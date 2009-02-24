@@ -21,7 +21,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gpointin-device-settings.h"
+#include "gpointing-device-settings.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>

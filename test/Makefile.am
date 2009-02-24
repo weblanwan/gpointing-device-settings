@@ -29,10 +29,10 @@ LIBS =				\
 	$(GTK_LIBS)		\
 	$(GCUTTER_LIBS)
 
-suite_gpointing-device-settings_test_la_SOURCES = gpointing-device-settings-test-suite.c
+suite_gpointing_device_settings_test_la_SOURCES = gpointing-device-settings-test-suite.c
 
 test_xinput_la_SOURCES = test-xinput.c
-test_xinput_la_LIBADD = $(top_builddir)/src/gpointing-device-settings-gxinput.o
+test_xinput_la_LIBADD = $(top_builddir)/src/gpointing_device_settings-gxinput.o
 
 echo-cutter:
 	@echo $(CUTTER)
