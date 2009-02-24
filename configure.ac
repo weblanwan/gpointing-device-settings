@@ -1,0 +1,106 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_PREREQ(2.57)
+
+AC_INIT(gpointing-device-settings, 0.9.0)
+AM_INIT_AUTOMAKE(1.6)
+AM_CONFIG_HEADER(config.h)
+AC_CONFIG_MACRO_DIR([m4])
+
+AM_PROG_LIBTOOL
+
+AC_PATH_PROG([PKG_CONFIG], [pkg-config], [no])
+
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PROG_INTLTOOL([0.35.0])
+AM_GLIB_GNU_GETTEXT
+
+GETTEXT_PACKAGE=gpointing-device-settings
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext package])
+
+if test "x$GCC" = "xyes"; then
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wmissing-declarations[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wmissing-declarations" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wmissing-prototypes[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wmissing-prototypes" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wpointer-arith[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wpointer-arith" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wcast-align[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wcast-align" ;;
+  esac
+
+  if test "x$enable_ansi" = "xyes"; then
+    case " $CFLAGS " in
+    *[\ \	]-ansi[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -ansi" ;;
+    esac
+
+    case " $CFLAGS " in
+    *[\ \	]-pedantic[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -pedantic" ;;
+    esac
+  fi
+fi
+
+GTK_REQUIRED=2.14.0
+AC_SUBST(GTK_REQUIRED)
+AM_PATH_GTK_2_0($GTK_REQUIRED)
+AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
+
+PKG_CHECK_MODULES(XINPUT, inputproto >= 1.4)
+AC_SUBST(XINPUT_CFLAGS)
+AC_SUBST(XINPUT_LIBS)
+
+dnl **************************************************************
+dnl Checks for typedefs, structures, and compiler characteristics.
+dnl **************************************************************
+AC_C_CONST
+
+dnl **************************************************************
+dnl Check for Cutter
+dnl **************************************************************
+m4_ifdef([AC_CHECK_GCUTTER], [
+AC_CHECK_GCUTTER(>= 1.0.6)
+],
+[ac_cv_use_cutter="no"])
+
+AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
+if test "$ac_cv_use_cutter" != "no"; then
+  AC_DEFINE(WITH_CUTTER, 1, [Define to 1 if you use Cutter])
+fi
+
+m4_ifdef([AC_CHECK_COVERAGE], [AC_CHECK_COVERAGE])
+GENHTML_OPTIONS="--title 'GPointingDeviceSettings Code Coverage'"
+
+AC_SUBST([AM_CPPFLAGS])
+AC_SUBST([AM_CFLAGS])
+AC_SUBST([AM_LDFLAGS])
+
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+data/Makefile
+test/Makefile
+po/Makefile.in
+])
+
+AC_OUTPUT
