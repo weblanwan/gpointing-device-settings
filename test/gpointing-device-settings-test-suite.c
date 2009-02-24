@@ -1,10 +1,10 @@
 #include <gcutter.h>
 #include <gtk/gtk.h>
 
-void gtrackpoint_test_warmup (void);
+void gpointing_device_settings_test_warmup (void);
 
 void
-gtrackpoint_test_warmup (void)
+gpointing_device_settings_test_warmup (void)
 {
     gtk_init(0, NULL);
 }
