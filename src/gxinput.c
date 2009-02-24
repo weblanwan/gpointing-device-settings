@@ -150,7 +150,7 @@ get_property (GObject    *object,
 GQuark
 g_xinput_error_quark (void)
 {
-    return g_quark_from_static_string("g-track-point-xinput-error-quark");
+    return g_quark_from_static_string("g-xinput-error-quark");
 }
 
 GXInput *

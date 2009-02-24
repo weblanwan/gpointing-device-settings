@@ -194,14 +194,11 @@ set_toggle_scroll_property (GXInput *xinput, GtkToggleButton *button,
                               first_value, second_value,
                               NULL);
     } else {
-        /* This call causes crash. why? */ 
-        /*
         g_xinput_set_property(xinput,
                               property_name,
                               &error,
-                              0,
+                              -1, -1,
                               NULL);
-        */
     }
 
     if (error) {
@@ -215,7 +212,7 @@ cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data
 {
     GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
-    set_toggle_scroll_property(priv->xinput, button, WHEEL_EMULATION_X_AXIS, 6, 7);
+    set_toggle_scroll_property(priv->xinput, button, WHEEL_EMULATION_Y_AXIS, 6, 7);
 }
 
 static void
@@ -223,7 +220,7 @@ cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_da
 {
     GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
-    set_toggle_scroll_property(priv->xinput, button, WHEEL_EMULATION_Y_AXIS, 4, 5);
+    set_toggle_scroll_property(priv->xinput, button, WHEEL_EMULATION_X_AXIS, 4, 5);
 }
 
 static void
@@ -356,9 +353,9 @@ setup_current_values (GTrackPointUI *ui)
     set_integer_property(priv->xinput, WHEEL_EMULATION_TIMEOUT,
                          priv->builder, "wheel_emulation_timeout");
 
-    set_scroll_property(priv->xinput, WHEEL_EMULATION_X_AXIS,
-                        priv->builder, "wheel_emulation_vertical");
     set_scroll_property(priv->xinput, WHEEL_EMULATION_Y_AXIS,
+                        priv->builder, "wheel_emulation_vertical");
+    set_scroll_property(priv->xinput, WHEEL_EMULATION_X_AXIS,
                         priv->builder, "wheel_emulation_horizontal");
 }
 
