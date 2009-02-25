@@ -26,7 +26,7 @@ teardown (void)
 void
 test_new (void)
 {
-    ui = gpds_ui_new("trackpoint");
+    ui = gpds_ui_new("touchpad");
     cut_assert(ui);
 }
 

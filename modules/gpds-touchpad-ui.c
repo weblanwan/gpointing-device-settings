@@ -28,40 +28,31 @@
 #include "gpds-xinput.h"
 #include "gpds-module-impl.h"
 
-#define DEVICE_NAME "TPPS/2 IBM TrackPoint"
-#define MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
-#define MIDDLE_BUTTON_TIMEOUT "Middle Button Timeout"
-#define WHEEL_EMULATION "Wheel Emulation"
-#define WHEEL_EMULATION_INERTIA "Wheel Emulation Inertia"
-#define WHEEL_EMULATION_X_AXIS "Wheel Emulation X Axis"
-#define WHEEL_EMULATION_Y_AXIS "Wheel Emulation Y Axis"
-#define WHEEL_EMULATION_TIMEOUT "Wheel Emulation Timeout"
-#define WHEEL_EMULATION_BUTTON "Wheel Emulation Button"
-#define DRAG_LOCK_BUTTONS "Drag Lock Buttons"
+#define DEVICE_NAME "SynPS/2 Synaptics TouchPad"
 
-#define GPDS_TYPE_TRACK_POINT_UI            gpds_type_track_point_ui
-#define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
-#define GPDS_TRACK_POINT_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIClass))
-#define G_IS_TRACK_POINT_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_TRACK_POINT_UI))
-#define G_IS_TRACK_POINT_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_TRACK_POINT_UI))
-#define GPDS_TRACK_POINT_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIClass))
+#define GPDS_TYPE_TOUCHPAD_UI            gpds_type_touchpad_ui
+#define GPDS_TOUCHPAD_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUI))
+#define GPDS_TOUCHPAD_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUIClass))
+#define G_IS_TOUCHPAD_UI(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_TOUCHPAD_UI))
+#define G_IS_TOUCHPAD_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_TOUCHPAD_UI))
+#define GPDS_TOUCHPAD_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUIClass))
 
-typedef struct _GpdsTrackPointUI GpdsTrackPointUI;
-typedef struct _GpdsTrackPointUIClass GpdsTrackPointUIClass;
+typedef struct _GpdsTouchpadUI GpdsTouchpadUI;
+typedef struct _GpdsTouchpadUIClass GpdsTouchpadUIClass;
 
-struct _GpdsTrackPointUI
+struct _GpdsTouchpadUI
 {
     GpdsUI parent;
     GpdsXInput *xinput;
     gchar *ui_file_path;
 };
 
-struct _GpdsTrackPointUIClass
+struct _GpdsTouchpadUIClass
 {
     GpdsUIClass parent_class;
 };
 
-static GType gpds_type_track_point_ui = 0;
+static GType gpds_type_touchpad_ui = 0;
 static GpdsUIClass *parent_class;
 
 static void       dispose            (GObject *object);
@@ -71,7 +62,7 @@ static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GtkWidget *get_label_widget   (GpdsUI  *ui, GError **error);
 
 static void
-class_init (GpdsTrackPointUIClass *klass)
+class_init (GpdsTouchpadUIClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GpdsUIClass *ui_class = GPDS_UI_CLASS(klass);
@@ -95,12 +86,11 @@ get_ui_file_directory (void)
 }
 
 static void
-init (GpdsTrackPointUI *ui)
+init (GpdsTouchpadUI *ui)
 {
     ui->xinput = NULL;
-    ui->ui_file_path = g_build_filename(get_ui_file_directory(),
-                                        "trackpoint.ui",
-                                        NULL);
+    ui->ui_file_path = 
+        g_build_filename(get_ui_file_directory(), "touchpad.ui", NULL);
 }
 
 static void
@@ -108,21 +98,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (GpdsTrackPointUIClass),
+            sizeof (GpdsTouchpadUIClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(GpdsTrackPointUI),
+            sizeof(GpdsTouchpadUI),
             0,
             (GInstanceInitFunc) init,
         };
 
-    gpds_type_track_point_ui =
+    gpds_type_touchpad_ui =
         g_type_module_register_type(type_module,
                                     GPDS_TYPE_UI,
-                                    "GpdsTrackPointUI",
+                                    "GpdsTouchpadUI",
                                     &info, 0);
 }
 
@@ -132,10 +122,10 @@ GPDS_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (gpds_type_track_point_ui)
+    if (gpds_type_touchpad_ui)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(gpds_type_track_point_ui));
+                           (gchar *)g_type_name(gpds_type_touchpad_ui));
 
     return registered_types;
 }
@@ -148,13 +138,13 @@ GPDS_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 GPDS_MODULE_IMPL_INSTANTIATE (void)
 {
-    return g_object_new(GPDS_TYPE_TRACK_POINT_UI, NULL);
+    return g_object_new(GPDS_TYPE_TOUCHPAD_UI, NULL);
 }
 
 static void
 dispose (GObject *object)
 {
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(object);
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(object);
 
     if (ui->xinput) {
         g_object_unref(ui->xinput);
@@ -224,103 +214,13 @@ set_widget_sensitivity (GtkBuilder *builder,
 }
 
 static void
-cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    GtkBuilder *builder;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_toggle_property(ui->xinput, button, MIDDLE_BUTTON_EMULATION);
-    set_widget_sensitivity(builder, "middle_button_emulation_box", button);
-}
-
-static void
-cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    GtkBuilder *builder;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_toggle_property(ui->xinput, button, WHEEL_EMULATION);
-    set_widget_sensitivity(builder, "wheel_emulation_box", button);
-}
-
-static void
-set_toggle_scroll_property (GpdsXInput *xinput, GtkToggleButton *button,
-                            const gchar *property_name,
-                            gint first_value, gint second_value)
-{
-    GError *error = NULL;
-    gboolean active;
-
-    active = gtk_toggle_button_get_active(button);
-    if (active) {
-        gpds_xinput_set_property(xinput,
-                              property_name,
-                              &error,
-                              first_value, second_value,
-                              NULL);
-    } else {
-        gpds_xinput_set_property(xinput,
-                              property_name,
-                              &error,
-                              -1, -1,
-                              NULL);
-    }
-
-    if (error) {
-        show_error(error);
-        g_error_free(error);
-    }
-}
-
-static void
-cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_Y_AXIS, 6, 7);
-}
-
-static void
-cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_X_AXIS, 4, 5);
-}
-
-static void
-cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
-{
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_spin_property(ui->xinput, button, WHEEL_EMULATION_TIMEOUT);
-}
-
-static void
-cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
-{
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_spin_property(ui->xinput, button, MIDDLE_BUTTON_TIMEOUT);
-}
-
-static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
-    GObject *object;
-
 #define CONNECT(object_name, signal_name)                               \
     object = gtk_builder_get_object(builder, #object_name);             \
     g_signal_connect(object, #signal_name,                              \
                      G_CALLBACK(cb_ ## object_name ## _ ## signal_name),\
                      ui)
-
-    CONNECT(middle_button_emulation, toggled);
-    CONNECT(middle_button_timeout, value_changed);
-    CONNECT(wheel_emulation, toggled);
-    CONNECT(wheel_emulation_timeout, value_changed);
-    CONNECT(wheel_emulation_vertical, toggled);
-    CONNECT(wheel_emulation_horizontal, toggled);
 
 #undef CONNECT
 }
@@ -405,22 +305,6 @@ set_scroll_property (GpdsXInput *xinput, const gchar *property_name,
 static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
-    GpdsTrackPointUI *track_point_ui = GPDS_TRACK_POINT_UI(ui);
-
-    set_boolean_property(track_point_ui->xinput, MIDDLE_BUTTON_EMULATION,
-                         builder, "middle_button_emulation");
-    set_boolean_property(track_point_ui->xinput, WHEEL_EMULATION,
-                         builder, "wheel_emulation");
-
-    set_integer_property(track_point_ui->xinput, MIDDLE_BUTTON_TIMEOUT,
-                         builder, "middle_button_timeout");
-    set_integer_property(track_point_ui->xinput, WHEEL_EMULATION_TIMEOUT,
-                         builder, "wheel_emulation_timeout");
-
-    set_scroll_property(track_point_ui->xinput, WHEEL_EMULATION_Y_AXIS,
-                        builder, "wheel_emulation_vertical");
-    set_scroll_property(track_point_ui->xinput, WHEEL_EMULATION_X_AXIS,
-                        builder, "wheel_emulation_horizontal");
 }
 
 static gboolean
@@ -434,13 +318,12 @@ is_available (GpdsUI *ui, GError **error)
         return FALSE;
     }
 
-    if (!g_file_test(GPDS_TRACK_POINT_UI(ui)->ui_file_path,
-                     G_FILE_TEST_EXISTS)) {
+    if (!g_file_test(GPDS_TOUCHPAD_UI(ui)->ui_file_path, G_FILE_TEST_EXISTS)) {
         g_set_error(error,
                     GPDS_UI_ERROR,
                     GPDS_UI_ERROR_NO_UI_FILE,
                     _("%s does not found."),
-                    GPDS_TRACK_POINT_UI(ui)->ui_file_path);
+                    GPDS_TOUCHPAD_UI(ui)->ui_file_path);
         return FALSE;
     }
 
@@ -455,12 +338,12 @@ build (GpdsUI  *ui, GError **error)
     builder = gpds_ui_get_builder(ui);
 
     if (!gtk_builder_add_from_file(builder, 
-                                   GPDS_TRACK_POINT_UI(ui)->ui_file_path,
+                                   GPDS_TOUCHPAD_UI(ui)->ui_file_path,
                                    error)) {
         return FALSE;
     }
 
-    GPDS_TRACK_POINT_UI(ui)->xinput = gpds_xinput_new(DEVICE_NAME);
+    GPDS_TOUCHPAD_UI(ui)->xinput = gpds_xinput_new(DEVICE_NAME);
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);

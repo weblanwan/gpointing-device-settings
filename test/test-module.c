@@ -44,6 +44,7 @@ test_load_modules (void)
 void
 test_collect_names (void)
 {
+    expected_names = g_list_append(expected_names, "touchpad");
     expected_names = g_list_append(expected_names, "trackpoint");
 
     cut_trace(test_load_modules());

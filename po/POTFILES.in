@@ -1,2 +1,3 @@
-src/gxinput.c
-[type: gettext/glade]data/gtrackpoint.ui
+src/gpds-xinput.c
+[type: gettext/glade]data/trackpoint.ui
+[type: gettext/glade]data/touchpad.ui

@@ -12,10 +12,12 @@ AM_LDFLAGS =							\
   -no-undefined -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 gpds_module_LTLIBRARIES = 	\
-	trackpoint.la
+	trackpoint.la		\
+	touchpad.la
 
 LIBS =					\
 	$(top_builddir)/src/libgpds.la	\
 	$(GTK_LIBS)
 
 trackpoint_la_SOURCES = gpds-trackpoint-ui.c
+touchpad_la_SOURCES = gpds-touchpad-ui.c

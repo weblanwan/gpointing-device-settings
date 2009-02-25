@@ -56,7 +56,6 @@ cb_response (GtkDialog *dialog, gint response_id, gpointer user_data)
 static void
 append_uis (GtkNotebook *notebook)
 {
-    GError *error = NULL;
     GList *ui_names, *name;
 
     ui_names = gpds_module_collect_names(modules);
@@ -65,6 +64,7 @@ append_uis (GtkNotebook *notebook)
         GpdsUI *ui;
         GtkWidget *widget = NULL;
         GtkWidget *label = NULL;
+        GError *error = NULL;
 
         ui = gpds_ui_new(name->data);
         uis = g_list_prepend(uis, ui);
@@ -73,8 +73,23 @@ append_uis (GtkNotebook *notebook)
             continue;
 
         gpds_ui_build(ui, &error);
-        widget = gpds_ui_get_content_widget(ui, NULL);
-        label = gpds_ui_get_label_widget(ui, NULL);
+        if (error) {
+            g_warning("%s", error->message);
+            g_error_free(error);
+            error = NULL;
+        }
+        widget = gpds_ui_get_content_widget(ui, &error);
+        if (error) {
+            g_warning("%s", error->message);
+            g_error_free(error);
+            error = NULL;
+        }
+        label = gpds_ui_get_label_widget(ui, &error);
+        if (error) {
+            g_warning("%s", error->message);
+            g_error_free(error);
+            error = NULL;
+        }
 
         if (!widget)
             widget = gtk_label_new(error->message);

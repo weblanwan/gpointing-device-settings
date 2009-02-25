@@ -2,6 +2,7 @@
 #include <gtk/gtk.h>
 
 void gpds_test_warmup (void);
+void gpds_test_cooldown (void);
 
 void
 gpds_test_warmup (void)
