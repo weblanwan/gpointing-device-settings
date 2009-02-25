@@ -20,7 +20,8 @@ unset LANG
 export BASE_DIR="`dirname $0`"
 top_dir="$BASE_DIR/.."
 top_dir="`cd $top_dir; pwd`"
-export KZ_EMBED_MODULE_DIR="$top_dir/module/embed/gecko/.libs"
+export GPDS_MODULE_DIR="$top_dir/modules/.libs"
+export GPDS_TRACK_POINT_UI_FILE_PATH="$top_dir/data/trackpoint.ui"
 
 if test x"$NO_MAKE" != x"yes"; then
     if which gmake > /dev/null; then

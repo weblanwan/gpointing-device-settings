@@ -1,6 +1,6 @@
 # -*- Mode: Makefile; tab-width: 8; indent-tabs-mode: t; -*-
 
-SUBDIRS = src data test po
+SUBDIRS = src modules data test po
 
 ACLOCAL_AMFLAGS = -I m4
 

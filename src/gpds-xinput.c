@@ -21,7 +21,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gxinput.h"
+#include "gpds-xinput.h"
 
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
@@ -30,8 +30,8 @@
 #include <X11/Xatom.h>
 #include <string.h>
 
-typedef struct _GXInputPriv GXInputPriv;
-struct _GXInputPriv
+typedef struct _GpdsXInputPriv GpdsXInputPriv;
+struct _GpdsXInputPriv
 {
     gchar *device_name;
     XDeviceInfo *device_info_list;
@@ -44,9 +44,9 @@ enum
     PROP_DEVICE_NAME
 };
 
-#define G_XINPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), G_TYPE_XINPUT, GXInputPriv))
+#define GPDS_XINPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GPDS_TYPE_XINPUT, GpdsXInputPriv))
 
-G_DEFINE_TYPE (GXInput, g_xinput, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GpdsXInput, gpds_xinput, G_TYPE_OBJECT)
 
 static void dispose      (GObject      *object);
 static void set_property (GObject      *object,
@@ -59,7 +59,7 @@ static void get_property (GObject      *object,
                           GParamSpec   *pspec);
 
 static void
-g_xinput_class_init (GXInputClass *klass)
+gpds_xinput_class_init (GpdsXInputClass *klass)
 {
     GObjectClass   *gobject_class = G_OBJECT_CLASS(klass);
 
@@ -76,13 +76,13 @@ g_xinput_class_init (GXInputClass *klass)
              NULL,
              G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
-    g_type_class_add_private(gobject_class, sizeof(GXInputPriv));
+    g_type_class_add_private(gobject_class, sizeof(GpdsXInputPriv));
 }
 
 static void
-g_xinput_init (GXInput *xinput)
+gpds_xinput_init (GpdsXInput *xinput)
 {
-    GXInputPriv *priv = G_XINPUT_GET_PRIVATE(xinput);
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
 
     priv->device_name = NULL;
     priv->device_info_list = NULL;
@@ -92,7 +92,7 @@ g_xinput_init (GXInput *xinput)
 static void
 dispose (GObject *object)
 {
-    GXInputPriv *priv = G_XINPUT_GET_PRIVATE(object);
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(object);
 
     g_free(priv->device_name);
 
@@ -106,8 +106,8 @@ dispose (GObject *object)
         priv->device = NULL;
     }
 
-    if (G_OBJECT_CLASS(g_xinput_parent_class)->dispose)
-        G_OBJECT_CLASS(g_xinput_parent_class)->dispose(object);
+    if (G_OBJECT_CLASS(gpds_xinput_parent_class)->dispose)
+        G_OBJECT_CLASS(gpds_xinput_parent_class)->dispose(object);
 }
 
 static void
@@ -116,7 +116,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    GXInputPriv *priv = G_XINPUT_GET_PRIVATE(object);
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(object);
 
     switch (prop_id) {
     case PROP_DEVICE_NAME:
@@ -135,7 +135,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    GXInputPriv *priv = G_XINPUT_GET_PRIVATE(object);
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(object);
 
     switch (prop_id) {
     case PROP_DEVICE_NAME:
@@ -148,15 +148,15 @@ get_property (GObject    *object,
 }
 
 GQuark
-g_xinput_error_quark (void)
+gpds_xinput_error_quark (void)
 {
-    return g_quark_from_static_string("g-xinput-error-quark");
+    return g_quark_from_static_string("gpds-xinput-error-quark");
 }
 
-GXInput *
-g_xinput_new (const gchar *device_name)
+GpdsXInput *
+gpds_xinput_new (const gchar *device_name)
 {
-    return g_object_new(G_TYPE_XINPUT,
+    return g_object_new(GPDS_TYPE_XINPUT,
                         "device-name", device_name,
                         NULL);
 }
@@ -188,8 +188,8 @@ open_device (const gchar *device_name, GError **error)
     device_info = get_device_info(device_name);
     if (!device_info) {
         g_set_error(error,
-                    G_XINPUT_ERROR,
-                    G_XINPUT_ERROR_NO_DEVICE,
+                    GPDS_XINPUT_ERROR,
+                    GPDS_XINPUT_ERROR_NO_DEVICE,
                     _("No  device found."));
         return NULL;
     }
@@ -197,8 +197,8 @@ open_device (const gchar *device_name, GError **error)
     device = XOpenDevice(GDK_DISPLAY(), device_info->id);
     if (!device) {
         g_set_error(error,
-                    G_XINPUT_ERROR,
-                    G_XINPUT_ERROR_NO_DEVICE,
+                    GPDS_XINPUT_ERROR,
+                    GPDS_XINPUT_ERROR_NO_DEVICE,
                     _("Could not open %s device."), device_name);
         return NULL;
     }
@@ -207,9 +207,9 @@ open_device (const gchar *device_name, GError **error)
 }
 
 static XDevice *
-get_device (GXInput *xinput, GError **error)
+get_device (GpdsXInput *xinput, GError **error)
 {
-    GXInputPriv *priv = G_XINPUT_GET_PRIVATE(xinput);
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
 
     if (priv->device)
         return priv->device;
@@ -219,7 +219,7 @@ get_device (GXInput *xinput, GError **error)
 }
 
 static gboolean
-set_property_va_list (GXInput *xinput,
+set_property_va_list (GpdsXInput *xinput,
                       const gchar *property_name,
                       GError **error,
                       gint first_value, va_list var_args)
@@ -291,7 +291,7 @@ set_property_va_list (GXInput *xinput,
 }
 
 gboolean
-g_xinput_set_property (GXInput *xinput,
+gpds_xinput_set_property (GpdsXInput *xinput,
                        const gchar *property_name,
                        GError **error,
                        gint first_value, ...)
@@ -307,7 +307,7 @@ g_xinput_set_property (GXInput *xinput,
 }
 
 static Atom
-get_atom (GXInput *xinput, const gchar *property_name, GError **error)
+get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
 {
     gint i, n_properties;
     XDevice *device;
@@ -334,7 +334,7 @@ get_atom (GXInput *xinput, const gchar *property_name, GError **error)
 }
 
 static gboolean
-get_int_property (GXInput *xinput,
+get_int_property (GpdsXInput *xinput,
                   const gchar *property_name,
                   GError **error,
                   gint **values, gulong *n_values)
@@ -393,7 +393,7 @@ get_int_property (GXInput *xinput,
 }
 
 gboolean
-g_xinput_get_property (GXInput *xinput,
+gpds_xinput_get_property (GpdsXInput *xinput,
                        const gchar *property_name,
                        GError **error,
                        gint **values,
@@ -409,7 +409,7 @@ g_xinput_get_property (GXInput *xinput,
 }
 
 gboolean
-g_xinput_exist_device (const gchar *device_name)
+gpds_xinput_exist_device (const gchar *device_name)
 {
     return get_device_info(device_name) ? TRUE : FALSE;
 }

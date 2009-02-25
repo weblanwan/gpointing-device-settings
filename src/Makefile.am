@@ -1,18 +1,38 @@
+lib_LTLIBRARIES = libgpds.la
+
+libgpds_public_headers = 		\
+	gpds-module-impl.h		\
+	gpds-ui.h			\
+	gpds-xinput.h
+
+libgpds_la_SOURCES =			\
+	$(libgpds_public_headers)	\
+	gpds-module.c			\
+	gpds-module.h			\
+	gpds-ui.c			\
+	gpds-xinput.c
+libgpds_la_CFLAGS =			\
+	$(GPDS_CFLAGS)			\
+	$(COVERAGE_CFLAGS)
+
+libgpds_la_LDFLAGS =				\
+	-version-info $(LT_VERSION_INFO)	\
+	-no-undefined
+
+libgpds_la_LIBADD =			\
+	$(GTK_LIBS)			\
+	$(XINPUT_LIBS)
+
 bin_PROGRAMS = gpointing-device-settings
 
-gpointing_device_settings_CFLAGS =		\
-	-DDATADIR=\""$(datadir)/$(PACKAGE)"\" 	\
-	-DHELPDATADIR=\""$(datadir)"\"	 	\
-	$(XINPUT_CFLAGS)			\
-	$(GTK_CFLAGS)
+gpointing_device_settings_CFLAGS =	\
+	$(GPDS_CFLAGS)			\
+	$(COVERAGE_CFLAGS)
 
 gpointing_device_settings_SOURCES =	\
-	gpointing-device-settings.c	\
-	gtrackpoint-ui.c		\
-	gtrackpoint-ui.h		\
-	gxinput.c			\
-	gxinput.h
+	gpointing-device-settings.c
 
 gpointing_device_settings_LDADD =	\
-	$(GTK_LIBS)	\
+	$(top_builddir)/src/libgpds.la	\
+	$(GTK_LIBS)			\
 	$(XINPUT_LIBS)

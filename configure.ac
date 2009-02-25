@@ -70,10 +70,34 @@ PKG_CHECK_MODULES(XINPUT, inputproto >= 1.4)
 AC_SUBST(XINPUT_CFLAGS)
 AC_SUBST(XINPUT_LIBS)
 
+LT_CURRENT=1
+LT_REVISION=0
+LT_AGE=1
+LT_VERSION_INFO="$LT_CURRENT:$LT_REVISION:$LT_AGE"
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+AC_SUBST(LT_VERSION_INFO)
+
+LT_CURRENT_MINUS_AGE=`expr $LT_CURRENT - $LT_AGE`
+AC_SUBST(LT_CURRENT_MINUS_AGE)
+
+LIBTOOL_EXPORT_OPTIONS='-export-symbols-regex "^[[^_]].*"'
+AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
+
 dnl **************************************************************
 dnl Checks for typedefs, structures, and compiler characteristics.
 dnl **************************************************************
 AC_C_CONST
+
+gpds_moduledir="\${libdir}/\$(PACKAGE)/module"
+AC_SUBST(gpds_moduledir)
+gpds_datadir="\${datadir}/\$(PACKAGE)"
+AC_SUBST(gpds_datadir)
+gpds_ui_filedir="\${datadir}/\$(PACKAGE)/ui"
+AC_SUBST(gpds_ui_filedir)
+gpds_help_datadir="\${datadir}"
+AC_SUBST(gpds_help_datadir)
 
 dnl **************************************************************
 dnl Check for Cutter
@@ -91,6 +115,16 @@ fi
 m4_ifdef([AC_CHECK_COVERAGE], [AC_CHECK_COVERAGE])
 GENHTML_OPTIONS="--title 'GPointingDeviceSettings Code Coverage'"
 
+GPDS_CFLAGS="$XINPUT_CFLAGS $GTK_CFLAGS"
+GPDS_CFLAGS="$GPDS_CFLAGS -DGTK_DISABLE_DEPRECATED"
+GPDS_CFLAGS="$GPDS_CFLAGS -DGDK_DISABLE_DEPRECATED"
+GPDS_CFLAGS="$GPDS_CFLAGS -DG_DISABLE_DEPRECATED"
+GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_MODULEDIR=\\\"\"\$(gpds_moduledir)\"\\\""
+GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_DATADIR=\\\"\"\$(gpds_datadir)\"\\\""
+GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_UI_FILEDIR=\\\"\"\$(gpds_ui_filedir)\"\\\""
+GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_HELP_DATADIR=\\\"\"\$(gpds_help_datadir)\"\\\""
+AC_SUBST(GPDS_CFLAGS)
+
 AC_SUBST([AM_CPPFLAGS])
 AC_SUBST([AM_CFLAGS])
 AC_SUBST([AM_LDFLAGS])
@@ -98,6 +132,7 @@ AC_SUBST([AM_LDFLAGS])
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
+modules/Makefile
 data/Makefile
 test/Makefile
 po/Makefile.in

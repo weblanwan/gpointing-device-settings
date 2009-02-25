@@ -2,9 +2,11 @@ if WITH_CUTTER
 TESTS = run-test.sh
 TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
 
-noinst_LTLIBRARIES =			\
-	suite_gpointing-device-settings_test.la	\
-	test_xinput.la	
+noinst_LTLIBRARIES =	\
+	suite_gpds_test.la	\
+	test-xinput.la		\
+	test-module.la		\
+	test-ui.la
 endif
 
 EXTRA_DIST =		\
@@ -25,14 +27,16 @@ AM_LDFLAGS =			\
 	-avoid-version		\
 	-no-undefined
 
-LIBS =				\
-	$(GTK_LIBS)		\
+LIBS =					\
+	$(top_builddir)/src/libgpds.la	\
+	$(GTK_LIBS)			\
 	$(GCUTTER_LIBS)
 
-suite_gpointing_device_settings_test_la_SOURCES = gpointing-device-settings-test-suite.c
+suite_gpds_test_la_SOURCES = gpds-test-suite.c
 
 test_xinput_la_SOURCES = test-xinput.c
-test_xinput_la_LIBADD = $(top_builddir)/src/gpointing_device_settings-gxinput.o
+test_module_la_SOURCES = test-module.c
+test_ui_la_SOURCES = test-ui.c
 
 echo-cutter:
 	@echo $(CUTTER)

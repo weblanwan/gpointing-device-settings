@@ -21,11 +21,11 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gtrackpoint-ui.h"
+#include "gpds-trackpoint-ui.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include "gxinput.h"
+#include "gpds-xinput.h"
 
 #define DEVICE_NAME "TPPS/2 IBM TrackPoint"
 #define MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
@@ -38,42 +38,42 @@
 #define WHEEL_EMULATION_BUTTON "Wheel Emulation Button"
 #define DRAG_LOCK_BUTTONS "Drag Lock Buttons"
 
-typedef struct _GTrackPointUIPriv GTrackPointUIPriv;
-struct _GTrackPointUIPriv
+typedef struct _GpdsTrackPointUIPriv GpdsTrackPointUIPriv;
+struct _GpdsTrackPointUIPriv
 {
     GtkBuilder *builder;
     GError *error;
-    GXInput *xinput;
+    GpdsXInput *xinput;
 };
 
 
-#define G_TRACK_POINT_UI_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), G_TYPE_TRACK_POINT_UI, GTrackPointUIPriv))
+#define GPDS_TRACK_POINT_UI_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIPriv))
 
-G_DEFINE_TYPE (GTrackPointUI, g_track_point_ui, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GpdsTrackPointUI, gpds_track_point_ui, G_TYPE_OBJECT)
 
 static void dispose      (GObject      *object);
 
 static void
-g_track_point_ui_class_init (GTrackPointUIClass *klass)
+gpds_track_point_ui_class_init (GpdsTrackPointUIClass *klass)
 {
     GObjectClass   *gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose = dispose;
 
-    g_type_class_add_private(gobject_class, sizeof(GTrackPointUIPriv));
+    g_type_class_add_private(gobject_class, sizeof(GpdsTrackPointUIPriv));
 }
 
 static void
-g_track_point_ui_init (GTrackPointUI *ui)
+gpds_track_point_ui_init (GpdsTrackPointUI *ui)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(ui);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(ui);
 
     priv->xinput = NULL;
     priv->error = NULL;
 
     priv->builder = gtk_builder_new();
     gtk_builder_add_from_file(priv->builder, 
-                              DATADIR "/gtrackpoint.ui", &priv->error);
+                              GPDS_DATADIR "/gtrackpoint.ui", &priv->error);
     if (priv->error) {
         g_print("%s\n", priv->error->message);
     }
@@ -82,7 +82,7 @@ g_track_point_ui_init (GTrackPointUI *ui)
 static void
 dispose (GObject *object)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(object);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(object);
 
     if (priv->builder) {
         g_object_unref(priv->builder);
@@ -99,8 +99,8 @@ dispose (GObject *object)
         priv->error = NULL;
     }
 
-    if (G_OBJECT_CLASS(g_track_point_ui_parent_class)->dispose)
-        G_OBJECT_CLASS(g_track_point_ui_parent_class)->dispose(object);
+    if (G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose)
+        G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose(object);
 }
 
 static void
@@ -113,13 +113,13 @@ show_error (GError *error)
 }
 
 static void
-set_toggle_property (GXInput *xinput, GtkToggleButton *button, const gchar *property_name)
+set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *property_name)
 {
     GError *error = NULL;
     gboolean active;
 
     active = gtk_toggle_button_get_active(button);
-    g_xinput_set_property(xinput,
+    gpds_xinput_set_property(xinput,
                           property_name,
                           &error,
                           active ? 1 : 0,
@@ -131,13 +131,13 @@ set_toggle_property (GXInput *xinput, GtkToggleButton *button, const gchar *prop
 }
 
 static void
-set_spin_property (GXInput *xinput, GtkSpinButton *button, const gchar *property_name)
+set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, const gchar *property_name)
 {
     GError *error = NULL;
     gdouble value;
 
     value = gtk_spin_button_get_value(button);
-    g_xinput_set_property(xinput,
+    gpds_xinput_set_property(xinput,
                           property_name,
                           &error,
                           (gint)value,
@@ -163,7 +163,7 @@ set_widget_sensitivity (GtkBuilder *builder,
 static void
 cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
     set_toggle_property(priv->xinput, button, MIDDLE_BUTTON_EMULATION);
     set_widget_sensitivity(priv->builder, "middle_button_emulation_box", button);
@@ -172,14 +172,14 @@ cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 static void
 cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
     set_toggle_property(priv->xinput, button, WHEEL_EMULATION);
     set_widget_sensitivity(priv->builder, "wheel_emulation_box", button);
 }
 
 static void
-set_toggle_scroll_property (GXInput *xinput, GtkToggleButton *button,
+set_toggle_scroll_property (GpdsXInput *xinput, GtkToggleButton *button,
                             const gchar *property_name,
                             gint first_value, gint second_value)
 {
@@ -188,13 +188,13 @@ set_toggle_scroll_property (GXInput *xinput, GtkToggleButton *button,
 
     active = gtk_toggle_button_get_active(button);
     if (active) {
-        g_xinput_set_property(xinput,
+        gpds_xinput_set_property(xinput,
                               property_name,
                               &error,
                               first_value, second_value,
                               NULL);
     } else {
-        g_xinput_set_property(xinput,
+        gpds_xinput_set_property(xinput,
                               property_name,
                               &error,
                               -1, -1,
@@ -210,7 +210,7 @@ set_toggle_scroll_property (GXInput *xinput, GtkToggleButton *button,
 static void
 cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
     set_toggle_scroll_property(priv->xinput, button, WHEEL_EMULATION_Y_AXIS, 6, 7);
 }
@@ -218,7 +218,7 @@ cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data
 static void
 cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_data)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
     set_toggle_scroll_property(priv->xinput, button, WHEEL_EMULATION_X_AXIS, 4, 5);
 }
@@ -226,7 +226,7 @@ cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_da
 static void
 cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
     set_spin_property(priv->xinput, button, WHEEL_EMULATION_TIMEOUT);
 }
@@ -234,15 +234,15 @@ cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_d
 static void
 cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(user_data);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(user_data);
 
     set_spin_property(priv->xinput, button, MIDDLE_BUTTON_TIMEOUT);
 }
 
 static void
-setup_signals (GTrackPointUI *ui)
+setup_signals (GpdsTrackPointUI *ui)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(ui);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(ui);
     GObject *object;
 
 #define CONNECT(object_name, signal_name)                               \
@@ -262,12 +262,12 @@ setup_signals (GTrackPointUI *ui)
 }
 
 static gboolean
-get_integer_property (GXInput *xinput, const gchar *property_name,
+get_integer_property (GpdsXInput *xinput, const gchar *property_name,
                       gint **values, gulong *n_values)
 {
     GError *error = NULL;
 
-    g_xinput_get_property(xinput,
+    gpds_xinput_get_property(xinput,
                           property_name,
                           &error,
                           values, n_values);
@@ -282,7 +282,7 @@ get_integer_property (GXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_integer_property (GXInput *xinput, const gchar *property_name,
+set_integer_property (GpdsXInput *xinput, const gchar *property_name,
                       GtkBuilder *builder, const gchar *object_name)
 {
     GObject *object;
@@ -301,7 +301,7 @@ set_integer_property (GXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_boolean_property (GXInput *xinput, const gchar *property_name,
+set_boolean_property (GpdsXInput *xinput, const gchar *property_name,
                       GtkBuilder *builder, const gchar *object_name)
 {
     GObject *object;
@@ -320,7 +320,7 @@ set_boolean_property (GXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_scroll_property (GXInput *xinput, const gchar *property_name,
+set_scroll_property (GpdsXInput *xinput, const gchar *property_name,
                      GtkBuilder *builder, const gchar *object_name)
 {
     GObject *object;
@@ -339,9 +339,9 @@ set_scroll_property (GXInput *xinput, const gchar *property_name,
 }
 
 static void
-setup_current_values (GTrackPointUI *ui)
+setup_current_values (GpdsTrackPointUI *ui)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(ui);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(ui);
 
     set_boolean_property(priv->xinput, MIDDLE_BUTTON_EMULATION,
                          priv->builder, "middle_button_emulation");
@@ -360,41 +360,41 @@ setup_current_values (GTrackPointUI *ui)
 }
 
 static void
-setup (GTrackPointUI *ui)
+setup (GpdsTrackPointUI *ui)
 {
     setup_current_values(ui);
     setup_signals(ui);
 }
 
-GTrackPointUI *
-g_track_point_ui_new (void)
+GpdsTrackPointUI *
+gpds_track_point_ui_new (void)
 {
-    return g_object_new(G_TYPE_TRACK_POINT_UI, NULL);
+    return g_object_new(GPDS_TYPE_TRACK_POINT_UI, NULL);
 }
 
 GtkWidget *
-g_track_point_ui_get_widget (GTrackPointUI *ui)
+gpds_track_point_ui_get_widget (GpdsTrackPointUI *ui)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(ui);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(ui);
 
     if (!priv->builder)
         return NULL;
 
-    if (!g_xinput_exist_device(DEVICE_NAME)) {
+    if (!gpds_xinput_exist_device(DEVICE_NAME)) {
         g_print("No %s found\n", DEVICE_NAME);
         return NULL;
     }
 
-    priv->xinput = g_xinput_new(DEVICE_NAME);
+    priv->xinput = gpds_xinput_new(DEVICE_NAME);
     setup(ui);
 
     return GTK_WIDGET(gtk_builder_get_object(priv->builder, "main-widget"));
 }
 
 GtkWidget *
-g_track_point_ui_get_label_widget (GTrackPointUI *ui)
+gpds_track_point_ui_get_label_widget (GpdsTrackPointUI *ui)
 {
-    GTrackPointUIPriv *priv = G_TRACK_POINT_UI_GET_PRIVATE(ui);
+    GpdsTrackPointUIPriv *priv = GPDS_TRACK_POINT_UI_GET_PRIVATE(ui);
 
     if (!priv->builder)
         return NULL;

@@ -21,12 +21,31 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gpointing-device-settings.h"
-
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include "gtrackpoint-ui.h"
-#include "gxinput.h"
+#include "gpds-xinput.h"
+#include "gpds-module.h"
+#include "gpds-ui.h"
+
+static GList *modules = NULL;
+static GList *uis = NULL;
+
+static gboolean
+gpds_init (void)
+{
+    modules = gpds_module_load_modules();
+    return TRUE;
+}
+
+static gboolean
+gpds_quit (void)
+{
+    g_list_foreach(uis, (GFunc)g_object_unref, NULL);
+    g_list_free(uis);
+    g_list_free(modules);
+
+    return TRUE;
+}
 
 static void
 cb_response (GtkDialog *dialog, gint response_id, gpointer user_data)
@@ -34,14 +53,48 @@ cb_response (GtkDialog *dialog, gint response_id, gpointer user_data)
     gtk_main_quit();
 }
 
+static void
+append_uis (GtkNotebook *notebook)
+{
+    GError *error = NULL;
+    GList *ui_names, *name;
+
+    ui_names = gpds_module_collect_names(modules);
+    
+    for (name = ui_names; name; name = g_list_next(name)) {
+        GpdsUI *ui;
+        GtkWidget *widget = NULL;
+        GtkWidget *label = NULL;
+
+        ui = gpds_ui_new(name->data);
+        uis = g_list_prepend(uis, ui);
+
+        if (!gpds_ui_is_available(ui, NULL))
+            continue;
+
+        gpds_ui_build(ui, &error);
+        widget = gpds_ui_get_content_widget(ui, NULL);
+        label = gpds_ui_get_label_widget(ui, NULL);
+
+        if (!widget)
+            widget = gtk_label_new(error->message);
+
+        gtk_notebook_append_page(notebook,
+                                 widget, label);
+
+    }
+
+    g_list_free(ui_names);
+}
+
 int
 main (int argc, char *argv[])
 {
-    GTrackPointUI *ui;
     GtkWidget *dialog, *notebook, *content_area;
-    GtkWidget *widget;
 
     gtk_init(&argc, &argv);
+
+    gpds_init();
 
     dialog = gtk_dialog_new_with_buttons(_("TrackPoint Settings"),
                                          NULL,
@@ -55,19 +108,11 @@ main (int argc, char *argv[])
     content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
     gtk_container_add(GTK_CONTAINER(content_area),
                       notebook);
-
-    ui = g_track_point_ui_new();
-    widget = g_track_point_ui_get_widget(ui);
-    if (!widget)
-        widget = gtk_label_new(_("No device availlable"));
-
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
-                             widget, NULL);
-
+    append_uis(GTK_NOTEBOOK(notebook));
     gtk_widget_show_all(dialog);
     gtk_main();
 
-    g_object_unref(ui);
+    gpds_quit();
 
     return 0;
 }

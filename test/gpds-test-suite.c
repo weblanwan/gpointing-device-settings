@@ -1,12 +1,17 @@
 #include <gcutter.h>
 #include <gtk/gtk.h>
 
-void gpointing_device_settings_test_warmup (void);
+void gpds_test_warmup (void);
 
 void
-gpointing_device_settings_test_warmup (void)
+gpds_test_warmup (void)
 {
     gtk_init(0, NULL);
+}
+
+void
+gpds_test_cooldown (void)
+{
 }
 
 /*

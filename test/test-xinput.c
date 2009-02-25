@@ -1,11 +1,11 @@
-#include "gxinput.h"
+#include "gpds-xinput.h"
 
 #include <gcutter.h>
 
 void test_new (void);
 void test_property (void);
 
-static GXInput *xinput;
+static GpdsXInput *xinput;
 static gint *values;
 static gulong n_values;
 static GError *error;
@@ -31,7 +31,7 @@ teardown (void)
 void
 test_new (void)
 {
-    xinput = g_xinput_new("TPPS/2 IBM TrackPoint");
+    xinput = gpds_xinput_new("TPPS/2 IBM TrackPoint");
     cut_assert(xinput);
 }
 
@@ -41,7 +41,7 @@ test_property (void)
     gint original_value;
     cut_trace(test_new());
 
-    cut_assert_true(g_xinput_get_property(xinput,
+    cut_assert_true(gpds_xinput_get_property(xinput,
                                           "Middle Button Emulation",
                                           &error,
                                           &values, &n_values));
@@ -49,13 +49,13 @@ test_property (void)
     cut_assert_equal_int(1, n_values);
     original_value = values[0];
 
-    cut_assert_true(g_xinput_set_property(xinput,
+    cut_assert_true(gpds_xinput_set_property(xinput,
                                           "Middle Button Emulation",
                                           &error,
                                           1, NULL));
     gcut_assert_error(error);
     g_free(values);
-    cut_assert_true(g_xinput_get_property(xinput,
+    cut_assert_true(gpds_xinput_get_property(xinput,
                                           "Middle Button Emulation",
                                           &error,
                                           &values, &n_values));
@@ -63,14 +63,14 @@ test_property (void)
     cut_assert_equal_int(1, n_values);
     cut_assert_equal_int(1, values[0]);
 
-    cut_assert_true(g_xinput_set_property(xinput,
+    cut_assert_true(gpds_xinput_set_property(xinput,
                                           "Middle Button Emulation",
                                           &error,
                                           original_value, NULL));
     gcut_assert_error(error);
 
     g_free(values);
-    cut_assert_true(g_xinput_get_property(xinput,
+    cut_assert_true(gpds_xinput_get_property(xinput,
                                           "Middle Button Emulation",
                                           &error,
                                           &values, &n_values));
