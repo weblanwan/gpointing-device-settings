@@ -42,6 +42,7 @@ gpds_quit (void)
 {
     g_list_foreach(uis, (GFunc)g_object_unref, NULL);
     g_list_free(uis);
+    g_list_foreach(modules, (GFunc)gpds_module_unload, NULL);
     g_list_free(modules);
 
     return TRUE;
