@@ -2,6 +2,8 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
+moduledir=@gpds_moduledir@
+uidir=@gpds_ui_filedir@
 
 Name: LibGPointingDeviceSettings
 Description: Library to create dynamic module of UI for pointing device settings
