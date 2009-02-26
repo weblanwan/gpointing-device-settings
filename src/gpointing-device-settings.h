@@ -17,17 +17,14 @@
  *
  */
 
-#ifndef __GTRACKPOINT_H__
-#define __GTRACKPOINT_H__
+#ifndef __GPOINTING_DEVICE_SETTINGS_H__
+#define __GPOINTING_DEVICE_SETTINGS_H__
 
-#include <glib-object.h>
+#include <gpds-ui.h>
+#include <gpds-module-impl.h>
+#include <gpds-xinput.h>
 
-G_BEGIN_DECLS
-
-
-G_END_DECLS
-
-#endif /* __GTRACKPOINT_H__ */
+#endif /* __GPOINTING_DEVICE_SETTINGS_H__ */
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
