@@ -7,3 +7,6 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = 		\
 	MAINTAINERS	\
 	autogen.sh
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libgpointing-device-settings.pc

@@ -23,6 +23,9 @@ libgpds_la_LIBADD =			\
 	$(GTK_LIBS)			\
 	$(XINPUT_LIBS)
 
+pkginclude_HEADERS =				\
+	$(libgpds_public_headers)
+
 bin_PROGRAMS = gpointing-device-settings
 
 gpointing_device_settings_CFLAGS =	\

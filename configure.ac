@@ -136,6 +136,7 @@ modules/Makefile
 data/Makefile
 test/Makefile
 po/Makefile.in
+libgpointing-device-settings.pc
 ])
 
 AC_OUTPUT

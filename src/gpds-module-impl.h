@@ -24,8 +24,6 @@
 
 G_BEGIN_DECLS
 
-#include "gpds-module.h"
-
 typedef GList   *(*GpdsModuleInitFunc)         (GTypeModule *module);
 typedef void     (*GpdsModuleExitFunc)         (void);
 typedef GObject *(*GpdsModuleInstantiateFunc)  (void);

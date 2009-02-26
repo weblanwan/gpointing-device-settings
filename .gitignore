@@ -19,6 +19,7 @@ intltool-extract.in
 intltool-merge.in
 intltool-update.in
 mkinstalldirs
+libgpointing-device-settings.pc
 coverage
 coverage.info
 *.gcno
