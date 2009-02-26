@@ -14,10 +14,23 @@ static GList *expected_names;
 static GObject *object;
 
 void
+cut_startup (void)
+{
+    modules = gpds_module_load_modules();
+}
+
+void
+cut_shutdown (void)
+{
+    g_list_foreach(modules, (GFunc)gpds_module_unload, NULL);
+    g_list_free(modules);
+    modules = NULL;
+}
+
+void
 setup (void)
 {
     module = NULL;
-    modules = NULL;
     names = NULL;
     expected_names = NULL;
     object = NULL;
@@ -29,16 +42,8 @@ teardown (void)
 {
     if (object)
         g_object_unref(object);
-    g_list_free(modules);
     g_list_free(names);
     g_list_free(expected_names);
-}
-
-void
-test_load_modules (void)
-{
-    modules = gpds_module_load_modules();
-    cut_assert(modules);
 }
 
 void
@@ -46,8 +51,6 @@ test_collect_names (void)
 {
     expected_names = g_list_append(expected_names, "touchpad");
     expected_names = g_list_append(expected_names, "trackpoint");
-
-    cut_trace(test_load_modules());
 
     names = gpds_module_collect_names(modules);
 
