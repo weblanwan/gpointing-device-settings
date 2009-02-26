@@ -40,6 +40,9 @@ teardown (void)
         g_object_unref(ui);
     g_list_free(names);
     g_list_free(expected_names);
+
+    if (error)
+        g_clear_error(&error);
 }
 
 void
