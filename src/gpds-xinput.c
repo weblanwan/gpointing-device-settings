@@ -156,6 +156,8 @@ gpds_xinput_error_quark (void)
 GpdsXInput *
 gpds_xinput_new (const gchar *device_name)
 {
+    g_return_val_if_fail(device_name, NULL);
+
     return g_object_new(GPDS_TYPE_XINPUT,
                         "device-name", device_name,
                         NULL);

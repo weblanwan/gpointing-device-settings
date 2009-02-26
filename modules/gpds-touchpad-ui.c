@@ -35,7 +35,7 @@
 #define TAP_TIME "Synaptics Tap Time"
 #define TAP_MOVE "Synaptics Tap Move"
 #define TAP_DURATIONS "Synaptics Tap Durations"
-#define TAP_FAST_TAP"Synaptics Tap FastTap"
+#define TAP_FAST_TAP "Synaptics Tap FastTap"
 #define MIDDLE_BUTTON_TIMEOUT "Synaptics Middle Button Timeout"
 #define TWO_FINGER_PRESSURE "Synaptics Two-Finger Pressure"
 #define SCROLLING_DISTANCE "Synaptics Scrolling Distance"
@@ -214,14 +214,15 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *p
     gboolean active;
 
     active = gtk_toggle_button_get_active(button);
-    gpds_xinput_set_property(xinput,
-                             property_name,
-                             &error,
-                             active ? 1 : 0,
-                             NULL);
-    if (error) {
-        show_error(error);
-        g_error_free(error);
+    if (!gpds_xinput_set_property(xinput,
+                                  property_name,
+                                  &error,
+                                  active ? 1 : 0,
+                                  NULL)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
     }
 }
 
@@ -232,14 +233,15 @@ set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, const gchar *prope
     gdouble value;
 
     value = gtk_spin_button_get_value(button);
-    gpds_xinput_set_property(xinput,
-                             property_name,
-                             &error,
-                             (gint)value,
-                             NULL);
-    if (error) {
-        show_error(error);
-        g_error_free(error);
+    if (!gpds_xinput_set_property(xinput,
+                                  property_name,
+                                  &error,
+                                  (gint)value,
+                                  NULL)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
     }
 }
 
@@ -256,13 +258,40 @@ set_widget_sensitivity (GtkBuilder *builder,
 }
 
 static void
+cb_faster_tapping_check_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));
+
+    set_toggle_property(ui->xinput, button, TAP_FAST_TAP);
+}
+
+static void
+cb_circular_scroll_check_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));
+
+    set_toggle_property(ui->xinput, button, CIRCULAR_SCROLLING);
+}
+
+static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
+    GObject *object;
+
 #define CONNECT(object_name, signal_name)                               \
     object = gtk_builder_get_object(builder, #object_name);             \
     g_signal_connect(object, #signal_name,                              \
                      G_CALLBACK(cb_ ## object_name ## _ ## signal_name),\
                      ui)
+
+    CONNECT(faster_tapping_check, toggled);
+    CONNECT(circular_scroll_check, toggled);
 
 #undef CONNECT
 }
@@ -273,13 +302,14 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 {
     GError *error = NULL;
 
-    gpds_xinput_get_property(xinput,
-                          property_name,
-                          &error,
-                          values, n_values);
-    if (error) {
-        show_error(error);
-        g_error_free(error);
+    if (!gpds_xinput_get_property(xinput,
+                                  property_name,
+                                  &error,
+                                  values, n_values)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
         return FALSE;
     }
 
@@ -347,6 +377,12 @@ set_scroll_property (GpdsXInput *xinput, const gchar *property_name,
 static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
+    GpdsTouchpadUI *touchpad_ui = GPDS_TOUCHPAD_UI(ui);
+
+    set_boolean_property(touchpad_ui->xinput, TAP_FAST_TAP,
+                         builder, "faster_tapping_check");
+    set_boolean_property(touchpad_ui->xinput, CIRCULAR_SCROLLING,
+                         builder, "circular_scroll_check");
 }
 
 static const gchar *

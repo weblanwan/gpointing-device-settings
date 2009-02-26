@@ -331,13 +331,14 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 {
     GError *error = NULL;
 
-    gpds_xinput_get_property(xinput,
-                          property_name,
-                          &error,
-                          values, n_values);
-    if (error) {
-        show_error(error);
-        g_error_free(error);
+    if (!gpds_xinput_get_property(xinput,
+                                  property_name,
+                                  &error,
+                                  values, n_values)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
         return FALSE;
     }
 
