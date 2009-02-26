@@ -190,7 +190,7 @@ open_device (const gchar *device_name, GError **error)
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("No  device found."));
+                    _("No device found."));
         return NULL;
     }
 
@@ -292,9 +292,9 @@ set_property_va_list (GpdsXInput *xinput,
 
 gboolean
 gpds_xinput_set_property (GpdsXInput *xinput,
-                       const gchar *property_name,
-                       GError **error,
-                       gint first_value, ...)
+                          const gchar *property_name,
+                          GError **error,
+                          gint first_value, ...)
 {
     gboolean success;
     va_list var_args;
@@ -348,6 +348,8 @@ get_int_property (GpdsXInput *xinput,
     gulong i;
     gint *int_values;
 
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
     device = get_device(xinput, error);
     if (!device)
         return FALSE;
@@ -394,12 +396,14 @@ get_int_property (GpdsXInput *xinput,
 
 gboolean
 gpds_xinput_get_property (GpdsXInput *xinput,
-                       const gchar *property_name,
-                       GError **error,
-                       gint **values,
-                       gulong *n_values)
+                          const gchar *property_name,
+                          GError **error,
+                          gint **values,
+                          gulong *n_values)
 {
     XDevice *device;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
 
     device = get_device(xinput, error);
     if (!device)
