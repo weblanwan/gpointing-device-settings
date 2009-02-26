@@ -1,6 +1,5 @@
-uidir   = $(datadir)/$(PACKAGE)/ui
-ui_DATA = 		\
+gpds_ui_DATA = 		\
 	trackpoint.ui	\
 	touchpad.ui
 
-EXTRA_DIST = $(ui_DATA)
+EXTRA_DIST = $(gpds_ui_DATA)

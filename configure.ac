@@ -94,8 +94,8 @@ gpds_moduledir="\${libdir}/\$(PACKAGE)/module"
 AC_SUBST(gpds_moduledir)
 gpds_datadir="\${datadir}/\$(PACKAGE)"
 AC_SUBST(gpds_datadir)
-gpds_ui_filedir="\${datadir}/\$(PACKAGE)/ui"
-AC_SUBST(gpds_ui_filedir)
+gpds_uidir="\${datadir}/\$(PACKAGE)/ui"
+AC_SUBST(gpds_uidir)
 gpds_help_datadir="\${datadir}"
 AC_SUBST(gpds_help_datadir)
 
@@ -121,7 +121,7 @@ GPDS_CFLAGS="$GPDS_CFLAGS -DGDK_DISABLE_DEPRECATED"
 GPDS_CFLAGS="$GPDS_CFLAGS -DG_DISABLE_DEPRECATED"
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_MODULEDIR=\\\"\"\$(gpds_moduledir)\"\\\""
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_DATADIR=\\\"\"\$(gpds_datadir)\"\\\""
-GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_UI_FILEDIR=\\\"\"\$(gpds_ui_filedir)\"\\\""
+GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_UIDIR=\\\"\"\$(gpds_uidir)\"\\\""
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_HELP_DATADIR=\\\"\"\$(gpds_help_datadir)\"\\\""
 AC_SUBST(GPDS_CFLAGS)
 

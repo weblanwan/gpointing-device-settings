@@ -81,8 +81,8 @@ get_ui_file_directory (void)
 {
     const gchar *dir;
 
-    dir = g_getenv("GPDS_UI_FILE_DIR");
-    return dir ? dir : GPDS_UI_FILEDIR;
+    dir = g_getenv("GPDS_UI_DIR");
+    return dir ? dir : GPDS_UIDIR;
 }
 
 static void
