@@ -58,6 +58,10 @@ struct _GpdsUIClass
     GtkWidget *(*get_label_widget)      (GpdsUI *ui, GError **error);
 };
 
+gboolean    gpds_uis_load                (void);
+gboolean    gpds_uis_unload              (void);
+GList      *gpds_uis_get_names           (void);
+
 GQuark      gpds_ui_error_quark          (void);
 GType       gpds_ui_get_type             (void) G_GNUC_CONST;
 GpdsUI     *gpds_ui_new                  (const gchar *name);

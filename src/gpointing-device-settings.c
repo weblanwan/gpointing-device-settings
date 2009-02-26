@@ -27,13 +27,12 @@
 #include "gpds-module.h"
 #include "gpds-ui.h"
 
-static GList *modules = NULL;
 static GList *uis = NULL;
 
 static gboolean
 gpds_init (void)
 {
-    modules = gpds_module_load_modules();
+    gpds_uis_load();
     return TRUE;
 }
 
@@ -42,8 +41,7 @@ gpds_quit (void)
 {
     g_list_foreach(uis, (GFunc)g_object_unref, NULL);
     g_list_free(uis);
-    g_list_foreach(modules, (GFunc)gpds_module_unload, NULL);
-    g_list_free(modules);
+    gpds_uis_unload();
 
     return TRUE;
 }
@@ -59,7 +57,7 @@ append_uis (GtkNotebook *notebook)
 {
     GList *ui_names, *name;
 
-    ui_names = gpds_module_collect_names(modules);
+    ui_names = gpds_uis_get_names();
     
     for (name = ui_names; name; name = g_list_next(name)) {
         GpdsUI *ui;

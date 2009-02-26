@@ -30,16 +30,27 @@
 
 static GList *uis = NULL;
 
-#if 0
 gboolean
-gpds_ui_quit (void)
+gpds_uis_load (void)
+{
+    uis = gpds_module_load_modules();
+    return TRUE;
+}
+
+gboolean
+gpds_uis_unload (void)
 {
     g_list_foreach(uis, (GFunc)gpds_module_unload, NULL);
     g_list_free(uis);
 
     return TRUE;
 }
-#endif
+
+GList *
+gpds_uis_get_names (void)
+{
+    return gpds_module_collect_names(uis);
+}
 
 typedef struct _GpdsUIPriv GpdsUIPriv;
 struct _GpdsUIPriv
