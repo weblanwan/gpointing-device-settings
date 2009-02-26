@@ -30,6 +30,37 @@
 
 #define DEVICE_NAME "SynPS/2 Synaptics TouchPad"
 
+#define EDGES "Synaptics Edges"
+#define FINGER "Synaptics Finger"
+#define TAP_TIME "Synaptics Tap Time"
+#define TAP_MOVE "Synaptics Tap Move"
+#define TAP_DURATIONS "Synaptics Tap Durations"
+#define TAP_FAST_TAP"Synaptics Tap FastTap"
+#define MIDDLE_BUTTON_TIMEOUT "Synaptics Middle Button Timeout"
+#define TWO_FINGER_PRESSURE "Synaptics Two-Finger Pressure"
+#define SCROLLING_DISTANCE "Synaptics Scrolling Distance"
+#define EDGE_SCROLLING "Synaptics Edge Scrolling"
+#define TWO_FINGER_SCROLLING "Synaptics Two-Finger Scrolling"
+#define EDGE_MOTION_PRESSURE "Synaptics Edge Motion Pressure"
+#define EDGE_MOTION_SPEED "Synaptics Edge Motion Speed"
+#define EDGE_MOTION_ALWAYS "Synaptics Edge Motion Always"
+#define BUTTON_SCROLLING "Synaptics Button Scrolling"
+#define BUTTON_SCROLLING_REPEAT "Synaptics Button Scrolling Repeat"
+#define SCROLLING_TIME "Synaptics Button Scrolling Time"
+#define OFF "Synaptics Off"
+#define GUESTMOUSE_OFF "Synaptics Guestmouse Off"
+#define LOCKED_DRAGS "Synaptics Locked Drags"
+#define LOCKED_DRAGS_TIMEOUT "Synaptics Locked Drags Timeout"
+#define TAP_ACTION "Synaptics Tap Action"
+#define CLICK_ACTION "Synaptics Click Action"
+#define CIRCULAR_SCROLLING "Synaptics Circular Scrolling"
+#define CIRCULAR_SCROLLING_TRIGGER "Synaptics Circular Scrolling Trigger"
+#define CIRCULAR_PAD "Synaptics Circular Pad"
+#define PALM_DETECTION "Synaptics Palm Detection"
+#define PALM_DIMENSIONS "Synaptics Palm Dimensions"
+#define PRESSURE_MOTION "Synaptics Pressure Motion"
+#define GRAB_EVENT_DEVICE "Synaptics Grab Event Device"
+
 static const gchar *touchpad_device_names[] =
 {
     "SynPS/2 Synaptics TouchPad",
