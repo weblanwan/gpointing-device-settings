@@ -30,6 +30,14 @@
 
 #define DEVICE_NAME "SynPS/2 Synaptics TouchPad"
 
+static const gchar *touchpad_device_names[] =
+{
+    "SynPS/2 Synaptics TouchPad",
+    "AlpsPS/2 ALPS GlidePoint"
+};
+
+static const gint n_touchpad_device_names = G_N_ELEMENTS(touchpad_device_names);
+
 #define GPDS_TYPE_TOUCHPAD_UI            gpds_type_touchpad_ui
 #define GPDS_TOUCHPAD_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUI))
 #define GPDS_TOUCHPAD_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUIClass))
@@ -45,6 +53,7 @@ struct _GpdsTouchpadUI
     GpdsUI parent;
     GpdsXInput *xinput;
     gchar *ui_file_path;
+    gchar *device_name;
 };
 
 struct _GpdsTouchpadUIClass
@@ -88,6 +97,7 @@ get_ui_file_directory (void)
 static void
 init (GpdsTouchpadUI *ui)
 {
+    ui->device_name = NULL;
     ui->xinput = NULL;
     ui->ui_file_path = 
         g_build_filename(get_ui_file_directory(), "touchpad.ui", NULL);
@@ -150,6 +160,7 @@ dispose (GObject *object)
         g_object_unref(ui->xinput);
         ui->xinput = NULL;
     }
+    g_free(ui->device_name);
     g_free(ui->ui_file_path);
 
     if (G_OBJECT_CLASS(parent_class)->dispose)
@@ -307,10 +318,25 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
 }
 
+static const gchar *
+find_device_name (void)
+{
+    gint i;
+
+    for (i = 0; i < n_touchpad_device_names; i++) {
+        if (gpds_xinput_exist_device(touchpad_device_names[i]));
+            return touchpad_device_names[i];
+    }
+    return NULL;
+}
+
 static gboolean
 is_available (GpdsUI *ui, GError **error)
 {
-    if (!gpds_xinput_exist_device(DEVICE_NAME)) {
+    const gchar *device_name;
+    device_name = find_device_name();
+
+    if (!device_name) {
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
@@ -326,6 +352,8 @@ is_available (GpdsUI *ui, GError **error)
                     GPDS_TOUCHPAD_UI(ui)->ui_file_path);
         return FALSE;
     }
+
+    GPDS_TOUCHPAD_UI(ui)->device_name = g_strdup(device_name);
 
     return TRUE;
 }
@@ -343,7 +371,7 @@ build (GpdsUI  *ui, GError **error)
         return FALSE;
     }
 
-    GPDS_TOUCHPAD_UI(ui)->xinput = gpds_xinput_new(DEVICE_NAME);
+    GPDS_TOUCHPAD_UI(ui)->xinput = gpds_xinput_new(GPDS_TOUCHPAD_UI(ui)->device_name);
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);
