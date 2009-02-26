@@ -19,6 +19,9 @@ intltool-extract.in
 intltool-merge.in
 intltool-update.in
 mkinstalldirs
+coverage
+coverage.info
+*.gcno
 po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot
