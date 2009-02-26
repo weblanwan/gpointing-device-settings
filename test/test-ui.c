@@ -63,10 +63,13 @@ test_new (void)
 void
 test_is_available (void)
 {
+    gboolean available;
+
     cut_trace(test_new());
 
-    gpds_ui_is_available(ui, &error);
-    gcut_assert_error(error);
+    available = gpds_ui_is_available(ui, &error);
+    if (available)
+        gcut_assert_error(error);
 }
 
 void
