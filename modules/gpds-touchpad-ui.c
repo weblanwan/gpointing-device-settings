@@ -356,8 +356,8 @@ set_boolean_property (GpdsXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_scroll_property (GpdsXInput *xinput, const gchar *property_name,
-                     GtkBuilder *builder, const gchar *object_name)
+set_edge_scroll_property (GpdsXInput *xinput, const gchar *property_name,
+                          GtkBuilder *builder)
 {
     GObject *object;
     gint *values;
@@ -368,9 +368,19 @@ set_scroll_property (GpdsXInput *xinput, const gchar *property_name,
         return;
     }
 
-    object = gtk_builder_get_object(builder, object_name);
+    if (n_values != 3) {
+        g_free(values);
+        return;
+    }
+
+    object = gtk_builder_get_object(builder, "vertical_scroll_check");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 n_values == 2 ? TRUE : FALSE);
+                                 values[0] == 1 ? TRUE : FALSE);
+
+    object = gtk_builder_get_object(builder, "horizontal_scroll_check");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
+                                 values[1] == 1 ? TRUE : FALSE);
+
     g_free(values);
 }
 
@@ -383,6 +393,8 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                          builder, "faster_tapping_check");
     set_boolean_property(touchpad_ui->xinput, CIRCULAR_SCROLLING,
                          builder, "circular_scroll_check");
+    set_edge_scroll_property(touchpad_ui->xinput, EDGE_SCROLLING,
+                             builder);
 }
 
 static const gchar *
@@ -391,7 +403,7 @@ find_device_name (void)
     gint i;
 
     for (i = 0; i < n_touchpad_device_names; i++) {
-        if (gpds_xinput_exist_device(touchpad_device_names[i]));
+        if (gpds_xinput_exist_device(touchpad_device_names[i]))
             return touchpad_device_names[i];
     }
     return NULL;
@@ -407,7 +419,7 @@ is_available (GpdsUI *ui, GError **error)
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("No  device found."));
+                    _("No device found."));
         return FALSE;
     }
 
