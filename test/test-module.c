@@ -4,7 +4,7 @@
 
 void test_load_modules (void);
 void test_collect_names (void);
-void test_instantiate (void);
+void test_find (void);
 
 static GList *modules;
 static GpdsModule *module;
@@ -58,23 +58,11 @@ test_collect_names (void)
 }
 
 void
-test_instantiate (void)
+test_find (void)
 {
-    GList *name;
-
-    cut_trace(test_collect_names());
-
-    for (name = names; name; name = g_list_next(name)) {
-        module = gpds_module_find(modules, name->data);
-        cut_assert(module);
-
-        object = gpds_module_instantiate(module);
-        cut_assert(object);
-        g_object_unref(object);
-        object = NULL;
-    }
+    cut_assert(gpds_module_find(modules, "touchpad"));
+    cut_assert(gpds_module_find(modules, "trackpoint"));
 }
-
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
