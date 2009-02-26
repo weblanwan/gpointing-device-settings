@@ -28,13 +28,25 @@
 #include "gpds-module.h"
 #include "gpds-xinput.h"
 
+static GList *uis = NULL;
+
+#if 0
+gboolean
+gpds_ui_quit (void)
+{
+    g_list_foreach(uis, (GFunc)gpds_module_unload, NULL);
+    g_list_free(uis);
+
+    return TRUE;
+}
+#endif
+
 typedef struct _GpdsUIPriv GpdsUIPriv;
 struct _GpdsUIPriv
 {
     GtkBuilder *builder;
     GpdsXInput *xinput;
 };
-
 
 #define GPDS_UI_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GPDS_TYPE_UI, GpdsUIPriv))
 
@@ -90,14 +102,17 @@ GpdsUI *
 gpds_ui_new (const gchar *name)
 {
     GpdsModule *module;
-    GObject *ui;
 
-    module = gpds_module_load_module(gpds_module_directory(), name);
-    g_return_val_if_fail(module != NULL, NULL);
+    module = gpds_module_find(uis, name);
+    if (!module)
+    {
+        module = gpds_module_load_module(gpds_module_directory(), name);
+        g_return_val_if_fail(module != NULL, NULL);
 
-    ui = gpds_module_instantiate(module);
+        uis = g_list_prepend(uis, module);
+    }
 
-    return GPDS_UI(ui);
+    return GPDS_UI(gpds_module_instantiate(module));
 }
 
 gboolean

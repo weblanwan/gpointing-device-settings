@@ -65,7 +65,6 @@ gboolean    gpds_ui_is_available         (GpdsUI *ui, GError **error);
 gboolean    gpds_ui_build                (GpdsUI *ui, GError **error);
 GtkWidget  *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);
 GtkWidget  *gpds_ui_get_label_widget     (GpdsUI *ui, GError **error);
-
 GtkBuilder *gpds_ui_get_builder          (GpdsUI *ui);
 
 G_END_DECLS
