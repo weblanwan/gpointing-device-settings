@@ -298,6 +298,13 @@ cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_d
 }
 
 static void
+cb_wheel_emulation_inertia_value_changed (GtkSpinButton *button, gpointer user_data)
+{
+    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    set_spin_property(ui->xinput, button, WHEEL_EMULATION_INERTIA);
+}
+
+static void
 cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
@@ -319,6 +326,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(middle_button_timeout, value_changed);
     CONNECT(wheel_emulation, toggled);
     CONNECT(wheel_emulation_timeout, value_changed);
+    CONNECT(wheel_emulation_inertia, value_changed);
     CONNECT(wheel_emulation_vertical, toggled);
     CONNECT(wheel_emulation_horizontal, toggled);
 
@@ -417,6 +425,8 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                          builder, "middle_button_timeout");
     set_integer_property(track_point_ui->xinput, WHEEL_EMULATION_TIMEOUT,
                          builder, "wheel_emulation_timeout");
+    set_integer_property(track_point_ui->xinput, WHEEL_EMULATION_INERTIA,
+                         builder, "wheel_emulation_inertia");
 
     set_scroll_property(track_point_ui->xinput, WHEEL_EMULATION_Y_AXIS,
                         builder, "wheel_emulation_vertical");
