@@ -78,8 +78,13 @@ test_is_available (void)
 void
 test_build (void)
 {
+    gboolean available;
+
     cut_trace(test_new());
 
+    available = gpds_ui_is_available(ui, &error);
+    if (!available)
+        cut_omit("No touchpad device.");
     cut_assert_true(gpds_ui_build(ui, &error));
     gcut_assert_error(error);
 }
