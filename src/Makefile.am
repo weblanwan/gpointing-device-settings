@@ -30,6 +30,7 @@ pkginclude_HEADERS =				\
 bin_PROGRAMS = gpointing-device-settings
 
 gpointing_device_settings_CFLAGS =	\
+	-DLOCALEDIR=\""$(localedir)"\"	\
 	$(GPDS_CFLAGS)			\
 	$(COVERAGE_CFLAGS)
 

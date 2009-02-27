@@ -23,6 +23,7 @@ libgpointing-device-settings.pc
 coverage
 coverage.info
 *.gcno
+data/touchpad.ui
 po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot
