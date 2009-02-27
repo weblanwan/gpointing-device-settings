@@ -24,6 +24,7 @@ coverage
 coverage.info
 *.gcno
 data/touchpad.ui
+data/trackpoint.ui
 po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot
