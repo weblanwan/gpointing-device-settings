@@ -566,7 +566,7 @@ is_available (GpdsUI *ui, GError **error)
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("No device found."));
+                    _("No Touchpad device found."));
         return FALSE;
     }
 
