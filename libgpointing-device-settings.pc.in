@@ -6,6 +6,7 @@ datarootdir=@datarootdir@
 datadir=@datadir@
 moduledir=@libdir@/gpointing-device-settings/module
 uidir=@datadir@/gpointing-device-settings/ui
+icondir=@datadir@/gpointing-device-settings/icon
 
 Name: LibGPointingDeviceSettings
 Description: Library to create dynamic module of UI for pointing device settings

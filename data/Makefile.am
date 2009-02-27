@@ -2,4 +2,10 @@ gpds_ui_DATA = 		\
 	trackpoint.ui	\
 	touchpad.ui
 
-EXTRA_DIST = $(gpds_ui_DATA)
+gpds_icon_DATA = 	\
+	touchpad.png
+
+EXTRA_DIST = 		\
+	trackpoint.ui	\
+	touchpad.ui.in	\
+	$(gpds_icon_DATA)

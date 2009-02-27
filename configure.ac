@@ -96,6 +96,8 @@ gpds_datadir="\${datadir}/\$(PACKAGE)"
 AC_SUBST(gpds_datadir)
 gpds_uidir="\${datadir}/\$(PACKAGE)/ui"
 AC_SUBST(gpds_uidir)
+gpds_icondir="\${datadir}/\$(PACKAGE)/icon"
+AC_SUBST(gpds_icondir)
 gpds_help_datadir="\${datadir}"
 AC_SUBST(gpds_help_datadir)
 
@@ -122,6 +124,7 @@ GPDS_CFLAGS="$GPDS_CFLAGS -DG_DISABLE_DEPRECATED"
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_MODULEDIR=\\\"\"\$(gpds_moduledir)\"\\\""
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_DATADIR=\\\"\"\$(gpds_datadir)\"\\\""
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_UIDIR=\\\"\"\$(gpds_uidir)\"\\\""
+GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_ICONDIR=\\\"\"\$(gpds_icondir)\"\\\""
 GPDS_CFLAGS="$GPDS_CFLAGS -DGPDS_HELP_DATADIR=\\\"\"\$(gpds_help_datadir)\"\\\""
 AC_SUBST(GPDS_CFLAGS)
 
@@ -134,6 +137,7 @@ Makefile
 src/Makefile
 modules/Makefile
 data/Makefile
+data/touchpad.ui
 test/Makefile
 po/Makefile.in
 libgpointing-device-settings.pc
