@@ -440,7 +440,7 @@ is_available (GpdsUI *ui, GError **error)
         g_set_error(error,
                     GPDS_UI_ERROR,
                     GPDS_UI_ERROR_NO_UI_FILE,
-                    _("%s does not found."),
+                    _("%s did not find."),
                     GPDS_TRACK_POINT_UI(ui)->ui_file_path);
         return FALSE;
     }
