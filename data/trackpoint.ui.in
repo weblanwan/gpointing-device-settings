@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <interface>
-  <object class="GtkHBox" id ="main-widget-label">
+  <object class="GtkLabel" id ="main-widget-label">
     <property name="visible">True</property>
     <child>
       <object class="GtkImage" id ="main-widget-label-icon">
         <property name="visible">True</property>
-        <property name="file">/home/zoe/GPDS/share/gpointing-device-settings/icon/trackpoint.png</property>
+        <property name="file">@prefix@/share/gpointing-device-settings/icon/trackpoint.png</property>
       </object>
     </child>
     <child>

@@ -76,7 +76,7 @@
     <child>
       <object class="GtkLabel" id ="main-widget-label-text">
         <property name="visible">True</property>
-        <property name="label" translatable="yes">TouchPad</property>
+        <property name="label" translatable="yes">Touchpad</property>
       </object>
     </child>
   </object>

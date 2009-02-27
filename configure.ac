@@ -139,6 +139,7 @@ Makefile
 src/Makefile
 modules/Makefile
 data/Makefile
+data/trackpoint.ui
 data/touchpad.ui
 test/Makefile
 po/Makefile.in
