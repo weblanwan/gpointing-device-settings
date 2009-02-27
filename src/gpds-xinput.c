@@ -301,6 +301,8 @@ gpds_xinput_set_property (GpdsXInput *xinput,
     gboolean success;
     va_list var_args;
 
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
     va_start(var_args, first_value);
     success = set_property_va_list(xinput, property_name, error, first_value, var_args);
     va_end(var_args);
