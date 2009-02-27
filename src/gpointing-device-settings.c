@@ -68,26 +68,28 @@ append_uis (GtkNotebook *notebook)
         ui = gpds_ui_new(name->data);
         uis = g_list_prepend(uis, ui);
 
-        if (!gpds_ui_is_available(ui, NULL))
+        if (!gpds_ui_is_available(ui, &error)) {
+            if (error) {
+                g_warning("%s", error->message);
+                g_clear_error(&error);
+            }
             continue;
+        }
 
         gpds_ui_build(ui, &error);
         if (error) {
             g_warning("%s", error->message);
-            g_error_free(error);
-            error = NULL;
+            g_clear_error(&error);
         }
         widget = gpds_ui_get_content_widget(ui, &error);
         if (error) {
             g_warning("%s", error->message);
-            g_error_free(error);
-            error = NULL;
+            g_clear_error(&error);
         }
         label = gpds_ui_get_label_widget(ui, &error);
         if (error) {
             g_warning("%s", error->message);
-            g_error_free(error);
-            error = NULL;
+            g_clear_error(&error);
         }
 
         if (!widget)
