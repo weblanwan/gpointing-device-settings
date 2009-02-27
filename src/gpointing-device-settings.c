@@ -112,7 +112,7 @@ main (int argc, char *argv[])
 
     gpds_init();
 
-    dialog = gtk_dialog_new_with_buttons(_("TrackPoint Settings"),
+    dialog = gtk_dialog_new_with_buttons(_("Pointing Device Settings"),
                                          NULL,
                                          0, 
                                          GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
