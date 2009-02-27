@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
 <interface>
-  <object class="GtkLabel" id ="main-widget-label">
+  <object class="GtkHBox" id ="main-widget-label">
     <property name="visible">True</property>
     <child>
       <object class="GtkImage" id ="main-widget-label-icon">
