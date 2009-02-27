@@ -734,87 +734,10 @@
                         </child>
                         <child>
                           <object class="GtkVBox" id="circular_scroll_box">
-                            <property name="visible">True</property>
+                            <property name="visible">False</property>
                             <property name="sensitive">False</property>
                             <property name="homogeneous">False</property>
                             <property name="spacing">6</property>
-                            <child>
-                              <object class="GtkHBox" id="hbox25">
-                                <property name="visible">True</property>
-                                <property name="homogeneous">False</property>
-                                <property name="spacing">6</property>
-                                <child>
-                                  <object class="GtkLabel" id="label21">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">&lt;i&gt;Slow&lt;/i&gt;</property>
-                                    <property name="use_underline">False</property>
-                                    <property name="use_markup">True</property>
-                                    <property name="justify">GTK_JUSTIFY_CENTER</property>
-                                    <property name="wrap">False</property>
-                                    <property name="selectable">False</property>
-                                    <property name="xalign">1</property>
-                                    <property name="yalign">0.5</property>
-                                    <property name="xpad">0</property>
-                                    <property name="ypad">0</property>
-                                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-                                    <property name="width_chars">-1</property>
-                                    <property name="single_line_mode">False</property>
-                                    <property name="angle">0</property>
-                                  </object>
-                                  <packing>
-                                    <property name="padding">0</property>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkHScale" id="circular_scroll_scale">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="draw_value">False</property>
-                                    <property name="value_pos">GTK_POS_TOP</property>
-                                    <property name="digits">0</property>
-                                    <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
-                                    <property name="inverted">False</property>
-                                    <property name="adjustment">adjustment5</property>
-                                  </object>
-                                  <packing>
-                                    <property name="padding">0</property>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label22">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">&lt;i&gt;Fast&lt;/i&gt;</property>
-                                    <property name="use_underline">False</property>
-                                    <property name="use_markup">True</property>
-                                    <property name="justify">GTK_JUSTIFY_CENTER</property>
-                                    <property name="wrap">False</property>
-                                    <property name="selectable">False</property>
-                                    <property name="xalign">0</property>
-                                    <property name="yalign">0.5</property>
-                                    <property name="xpad">0</property>
-                                    <property name="ypad">0</property>
-                                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-                                    <property name="width_chars">-1</property>
-                                    <property name="single_line_mode">False</property>
-                                    <property name="angle">0</property>
-                                  </object>
-                                  <packing>
-                                    <property name="padding">0</property>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="padding">0</property>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                              </packing>
-                            </child>
                             <child>
                               <object class="GtkLabel" id="label45">
                                 <property name="visible">True</property>

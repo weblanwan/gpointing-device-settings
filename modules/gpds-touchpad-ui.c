@@ -344,6 +344,7 @@ cb_circular_scroll_check_toggled (GtkToggleButton *button, gpointer user_data)
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, CIRCULAR_SCROLLING);
+    set_widget_sensitivity(builder, "circular_scroll_box", button);
 }
 
 static void
