@@ -55,7 +55,6 @@ GpdsModule  *gpds_module_find                (GList          *modules,
                                               const gchar    *name);
 const gchar *gpds_module_directory           (void);
 
-GList       *gpds_module_collect_registered_types (GList *modules);
 GList       *gpds_module_collect_names            (GList *modules);
 
 GObject     *gpds_module_instantiate              (GpdsModule *module);

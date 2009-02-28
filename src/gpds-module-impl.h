@@ -24,7 +24,7 @@
 
 G_BEGIN_DECLS
 
-typedef GList   *(*GpdsModuleInitFunc)         (GTypeModule *module);
+typedef void     (*GpdsModuleInitFunc)         (GTypeModule *module);
 typedef void     (*GpdsModuleExitFunc)         (void);
 typedef GObject *(*GpdsModuleInstantiateFunc)  (void);
 
@@ -32,7 +32,7 @@ typedef GObject *(*GpdsModuleInstantiateFunc)  (void);
 #define GPDS_MODULE_IMPL_EXIT           gpds_module_impl_exit
 #define GPDS_MODULE_IMPL_INSTANTIATE    gpds_module_impl_instantiate
 
-GList   *GPDS_MODULE_IMPL_INIT           (GTypeModule  *module);
+void     GPDS_MODULE_IMPL_INIT           (GTypeModule  *module);
 void     GPDS_MODULE_IMPL_EXIT           (void);
 GObject *GPDS_MODULE_IMPL_INSTANTIATE    (void);
 

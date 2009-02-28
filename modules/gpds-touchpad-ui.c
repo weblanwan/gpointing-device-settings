@@ -69,7 +69,7 @@ static const gchar *touchpad_device_names[] =
 
 static const gint n_touchpad_device_names = G_N_ELEMENTS(touchpad_device_names);
 
-#define GPDS_TYPE_TOUCHPAD_UI            gpds_type_touchpad_ui
+#define GPDS_TYPE_TOUCHPAD_UI            (gpds_touchpad_ui_get_type())
 #define GPDS_TOUCHPAD_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUI))
 #define GPDS_TOUCHPAD_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUIClass))
 #define G_IS_TOUCHPAD_UI(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_TOUCHPAD_UI))
@@ -93,8 +93,7 @@ struct _GpdsTouchpadUIClass
     GpdsUIClass parent_class;
 };
 
-static GType gpds_type_touchpad_ui = 0;
-static GpdsUIClass *parent_class;
+GType gpds_touchpad_ui_get_type (void) G_GNUC_CONST;
 
 static void       dispose            (GObject *object);
 static gboolean   is_available       (GpdsUI  *ui, GError **error);
@@ -102,19 +101,25 @@ static gboolean   build              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GtkWidget *get_label_widget   (GpdsUI  *ui, GError **error);
 
+G_DEFINE_DYNAMIC_TYPE(GpdsTouchpadUI, gpds_touchpad_ui, GPDS_TYPE_UI)
+
 static void
-class_init (GpdsTouchpadUIClass *klass)
+gpds_touchpad_ui_class_init (GpdsTouchpadUIClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GpdsUIClass *ui_class = GPDS_UI_CLASS(klass);
 
-    parent_class = g_type_class_peek_parent(klass);
     gobject_class->dispose = dispose;
 
     ui_class->is_available       = is_available;
     ui_class->build              = build;
     ui_class->get_content_widget = get_content_widget;
     ui_class->get_label_widget   = get_label_widget;
+}
+
+static void
+gpds_touchpad_ui_class_finalize (GpdsTouchpadUIClass *klass)
+{
 }
 
 static const gchar *
@@ -127,7 +132,7 @@ get_ui_file_directory (void)
 }
 
 static void
-init (GpdsTouchpadUI *ui)
+gpds_touchpad_ui_init (GpdsTouchpadUI *ui)
 {
     ui->device_name = NULL;
     ui->xinput = NULL;
@@ -136,41 +141,13 @@ init (GpdsTouchpadUI *ui)
     ui->gconf = gconf_client_get_default();
 }
 
-static void
-register_type (GTypeModule *type_module)
-{
-    static const GTypeInfo info =
-        {
-            sizeof (GpdsTouchpadUIClass),
-            (GBaseInitFunc) NULL,
-            (GBaseFinalizeFunc) NULL,
-            (GClassInitFunc) class_init,
-            NULL,           /* class_finalize */
-            NULL,           /* class_data */
-            sizeof(GpdsTouchpadUI),
-            0,
-            (GInstanceInitFunc) init,
-        };
-
-    gpds_type_touchpad_ui =
-        g_type_module_register_type(type_module,
-                                    GPDS_TYPE_UI,
-                                    "GpdsTouchpadUI",
-                                    &info, 0);
-}
-
-G_MODULE_EXPORT GList *
+G_MODULE_EXPORT void
 GPDS_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
-    GList *registered_types = NULL;
+    if (GPDS_TYPE_TOUCHPAD_UI)
+        return;
 
-    register_type(type_module);
-    if (gpds_type_touchpad_ui)
-        registered_types =
-            g_list_prepend(registered_types,
-                           (gchar *)g_type_name(gpds_type_touchpad_ui));
-
-    return registered_types;
+    gpds_touchpad_ui_register_type(type_module);
 }
 
 G_MODULE_EXPORT void
@@ -202,8 +179,8 @@ dispose (GObject *object)
     g_free(ui->device_name);
     g_free(ui->ui_file_path);
 
-    if (G_OBJECT_CLASS(parent_class)->dispose)
-        G_OBJECT_CLASS(parent_class)->dispose(object);
+    if (G_OBJECT_CLASS(gpds_touchpad_ui_parent_class)->dispose)
+        G_OBJECT_CLASS(gpds_touchpad_ui_parent_class)->dispose(object);
 }
 
 static void

@@ -39,7 +39,7 @@
 #define WHEEL_EMULATION_BUTTON  "Wheel Emulation Button"
 #define DRAG_LOCK_BUTTONS       "Drag Lock Buttons"
 
-#define GPDS_TYPE_TRACK_POINT_UI            gpds_type_track_point_ui
+#define GPDS_TYPE_TRACK_POINT_UI            (gpds_track_point_ui_get_type())
 #define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
 #define GPDS_TRACK_POINT_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIClass))
 #define G_IS_TRACK_POINT_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_TRACK_POINT_UI))
@@ -62,8 +62,7 @@ struct _GpdsTrackPointUIClass
     GpdsUIClass parent_class;
 };
 
-static GType gpds_type_track_point_ui = 0;
-static GpdsUIClass *parent_class;
+GType gpds_track_point_ui_get_type (void) G_GNUC_CONST;
 
 static void       dispose            (GObject *object);
 static gboolean   is_available       (GpdsUI  *ui, GError **error);
@@ -71,19 +70,25 @@ static gboolean   build              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GtkWidget *get_label_widget   (GpdsUI  *ui, GError **error);
 
+G_DEFINE_DYNAMIC_TYPE(GpdsTrackPointUI, gpds_track_point_ui, GPDS_TYPE_UI)
+
 static void
-class_init (GpdsTrackPointUIClass *klass)
+gpds_track_point_ui_class_init (GpdsTrackPointUIClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GpdsUIClass *ui_class = GPDS_UI_CLASS(klass);
 
-    parent_class = g_type_class_peek_parent(klass);
     gobject_class->dispose = dispose;
 
     ui_class->is_available       = is_available;
     ui_class->build              = build;
     ui_class->get_content_widget = get_content_widget;
     ui_class->get_label_widget   = get_label_widget;
+}
+
+static void
+gpds_track_point_ui_class_finalize (GpdsTrackPointUIClass *klass)
+{
 }
 
 static const gchar *
@@ -96,7 +101,7 @@ get_ui_file_directory (void)
 }
 
 static void
-init (GpdsTrackPointUI *ui)
+gpds_track_point_ui_init (GpdsTrackPointUI *ui)
 {
     ui->xinput = NULL;
     ui->ui_file_path = g_build_filename(get_ui_file_directory(),
@@ -105,41 +110,13 @@ init (GpdsTrackPointUI *ui)
     ui->gconf = gconf_client_get_default();
 }
 
-static void
-register_type (GTypeModule *type_module)
-{
-    static const GTypeInfo info =
-        {
-            sizeof (GpdsTrackPointUIClass),
-            (GBaseInitFunc) NULL,
-            (GBaseFinalizeFunc) NULL,
-            (GClassInitFunc) class_init,
-            NULL,           /* class_finalize */
-            NULL,           /* class_data */
-            sizeof(GpdsTrackPointUI),
-            0,
-            (GInstanceInitFunc) init,
-        };
-
-    gpds_type_track_point_ui =
-        g_type_module_register_type(type_module,
-                                    GPDS_TYPE_UI,
-                                    "GpdsTrackPointUI",
-                                    &info, 0);
-}
-
-G_MODULE_EXPORT GList *
+G_MODULE_EXPORT void
 GPDS_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
-    GList *registered_types = NULL;
+    if (GPDS_TYPE_TRACK_POINT_UI)
+        return;
 
-    register_type(type_module);
-    if (gpds_type_track_point_ui)
-        registered_types =
-            g_list_prepend(registered_types,
-                           (gchar *)g_type_name(gpds_type_track_point_ui));
-
-    return registered_types;
+    gpds_track_point_ui_register_type(type_module);
 }
 
 G_MODULE_EXPORT void
@@ -170,8 +147,8 @@ dispose (GObject *object)
 
     g_free(ui->ui_file_path);
 
-    if (G_OBJECT_CLASS(parent_class)->dispose)
-        G_OBJECT_CLASS(parent_class)->dispose(object);
+    if (G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose)
+        G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose(object);
 }
 
 static void

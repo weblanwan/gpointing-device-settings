@@ -12,8 +12,7 @@ AM_CFLAGS =				\
 AM_LDFLAGS =			\
   -avoid-version -module	\
   -no-undefined 		\
-  -export-dynamic 		\
-  $(LIBTOOL_EXPORT_OPTIONS)
+  -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 gpds_module_LTLIBRARIES = 	\
 	trackpoint.la		\

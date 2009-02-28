@@ -34,7 +34,6 @@ struct _GpdsModulePrivate
 {
     GModule      *library;
     gchar        *mod_path;
-    GList        *registered_types;
 
     GpdsModuleInitFunc         init;
     GpdsModuleExitFunc         exit;
@@ -79,7 +78,6 @@ gpds_module_init (GpdsModule *module)
 
     priv->library          = NULL;
     priv->mod_path         = NULL;
-    priv->registered_types = NULL;
 }
 
 static void
@@ -89,8 +87,6 @@ finalize (GObject *object)
 
     g_free(priv->mod_path);
     priv->mod_path = NULL;
-    g_list_free(priv->registered_types);
-    priv->registered_types = NULL;
 
     G_OBJECT_CLASS(gpds_module_parent_class)->finalize(object);
 }
@@ -118,8 +114,7 @@ load (GTypeModule *module)
         return FALSE;
     }
 
-    g_list_free(priv->registered_types);
-    priv->registered_types = priv->init(module);
+    priv->init(module);
 
     return TRUE;
 }
@@ -137,38 +132,6 @@ unload (GTypeModule *module)
     priv->init = NULL;
     priv->exit = NULL;
     priv->instantiate = NULL;
-
-    g_list_free(priv->registered_types);
-    priv->registered_types = NULL;
-}
-
-GList *
-gpds_module_collect_registered_types (GList *modules)
-{
-    GList *results = NULL;
-    GList *node;
-
-    for (node = modules; node; node = g_list_next(node)) {
-        GpdsModule *module = node->data;
-        GTypeModule *g_type_module;
-
-        g_type_module = G_TYPE_MODULE(module);
-        if (g_type_module_use(g_type_module)) {
-            GpdsModulePrivate *priv;
-            GList *node;
-
-            priv = GPDS_MODULE_GET_PRIVATE(module);
-            for (node = priv->registered_types;
-                 node;
-                 node = g_list_next(node)) {
-                results = g_list_prepend(results, node->data);
-            }
-
-            g_type_module_unuse(g_type_module);
-        }
-    }
-
-    return results;
 }
 
 GList *
@@ -252,7 +215,7 @@ _gpds_module_open (const gchar *mod_path)
 static void
 _gpds_module_close (GModule *module)
 {
-    if (module && g_module_close(module)) {
+    if (module && !g_module_close(module)) {
         _gpds_module_show_error(NULL);
     }
 }
