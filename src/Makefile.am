@@ -12,6 +12,9 @@ libgpds_la_SOURCES =			\
 	gpds-module.h			\
 	gpds-ui.c			\
 	gpds-xinput.c
+
+AM_CFLAGS = -DG_LOG_DOMAIN=\"GPointingDeviceSettings\"
+
 libgpds_la_CFLAGS =			\
 	$(GPDS_CFLAGS)			\
 	$(COVERAGE_CFLAGS)
