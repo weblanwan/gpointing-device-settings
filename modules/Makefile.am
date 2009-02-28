@@ -25,7 +25,10 @@ LIBS =					\
 	$(GCONF2_LIBS)			\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
-trackpoint_la_SOURCES = gpds-trackpoint-ui.c
+trackpoint_la_SOURCES = 	\
+	gpds-trackpoint-ui.c	\
+	gpds-trackpoint-gconf.h
+
 touchpad_la_SOURCES = 		\
 	gpds-touchpad-ui.c	\
 	gpds-touchpad-gconf.h

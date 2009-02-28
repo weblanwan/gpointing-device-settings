@@ -25,18 +25,19 @@
 #include <glib/gi18n.h>
 #include <gpointing-device-settings.h>
 #include <gconf/gconf-client.h>
+#include "gpds-trackpoint-gconf.h"
 
 #define DEVICE_NAME "TPPS/2 IBM TrackPoint"
 
 #define MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
-#define MIDDLE_BUTTON_TIMEOUT "Middle Button Timeout"
-#define WHEEL_EMULATION "Wheel Emulation"
+#define MIDDLE_BUTTON_TIMEOUT   "Middle Button Timeout"
+#define WHEEL_EMULATION         "Wheel Emulation"
 #define WHEEL_EMULATION_INERTIA "Wheel Emulation Inertia"
-#define WHEEL_EMULATION_X_AXIS "Wheel Emulation X Axis"
-#define WHEEL_EMULATION_Y_AXIS "Wheel Emulation Y Axis"
+#define WHEEL_EMULATION_X_AXIS  "Wheel Emulation X Axis"
+#define WHEEL_EMULATION_Y_AXIS  "Wheel Emulation Y Axis"
 #define WHEEL_EMULATION_TIMEOUT "Wheel Emulation Timeout"
-#define WHEEL_EMULATION_BUTTON "Wheel Emulation Button"
-#define DRAG_LOCK_BUTTONS "Drag Lock Buttons"
+#define WHEEL_EMULATION_BUTTON  "Wheel Emulation Button"
+#define DRAG_LOCK_BUTTONS       "Drag Lock Buttons"
 
 #define GPDS_TYPE_TRACK_POINT_UI            gpds_type_track_point_ui
 #define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
@@ -53,6 +54,7 @@ struct _GpdsTrackPointUI
     GpdsUI parent;
     GpdsXInput *xinput;
     gchar *ui_file_path;
+    GConfClient *gconf;
 };
 
 struct _GpdsTrackPointUIClass
@@ -100,6 +102,7 @@ init (GpdsTrackPointUI *ui)
     ui->ui_file_path = g_build_filename(get_ui_file_directory(),
                                         "trackpoint.ui",
                                         NULL);
+    ui->gconf = gconf_client_get_default();
 }
 
 static void
@@ -159,6 +162,12 @@ dispose (GObject *object)
         g_object_unref(ui->xinput);
         ui->xinput = NULL;
     }
+
+    if (ui->gconf) {
+        g_object_unref(ui->gconf);
+        ui->gconf = NULL;
+    }
+
     g_free(ui->ui_file_path);
 
     if (G_OBJECT_CLASS(parent_class)->dispose)
@@ -257,16 +266,16 @@ set_toggle_scroll_property (GpdsXInput *xinput, GtkToggleButton *button,
     active = gtk_toggle_button_get_active(button);
     if (active) {
         gpds_xinput_set_property(xinput,
-                              property_name,
-                              &error,
-                              first_value, second_value,
-                              NULL);
+                                 property_name,
+                                 &error,
+                                 first_value, second_value,
+                                 NULL);
     } else {
         gpds_xinput_set_property(xinput,
-                              property_name,
-                              &error,
-                              -1, -1,
-                              NULL);
+                                 property_name,
+                                 &error,
+                                 -1, -1,
+                                 NULL);
     }
 
     if (error) {
@@ -278,36 +287,56 @@ set_toggle_scroll_property (GpdsXInput *xinput, GtkToggleButton *button,
 static void
 cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data)
 {
+    gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_Y_AXIS, 6, 7);
+
+    enable = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY, enable, NULL);
 }
 
 static void
 cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_data)
 {
+    gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_X_AXIS, 4, 5);
+
+    enable = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY, enable, NULL);
 }
 
 static void
 cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
+    gdouble time;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     set_spin_property(ui->xinput, button, WHEEL_EMULATION_TIMEOUT);
+
+    time = gtk_spin_button_get_value(button);
+    gconf_client_set_int(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY, (gint)time, NULL);
 }
 
 static void
 cb_wheel_emulation_inertia_value_changed (GtkSpinButton *button, gpointer user_data)
 {
+    gdouble inertia;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     set_spin_property(ui->xinput, button, WHEEL_EMULATION_INERTIA);
+
+    inertia = gtk_spin_button_get_value(button);
+    gconf_client_set_int(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY, (gint)inertia, NULL);
 }
 
 static void
 cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
+    gdouble time;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     set_spin_property(ui->xinput, button, MIDDLE_BUTTON_TIMEOUT);
+
+    time = gtk_spin_button_get_value(button);
+    gconf_client_set_int(ui->gconf, GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY, (gint)time, NULL);
 }
 
 static void
@@ -354,59 +383,87 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_integer_property (GpdsXInput *xinput, const gchar *property_name,
-                      GtkBuilder *builder, const gchar *object_name)
+set_integer_property_from_preference (GpdsTrackPointUI *ui,
+                                      const gchar *property_name,
+                                      const gchar *gconf_key_name,
+                                      GtkBuilder *builder,
+                                      const gchar *object_name)
 {
     GObject *object;
     gint *values;
     gulong n_values;
+    gint value;
+    gboolean dir_exists;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
+    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TRACK_POINT_GCONF_DIR, NULL);
+    if (dir_exists)
+        value = gconf_client_get_int(ui->gconf, gconf_key_name, NULL);
+    else
+        value = values[0];
+
     object = gtk_builder_get_object(builder, object_name);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(object),
-                              values[0]);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(object), value);
     g_free(values);
 }
 
 static void
-set_boolean_property (GpdsXInput *xinput, const gchar *property_name,
-                      GtkBuilder *builder, const gchar *object_name)
+set_boolean_property_from_preference (GpdsTrackPointUI *ui,
+                                      const gchar *property_name,
+                                      const gchar *gconf_key_name,
+                                      GtkBuilder *builder,
+                                      const gchar *object_name)
 {
     GObject *object;
     gint *values;
     gulong n_values;
+    gboolean enable, dir_exists;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
+    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TRACK_POINT_GCONF_DIR, NULL);
+    if (dir_exists)
+        enable = gconf_client_get_bool(ui->gconf, gconf_key_name, NULL);
+    else
+        enable = (values[0] == 1);
+
     object = gtk_builder_get_object(builder, object_name);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 values[0] == 1 ? TRUE : FALSE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
     g_free(values);
 }
 
 static void
-set_scroll_property (GpdsXInput *xinput, const gchar *property_name,
-                     GtkBuilder *builder, const gchar *object_name)
+set_scroll_property_from_preference (GpdsTrackPointUI *ui,
+                                     const gchar *property_name,
+                                     const gchar *gconf_key_name,
+                                     GtkBuilder *builder,
+                                     const gchar *object_name)
 {
     GObject *object;
     gint *values;
     gulong n_values;
+    gboolean enable, dir_exists;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
+    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TRACK_POINT_GCONF_DIR, NULL);
+    if (dir_exists)
+        enable = gconf_client_get_bool(ui->gconf, gconf_key_name, NULL);
+    else
+        enable = (values[0] != 0 && values[1] != 0);
+        
     object = gtk_builder_get_object(builder, object_name);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 n_values == 2 ? TRUE : FALSE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
     g_free(values);
 }
 
@@ -415,22 +472,42 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsTrackPointUI *track_point_ui = GPDS_TRACK_POINT_UI(ui);
 
-    set_boolean_property(track_point_ui->xinput, MIDDLE_BUTTON_EMULATION,
-                         builder, "middle_button_emulation");
-    set_boolean_property(track_point_ui->xinput, WHEEL_EMULATION,
-                         builder, "wheel_emulation");
+    set_boolean_property_from_preference(track_point_ui,
+                                         MIDDLE_BUTTON_EMULATION,
+                                         GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY,
+                                         builder,
+                                         "middle_button_emulation");
+    set_boolean_property_from_preference(track_point_ui,
+                                         WHEEL_EMULATION,
+                                         GPDS_TRACK_POINT_WHEEL_EMULATION_KEY,
+                                         builder,
+                                         "wheel_emulation");
+    set_integer_property_from_preference(track_point_ui,
+                                         MIDDLE_BUTTON_TIMEOUT,
+                                         GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY,
+                                         builder,
+                                         "middle_button_timeout");
+    set_integer_property_from_preference(track_point_ui,
+                                         WHEEL_EMULATION_TIMEOUT,
+                                         GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY,
+                                         builder,
+                                         "wheel_emulation_timeout");
+    set_integer_property_from_preference(track_point_ui,
+                                         WHEEL_EMULATION_INERTIA,
+                                         GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY,
+                                         builder,
+                                         "wheel_emulation_inertia");
 
-    set_integer_property(track_point_ui->xinput, MIDDLE_BUTTON_TIMEOUT,
-                         builder, "middle_button_timeout");
-    set_integer_property(track_point_ui->xinput, WHEEL_EMULATION_TIMEOUT,
-                         builder, "wheel_emulation_timeout");
-    set_integer_property(track_point_ui->xinput, WHEEL_EMULATION_INERTIA,
-                         builder, "wheel_emulation_inertia");
-
-    set_scroll_property(track_point_ui->xinput, WHEEL_EMULATION_Y_AXIS,
-                        builder, "wheel_emulation_vertical");
-    set_scroll_property(track_point_ui->xinput, WHEEL_EMULATION_X_AXIS,
-                        builder, "wheel_emulation_horizontal");
+    set_scroll_property_from_preference(track_point_ui,
+                                        WHEEL_EMULATION_Y_AXIS,
+                                        GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
+                                        builder,
+                                        "wheel_emulation_vertical");
+    set_scroll_property_from_preference(track_point_ui,
+                                        WHEEL_EMULATION_X_AXIS,
+                                        GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
+                                        builder,
+                                        "wheel_emulation_horizontal");
 }
 
 static gboolean
