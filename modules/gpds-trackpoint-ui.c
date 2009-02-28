@@ -274,7 +274,7 @@ cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data
 {
     gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_Y_AXIS, 6, 7);
+    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_Y_AXIS, 4, 5);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY, enable, NULL);
@@ -285,7 +285,7 @@ cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_da
 {
     gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_X_AXIS, 4, 5);
+    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_X_AXIS, 6, 7);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY, enable, NULL);
