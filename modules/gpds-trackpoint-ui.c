@@ -24,7 +24,9 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gpointing-device-settings.h>
+#include <gpds-xinput.h>
 #include <gconf/gconf-client.h>
+
 #include "gpds-trackpoint-gconf.h"
 
 #define DEVICE_NAME "TPPS/2 IBM TrackPoint"

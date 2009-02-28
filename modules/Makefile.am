@@ -5,15 +5,15 @@ INCLUDES = 			\
 	 -I$(top_srcdir)	\
 	 -I$(top_srcdir)/src
 
-AM_CFLAGS =				\
-	$(GPDS_CFLAGS)			\
-	$(GCONF2_CFLAGS)		\
+AM_CFLAGS =			\
+	$(GPDS_CFLAGS)		\
+	$(GCONF2_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
 AM_LDFLAGS =			\
-  -avoid-version -module	\
-  -no-undefined 		\
-  -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
+  	-avoid-version -module	\
+  	-no-undefined 		\
+  	-export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 gpds_module_LTLIBRARIES = 	\
 	trackpoint.la		\
