@@ -30,3 +30,5 @@ po/POTFILES
 po/gpointing-device-settings.pot
 po/stamp-it
 src/gpointing-device-settings
+modules/touchpad.gnome-settings-plugin
+modules/trackpoint.gnome-settings-plugin

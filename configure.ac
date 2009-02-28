@@ -111,6 +111,12 @@ AC_SUBST(gpds_icondir)
 gpds_help_datadir="\${datadir}"
 AC_SUBST(gpds_help_datadir)
 
+gsd_plugindir="\${libdir}/gnome-settings-daemon-2.0"
+AC_SUBST([gsd_plugindir])
+
+GSD_INTLTOOL_PLUGIN_RULE='%.gnome-settings-plugin:   %.gnome-settings-plugin.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
+AC_SUBST([GSD_INTLTOOL_PLUGIN_RULE])
+
 dnl **************************************************************
 dnl Check for Cutter
 dnl **************************************************************

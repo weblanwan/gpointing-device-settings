@@ -14,7 +14,7 @@ run()
 
 run ${ACLOCAL:-aclocal} $ACLOCAL_OPTIONS
 run ${LIBTOOLIZE:-libtoolize} --copy --force
-run ${INTLTOOLIZE:-intltoolize} --force --copy
+run ${INTLTOOLIZE:-intltoolize} --force --copy --automake
 run ${AUTOHEADER:-autoheader}
 run ${AUTOMAKE:-automake} --add-missing --foreign --copy
 run ${AUTOCONF:-autoconf}

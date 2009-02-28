@@ -1,0 +1,8 @@
+[GNOME Settings Plugin]
+Module=touchpad
+IAge=0
+_Name=Touchpad
+_Description=Touchpad plugin
+Authors=
+Copyright=Copyright © 2009
+Website=
