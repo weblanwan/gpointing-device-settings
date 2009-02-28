@@ -477,21 +477,23 @@ set_integer_property_from_preference (GpdsTouchpadUI *ui,
                                       const gchar *object_name)
 {
     GObject *object;
-    GError *error = NULL;
     gint *values;
     gulong n_values;
     gint value;
+    gboolean dir_exists;
 
     if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
-    value = gconf_client_get_int(ui->gconf, gconf_key_name, &error);
+    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TOUCHPAD_GCONF_DIR, NULL);
+    if (dir_exists)
+        value = gconf_client_get_int(ui->gconf, gconf_key_name, NULL);
+    else
+        value = values[0];
     object = gtk_builder_get_object(builder, object_name);
-    gtk_range_set_value(GTK_RANGE(object), error ? values[0] : value);
-    if (error)
-        g_clear_error(&error);
+    gtk_range_set_value(GTK_RANGE(object), value);
     g_free(values);
 }
 
@@ -503,22 +505,22 @@ set_boolean_property_from_preference (GpdsTouchpadUI *ui,
                                       const gchar *object_name)
 {
     GObject *object;
-    GError *error = NULL;
     gint *values;
     gulong n_values;
-    gboolean enable;
+    gboolean enable, dir_exists;
 
     if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
-    enable = gconf_client_get_bool(ui->gconf, gconf_key_name, &error);
+    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TOUCHPAD_GCONF_DIR, NULL);
+    if (dir_exists)
+        enable = gconf_client_get_bool(ui->gconf, gconf_key_name, NULL);
+    else
+        enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, object_name);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 error ? values[0] == 1 ? TRUE : FALSE : enable);
-    if (error)
-        g_clear_error(&error);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
     g_free(values);
 }
 
@@ -527,10 +529,9 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
                                           GtkBuilder *builder)
 {
     GObject *object;
-    GError *error = NULL;
     gint *values;
     gulong n_values;
-    gboolean enable;
+    gboolean enable, dir_exists;
 
     if (!get_integer_property(ui->xinput, EDGE_SCROLLING,
                               &values, &n_values)) {
@@ -542,19 +543,20 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
         return;
     }
 
-    enable = gconf_client_get_bool(ui->gconf, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY, &error);
+    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TOUCHPAD_GCONF_DIR, NULL);
+    if (dir_exists)
+        enable = gconf_client_get_bool(ui->gconf, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY, NULL);
+    else
+        enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, "vertical_scroll_check");
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 error ? values[0] == 1 ? TRUE : FALSE : enable);
-    if (error)
-        g_clear_error(&error);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
 
-    enable = gconf_client_get_bool(ui->gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, &error);
+    if (dir_exists)
+        enable = gconf_client_get_bool(ui->gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, NULL);
+    else
+        enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, "horizontal_scroll_check");
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 error ? values[1] == 1 ? TRUE : FALSE : enable);
-    if (error)
-        g_clear_error(&error);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
 
     g_free(values);
 }
