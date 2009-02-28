@@ -9,9 +9,11 @@ AM_CFLAGS =				\
 	$(GNOME_SETTINGS_DAEMON_CFLAGS)
 	$(COVERAGE_CFLAGS)
 
-AM_LDFLAGS =							\
-  -avoid-version -module					\
-  -no-undefined -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
+AM_LDFLAGS =			\
+  -avoid-version -module	\
+  -no-undefined 		\
+  -export-dynamic 		\
+  $(LIBTOOL_EXPORT_OPTIONS)
 
 gpds_module_LTLIBRARIES = 	\
 	trackpoint.la		\
@@ -24,4 +26,6 @@ LIBS =					\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
 trackpoint_la_SOURCES = gpds-trackpoint-ui.c
-touchpad_la_SOURCES = gpds-touchpad-ui.c
+touchpad_la_SOURCES = 		\
+	gpds-touchpad-ui.c	\
+	gpds-touchpad-gconf.h
