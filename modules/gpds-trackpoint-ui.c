@@ -213,10 +213,14 @@ cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     GtkBuilder *builder;
+    gboolean enable;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, MIDDLE_BUTTON_EMULATION);
+
+    enable = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY, enable, NULL);
     set_widget_sensitivity(builder, "middle_button_emulation_box", button);
 }
 
@@ -225,10 +229,14 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
     GtkBuilder *builder;
+    gboolean enable;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, WHEEL_EMULATION);
+
+    enable = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_KEY, enable, NULL);
     set_widget_sensitivity(builder, "wheel_emulation_box", button);
 }
 
