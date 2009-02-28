@@ -24,8 +24,10 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gpointing-device-settings.h>
+#include <gconf/gconf-client.h>
 
 #define DEVICE_NAME "TPPS/2 IBM TrackPoint"
+
 #define MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
 #define MIDDLE_BUTTON_TIMEOUT "Middle Button Timeout"
 #define WHEEL_EMULATION "Wheel Emulation"

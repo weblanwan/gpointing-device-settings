@@ -24,39 +24,60 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gpointing-device-settings.h>
+#include <gconf/gconf-client.h>
 
 #define DEVICE_NAME "SynPS/2 Synaptics TouchPad"
 
-#define EDGES "Synaptics Edges"
-#define FINGER "Synaptics Finger"
-#define TAP_TIME "Synaptics Tap Time"
-#define TAP_MOVE "Synaptics Tap Move"
-#define TAP_DURATIONS "Synaptics Tap Durations"
-#define TAP_FAST_TAP "Synaptics Tap FastTap"
-#define MIDDLE_BUTTON_TIMEOUT "Synaptics Middle Button Timeout"
-#define TWO_FINGER_PRESSURE "Synaptics Two-Finger Pressure"
-#define SCROLLING_DISTANCE "Synaptics Scrolling Distance"
-#define EDGE_SCROLLING "Synaptics Edge Scrolling"
-#define TWO_FINGER_SCROLLING "Synaptics Two-Finger Scrolling"
-#define EDGE_MOTION_PRESSURE "Synaptics Edge Motion Pressure"
-#define EDGE_MOTION_SPEED "Synaptics Edge Motion Speed"
-#define EDGE_MOTION_ALWAYS "Synaptics Edge Motion Always"
-#define BUTTON_SCROLLING "Synaptics Button Scrolling"
-#define BUTTON_SCROLLING_REPEAT "Synaptics Button Scrolling Repeat"
-#define SCROLLING_TIME "Synaptics Button Scrolling Time"
-#define OFF "Synaptics Off"
-#define GUESTMOUSE_OFF "Synaptics Guestmouse Off"
-#define LOCKED_DRAGS "Synaptics Locked Drags"
-#define LOCKED_DRAGS_TIMEOUT "Synaptics Locked Drags Timeout"
-#define TAP_ACTION "Synaptics Tap Action"
-#define CLICK_ACTION "Synaptics Click Action"
-#define CIRCULAR_SCROLLING "Synaptics Circular Scrolling"
-#define CIRCULAR_SCROLLING_TRIGGER "Synaptics Circular Scrolling Trigger"
-#define CIRCULAR_PAD "Synaptics Circular Pad"
-#define PALM_DETECTION "Synaptics Palm Detection"
-#define PALM_DIMENSIONS "Synaptics Palm Dimensions"
-#define PRESSURE_MOTION "Synaptics Pressure Motion"
-#define GRAB_EVENT_DEVICE "Synaptics Grab Event Device"
+#define EDGES                       "Synaptics Edges"
+#define FINGER                      "Synaptics Finger"
+#define TAP_TIME                    "Synaptics Tap Time"
+#define TAP_MOVE                    "Synaptics Tap Move"
+#define TAP_DURATIONS               "Synaptics Tap Durations"
+#define TAP_FAST_TAP                "Synaptics Tap FastTap"
+#define MIDDLE_BUTTON_TIMEOUT       "Synaptics Middle Button Timeout"
+#define TWO_FINGER_PRESSURE         "Synaptics Two-Finger Pressure"
+#define SCROLLING_DISTANCE          "Synaptics Scrolling Distance"
+#define EDGE_SCROLLING              "Synaptics Edge Scrolling"
+#define TWO_FINGER_SCROLLING        "Synaptics Two-Finger Scrolling"
+#define EDGE_MOTION_PRESSURE        "Synaptics Edge Motion Pressure"
+#define EDGE_MOTION_SPEED           "Synaptics Edge Motion Speed"
+#define EDGE_MOTION_ALWAYS          "Synaptics Edge Motion Always"
+#define BUTTON_SCROLLING            "Synaptics Button Scrolling"
+#define BUTTON_SCROLLING_REPEAT     "Synaptics Button Scrolling Repeat"
+#define SCROLLING_TIME              "Synaptics Button Scrolling Time"
+#define OFF                         "Synaptics Off"
+#define GUESTMOUSE_OFF              "Synaptics Guestmouse Off"
+#define LOCKED_DRAGS                "Synaptics Locked Drags"
+#define LOCKED_DRAGS_TIMEOUT        "Synaptics Locked Drags Timeout"
+#define TAP_ACTION                  "Synaptics Tap Action"
+#define CLICK_ACTION                "Synaptics Click Action"
+#define CIRCULAR_SCROLLING          "Synaptics Circular Scrolling"
+#define CIRCULAR_SCROLLING_TRIGGER  "Synaptics Circular Scrolling Trigger"
+#define CIRCULAR_PAD                "Synaptics Circular Pad"
+#define PALM_DETECTION              "Synaptics Palm Detection"
+#define PALM_DIMENSIONS             "Synaptics Palm Dimensions"
+#define PRESSURE_MOTION             "Synaptics Pressure Motion"
+#define GRAB_EVENT_DEVICE           "Synaptics Grab Event Device"
+
+#define SENSITIVITY_KEY             "/desktop/gnome/peripherals/touchpad/sensitivity"
+#define OFF_KEY                     "/desktop/gnome/peripherals/touchpad/off"
+#define MAX_TAP_TIME_KEY            "/desktop/gnome/peripherals/touchpad/max_tap_time"
+#define HORIZONTAL_SCROLL_DELTA_KEY "/desktop/gnome/peripherals/touchpad/horiz_scroll_delta"
+#define HORIZONTAL_SCROLLING_KEY    "/desktop/gnome/peripherals/touchpad/horizontal_scrolling"
+#define VERTICAL_SCROLL_DELTA_KEY   "/desktop/gnome/peripherals/touchpad/vert_scroll_delta"
+#define VERTICAL_SCROLLING_KEY      "/desktop/gnome/peripherals/touchpad/vertical_scrolling"
+#define EDGEMOTIONUSEALWAYS_KEY     "/desktop/gnome/peripherals/touchpad/edge_motion_use_always"
+#define COASTENABLE_KEY             "/desktop/gnome/peripherals/touchpad/coast_enable"
+#define CIRCULAR_SCROLLING_KEY      "/desktop/gnome/peripherals/touchpad/circular_scrolling"
+#define CIRCSCROLLDELTA_KEY         "/desktop/gnome/peripherals/touchpad/circ_scroll_delta"
+#define CIRCSCROLLTRIGGER_KEY       "/desktop/gnome/peripherals/touchpad/circ_scroll_trigger"
+#define FASTTAPS_KEY                "/desktop/gnome/peripherals/touchpad/fast_taps"
+#define BUTTONFORTAP_KEY            "/desktop/gnome/peripherals/touchpad/button_for_tap"
+#define ABSCOORDX_KEY               "/desktop/gnome/peripherals/touchpad/abs_coord_x"
+#define ABSCOORDY_KEY               "/desktop/gnome/peripherals/touchpad/abs_coord_y"
+#define MINSPEED_KEY                "/desktop/gnome/peripherals/touchpad/min_speed"
+#define MAXSPEED_KEY                "/desktop/gnome/peripherals/touchpad/max_speed"
+#define ACCELFACTOR_KEY             "/desktop/gnome/peripherals/touchpad/accel_factor"
 
 static const gchar *touchpad_device_names[] =
 {
@@ -82,6 +103,7 @@ struct _GpdsTouchpadUI
     GpdsXInput *xinput;
     gchar *ui_file_path;
     gchar *device_name;
+    GConfClient *gconf;
 };
 
 struct _GpdsTouchpadUIClass
@@ -129,6 +151,7 @@ init (GpdsTouchpadUI *ui)
     ui->xinput = NULL;
     ui->ui_file_path = 
         g_build_filename(get_ui_file_directory(), "touchpad.ui", NULL);
+    ui->gconf = gconf_client_get_default();
 }
 
 static void
@@ -188,6 +211,12 @@ dispose (GObject *object)
         g_object_unref(ui->xinput);
         ui->xinput = NULL;
     }
+
+    if (ui->gconf) {
+        g_object_unref(ui->gconf);
+        ui->gconf = NULL;
+    }
+
     g_free(ui->device_name);
     g_free(ui->ui_file_path);
 
@@ -315,10 +344,14 @@ cb_tapping_time_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gdouble time;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_range_property(ui->xinput, range, TAP_TIME);
+
+    time = gtk_range_get_value(range);
+    gconf_client_set_int(ui->gconf, MAX_TAP_TIME_KEY, (gint)time, NULL);
 }
 
 static void
@@ -326,10 +359,13 @@ cb_faster_tapping_check_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gboolean check;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, TAP_FAST_TAP);
+    check = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, FASTTAPS_KEY, check, NULL);
 }
 
 static void
@@ -337,11 +373,15 @@ cb_circular_scroll_check_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gboolean check;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, CIRCULAR_SCROLLING);
     set_widget_sensitivity(builder, "circular_scroll_box", button);
+
+    check = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, CIRCULAR_SCROLLING_KEY, check, NULL);
 }
 
 static void
@@ -349,10 +389,14 @@ cb_vertical_scroll_check_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gboolean check;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_edge_scroll_toggle_property(ui->xinput, builder);
+
+    check = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, VERTICAL_SCROLLING_KEY, check, NULL);
 }
 
 static void
@@ -360,10 +404,14 @@ cb_horizontal_scroll_check_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gboolean check;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_edge_scroll_toggle_property(ui->xinput, builder);
+
+    check = gtk_toggle_button_get_active(button);
+    gconf_client_set_bool(ui->gconf, HORIZONTAL_SCROLLING_KEY, check, NULL);
 }
 
 static void
@@ -371,10 +419,14 @@ cb_vertical_scroll_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gdouble distance;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_scrolling_distance_range_property(ui->xinput, builder);
+
+    distance = gtk_range_get_value(range);
+    gconf_client_set_int(ui->gconf, HORIZONTAL_SCROLL_DELTA_KEY, (gint)distance, NULL);
 }
 
 static void
@@ -382,10 +434,14 @@ cb_horizontal_scroll_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
     GtkBuilder *builder;
+    gdouble distance;
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_scrolling_distance_range_property(ui->xinput, builder);
+
+    distance = gtk_range_get_value(range);
+    gconf_client_set_int(ui->gconf, VERTICAL_SCROLL_DELTA_KEY, (gint)distance, NULL);
 }
 
 static void
@@ -432,51 +488,69 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_integer_property (GpdsXInput *xinput, const gchar *property_name,
-                      GtkBuilder *builder, const gchar *object_name)
+set_integer_property_from_preference (GpdsTouchpadUI *ui,
+                                      const gchar *property_name,
+                                      const gchar *gconf_key_name,
+                                      GtkBuilder *builder,
+                                      const gchar *object_name)
 {
     GObject *object;
+    GError *error = NULL;
     gint *values;
     gulong n_values;
+    gint value;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
+    value = gconf_client_get_int(ui->gconf, gconf_key_name, &error);
     object = gtk_builder_get_object(builder, object_name);
-    gtk_range_set_value(GTK_RANGE(object), values[0]);
+    gtk_range_set_value(GTK_RANGE(object), error ? values[0] : value);
+    if (error)
+        g_clear_error(&error);
     g_free(values);
 }
 
 static void
-set_boolean_property (GpdsXInput *xinput, const gchar *property_name,
-                      GtkBuilder *builder, const gchar *object_name)
+set_boolean_property_from_preference (GpdsTouchpadUI *ui,
+                                      const gchar *property_name,
+                                      const gchar *gconf_key_name,
+                                      GtkBuilder *builder,
+                                      const gchar *object_name)
 {
     GObject *object;
+    GError *error = NULL;
     gint *values;
     gulong n_values;
+    gboolean enable;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
         return;
     }
 
+    enable = gconf_client_get_bool(ui->gconf, gconf_key_name, &error);
     object = gtk_builder_get_object(builder, object_name);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 values[0] == 1 ? TRUE : FALSE);
+                                 error ? values[0] == 1 ? TRUE : FALSE : enable);
+    if (error)
+        g_clear_error(&error);
     g_free(values);
 }
 
 static void
-set_edge_scroll_property (GpdsXInput *xinput, const gchar *property_name,
-                          GtkBuilder *builder)
+set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
+                                          GtkBuilder *builder)
 {
     GObject *object;
+    GError *error = NULL;
     gint *values;
     gulong n_values;
+    gboolean enable;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput, EDGE_SCROLLING,
                               &values, &n_values)) {
         return;
     }
@@ -486,26 +560,35 @@ set_edge_scroll_property (GpdsXInput *xinput, const gchar *property_name,
         return;
     }
 
+    enable = gconf_client_get_bool(ui->gconf, VERTICAL_SCROLLING_KEY, &error);
     object = gtk_builder_get_object(builder, "vertical_scroll_check");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 values[0] == 1 ? TRUE : FALSE);
+                                 error ? values[0] == 1 ? TRUE : FALSE : enable);
+    if (error)
+        g_clear_error(&error);
 
+    enable = gconf_client_get_bool(ui->gconf, HORIZONTAL_SCROLLING_KEY, &error);
     object = gtk_builder_get_object(builder, "horizontal_scroll_check");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object),
-                                 values[1] == 1 ? TRUE : FALSE);
+                                 error ? values[1] == 1 ? TRUE : FALSE : enable);
+    if (error)
+        g_clear_error(&error);
 
     g_free(values);
 }
 
 static void
-set_distance_property (GpdsXInput *xinput, const gchar *property_name,
-                       GtkBuilder *builder)
+set_scroll_distance_property_from_preference (GpdsTouchpadUI *ui,
+                                              GtkBuilder *builder)
 {
     GObject *object;
+    GError *error = NULL;
     gint *values;
     gulong n_values;
+    gint distance;
 
-    if (!get_integer_property(xinput, property_name,
+    if (!get_integer_property(ui->xinput,
+                              SCROLLING_DISTANCE,
                               &values, &n_values)) {
         return;
     }
@@ -515,11 +598,17 @@ set_distance_property (GpdsXInput *xinput, const gchar *property_name,
         return;
     }
 
+    distance = gconf_client_get_int(ui->gconf, VERTICAL_SCROLL_DELTA_KEY, &error);
     object = gtk_builder_get_object(builder, "vertical_scroll_scale");
-    gtk_range_set_value(GTK_RANGE(object), values[0]);
+    gtk_range_set_value(GTK_RANGE(object), error ? values[0] : distance);
+    if (error)
+        g_clear_error(&error);
 
+    distance = gconf_client_get_int(ui->gconf, HORIZONTAL_SCROLL_DELTA_KEY, &error);
     object = gtk_builder_get_object(builder, "horizontal_scroll_scale");
-    gtk_range_set_value(GTK_RANGE(object), values[1]);
+    gtk_range_set_value(GTK_RANGE(object), error ? values[1] : distance);
+    if (error)
+        g_clear_error(&error);
 
     g_free(values);
 }
@@ -529,16 +618,23 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsTouchpadUI *touchpad_ui = GPDS_TOUCHPAD_UI(ui);
 
-    set_integer_property(touchpad_ui->xinput, TAP_TIME,
-                         builder, "tapping_time_scale");
-    set_boolean_property(touchpad_ui->xinput, TAP_FAST_TAP,
-                         builder, "faster_tapping_check");
-    set_boolean_property(touchpad_ui->xinput, CIRCULAR_SCROLLING,
-                         builder, "circular_scroll_check");
-    set_edge_scroll_property(touchpad_ui->xinput, EDGE_SCROLLING,
-                             builder);
-    set_distance_property(touchpad_ui->xinput, SCROLLING_DISTANCE,
-                          builder);
+    set_integer_property_from_preference(touchpad_ui,
+                                         TAP_TIME,
+                                         MAX_TAP_TIME_KEY,
+                                         builder,
+                                         "tapping_time_scale");
+    set_boolean_property_from_preference(touchpad_ui,
+                                         TAP_FAST_TAP, 
+                                         FASTTAPS_KEY,
+                                         builder,
+                                         "faster_tapping_check");
+    set_boolean_property_from_preference(touchpad_ui,
+                                         CIRCULAR_SCROLLING,
+                                         CIRCULAR_SCROLLING_KEY, 
+                                         builder,
+                                         "circular_scroll_check");
+    set_edge_scroll_property_from_preference(touchpad_ui, builder);
+    set_scroll_distance_property_from_preference(touchpad_ui, builder);
 }
 
 static const gchar *
