@@ -215,7 +215,7 @@ _gpds_module_open (const gchar *mod_path)
 static void
 _gpds_module_close (GModule *module)
 {
-    if (module && !g_module_close(module)) {
+    if (module /*&& !g_module_close(module)*/) {
         _gpds_module_show_error(NULL);
     }
 }
