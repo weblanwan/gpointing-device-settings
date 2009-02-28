@@ -21,12 +21,9 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gpds-ui.h"
-
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include "gpds-xinput.h"
-#include "gpds-module-impl.h"
+#include <gpointing-device-settings.h>
 
 #define DEVICE_NAME "TPPS/2 IBM TrackPoint"
 #define MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
