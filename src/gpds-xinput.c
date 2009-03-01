@@ -282,10 +282,12 @@ set_property_va_list (GpdsXInput *xinput,
     va_end(copy_var_args);
     g_free(values);
 
+    gdk_error_trap_push();
     XChangeDeviceProperty(GDK_DISPLAY(),
                           device, property_atom,
                           XA_INTEGER, format, PropModeReplace,
                           (unsigned char*)property_data, n_values);
+    gdk_error_trap_pop();
 
     g_free(property_data);
 
@@ -351,6 +353,7 @@ get_int_property (GpdsXInput *xinput,
     unsigned char *data, *data_position;
     gulong i;
     gint *int_values;
+    Status status;
 
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
 
@@ -362,12 +365,14 @@ get_int_property (GpdsXInput *xinput,
     if (atom < 0)
         return FALSE;
 
+    gdk_error_trap_push();
+    status =  XGetDeviceProperty(GDK_DISPLAY(), device, atom, 0, 1000, False,
+                                 XA_INTEGER, &actual_type, &actual_format,
+                                 n_values, &bytes_after, &data);
+    gdk_error_trap_pop();
 
-    if (XGetDeviceProperty(GDK_DISPLAY(), device, atom, 0, 1000, False,
-                           XA_INTEGER, &actual_type, &actual_format,
-                           n_values, &bytes_after, &data) != Success) {
+    if (status != Success)
         return FALSE;
-    }
 
     if (actual_type != XA_INTEGER) {
         XFree(data);
