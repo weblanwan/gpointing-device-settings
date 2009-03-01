@@ -23,8 +23,10 @@ libgpointing-device-settings.pc
 coverage
 coverage.info
 *.gcno
+*.gcda
 data/touchpad.ui
 data/trackpoint.ui
+data/gnome-settings-daemon.schemas
 po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot
