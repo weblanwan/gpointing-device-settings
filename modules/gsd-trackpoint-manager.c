@@ -86,7 +86,7 @@ cb_gconf_client_notify (GConfClient *client,
     if (!gpds_xinput_exist_device(GPDS_TRACK_POINT_DEVICE_NAME))
         return;
 
-    xinput = gpds_xinput_new("trackpoint");
+    xinput = gpds_xinput_new(GPDS_TRACK_POINT_DEVICE_NAME);
 
     value = gconf_entry_get_value(entry);
     key = gconf_entry_get_key(entry);
