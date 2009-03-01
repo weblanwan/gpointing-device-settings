@@ -44,6 +44,12 @@ static gpointer manager_object = NULL;
 static void
 gsd_track_point_manager_init (GsdTrackPointManager *manager)
 {
+    GsdTrackPointManagerPrivate *priv;
+
+    priv = GSD_TRACK_POINT_MANAGER_GET_PRIVATE(manager);
+
+    priv->gconf = NULL;
+    priv->notify_id = 0;
 }
 
 static void
