@@ -103,9 +103,9 @@
         </child>
         <child>
           <object class="GtkAdjustment" id="wheel_emulation_inertia_adjustment">
-            <property name="lower">50</property>
-            <property name="upper">10000</property>
-            <property name="step-increment">50</property>
+            <property name="lower">10</property>
+            <property name="upper">1000</property>
+            <property name="step-increment">10</property>
           </object>
           <object class="GtkSpinButton" id="wheel_emulation_inertia">
             <property name="numeric">True</property>
