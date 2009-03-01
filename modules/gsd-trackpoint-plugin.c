@@ -25,12 +25,14 @@
 #include "gnome-settings-plugin.h"
 #include <glib/gi18n.h>
 
+#include "gsd-trackpoint-manager.h"
+
 #define GSD_TYPE_TRACK_POINT_PLUGIN            (gsd_track_point_plugin_get_type ())
-#define GSD_TRACK_POINT_PLUGIN(jbj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSD_TYPE_TRACK_POINT_PLUGIN, GsdTrackPobjintPlugin))
-#define GSD_TRACK_POINT_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSD_TYPE_TRACK_POINT_PLUGIN, GsdTracklassPobjintPluginClass))
+#define GSD_TRACK_POINT_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSD_TYPE_TRACK_POINT_PLUGIN, GsdTrackPointPlugin))
+#define GSD_TRACK_POINT_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSD_TYPE_TRACK_POINT_PLUGIN, GsdTracklassPointPluginClass))
 #define GSD_IS_TRACK_POINT_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSD_TYPE_TRACK_POINT_PLUGIN))
 #define GSD_IS_TRACK_POINT_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSD_TYPE_TRACK_POINT_PLUGIN))
-#define GSD_TRACK_POINT_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSD_TYPE_TRACK_POINT_PLUGIN, GsdTracklassPobjintPluginClass))
+#define GSD_TRACK_POINT_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSD_TYPE_TRACK_POINT_PLUGIN, GsdTracklassPointPluginClass))
 
 typedef struct _GsdTrackPointPlugin GsdTrackPointPlugin;
 typedef struct _GsdTrackPointPluginClass GsdTrackPointPluginClass;
@@ -38,6 +40,7 @@ typedef struct _GsdTrackPointPluginClass GsdTrackPointPluginClass;
 struct _GsdTrackPointPlugin
 {
     GnomeSettingsPlugin parent;
+    GsdTrackPointManager *manager;
 };
 
 struct _GsdTrackPointPluginClass
@@ -53,16 +56,30 @@ GNOME_SETTINGS_PLUGIN_REGISTER(GsdTrackPointPlugin, gsd_track_point_plugin)
 static void
 gsd_track_point_plugin_init (GsdTrackPointPlugin *plugin)
 {
+    plugin->manager = NULL;
 }
 
 static void
 activate (GnomeSettingsPlugin *plugin)
 {
+    GsdTrackPointPlugin *track_point_plugin;
+
+    track_point_plugin = GSD_TRACK_POINT_PLUGIN(plugin); 
+    track_point_plugin->manager = gsd_track_point_manager_new();
+    gsd_track_point_manager_start(track_point_plugin->manager, NULL);
 }
 
 static void
 deactivate (GnomeSettingsPlugin *plugin)
 {
+    GsdTrackPointPlugin *track_point_plugin;
+
+    track_point_plugin = GSD_TRACK_POINT_PLUGIN(plugin); 
+    if (track_point_plugin->manager) {
+        gsd_track_point_manager_stop(track_point_plugin->manager);
+        g_object_unref(track_point_plugin->manager);
+        track_point_plugin->manager = NULL;
+    }
 }
 
 static void

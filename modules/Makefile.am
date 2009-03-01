@@ -44,8 +44,10 @@ gsd_plugin_CFLAGS =					\
 	-DGNOME_SETTINGS_LOCALEDIR=\""$(localedir)"\"
 
 libtrackpoint_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libtrackpoint_la_SOURCES = 	\
-	gsd-trackpoint-plugin.c
+libtrackpoint_la_SOURCES = 		\
+	gsd-trackpoint-plugin.c		\
+	gsd-trackpoint-manager.h	\
+	gsd-trackpoint-manager.c
 
 libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
 libtouchpad_la_SOURCES = 	\
