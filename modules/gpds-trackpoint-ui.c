@@ -27,19 +27,9 @@
 #include <gpds-xinput.h>
 #include <gconf/gconf-client.h>
 
-#include "gpds-trackpoint-gconf.h"
+#include "gpds-trackpoint-definitions.h"
 
 #define DEVICE_NAME "TPPS/2 IBM TrackPoint"
-
-#define MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
-#define MIDDLE_BUTTON_TIMEOUT   "Middle Button Timeout"
-#define WHEEL_EMULATION         "Wheel Emulation"
-#define WHEEL_EMULATION_INERTIA "Wheel Emulation Inertia"
-#define WHEEL_EMULATION_X_AXIS  "Wheel Emulation X Axis"
-#define WHEEL_EMULATION_Y_AXIS  "Wheel Emulation Y Axis"
-#define WHEEL_EMULATION_TIMEOUT "Wheel Emulation Timeout"
-#define WHEEL_EMULATION_BUTTON  "Wheel Emulation Button"
-#define DRAG_LOCK_BUTTONS       "Drag Lock Buttons"
 
 #define GPDS_TYPE_TRACK_POINT_UI            (gpds_track_point_ui_get_type())
 #define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
@@ -219,7 +209,7 @@ cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
-    set_toggle_property(ui->xinput, button, MIDDLE_BUTTON_EMULATION);
+    set_toggle_property(ui->xinput, button, GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY, enable, NULL);
@@ -235,7 +225,7 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
-    set_toggle_property(ui->xinput, button, WHEEL_EMULATION);
+    set_toggle_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_KEY, enable, NULL);
@@ -276,7 +266,7 @@ cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data
 {
     gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_Y_AXIS, 4, 5);
+    set_toggle_scroll_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS, 4, 5);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY, enable, NULL);
@@ -287,7 +277,7 @@ cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_da
 {
     gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, WHEEL_EMULATION_X_AXIS, 6, 7);
+    set_toggle_scroll_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS, 6, 7);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY, enable, NULL);
@@ -298,7 +288,7 @@ cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_d
 {
     gdouble time;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_spin_property(ui->xinput, button, WHEEL_EMULATION_TIMEOUT);
+    set_spin_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT);
 
     time = gtk_spin_button_get_value(button);
     gconf_client_set_int(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY, (gint)time, NULL);
@@ -309,7 +299,7 @@ cb_wheel_emulation_inertia_value_changed (GtkSpinButton *button, gpointer user_d
 {
     gdouble inertia;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_spin_property(ui->xinput, button, WHEEL_EMULATION_INERTIA);
+    set_spin_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA);
 
     inertia = gtk_spin_button_get_value(button);
     gconf_client_set_int(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY, (gint)inertia, NULL);
@@ -320,7 +310,7 @@ cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_dat
 {
     gdouble time;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_spin_property(ui->xinput, button, MIDDLE_BUTTON_TIMEOUT);
+    set_spin_property(ui->xinput, button, GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT);
 
     time = gtk_spin_button_get_value(button);
     gconf_client_set_int(ui->gconf, GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY, (gint)time, NULL);
@@ -460,38 +450,38 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     GpdsTrackPointUI *track_point_ui = GPDS_TRACK_POINT_UI(ui);
 
     set_boolean_property_from_preference(track_point_ui,
-                                         MIDDLE_BUTTON_EMULATION,
+                                         GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION,
                                          GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY,
                                          builder,
                                          "middle_button_emulation");
     set_boolean_property_from_preference(track_point_ui,
-                                         WHEEL_EMULATION,
+                                         GPDS_TRACK_POINT_WHEEL_EMULATION,
                                          GPDS_TRACK_POINT_WHEEL_EMULATION_KEY,
                                          builder,
                                          "wheel_emulation");
     set_integer_property_from_preference(track_point_ui,
-                                         MIDDLE_BUTTON_TIMEOUT,
+                                         GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT,
                                          GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY,
                                          builder,
                                          "middle_button_timeout");
     set_integer_property_from_preference(track_point_ui,
-                                         WHEEL_EMULATION_TIMEOUT,
+                                         GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT,
                                          GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY,
                                          builder,
                                          "wheel_emulation_timeout");
     set_integer_property_from_preference(track_point_ui,
-                                         WHEEL_EMULATION_INERTIA,
+                                         GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA,
                                          GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY,
                                          builder,
                                          "wheel_emulation_inertia");
 
     set_scroll_property_from_preference(track_point_ui,
-                                        WHEEL_EMULATION_Y_AXIS,
+                                        GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS,
                                         GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
                                         builder,
                                         "wheel_emulation_vertical");
     set_scroll_property_from_preference(track_point_ui,
-                                        WHEEL_EMULATION_X_AXIS,
+                                        GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS,
                                         GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
                                         builder,
                                         "wheel_emulation_horizontal");

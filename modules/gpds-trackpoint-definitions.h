@@ -20,6 +20,16 @@
 #ifndef __GPDS_TRACK_POINT_GCONF_H__
 #define __GPDS_TRACK_POINT_GCONF_H__
 
+#define GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
+#define GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT   "Middle Button Timeout"
+#define GPDS_TRACK_POINT_WHEEL_EMULATION         "Wheel Emulation"
+#define GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA "Wheel Emulation Inertia"
+#define GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS  "Wheel Emulation X Axis"
+#define GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS  "Wheel Emulation Y Axis"
+#define GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT "Wheel Emulation Timeout"
+#define GPDS_TRACK_POINT_WHEEL_EMULATION_BUTTON  "Wheel Emulation Button"
+#define GPDS_TRACK_POINT_DRAG_LOCK_BUTTONS       "Drag Lock Buttons"
+
 #define GPDS_TRACK_POINT_GCONF_DIR                   "/desktop/gnome/peripherals/trackpoint"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY GPDS_TRACK_POINT_GCONF_DIR "/middle_button_emulation"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY   GPDS_TRACK_POINT_GCONF_DIR "/middle_button_timeoue"
