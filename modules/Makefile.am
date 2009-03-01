@@ -50,8 +50,10 @@ libtrackpoint_la_SOURCES = 		\
 	gsd-trackpoint-manager.c
 
 libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libtouchpad_la_SOURCES = 	\
-	gsd-touchpad-plugin.c
+libtouchpad_la_SOURCES = 		\
+	gsd-touchpad-plugin.c		\
+	gsd-touchpad-manager.h		\
+	gsd-touchpad-manager.c
 
 gsd_plugin_in_files =	 			\
 	trackpoint.gnome-settings-plugin.in	\

@@ -25,12 +25,14 @@
 #include "gnome-settings-plugin.h"
 #include <glib/gi18n.h>
 
+#include "gsd-touchpad-manager.h"
+
 #define GSD_TYPE_TOUCHPAD_PLUGIN            (gsd_touchpad_plugin_get_type ())
-#define GSD_TOUCHPAD_PLUGIN(jbj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSD_TYPE_TOUCHPAD_PLUGIN, GsdTrackPobjintPlugin))
-#define GSD_TOUCHPAD_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSD_TYPE_TOUCHPAD_PLUGIN, GsdTracklassPobjintPluginClass))
+#define GSD_TOUCHPAD_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSD_TYPE_TOUCHPAD_PLUGIN, GsdTouchpadPlugin))
+#define GSD_TOUCHPAD_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSD_TYPE_TOUCHPAD_PLUGIN, GsdTracklassPointPluginClass))
 #define GSD_IS_TOUCHPAD_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSD_TYPE_TOUCHPAD_PLUGIN))
 #define GSD_IS_TOUCHPAD_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSD_TYPE_TOUCHPAD_PLUGIN))
-#define GSD_TOUCHPAD_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSD_TYPE_TOUCHPAD_PLUGIN, GsdTracklassPobjintPluginClass))
+#define GSD_TOUCHPAD_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSD_TYPE_TOUCHPAD_PLUGIN, GsdTracklassPointPluginClass))
 
 typedef struct _GsdTouchpadPlugin GsdTouchpadPlugin;
 typedef struct _GsdTouchpadPluginClass GsdTouchpadPluginClass;
@@ -38,6 +40,7 @@ typedef struct _GsdTouchpadPluginClass GsdTouchpadPluginClass;
 struct _GsdTouchpadPlugin
 {
     GnomeSettingsPlugin parent;
+    GsdTouchpadManager *manager;
 };
 
 struct _GsdTouchpadPluginClass
@@ -53,16 +56,30 @@ GNOME_SETTINGS_PLUGIN_REGISTER(GsdTouchpadPlugin, gsd_touchpad_plugin)
 static void
 gsd_touchpad_plugin_init (GsdTouchpadPlugin *plugin)
 {
+    plugin->manager = NULL;
 }
 
 static void
 activate (GnomeSettingsPlugin *plugin)
 {
+    GsdTouchpadPlugin *touchpad_plugin;
+
+    touchpad_plugin = GSD_TOUCHPAD_PLUGIN(plugin); 
+    touchpad_plugin->manager = gsd_touchpad_manager_new();
+    gsd_touchpad_manager_start(touchpad_plugin->manager, NULL);
 }
 
 static void
 deactivate (GnomeSettingsPlugin *plugin)
 {
+    GsdTouchpadPlugin *touchpad_plugin;
+
+    touchpad_plugin = GSD_TOUCHPAD_PLUGIN(plugin); 
+    if (touchpad_plugin->manager) {
+        gsd_touchpad_manager_stop(touchpad_plugin->manager);
+        g_object_unref(touchpad_plugin->manager);
+        touchpad_plugin->manager = NULL;
+    }
 }
 
 static void

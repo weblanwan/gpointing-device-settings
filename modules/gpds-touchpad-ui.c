@@ -27,40 +27,8 @@
 #include <gpds-xinput.h>
 #include <gconf/gconf-client.h>
 
-#include "gpds-touchpad-gconf.h"
+#include "gpds-touchpad-definitions.h"
 
-#define DEVICE_NAME "SynPS/2 Synaptics TouchPad"
-
-#define EDGES                       "Synaptics Edges"
-#define FINGER                      "Synaptics Finger"
-#define TAP_TIME                    "Synaptics Tap Time"
-#define TAP_MOVE                    "Synaptics Tap Move"
-#define TAP_DURATIONS               "Synaptics Tap Durations"
-#define TAP_FAST_TAP                "Synaptics Tap FastTap"
-#define MIDDLE_BUTTON_TIMEOUT       "Synaptics Middle Button Timeout"
-#define TWO_FINGER_PRESSURE         "Synaptics Two-Finger Pressure"
-#define SCROLLING_DISTANCE          "Synaptics Scrolling Distance"
-#define EDGE_SCROLLING              "Synaptics Edge Scrolling"
-#define TWO_FINGER_SCROLLING        "Synaptics Two-Finger Scrolling"
-#define EDGE_MOTION_PRESSURE        "Synaptics Edge Motion Pressure"
-#define EDGE_MOTION_SPEED           "Synaptics Edge Motion Speed"
-#define EDGE_MOTION_ALWAYS          "Synaptics Edge Motion Always"
-#define BUTTON_SCROLLING            "Synaptics Button Scrolling"
-#define BUTTON_SCROLLING_REPEAT     "Synaptics Button Scrolling Repeat"
-#define SCROLLING_TIME              "Synaptics Button Scrolling Time"
-#define OFF                         "Synaptics Off"
-#define GUESTMOUSE_OFF              "Synaptics Guestmouse Off"
-#define LOCKED_DRAGS                "Synaptics Locked Drags"
-#define LOCKED_DRAGS_TIMEOUT        "Synaptics Locked Drags Timeout"
-#define TAP_ACTION                  "Synaptics Tap Action"
-#define CLICK_ACTION                "Synaptics Click Action"
-#define CIRCULAR_SCROLLING          "Synaptics Circular Scrolling"
-#define CIRCULAR_SCROLLING_TRIGGER  "Synaptics Circular Scrolling Trigger"
-#define CIRCULAR_PAD                "Synaptics Circular Pad"
-#define PALM_DETECTION              "Synaptics Palm Detection"
-#define PALM_DIMENSIONS             "Synaptics Palm Dimensions"
-#define PRESSURE_MOTION             "Synaptics Pressure Motion"
-#define GRAB_EVENT_DEVICE           "Synaptics Grab Event Device"
 
 static const gchar *touchpad_device_names[] =
 {
@@ -241,7 +209,7 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
     set_widget_sensitivity(builder, "horizontal_scroll_box", GTK_TOGGLE_BUTTON(object));
 
     if (!gpds_xinput_set_property(xinput,
-                                  EDGE_SCROLLING,
+                                  GPDS_TOUCHPAD_EDGE_SCROLLING,
                                   &error,
                                   vertical_scrolling_active ? 1 : 0,
                                   horizontal_scrolling_active ? 1 : 0,
@@ -287,7 +255,7 @@ set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
     horizontal_scrolling_distance = gtk_range_get_value(GTK_RANGE(object));
 
     if (!gpds_xinput_set_property(xinput,
-                                  SCROLLING_DISTANCE,
+                                  GPDS_TOUCHPAD_SCROLLING_DISTANCE,
                                   &error,
                                   (gint)vertical_scrolling_distance,
                                   (gint)horizontal_scrolling_distance,
@@ -308,10 +276,10 @@ cb_tapping_time_scale_value_changed (GtkRange *range, gpointer user_data)
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
-    set_range_property(ui->xinput, range, TAP_TIME);
+    set_range_property(ui->xinput, range, GPDS_TOUCHPAD_TAP_TIME);
 
     time = gtk_range_get_value(range);
-    gconf_client_set_int(ui->gconf, GPDS_TOUCHPAD_MAX_TAP_TIME_KEY, (gint)time, NULL);
+    gconf_client_set_int(ui->gconf, GPDS_TOUCHPAD_TAP_TIME_KEY, (gint)time, NULL);
 }
 
 static void
@@ -323,9 +291,9 @@ cb_faster_tapping_check_toggled (GtkToggleButton *button, gpointer user_data)
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
-    set_toggle_property(ui->xinput, button, TAP_FAST_TAP);
+    set_toggle_property(ui->xinput, button, GPDS_TOUCHPAD_TAP_FAST_TAP);
     check = gtk_toggle_button_get_active(button);
-    gconf_client_set_bool(ui->gconf, GPDS_TOUCHPAD_FASTTAPS_KEY, check, NULL);
+    gconf_client_set_bool(ui->gconf, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY, check, NULL);
 }
 
 static void
@@ -337,7 +305,7 @@ cb_circular_scroll_check_toggled (GtkToggleButton *button, gpointer user_data)
 
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
-    set_toggle_property(ui->xinput, button, CIRCULAR_SCROLLING);
+    set_toggle_property(ui->xinput, button, GPDS_TOUCHPAD_CIRCULAR_SCROLLING);
     set_widget_sensitivity(builder, "circular_scroll_box", button);
 
     check = gtk_toggle_button_get_active(button);
@@ -386,7 +354,7 @@ cb_vertical_scroll_scale_value_changed (GtkRange *range, gpointer user_data)
     set_scrolling_distance_range_property(ui->xinput, builder);
 
     distance = gtk_range_get_value(range);
-    gconf_client_set_int(ui->gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLL_DELTA_KEY, (gint)distance, NULL);
+    gconf_client_set_int(ui->gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY, (gint)distance, NULL);
 }
 
 static void
@@ -401,7 +369,7 @@ cb_horizontal_scroll_scale_value_changed (GtkRange *range, gpointer user_data)
     set_scrolling_distance_range_property(ui->xinput, builder);
 
     distance = gtk_range_get_value(range);
-    gconf_client_set_int(ui->gconf, GPDS_TOUCHPAD_VERTICAL_SCROLL_DELTA_KEY, (gint)distance, NULL);
+    gconf_client_set_int(ui->gconf, GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY, (gint)distance, NULL);
 }
 
 static void
@@ -511,7 +479,7 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     gboolean enable, dir_exists;
 
-    if (!get_integer_property(ui->xinput, EDGE_SCROLLING,
+    if (!get_integer_property(ui->xinput, GPDS_TOUCHPAD_EDGE_SCROLLING,
                               &values, &n_values)) {
         return;
     }
@@ -550,7 +518,7 @@ set_scroll_distance_property_from_preference (GpdsTouchpadUI *ui,
     gint distance;
 
     if (!get_integer_property(ui->xinput,
-                              SCROLLING_DISTANCE,
+                              GPDS_TOUCHPAD_SCROLLING_DISTANCE,
                               &values, &n_values)) {
         return;
     }
@@ -560,13 +528,17 @@ set_scroll_distance_property_from_preference (GpdsTouchpadUI *ui,
         return;
     }
 
-    distance = gconf_client_get_int(ui->gconf, GPDS_TOUCHPAD_VERTICAL_SCROLL_DELTA_KEY, &error);
+    distance = gconf_client_get_int(ui->gconf,
+                                    GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY,
+                                    &error);
     object = gtk_builder_get_object(builder, "vertical_scroll_scale");
     gtk_range_set_value(GTK_RANGE(object), error ? values[0] : distance);
     if (error)
         g_clear_error(&error);
 
-    distance = gconf_client_get_int(ui->gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLL_DELTA_KEY, &error);
+    distance = gconf_client_get_int(ui->gconf,
+                                    GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY,
+                                    &error);
     object = gtk_builder_get_object(builder, "horizontal_scroll_scale");
     gtk_range_set_value(GTK_RANGE(object), error ? values[1] : distance);
     if (error)
@@ -581,17 +553,17 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     GpdsTouchpadUI *touchpad_ui = GPDS_TOUCHPAD_UI(ui);
 
     set_integer_property_from_preference(touchpad_ui,
-                                         TAP_TIME,
-                                         GPDS_TOUCHPAD_MAX_TAP_TIME_KEY,
+                                         GPDS_TOUCHPAD_TAP_TIME,
+                                         GPDS_TOUCHPAD_TAP_TIME_KEY,
                                          builder,
                                          "tapping_time_scale");
     set_boolean_property_from_preference(touchpad_ui,
-                                         TAP_FAST_TAP, 
-                                         GPDS_TOUCHPAD_FASTTAPS_KEY,
+                                         GPDS_TOUCHPAD_TAP_FAST_TAP, 
+                                         GPDS_TOUCHPAD_TAP_FAST_TAP_KEY,
                                          builder,
                                          "faster_tapping_check");
     set_boolean_property_from_preference(touchpad_ui,
-                                         CIRCULAR_SCROLLING,
+                                         GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
                                          GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY, 
                                          builder,
                                          "circular_scroll_check");
