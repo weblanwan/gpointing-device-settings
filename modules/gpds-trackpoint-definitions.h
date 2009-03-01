@@ -20,6 +20,8 @@
 #ifndef __GPDS_TRACK_POINT_GCONF_H__
 #define __GPDS_TRACK_POINT_GCONF_H__
 
+#define GPDS_TRACK_POINT_DEVICE_NAME "TPPS/2 IBM TrackPoint"
+
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION "Middle Button Emulation"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT   "Middle Button Timeout"
 #define GPDS_TRACK_POINT_WHEEL_EMULATION         "Wheel Emulation"

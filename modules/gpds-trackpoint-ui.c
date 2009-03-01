@@ -29,8 +29,6 @@
 
 #include "gpds-trackpoint-definitions.h"
 
-#define DEVICE_NAME "TPPS/2 IBM TrackPoint"
-
 #define GPDS_TYPE_TRACK_POINT_UI            (gpds_track_point_ui_get_type())
 #define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
 #define GPDS_TRACK_POINT_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIClass))
@@ -490,7 +488,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 static gboolean
 is_available (GpdsUI *ui, GError **error)
 {
-    if (!gpds_xinput_exist_device(DEVICE_NAME)) {
+    if (!gpds_xinput_exist_device(GPDS_TRACK_POINT_DEVICE_NAME)) {
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
@@ -524,7 +522,7 @@ build (GpdsUI  *ui, GError **error)
         return FALSE;
     }
 
-    GPDS_TRACK_POINT_UI(ui)->xinput = gpds_xinput_new(DEVICE_NAME);
+    GPDS_TRACK_POINT_UI(ui)->xinput = gpds_xinput_new(GPDS_TRACK_POINT_DEVICE_NAME);
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);
