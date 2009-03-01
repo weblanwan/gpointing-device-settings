@@ -29,6 +29,7 @@ po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot
 po/stamp-it
+po/.intltool-merge-cache
 src/gpointing-device-settings
 modules/touchpad.gnome-settings-plugin
 modules/trackpoint.gnome-settings-plugin
