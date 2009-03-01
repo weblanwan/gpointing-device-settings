@@ -55,6 +55,9 @@ gsd_track_point_manager_init (GsdTrackPointManager *manager)
 static void
 gsd_track_point_manager_class_init (GsdTrackPointManagerClass *klass)
 {
+    GObjectClass   *gobject_class = G_OBJECT_CLASS(klass);
+
+    g_type_class_add_private(gobject_class, sizeof(GsdTrackPointManagerPrivate));
 }
 
 GsdTrackPointManager *
