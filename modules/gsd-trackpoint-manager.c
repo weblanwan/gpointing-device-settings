@@ -130,19 +130,19 @@ cb_gconf_client_notify (GConfClient *client,
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT,
                                      NULL,
-                                     gconf_value_get_bool(value),
+                                     gconf_value_get_int(value),
                                      NULL);
         } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT,
                                      NULL,
-                                     gconf_value_get_bool(value),
+                                     gconf_value_get_int(value),
                                      NULL);
         } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA,
                                      NULL,
-                                     gconf_value_get_bool(value),
+                                     gconf_value_get_int(value),
                                      NULL);
         }
         break;
