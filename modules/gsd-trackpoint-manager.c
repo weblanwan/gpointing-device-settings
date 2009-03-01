@@ -105,23 +105,22 @@ cb_gconf_client_notify (GConfClient *client,
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
-        } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY)) {
-            gboolean enable;
-            enable = gconf_value_get_bool(value);
+        } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY) ||
+                    !strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY)) {
+            gboolean enable_vertical, enable_horizontal;
+            enable_vertical = gconf_client_get_bool(client,
+                                                    GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS,
+                                                    NULL);
+            enable_horizontal = gconf_client_get_bool(client,
+                                                      GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS,
+                                                      NULL);
             gpds_xinput_set_property(xinput,
-                                     GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS,
+                                     GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
                                      NULL,
-                                     enable ? 6 : -1,
-                                     enable ? 7 : -1,
-                                     NULL);
-        } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY)) {
-            gboolean enable;
-            enable = gconf_value_get_bool(value);
-            gpds_xinput_set_property(xinput,
-                                     GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS,
-                                     NULL,
-                                     enable ? 4 : -1,
-                                     enable ? 5 : -1,
+                                     enable_vertical ? 6 : -1,
+                                     enable_vertical ? 7 : -1,
+                                     enable_horizontal ? 4 : -1,
+                                     enable_horizontal ? 5 : -1,
                                      NULL);
         }
         break;

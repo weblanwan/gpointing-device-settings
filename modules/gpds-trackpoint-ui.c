@@ -231,28 +231,30 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 static void
-set_toggle_scroll_property (GpdsXInput *xinput, GtkToggleButton *button,
-                            const gchar *property_name,
-                            gint first_value, gint second_value)
+set_scroll_axes_property (GpdsTrackPointUI *ui)
 {
+    GtkBuilder *builder;
+    GtkToggleButton *button;
     GError *error = NULL;
-    gboolean active;
+    gboolean horizontal_scroll_active;
+    gboolean vertical_scroll_active;
 
-    active = gtk_toggle_button_get_active(button);
-    if (active) {
-        gpds_xinput_set_property(xinput,
-                                 property_name,
-                                 &error,
-                                 first_value, second_value,
-                                 NULL);
-    } else {
-        gpds_xinput_set_property(xinput,
-                                 property_name,
-                                 &error,
-                                 -1, -1,
-                                 NULL);
-    }
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
 
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_vertical"));
+    vertical_scroll_active = gtk_toggle_button_get_active(button);
+
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_horizontal"));
+    horizontal_scroll_active = gtk_toggle_button_get_active(button);
+
+    gpds_xinput_set_property(ui->xinput,
+                             GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
+                             &error,
+                             vertical_scroll_active ? 6 : -1,
+                             vertical_scroll_active ? 7 : -1,
+                             horizontal_scroll_active ? 4 : -1,
+                             horizontal_scroll_active ? 5 : -1,
+                             NULL);
     if (error) {
         show_error(error);
         g_error_free(error);
@@ -264,7 +266,7 @@ cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data
 {
     gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS, 4, 5);
+    set_scroll_axes_property(ui);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY, enable, NULL);
@@ -275,7 +277,7 @@ cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_da
 {
     gboolean enable;
     GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
-    set_toggle_scroll_property(ui->xinput, button, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS, 6, 7);
+    set_scroll_axes_property(ui);
 
     enable = gtk_toggle_button_get_active(button);
     gconf_client_set_bool(ui->gconf, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY, enable, NULL);
@@ -415,16 +417,14 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
 }
 
 static void
-set_scroll_property_from_preference (GpdsTrackPointUI *ui,
-                                     const gchar *property_name,
-                                     const gchar *gconf_key_name,
-                                     GtkBuilder *builder,
-                                     const gchar *object_name)
+set_scroll_axes_property_from_preference (GpdsTrackPointUI *ui,
+                                          const gchar *property_name,
+                                          GtkBuilder *builder)
 {
     GObject *object;
     gint *values;
     gulong n_values;
-    gboolean enable, dir_exists;
+    gboolean horizontal_enable = FALSE, vertical_enable = FALSE, dir_exists;
 
     if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
@@ -432,13 +432,25 @@ set_scroll_property_from_preference (GpdsTrackPointUI *ui,
     }
 
     dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TRACK_POINT_GCONF_DIR, NULL);
-    if (dir_exists)
-        enable = gconf_client_get_bool(ui->gconf, gconf_key_name, NULL);
-    else
-        enable = (values[0] != 0 && values[1] != 0);
-        
-    object = gtk_builder_get_object(builder, object_name);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
+    if (dir_exists) {
+        horizontal_enable = gconf_client_get_bool(ui->gconf,
+                                                  GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
+                                                  NULL);
+        vertical_enable = gconf_client_get_bool(ui->gconf,
+                                                GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
+                                                NULL);
+    } else {
+        if (n_values >= 2)
+            horizontal_enable = (values[0] != 0 && values[1] != 0);
+        if (n_values >= 4)
+            vertical_enable = (values[2] != 0 && values[3] != 0);
+    }
+
+    object = gtk_builder_get_object(builder, "wheel_emulation_horizontal");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), horizontal_enable);
+    object = gtk_builder_get_object(builder, "wheel_emulation_vertical");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), vertical_enable);
+
     g_free(values);
 }
 
@@ -473,16 +485,9 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          builder,
                                          "wheel_emulation_inertia");
 
-    set_scroll_property_from_preference(track_point_ui,
-                                        GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS,
-                                        GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
-                                        builder,
-                                        "wheel_emulation_vertical");
-    set_scroll_property_from_preference(track_point_ui,
-                                        GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS,
-                                        GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
-                                        builder,
-                                        "wheel_emulation_horizontal");
+    set_scroll_axes_property_from_preference(track_point_ui,
+                                             GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
+                                             builder);
 }
 
 static gboolean
