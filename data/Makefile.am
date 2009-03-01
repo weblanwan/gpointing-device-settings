@@ -20,3 +20,9 @@ EXTRA_DIST = 			\
 	$(gpds_icon_DATA)	\
 	$(schemas_in_files)
 
+CLEANFILES = 			\
+	$(schemas_DATA)
+
+DISTCLEANFILES =		\
+	$(schemas_DATA)
+
