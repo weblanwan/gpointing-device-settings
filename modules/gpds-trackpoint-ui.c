@@ -437,6 +437,7 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
     gulong n_values;
     gboolean enable, dir_exists;
     const gchar *property_name;
+    gchar *box_name;
 
     property_name = gpds_track_point_xinput_get_name(property);
 
@@ -454,6 +455,10 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
     object = gtk_builder_get_object(builder, object_name);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
     g_free(values);
+
+    box_name = g_strconcat(object_name, "_box", NULL);
+    set_widget_sensitivity (builder, box_name, GTK_TOGGLE_BUTTON(object));
+    g_free(box_name);
 }
 
 static void
