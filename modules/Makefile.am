@@ -34,9 +34,14 @@ trackpoint_la_SOURCES = 		\
 	gpds-trackpoint-ui.c		\
         $(trackpoint_common_SOURCES)
 
+touchpad_common_SOURCES =               \
+        gpds-touchpad-xinput.c          \
+        gpds-touchpad-xinput.h          \
+	gpds-touchpad-definitions.h
+        
 touchpad_la_SOURCES = 			\
 	gpds-touchpad-ui.c		\
-	gpds-touchpad-definitions.h
+        $(touchpad_common_SOURCES)
 
 # plugins for gnome-settings-daemon
 gsd_plugin_LTLIBRARIES =	\
@@ -59,7 +64,8 @@ libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
 libtouchpad_la_SOURCES = 		\
 	gsd-touchpad-plugin.c		\
 	gsd-touchpad-manager.h		\
-	gsd-touchpad-manager.c
+	gsd-touchpad-manager.c          \
+        $(touchpad_common_SOURCES)
 
 gsd_plugin_in_files =	 			\
 	trackpoint.gnome-settings-plugin.in	\

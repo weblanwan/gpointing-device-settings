@@ -28,7 +28,7 @@
 #include <gconf/gconf-client.h>
 
 #include "gpds-touchpad-definitions.h"
-
+#include "gpds-touchpad-xinput.h"
 
 static const gchar *touchpad_device_names[] =
 {
@@ -174,15 +174,15 @@ set_widget_sensitivity (GtkBuilder *builder,
 }
 
 static void
-set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *property_name)
+set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsTouchpadProperty property)
 {
     GError *error = NULL;
     gboolean active;
 
     active = gtk_toggle_button_get_active(button);
     if (!gpds_xinput_set_property(xinput,
-                                  property_name,
-                                  8,
+                                  gpds_touchpad_xinput_get_name(property),
+                                  gpds_touchpad_xinput_get_format_type(property),
                                   &error,
                                   active ? 1 : 0,
                                   NULL)) {
@@ -210,8 +210,8 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
     set_widget_sensitivity(builder, "horizontal_scroll_box", GTK_TOGGLE_BUTTON(object));
 
     if (!gpds_xinput_set_property(xinput,
-                                  GPDS_TOUCHPAD_EDGE_SCROLLING,
-                                  16,
+                                  gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                  gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
                                   &error,
                                   vertical_scrolling_active ? 1 : 0,
                                   horizontal_scrolling_active ? 1 : 0,
@@ -224,15 +224,15 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 }
 
 static void
-set_range_property (GpdsXInput *xinput, GtkRange *range, const gchar *property_name)
+set_range_property (GpdsXInput *xinput, GtkRange *range, GpdsTouchpadProperty property)
 {
     GError *error = NULL;
     gdouble value;
 
     value = gtk_range_get_value(range);
     if (!gpds_xinput_set_property(xinput,
-                                  property_name,
-                                  16,
+                                  gpds_touchpad_xinput_get_name(property),
+                                  gpds_touchpad_xinput_get_format_type(property),
                                   &error,
                                   (gint)value,
                                   NULL)) {
@@ -258,8 +258,8 @@ set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
     horizontal_scrolling_distance = gtk_range_get_value(GTK_RANGE(object));
 
     if (!gpds_xinput_set_property(xinput,
-                                  GPDS_TOUCHPAD_SCROLLING_DISTANCE,
-                                  16,
+                                  gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                  gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
                                   &error,
                                   (gint)vertical_scrolling_distance,
                                   (gint)horizontal_scrolling_distance,
@@ -399,13 +399,13 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static gboolean
-get_integer_property (GpdsXInput *xinput, const gchar *property_name,
+get_integer_property (GpdsXInput *xinput, GpdsTouchpadProperty property,
                       gint **values, gulong *n_values)
 {
     GError *error = NULL;
 
     if (!gpds_xinput_get_property(xinput,
-                                  property_name,
+                                  gpds_touchpad_xinput_get_name(property),
                                   &error,
                                   values, n_values)) {
         if (error) {
@@ -421,7 +421,7 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 
 static void
 set_integer_property_from_preference (GpdsTouchpadUI *ui,
-                                      const gchar *property_name,
+                                      GpdsTouchpadProperty property,
                                       const gchar *gconf_key_name,
                                       GtkBuilder *builder,
                                       const gchar *object_name)
@@ -432,7 +432,7 @@ set_integer_property_from_preference (GpdsTouchpadUI *ui,
     gint value;
     gboolean dir_exists;
 
-    if (!get_integer_property(ui->xinput, property_name,
+    if (!get_integer_property(ui->xinput, property,
                               &values, &n_values)) {
         return;
     }
@@ -449,7 +449,7 @@ set_integer_property_from_preference (GpdsTouchpadUI *ui,
 
 static void
 set_boolean_property_from_preference (GpdsTouchpadUI *ui,
-                                      const gchar *property_name,
+                                      GpdsTouchpadProperty property,
                                       const gchar *gconf_key_name,
                                       GtkBuilder *builder,
                                       const gchar *object_name)
@@ -459,7 +459,7 @@ set_boolean_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     gboolean enable, dir_exists;
 
-    if (!get_integer_property(ui->xinput, property_name,
+    if (!get_integer_property(ui->xinput, property,
                               &values, &n_values)) {
         return;
     }

@@ -27,6 +27,7 @@
 #include <gpds-xinput.h>
 
 #include "gpds-touchpad-definitions.h"
+#include "gpds-touchpad-xinput.h"
 
 #define GSD_TOUCHPAD_MANAGER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GSD_TYPE_TOUCHPAD_MANAGER, GsdTouchpadManagerPrivate))
 
@@ -95,15 +96,15 @@ cb_gconf_client_notify (GConfClient *client,
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
             gpds_xinput_set_property(xinput,
-                                     GPDS_TOUCHPAD_TAP_FAST_TAP,
-                                     8,
+                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_FAST_TAP),
+                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TAP_FAST_TAP),
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
         } else  if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
             gpds_xinput_set_property(xinput,
-                                     GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
-                                     8,
+                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_CIRCULAR_SCROLLING),
+                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_CIRCULAR_SCROLLING),
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
@@ -118,8 +119,8 @@ cb_gconf_client_notify (GConfClient *client,
                                                       NULL);
 
             gpds_xinput_set_property(xinput,
-                                     GPDS_TOUCHPAD_EDGE_SCROLLING,
-                                     16,
+                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
                                      NULL,
                                      enable_vertical ? 1 : 0,
                                      enable_horizontal ? 1 : 0,
@@ -129,8 +130,8 @@ cb_gconf_client_notify (GConfClient *client,
     case GCONF_VALUE_INT:
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_TIME_KEY)) {
             gpds_xinput_set_property(xinput,
-                                     GPDS_TOUCHPAD_TAP_TIME,
-                                     16,
+                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_TIME),
+                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TAP_TIME),
                                      NULL,
                                      gconf_value_get_int(value),
                                      NULL);
@@ -148,8 +149,8 @@ cb_gconf_client_notify (GConfClient *client,
                                      GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY,
                                      NULL);
             gpds_xinput_set_property(xinput,
-                                     GPDS_TOUCHPAD_SCROLLING_DISTANCE,
-                                     16,
+                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
                                      NULL,
                                      vertical_scrolling_distance,
                                      horizontal_scrolling_distance,
