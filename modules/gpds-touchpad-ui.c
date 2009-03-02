@@ -456,7 +456,9 @@ set_circular_scrolling_trigger_button_state (GpdsTouchpadUI *ui,
 
 #define DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(position, trigger)                                   \
 static void                                                                                             \
-cb_trigger_ ## position ## _toggle_button_press_event (GtkToggleButton *button, gpointer user_data)     \
+cb_trigger_ ## position ## _toggle_button_press_event (GtkWidget *widget,                               \
+                                                       GdkEventButton *event,                           \
+                                                       gpointer user_data)                              \
 {                                                                                                       \
     set_circular_scrolling_trigger_property(GPDS_TOUCHPAD_UI(user_data),                                \
                                             GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ ## trigger);      \
