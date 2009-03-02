@@ -337,7 +337,7 @@
                         <property name="homogeneous">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkCheckButton" id="vertical_scroll_check">
+                          <object class="GtkCheckButton" id="vertical_scrolling">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="label" translatable="yes">Enable _vertical scrolling</property>
@@ -355,7 +355,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="vertical_scroll_box">
+                          <object class="GtkHBox" id="vertical_scrolling_box">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="homogeneous">False</property>
@@ -385,7 +385,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="vertical_scroll_scale">
+                              <object class="GtkHScale" id="vertical_scrolling_scale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="draw_value">False</property>
@@ -433,7 +433,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="horizontal_scroll_check">
+                          <object class="GtkCheckButton" id="horizontal_scrolling">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="label" translatable="yes">Enable _horizontal scrolling</property>
@@ -451,7 +451,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="horizontal_scroll_box">
+                          <object class="GtkHBox" id="horizontal_scrolling_box">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="homogeneous">False</property>
@@ -481,7 +481,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="horizontal_scroll_scale">
+                              <object class="GtkHScale" id="horizontal_scrolling_scale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="draw_value">False</property>
@@ -529,7 +529,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="circular_scroll_check">
+                          <object class="GtkCheckButton" id="circular_scrolling">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="label" translatable="yes">Enable Ci_rcular scrolling</property>
@@ -547,7 +547,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="circular_scroll_box">
+                          <object class="GtkVBox" id="circular_scrolling_box">
                             <property name="visible">False</property>
                             <property name="sensitive">False</property>
                             <property name="homogeneous">False</property>
