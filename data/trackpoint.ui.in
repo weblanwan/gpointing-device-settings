@@ -113,12 +113,6 @@
             <property name="adjustment">wheel_emulation_inertia_adjustment</property>
           </object>
         </child>
-        <child>
-          <object class="GtkLabel" id="wheel_emulation_inertia_unit">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">(ms)</property>
-          </object>
-        </child>
         </object>
       </child>
       <child>
