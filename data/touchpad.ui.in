@@ -608,7 +608,7 @@
                                             <property name="row_spacing">1</property>
                                             <property name="column_spacing">1</property>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_top_left_corner_toggle">
+                                              <object class="GtkToggleButton" id="trigger_left_top_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -630,7 +630,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_top_edge_toggle">
+                                              <object class="GtkToggleButton" id="trigger_top_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -652,7 +652,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_top_right_corner_toggle">
+                                              <object class="GtkToggleButton" id="trigger_top_right_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -674,7 +674,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_left_edge_toggle">
+                                              <object class="GtkToggleButton" id="trigger_left_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -696,7 +696,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_bottom_left_corner_toggle">
+                                              <object class="GtkToggleButton" id="trigger_bottom_left_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -718,7 +718,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_bottom_edge_toggle">
+                                              <object class="GtkToggleButton" id="trigger_bottom_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -740,7 +740,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_bottom_right_corner_toggle">
+                                              <object class="GtkToggleButton" id="trigger_right_bottom_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -762,7 +762,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToggleButton" id="trigger_right_edge_toggle">
+                                              <object class="GtkToggleButton" id="trigger_right_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
@@ -784,7 +784,7 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkButton" id="trigger_all_corners_button">
+                                              <object class="GtkButton" id="trigger_any_toggle">
                                                 <property name="width_request">22</property>
                                                 <property name="height_request">22</property>
                                                 <property name="visible">True</property>
