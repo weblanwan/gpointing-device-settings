@@ -25,6 +25,7 @@
 #define GPDS_TOUCHPAD_GCONF_DIR                   "/desktop/gnome/peripherals/touchpad"
 
 #define GPDS_TOUCHPAD_EDGES_KEY                         GPDS_TOUCHPAD_GCONF_DIR "/edges"
+#define GPDS_TOUCHPAD_FINGER_KEY                        GPDS_TOUCHPAD_GCONF_DIR "/finger"
 #define GPDS_TOUCHPAD_OFF_KEY                           GPDS_TOUCHPAD_GCONF_DIR "/off"
 #define GPDS_TOUCHPAD_TAP_TIME_KEY                      GPDS_TOUCHPAD_GCONF_DIR "/tap_time"
 #define GPDS_TOUCHPAD_TAP_FAST_TAP_KEY                  GPDS_TOUCHPAD_GCONF_DIR "/tap_fast_tap"

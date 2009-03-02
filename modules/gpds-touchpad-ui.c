@@ -271,6 +271,27 @@ set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
 }
 
 static void
+set_circular_scrolling_trigger_property (GpdsTouchpadUI *ui, GpdsTouchpadCircularScrollingTrigger trigger)
+{
+    GError *error = NULL;
+    gint properties[1];
+
+    properties[0] = trigger;
+
+    if (!gpds_xinput_set_int_properties(ui->xinput,
+                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER),
+                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER),
+                                        &error,
+                                        properties,
+                                        1)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+}
+
+static void
 cb_tapping_time_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
@@ -376,6 +397,86 @@ cb_horizontal_scroll_scale_value_changed (GtkRange *range, gpointer user_data)
 }
 
 static void
+set_circular_scrolling_trigger_button_state (GpdsTouchpadUI *ui, 
+                                             GpdsTouchpadCircularScrollingTrigger trigger)
+{
+    GtkToggleButton *button;
+    GtkBuilder *builder;
+    gboolean active = FALSE;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+#define SET_TOGGLE_BUTTON_STATE(name, state)                           \
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, name)); \
+    gtk_toggle_button_set_active(button, state);
+
+    if (trigger == GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ANY)
+        active = TRUE;
+
+    SET_TOGGLE_BUTTON_STATE("trigger_top_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_top_right_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_right_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_right_bottom_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_bottom_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_bottom_left_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_left_toggle", active);
+    SET_TOGGLE_BUTTON_STATE("trigger_left_top_toggle", active);
+
+    switch (trigger) {
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_TOP:
+        SET_TOGGLE_BUTTON_STATE("trigger_top_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_TOP_RIGHT:
+        SET_TOGGLE_BUTTON_STATE("trigger_top_right_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_RIGHT:
+        SET_TOGGLE_BUTTON_STATE("trigger_right_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_RIGHT_BOTTOM:
+        SET_TOGGLE_BUTTON_STATE("trigger_right_bottom_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_BOTTOM:
+        SET_TOGGLE_BUTTON_STATE("trigger_bottom_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_BOTTOM_LEFT:
+        SET_TOGGLE_BUTTON_STATE("trigger_bottom_left_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_LEFT:
+        SET_TOGGLE_BUTTON_STATE("trigger_left_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_LEFT_TOP:
+        SET_TOGGLE_BUTTON_STATE("trigger_left_top_toggle", TRUE);
+        break;
+    case GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ANY:
+    default:
+        break;
+    }
+#undef SET_TOGGLE_BUTTON_STATE
+}
+
+#define DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(position, trigger)                                   \
+static void                                                                                             \
+cb_trigger_ ## position ## _toggle_toggled (GtkToggleButton *button, gpointer user_data)                \
+{                                                                                                       \
+    set_circular_scrolling_trigger_property(GPDS_TOUCHPAD_UI(user_data),                                \
+                                            GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ ## trigger);      \
+    set_circular_scrolling_trigger_button_state(GPDS_TOUCHPAD_UI(user_data),                            \
+                                                GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ ## trigger);  \
+}
+
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(top, TOP)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(top_right, TOP_RIGHT)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(right, RIGHT)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(right_bottom, RIGHT_BOTTOM)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(bottom, BOTTOM)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(bottom_left, BOTTOM_LEFT)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(left, LEFT)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(left_top, LEFT_TOP)
+DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(any, ANY)
+
+#undef DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK
+
+static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
     GObject *object;
@@ -393,6 +494,17 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(vertical_scroll_scale, value_changed);
     CONNECT(horizontal_scroll_check, toggled);
     CONNECT(horizontal_scroll_scale, value_changed);
+
+    /* cirlular scrolling trigger */
+    CONNECT(trigger_top_toggle, toggled);
+    CONNECT(trigger_top_right_toggle, toggled);
+    CONNECT(trigger_right_toggle, toggled);
+    CONNECT(trigger_right_bottom_toggle, toggled);
+    CONNECT(trigger_bottom_toggle, toggled);
+    CONNECT(trigger_bottom_left_toggle, toggled);
+    CONNECT(trigger_left_toggle, toggled);
+    CONNECT(trigger_left_top_toggle, toggled);
+    CONNECT(trigger_any_toggle, toggled);
 
 #undef CONNECT
 }
@@ -551,6 +663,31 @@ set_scroll_distance_property_from_preference (GpdsTouchpadUI *ui,
 }
 
 static void
+set_circular_scrolling_trigger_property_from_preference (GpdsTouchpadUI *ui,
+                                                         GtkBuilder *builder)
+{
+    GError *error = NULL;
+    gint *values;
+    gulong n_values;
+    GpdsTouchpadCircularScrollingTrigger trigger;
+
+    if (!get_integer_property(ui->xinput,
+                              GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER,
+                              &values, &n_values)) {
+        return;
+    }
+
+    trigger = gconf_client_get_int(ui->gconf,
+                                   GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY,
+                                   &error);
+    set_circular_scrolling_trigger_button_state(ui, error ? values[0] : trigger);
+    if (error)
+        g_clear_error(&error);
+
+    g_free(values);
+}
+
+static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsTouchpadUI *touchpad_ui = GPDS_TOUCHPAD_UI(ui);
@@ -572,6 +709,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          "circular_scroll_check");
     set_edge_scroll_property_from_preference(touchpad_ui, builder);
     set_scroll_distance_property_from_preference(touchpad_ui, builder);
+    set_circular_scrolling_trigger_property_from_preference(touchpad_ui, builder);
 }
 
 static const gchar *
