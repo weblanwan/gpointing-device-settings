@@ -28,6 +28,7 @@
 #include <gconf/gconf-client.h>
 
 #include "gpds-trackpoint-definitions.h"
+#include "gpds-trackpoint-xinput.h"
 
 #define GPDS_TYPE_TRACK_POINT_UI            (gpds_track_point_ui_get_type())
 #define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
@@ -151,15 +152,20 @@ show_error (GError *error)
 }
 
 static void
-set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *property_name)
+set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsTrackPointProperty property)
 {
     GError *error = NULL;
     gboolean active;
+    const gchar *property_name;
+    gint format_type;
 
     active = gtk_toggle_button_get_active(button);
+    property_name = gpds_track_point_xinput_get_name(property);
+    format_type = gpds_track_point_xinput_get_format_type(property);
+
     gpds_xinput_set_property(xinput,
                              property_name,
-                             8,
+                             format_type,
                              &error,
                              active ? 1 : 0,
                              NULL);
@@ -170,15 +176,20 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *p
 }
 
 static void
-set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, const gchar *property_name)
+set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, GpdsTrackPointProperty property)
 {
     GError *error = NULL;
     gdouble value;
+    const gchar *property_name;
+    gint format_type;
 
     value = gtk_spin_button_get_value(button);
+    property_name = gpds_track_point_xinput_get_name(property);
+    format_type = gpds_track_point_xinput_get_format_type(property);
+
     gpds_xinput_set_property(xinput,
                              property_name,
-                             16,
+                             format_type,
                              &error,
                              (gint)value,
                              NULL);
@@ -240,6 +251,8 @@ set_scroll_axes_property (GpdsTrackPointUI *ui)
     GError *error = NULL;
     gboolean horizontal_scroll_active;
     gboolean vertical_scroll_active;
+    const gchar *property_name;
+    gint format_type;
 
     builder = gpds_ui_get_builder(GPDS_UI(ui));
 
@@ -249,9 +262,12 @@ set_scroll_axes_property (GpdsTrackPointUI *ui)
     button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_horizontal"));
     horizontal_scroll_active = gtk_toggle_button_get_active(button);
 
+    property_name = gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES);
+    format_type = gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES);
+
     gpds_xinput_set_property(ui->xinput,
-                             GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
-                             8,
+                             property_name,
+                             format_type,
                              &error,
                              vertical_scroll_active ? 6 : -1,
                              vertical_scroll_active ? 7 : -1,
@@ -364,7 +380,7 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 
 static void
 set_integer_property_from_preference (GpdsTrackPointUI *ui,
-                                      const gchar *property_name,
+                                      GpdsTrackPointProperty property,
                                       const gchar *gconf_key_name,
                                       GtkBuilder *builder,
                                       const gchar *object_name)
@@ -374,6 +390,9 @@ set_integer_property_from_preference (GpdsTrackPointUI *ui,
     gulong n_values;
     gint value;
     gboolean dir_exists;
+    const gchar *property_name;
+
+    property_name = gpds_track_point_xinput_get_name(property);
 
     if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
@@ -393,7 +412,7 @@ set_integer_property_from_preference (GpdsTrackPointUI *ui,
 
 static void
 set_boolean_property_from_preference (GpdsTrackPointUI *ui,
-                                      const gchar *property_name,
+                                      GpdsTrackPointProperty property,
                                       const gchar *gconf_key_name,
                                       GtkBuilder *builder,
                                       const gchar *object_name)
@@ -402,6 +421,9 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
     gint *values;
     gulong n_values;
     gboolean enable, dir_exists;
+    const gchar *property_name;
+
+    property_name = gpds_track_point_xinput_get_name(property);
 
     if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
@@ -421,13 +443,15 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
 
 static void
 set_scroll_axes_property_from_preference (GpdsTrackPointUI *ui,
-                                          const gchar *property_name,
                                           GtkBuilder *builder)
 {
     GObject *object;
     gint *values;
     gulong n_values;
     gboolean horizontal_enable = FALSE, vertical_enable = FALSE, dir_exists;
+    const gchar *property_name;
+
+    property_name = gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES);
 
     if (!get_integer_property(ui->xinput, property_name,
                               &values, &n_values)) {
@@ -489,7 +513,6 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          "wheel_emulation_inertia");
 
     set_scroll_axes_property_from_preference(track_point_ui,
-                                             GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
                                              builder);
 }
 

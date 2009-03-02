@@ -25,9 +25,14 @@ LIBS =					\
 	$(GCONF2_LIBS)			\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
+trackpoint_common_SOURCES =             \
+        gpds-trackpoint-xinput.c        \
+        gpds-trackpoint-xinput.h        \
+	gpds-trackpoint-definitions.h
+
 trackpoint_la_SOURCES = 		\
 	gpds-trackpoint-ui.c		\
-	gpds-trackpoint-definitions.h
+        $(trackpoint_common_SOURCES)
 
 touchpad_la_SOURCES = 			\
 	gpds-touchpad-ui.c		\
@@ -47,7 +52,8 @@ libtrackpoint_la_CFLAGS = $(gsd_plugin_CFLAGS)
 libtrackpoint_la_SOURCES = 		\
 	gsd-trackpoint-plugin.c		\
 	gsd-trackpoint-manager.h	\
-	gsd-trackpoint-manager.c
+	gsd-trackpoint-manager.c        \
+        $(trackpoint_common_SOURCES)
 
 libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
 libtouchpad_la_SOURCES = 		\

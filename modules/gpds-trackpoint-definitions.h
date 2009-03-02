@@ -22,17 +22,6 @@
 
 #define GPDS_TRACK_POINT_DEVICE_NAME "TPPS/2 IBM TrackPoint"
 
-#define GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION "Evdev Middle Button Emulation"
-#define GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT   "Evdev Middle Button Timeout"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION         "Evdev Wheel Emulation"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA "Evdev Wheel Emulation Inertia"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS  "Evdev Wheel Emulation X Axis"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS  "Evdev Wheel Emulation Y Axis"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION_AXES    "Evdev Wheel Emulation Axes"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT "Evdev Wheel Emulation Timeout"
-#define GPDS_TRACK_POINT_WHEEL_EMULATION_BUTTON  "Evdev Wheel Emulation Button"
-#define GPDS_TRACK_POINT_DRAG_LOCK_BUTTONS       "Evdev Drag Lock Buttons"
-
 #define GPDS_TRACK_POINT_GCONF_DIR                   "/desktop/gnome/peripherals/trackpoint"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY GPDS_TRACK_POINT_GCONF_DIR "/middle_button_emulation"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY   GPDS_TRACK_POINT_GCONF_DIR "/middle_button_timeoue"
