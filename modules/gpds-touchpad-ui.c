@@ -456,7 +456,7 @@ set_circular_scrolling_trigger_button_state (GpdsTouchpadUI *ui,
 
 #define DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(position, trigger)                                   \
 static void                                                                                             \
-cb_trigger_ ## position ## _toggle_toggled (GtkToggleButton *button, gpointer user_data)                \
+cb_trigger_ ## position ## _toggle_button_press_event (GtkToggleButton *button, gpointer user_data)     \
 {                                                                                                       \
     set_circular_scrolling_trigger_property(GPDS_TOUCHPAD_UI(user_data),                                \
                                             GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ ## trigger);      \
@@ -496,15 +496,15 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(horizontal_scroll_scale, value_changed);
 
     /* cirlular scrolling trigger */
-    CONNECT(trigger_top_toggle, toggled);
-    CONNECT(trigger_top_right_toggle, toggled);
-    CONNECT(trigger_right_toggle, toggled);
-    CONNECT(trigger_right_bottom_toggle, toggled);
-    CONNECT(trigger_bottom_toggle, toggled);
-    CONNECT(trigger_bottom_left_toggle, toggled);
-    CONNECT(trigger_left_toggle, toggled);
-    CONNECT(trigger_left_top_toggle, toggled);
-    CONNECT(trigger_any_toggle, toggled);
+    CONNECT(trigger_top_toggle, button_press_event);
+    CONNECT(trigger_top_right_toggle, button_press_event);
+    CONNECT(trigger_right_toggle, button_press_event);
+    CONNECT(trigger_right_bottom_toggle, button_press_event);
+    CONNECT(trigger_bottom_toggle, button_press_event);
+    CONNECT(trigger_bottom_left_toggle, button_press_event);
+    CONNECT(trigger_left_toggle, button_press_event);
+    CONNECT(trigger_left_top_toggle, button_press_event);
+    CONNECT(trigger_any_toggle, button_press_event);
 
 #undef CONNECT
 }
