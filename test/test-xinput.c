@@ -4,6 +4,7 @@
 
 void test_new (void);
 void test_property (void);
+void test_set_int_properties (void);
 
 static GpdsXInput *xinput;
 static gint *values;
@@ -79,6 +80,27 @@ test_property (void)
     gcut_assert_error(error);
     cut_assert_equal_int(1, n_values);
     cut_assert_equal_int(original_value, values[0]);
+}
+
+void
+test_set_int_properties (void)
+{
+    cut_trace(test_new());
+
+    cut_assert_true(gpds_xinput_get_property(xinput,
+                                             "Evdev Middle Button Emulation",
+                                             &error,
+                                             &values, &n_values));
+    gcut_assert_error(error);
+    cut_assert_equal_int(1, n_values);
+
+    cut_assert_true(gpds_xinput_set_int_properties(xinput,
+                                                   "Evdev Middle Button Emulation",
+                                                   8,
+                                                   &error,
+                                                   (gint*)&values,
+                                                   n_values));
+    gcut_assert_error(error);
 }
 
 /*

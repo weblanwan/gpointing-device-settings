@@ -313,6 +313,65 @@ gpds_xinput_set_property (GpdsXInput *xinput,
     return success;
 }
 
+gboolean
+gpds_xinput_set_int_properties (GpdsXInput *xinput,
+                                const gchar *property_name,
+                                gint format_type,
+                                GError **error,
+                                gint *properties,
+                                guint n_properties)
+{
+    XDevice *device;
+    Atom property_atom;
+    gint i;
+    gchar *property_data;
+
+    device = get_device(xinput, error);
+    if (!device)
+        return FALSE;
+
+    property_atom = XInternAtom(GDK_DISPLAY(), property_name, False);
+
+    switch (format_type) {
+    case 8:
+        property_data = (gchar*)g_new(int8_t*, n_properties);
+        break;
+    case 16:
+        property_data = (gchar*)g_new(int16_t*, n_properties);
+        break;
+    case 32:
+    default:
+        property_data = (gchar*)g_new(int32_t*, n_properties);
+        break;
+    }
+
+    for (i = 0; i < n_properties; i++) {
+        switch (format_type) {
+        case 8:
+            *(((int8_t*)property_data) + i) = properties[i];
+            break;
+        case 16:
+            *(((int16_t*)property_data) + i) = properties[i];
+            break;
+        case 32:
+        default:
+            *(((int32_t*)property_data) + i) = properties[i];
+            break;
+        }
+    }
+
+    gdk_error_trap_push();
+    XChangeDeviceProperty(GDK_DISPLAY(),
+                          device, property_atom,
+                          XA_INTEGER, format_type, PropModeReplace,
+                          (unsigned char*)property_data, n_properties);
+    gdk_error_trap_pop();
+
+    g_free(property_data);
+
+    return TRUE;
+}
+
 static Atom
 get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
 {
