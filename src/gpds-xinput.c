@@ -220,99 +220,6 @@ get_device (GpdsXInput *xinput, GError **error)
     return priv->device;
 }
 
-static gboolean
-set_property_va_list (GpdsXInput *xinput,
-                      const gchar *property_name,
-                      gint format_type,
-                      GError **error,
-                      gint first_value, va_list var_args)
-{
-    XDevice *device;
-    Atom property_atom;
-    gint i, n_values = 1;
-    gint *values;
-    gchar *property_data;
-    va_list copy_var_args;
-
-    device = get_device(xinput, error);
-    if (!device)
-        return FALSE;
-
-    property_atom = XInternAtom(GDK_DISPLAY(), property_name, False);
-
-    G_VA_COPY(copy_var_args, var_args);
-    while (va_arg(var_args, gint))
-        n_values++;
-
-    values = g_new(gint, n_values);
-    values[0] = first_value;
-
-    for (i = 1; i < n_values; i++) {
-        values[i] = va_arg(copy_var_args, gint);
-    }
-
-    switch (format_type) {
-    case 8:
-        property_data = (gchar*)g_new(int8_t*, n_values);
-        break;
-    case 16:
-        property_data = (gchar*)g_new(int16_t*, n_values);
-        break;
-    case 32:
-    default:
-        property_data = (gchar*)g_new(int32_t*, n_values);
-        break;
-    }
-
-    for (i = 0; i < n_values; i++) {
-        switch (format_type) {
-        case 8:
-            *(((int8_t*)property_data) + i) = values[i];
-            break;
-        case 16:
-            *(((int16_t*)property_data) + i) = values[i];
-            break;
-        case 32:
-        default:
-            *(((int32_t*)property_data) + i) = values[i];
-            break;
-        }
-    }
-
-    va_end(copy_var_args);
-    g_free(values);
-
-    gdk_error_trap_push();
-    XChangeDeviceProperty(GDK_DISPLAY(),
-                          device, property_atom,
-                          XA_INTEGER, format_type, PropModeReplace,
-                          (unsigned char*)property_data, n_values);
-    gdk_error_trap_pop();
-
-    g_free(property_data);
-
-    return TRUE;
-}
-
-gboolean
-gpds_xinput_set_property (GpdsXInput *xinput,
-                          const gchar *property_name,
-                          gint format_type,
-                          GError **error,
-                          gint first_value, ...)
-{
-    gboolean success;
-    va_list var_args;
-
-    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
-
-    va_start(var_args, first_value);
-    success = set_property_va_list(xinput, property_name, format_type, error, first_value, var_args);
-    va_end(var_args);
-
-    return success;
-}
-
 gboolean
 gpds_xinput_set_int_properties (GpdsXInput *xinput,
                                 const gchar *property_name,
@@ -325,6 +232,8 @@ gpds_xinput_set_int_properties (GpdsXInput *xinput,
     Atom property_atom;
     gint i;
     gchar *property_data;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
 
     device = get_device(xinput, error);
     if (!device)

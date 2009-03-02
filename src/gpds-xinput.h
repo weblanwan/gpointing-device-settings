@@ -57,12 +57,6 @@ GType       gpds_xinput_get_type           (void) G_GNUC_CONST;
 gboolean    gpds_xinput_exist_device       (const gchar *device_name);
 
 GpdsXInput *gpds_xinput_new                (const gchar *device_name);
-gboolean    gpds_xinput_set_property       (GpdsXInput *xinput,
-                                            const gchar *property_name,
-                                            gint format_type,
-                                            GError **error,
-                                            gint first_property_value,
-                                            ...) G_GNUC_NULL_TERMINATED;
 gboolean    gpds_xinput_set_int_properties (GpdsXInput *xinput,
                                             const gchar *property_name,
                                             gint format_type,
