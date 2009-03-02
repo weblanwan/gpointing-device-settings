@@ -109,10 +109,10 @@ cb_gconf_client_notify (GConfClient *client,
                     !strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY)) {
             gboolean enable_vertical, enable_horizontal;
             enable_vertical = gconf_client_get_bool(client,
-                                                    GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS,
+                                                    GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
                                                     NULL);
             enable_horizontal = gconf_client_get_bool(client,
-                                                      GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS,
+                                                      GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
                                                       NULL);
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
