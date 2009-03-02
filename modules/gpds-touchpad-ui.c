@@ -177,15 +177,16 @@ static void
 set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsTouchpadProperty property)
 {
     GError *error = NULL;
-    gboolean active;
+    gint properties[1];
 
-    active = gtk_toggle_button_get_active(button);
-    if (!gpds_xinput_set_property(xinput,
-                                  gpds_touchpad_xinput_get_name(property),
-                                  gpds_touchpad_xinput_get_format_type(property),
-                                  &error,
-                                  active ? 1 : 0,
-                                  NULL)) {
+    properties[0] = gtk_toggle_button_get_active(button) ? 1 : 0;
+
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        gpds_touchpad_xinput_get_name(property),
+                                        gpds_touchpad_xinput_get_format_type(property),
+                                        &error,
+                                        properties,
+                                        1)) {
         if (error) {
             show_error(error);
             g_error_free(error);
@@ -197,25 +198,25 @@ static void
 set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
     GError *error = NULL;
-    gboolean vertical_scrolling_active;
-    gboolean horizontal_scrolling_active;
     GObject *object;
+    gint properties[3];
 
     object = gtk_builder_get_object(builder, "vertical_scroll_check");
-    vertical_scrolling_active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object));
     set_widget_sensitivity(builder, "vertical_scroll_box", GTK_TOGGLE_BUTTON(object));
+    properties[0] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
 
     object = gtk_builder_get_object(builder, "horizontal_scroll_check");
-    horizontal_scrolling_active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object));
     set_widget_sensitivity(builder, "horizontal_scroll_box", GTK_TOGGLE_BUTTON(object));
+    properties[1] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
 
-    if (!gpds_xinput_set_property(xinput,
-                                  gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
-                                  gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
-                                  &error,
-                                  vertical_scrolling_active ? 1 : 0,
-                                  horizontal_scrolling_active ? 1 : 0,
-                                  NULL)) {
+    properties[2] = 0;
+
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                        &error,
+                                        properties,
+                                        3)) {
         if (error) {
             show_error(error);
             g_error_free(error);
@@ -227,15 +228,15 @@ static void
 set_range_property (GpdsXInput *xinput, GtkRange *range, GpdsTouchpadProperty property)
 {
     GError *error = NULL;
-    gdouble value;
+    gint properties[1];
 
-    value = gtk_range_get_value(range);
-    if (!gpds_xinput_set_property(xinput,
-                                  gpds_touchpad_xinput_get_name(property),
-                                  gpds_touchpad_xinput_get_format_type(property),
-                                  &error,
-                                  (gint)value,
-                                  NULL)) {
+    properties[0] = (gint)gtk_range_get_value(range);
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        gpds_touchpad_xinput_get_name(property),
+                                        gpds_touchpad_xinput_get_format_type(property),
+                                        &error,
+                                        properties,
+                                        1)) {
         if (error) {
             show_error(error);
             g_error_free(error);
@@ -247,23 +248,21 @@ static void
 set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
     GError *error = NULL;
-    gdouble vertical_scrolling_distance;
-    gdouble horizontal_scrolling_distance;
     GObject *object;
+    gint properties[2];
 
     object = gtk_builder_get_object(builder, "horizontal_scroll_scale");
-    vertical_scrolling_distance = gtk_range_get_value(GTK_RANGE(object));
+    properties[0] = (gint)gtk_range_get_value(GTK_RANGE(object));
 
     object = gtk_builder_get_object(builder, "vertical_scroll_scale");
-    horizontal_scrolling_distance = gtk_range_get_value(GTK_RANGE(object));
+    properties[1] = (gint)gtk_range_get_value(GTK_RANGE(object));
 
-    if (!gpds_xinput_set_property(xinput,
-                                  gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
-                                  gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
-                                  &error,
-                                  (gint)vertical_scrolling_distance,
-                                  (gint)horizontal_scrolling_distance,
-                                  NULL)) {
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                        &error,
+                                        properties,
+                                        2)) {
         if (error) {
             show_error(error);
             g_error_free(error);

@@ -83,6 +83,7 @@ cb_gconf_client_notify (GConfClient *client,
     GConfValue *value;
     const gchar *key;
     GpdsXInput *xinput;
+    gint properties[4];
 
     if (!gpds_xinput_exist_device(GPDS_TRACK_POINT_DEVICE_NAME))
         return;
@@ -95,61 +96,76 @@ cb_gconf_client_notify (GConfClient *client,
     switch (value->type) {
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION),
-                                     gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION),
-                                     NULL,
-                                     gconf_value_get_bool(value),
-                                     NULL);
+            properties[0] = gconf_value_get_bool(value) ? 1 : 0;
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION),
+                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION),
+                                           NULL,
+                                           properties,
+                                           1);
         } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION),
-                                     gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION),
-                                     NULL,
-                                     gconf_value_get_bool(value),
-                                     NULL);
+            properties[0] = gconf_value_get_bool(value) ? 1 : 0;
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION),
+                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION),
+                                           NULL,
+                                           properties,
+                                           1);
         } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY) ||
                     !strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY)) {
-            gboolean enable_vertical, enable_horizontal;
-            enable_vertical = gconf_client_get_bool(client,
-                                                    GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
-                                                    NULL);
-            enable_horizontal = gconf_client_get_bool(client,
-                                                      GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
-                                                      NULL);
-            gpds_xinput_set_property(xinput,
-                                     gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES),
-                                     gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES),
-                                     NULL,
-                                     enable_vertical ? 6 : -1,
-                                     enable_vertical ? 7 : -1,
-                                     enable_horizontal ? 4 : -1,
-                                     enable_horizontal ? 5 : -1,
-                                     NULL);
+            gboolean enable;
+            enable = gconf_client_get_bool(client,
+                                           GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
+                                           NULL);
+            if (enable) {
+                properties[0] = 6;
+                properties[1] = 7;
+            } else {
+                properties[0] = 0;
+                properties[1] = 0;
+            }
+
+            enable = gconf_client_get_bool(client,
+                                           GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
+                                           NULL);
+            if (enable) {
+                properties[2] = 4;
+                properties[3] = 5;
+            } else {
+                properties[2] = 0;
+                properties[3] = 0;
+            }
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES),
+                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES),
+                                           NULL,
+                                           properties,
+                                           4);
         }
         break;
     case GCONF_VALUE_INT:
+        properties[0] = gconf_value_get_int(value);
         if (!strcmp(key, GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT),
-                                     gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT),
-                                     NULL,
-                                     gconf_value_get_int(value),
-                                     NULL);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT),
+                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT),
+                                           NULL,
+                                           properties,
+                                           1);
         } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT),
-                                     gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT),
-                                     NULL,
-                                     gconf_value_get_int(value),
-                                     NULL);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT),
+                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT),
+                                           NULL,
+                                           properties,
+                                           1);
         } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA),
-                                     gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA),
-                                     NULL,
-                                     gconf_value_get_int(value),
-                                     NULL);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA),
+                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA),
+                                           NULL,
+                                           properties,
+                                           1);
         }
         break;
     default:

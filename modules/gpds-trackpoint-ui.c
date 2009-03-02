@@ -158,17 +158,19 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsTrackPoint
     gboolean active;
     const gchar *property_name;
     gint format_type;
+    gint properties[1];
 
     active = gtk_toggle_button_get_active(button);
     property_name = gpds_track_point_xinput_get_name(property);
     format_type = gpds_track_point_xinput_get_format_type(property);
 
-    gpds_xinput_set_property(xinput,
-                             property_name,
-                             format_type,
-                             &error,
-                             active ? 1 : 0,
-                             NULL);
+    properties[0] = active ? 1 : 0;
+    gpds_xinput_set_int_properties(xinput,
+                                   property_name,
+                                   format_type,
+                                   &error,
+                                   properties,
+                                   1);
     if (error) {
         show_error(error);
         g_error_free(error);
@@ -182,17 +184,19 @@ set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, GpdsTrackPointProp
     gdouble value;
     const gchar *property_name;
     gint format_type;
+    gint properties[1];
 
     value = gtk_spin_button_get_value(button);
     property_name = gpds_track_point_xinput_get_name(property);
     format_type = gpds_track_point_xinput_get_format_type(property);
 
-    gpds_xinput_set_property(xinput,
-                             property_name,
-                             format_type,
-                             &error,
-                             (gint)value,
-                             NULL);
+    properties[0] = (gint)value;
+    gpds_xinput_set_int_properties(xinput,
+                                   property_name,
+                                   format_type,
+                                   &error,
+                                   properties,
+                                   1);
     if (error) {
         show_error(error);
         g_error_free(error);
@@ -249,31 +253,42 @@ set_scroll_axes_property (GpdsTrackPointUI *ui)
     GtkBuilder *builder;
     GtkToggleButton *button;
     GError *error = NULL;
-    gboolean horizontal_scroll_active;
-    gboolean vertical_scroll_active;
+    gboolean active;
     const gchar *property_name;
     gint format_type;
+    gint properties[4];
 
     builder = gpds_ui_get_builder(GPDS_UI(ui));
 
     button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_vertical"));
-    vertical_scroll_active = gtk_toggle_button_get_active(button);
+    active = gtk_toggle_button_get_active(button);
+    if (active) {
+        properties[0] = 6;
+        properties[1] = 7;
+    } else {
+        properties[0] = 0;
+        properties[1] = 0;
+    }
 
     button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_horizontal"));
-    horizontal_scroll_active = gtk_toggle_button_get_active(button);
+    active = gtk_toggle_button_get_active(button);
+    if (active) {
+        properties[2] = 4;
+        properties[3] = 5;
+    } else {
+        properties[2] = 0;
+        properties[3] = 0;
+    }
 
     property_name = gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES);
     format_type = gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES);
 
-    gpds_xinput_set_property(ui->xinput,
-                             property_name,
-                             format_type,
-                             &error,
-                             vertical_scroll_active ? 6 : -1,
-                             vertical_scroll_active ? 7 : -1,
-                             horizontal_scroll_active ? 4 : -1,
-                             horizontal_scroll_active ? 5 : -1,
-                             NULL);
+    gpds_xinput_set_int_properties(ui->xinput,
+                                   property_name,
+                                   format_type,
+                                   &error,
+                                   properties,
+                                   4);
     if (error) {
         show_error(error);
         g_error_free(error);

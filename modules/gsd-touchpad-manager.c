@@ -83,6 +83,7 @@ cb_gconf_client_notify (GConfClient *client,
     GConfValue *value;
     const gchar *key;
     GpdsXInput *xinput;
+    gint properties[4];
 
     if (!gpds_xinput_exist_device(GPDS_TOUCHPAD_DEVICE_NAME))
         return;
@@ -95,66 +96,66 @@ cb_gconf_client_notify (GConfClient *client,
     switch (value->type) {
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_FAST_TAP),
-                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TAP_FAST_TAP),
-                                     NULL,
-                                     gconf_value_get_bool(value),
-                                     NULL);
+            properties[0] = gconf_value_get_bool(value) ? 1 : 0;
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_FAST_TAP),
+                                           gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TAP_FAST_TAP),
+                                           NULL,
+                                           properties,
+                                           1);
         } else  if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_CIRCULAR_SCROLLING),
-                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_CIRCULAR_SCROLLING),
-                                     NULL,
-                                     gconf_value_get_bool(value),
-                                     NULL);
+            properties[0] = gconf_value_get_bool(value) ? 1 : 0;
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_CIRCULAR_SCROLLING),
+                                           gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_CIRCULAR_SCROLLING),
+                                           NULL,
+                                           properties,
+                                           1);
         } else  if (!strcmp(key, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY) ||
                     !strcmp(key, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY)) {
-            gboolean enable_vertical, enable_horizontal;
-            enable_vertical = gconf_client_get_bool(client,
-                                                    GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY,
-                                                    NULL);
-            enable_horizontal = gconf_client_get_bool(client,
-                                                      GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY,
-                                                      NULL);
+            gboolean enable;
+            enable = gconf_client_get_bool(client,
+                                           GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY,
+                                           NULL);
+            properties[0] = enable ? 1 : 0;
+            enable = gconf_client_get_bool(client,
+                                           GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY,
+                                           NULL);
+            properties[1] = enable ? 1 : 0;
 
-            gpds_xinput_set_property(xinput,
-                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
-                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
-                                     NULL,
-                                     enable_vertical ? 1 : 0,
-                                     enable_horizontal ? 1 : 0,
-                                     NULL);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                           gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                           NULL,
+                                           properties,
+                                           2);
         }
         break;
     case GCONF_VALUE_INT:
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_TIME_KEY)) {
-            gpds_xinput_set_property(xinput,
-                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_TIME),
-                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TAP_TIME),
-                                     NULL,
-                                     gconf_value_get_int(value),
-                                     NULL);
+            properties[0] = gconf_value_get_int(value);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_TIME),
+                                           gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TAP_TIME),
+                                           NULL,
+                                           properties,
+                                           1);
         } else if (!strcmp(key, GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY) ||
                    !strcmp(key, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY)) {
-            gint vertical_scrolling_distance;
-            gint horizontal_scrolling_distance;
-
-            vertical_scrolling_distance =
+            properties[0] =
                 gconf_client_get_int(client,
                                      GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY,
                                      NULL);
-            horizontal_scrolling_distance =
+            properties[1] =
                 gconf_client_get_int(client,
                                      GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY,
                                      NULL);
-            gpds_xinput_set_property(xinput,
-                                     gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
-                                     gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
-                                     NULL,
-                                     vertical_scrolling_distance,
-                                     horizontal_scrolling_distance,
-                                     NULL);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                           gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                           NULL,
+                                           properties,
+                                           2);
         }
         break;
     default:
