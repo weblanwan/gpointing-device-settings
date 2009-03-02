@@ -182,6 +182,7 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *p
     active = gtk_toggle_button_get_active(button);
     if (!gpds_xinput_set_property(xinput,
                                   property_name,
+                                  8,
                                   &error,
                                   active ? 1 : 0,
                                   NULL)) {
@@ -210,6 +211,7 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 
     if (!gpds_xinput_set_property(xinput,
                                   GPDS_TOUCHPAD_EDGE_SCROLLING,
+                                  16,
                                   &error,
                                   vertical_scrolling_active ? 1 : 0,
                                   horizontal_scrolling_active ? 1 : 0,
@@ -230,6 +232,7 @@ set_range_property (GpdsXInput *xinput, GtkRange *range, const gchar *property_n
     value = gtk_range_get_value(range);
     if (!gpds_xinput_set_property(xinput,
                                   property_name,
+                                  16,
                                   &error,
                                   (gint)value,
                                   NULL)) {
@@ -256,6 +259,7 @@ set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
 
     if (!gpds_xinput_set_property(xinput,
                                   GPDS_TOUCHPAD_SCROLLING_DISTANCE,
+                                  16,
                                   &error,
                                   (gint)vertical_scrolling_distance,
                                   (gint)horizontal_scrolling_distance,

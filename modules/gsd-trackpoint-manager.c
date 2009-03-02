@@ -96,12 +96,14 @@ cb_gconf_client_notify (GConfClient *client,
         if (!strcmp(key, GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION,
+                                     8,
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
         } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION,
+                                     8,
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
@@ -116,6 +118,7 @@ cb_gconf_client_notify (GConfClient *client,
                                                       NULL);
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
+                                     8,
                                      NULL,
                                      enable_vertical ? 6 : -1,
                                      enable_vertical ? 7 : -1,
@@ -128,18 +131,21 @@ cb_gconf_client_notify (GConfClient *client,
         if (!strcmp(key, GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT,
+                                     32,
                                      NULL,
                                      gconf_value_get_int(value),
                                      NULL);
         } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT,
+                                     16,
                                      NULL,
                                      gconf_value_get_int(value),
                                      NULL);
         } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA,
+                                     16,
                                      NULL,
                                      gconf_value_get_int(value),
                                      NULL);

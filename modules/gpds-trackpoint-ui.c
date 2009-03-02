@@ -159,6 +159,7 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, const gchar *p
     active = gtk_toggle_button_get_active(button);
     gpds_xinput_set_property(xinput,
                              property_name,
+                             8,
                              &error,
                              active ? 1 : 0,
                              NULL);
@@ -177,6 +178,7 @@ set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, const gchar *prope
     value = gtk_spin_button_get_value(button);
     gpds_xinput_set_property(xinput,
                              property_name,
+                             16,
                              &error,
                              (gint)value,
                              NULL);
@@ -249,6 +251,7 @@ set_scroll_axes_property (GpdsTrackPointUI *ui)
 
     gpds_xinput_set_property(ui->xinput,
                              GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
+                             8,
                              &error,
                              vertical_scroll_active ? 6 : -1,
                              vertical_scroll_active ? 7 : -1,

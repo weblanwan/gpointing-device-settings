@@ -42,38 +42,40 @@ test_property (void)
     cut_trace(test_new());
 
     cut_assert_true(gpds_xinput_get_property(xinput,
-                                          "Middle Button Emulation",
-                                          &error,
-                                          &values, &n_values));
+                                             "Evdev Middle Button Emulation",
+                                             &error,
+                                             &values, &n_values));
     gcut_assert_error(error);
     cut_assert_equal_int(1, n_values);
     original_value = values[0];
 
     cut_assert_true(gpds_xinput_set_property(xinput,
-                                          "Middle Button Emulation",
-                                          &error,
-                                          1, NULL));
+                                             "Evdev Middle Button Emulation",
+                                             8,
+                                             &error,
+                                             1, NULL));
     gcut_assert_error(error);
     g_free(values);
     cut_assert_true(gpds_xinput_get_property(xinput,
-                                          "Middle Button Emulation",
-                                          &error,
-                                          &values, &n_values));
+                                             "Evdev Middle Button Emulation",
+                                             &error,
+                                             &values, &n_values));
     gcut_assert_error(error);
     cut_assert_equal_int(1, n_values);
     cut_assert_equal_int(1, values[0]);
 
     cut_assert_true(gpds_xinput_set_property(xinput,
-                                          "Middle Button Emulation",
-                                          &error,
-                                          original_value, NULL));
+                                             "Evdev Middle Button Emulation",
+                                             8,
+                                             &error,
+                                             original_value, NULL));
     gcut_assert_error(error);
 
     g_free(values);
     cut_assert_true(gpds_xinput_get_property(xinput,
-                                          "Middle Button Emulation",
-                                          &error,
-                                          &values, &n_values));
+                                             "Evdev Middle Button Emulation",
+                                             &error,
+                                             &values, &n_values));
     gcut_assert_error(error);
     cut_assert_equal_int(1, n_values);
     cut_assert_equal_int(original_value, values[0]);

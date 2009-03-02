@@ -62,6 +62,7 @@ GpdsXInput  *gpds_xinput_new             (const gchar *device_name);
 
 gboolean     gpds_xinput_set_property    (GpdsXInput *xinput,
                                           const gchar *property_name,
+                                          gint format_type,
                                           GError **error,
                                           gint first_property_value,
                                           ...) G_GNUC_NULL_TERMINATED;

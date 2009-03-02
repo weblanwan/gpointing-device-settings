@@ -223,6 +223,7 @@ get_device (GpdsXInput *xinput, GError **error)
 static gboolean
 set_property_va_list (GpdsXInput *xinput,
                       const gchar *property_name,
+                      gint format_type,
                       GError **error,
                       gint first_value, va_list var_args)
 {
@@ -230,10 +231,8 @@ set_property_va_list (GpdsXInput *xinput,
     Atom property_atom;
     gint i, n_values = 1;
     gint *values;
-    gint max_value;
     gchar *property_data;
     va_list copy_var_args;
-    int format;
 
     device = get_device(xinput, error);
     if (!device)
@@ -247,25 +246,26 @@ set_property_va_list (GpdsXInput *xinput,
 
     values = g_new(gint, n_values);
     values[0] = first_value;
-    max_value = values[0];
+
     for (i = 1; i < n_values; i++) {
         values[i] = va_arg(copy_var_args, gint);
-        max_value = MAX(max_value, values[i]);
     }
 
-    if (max_value <= G_MAXINT8) {
+    switch (format_type) {
+    case 8:
         property_data = (gchar*)g_new(int8_t*, n_values);
-        format = 8;
-    } else if (max_value <= G_MAXINT16) {
+        break;
+    case 16:
         property_data = (gchar*)g_new(int16_t*, n_values);
-        format = 16;
-    } else {
+        break;
+    case 32:
+    default:
         property_data = (gchar*)g_new(int32_t*, n_values);
-        format = 32;
+        break;
     }
 
     for (i = 0; i < n_values; i++) {
-        switch (format) {
+        switch (format_type) {
         case 8:
             *(((int8_t*)property_data) + i) = values[i];
             break;
@@ -285,7 +285,7 @@ set_property_va_list (GpdsXInput *xinput,
     gdk_error_trap_push();
     XChangeDeviceProperty(GDK_DISPLAY(),
                           device, property_atom,
-                          XA_INTEGER, format, PropModeReplace,
+                          XA_INTEGER, format_type, PropModeReplace,
                           (unsigned char*)property_data, n_values);
     gdk_error_trap_pop();
 
@@ -297,6 +297,7 @@ set_property_va_list (GpdsXInput *xinput,
 gboolean
 gpds_xinput_set_property (GpdsXInput *xinput,
                           const gchar *property_name,
+                          gint format_type,
                           GError **error,
                           gint first_value, ...)
 {
@@ -306,7 +307,7 @@ gpds_xinput_set_property (GpdsXInput *xinput,
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
 
     va_start(var_args, first_value);
-    success = set_property_va_list(xinput, property_name, error, first_value, var_args);
+    success = set_property_va_list(xinput, property_name, format_type, error, first_value, var_args);
     va_end(var_args);
 
     return success;

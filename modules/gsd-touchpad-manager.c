@@ -96,12 +96,14 @@ cb_gconf_client_notify (GConfClient *client,
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TOUCHPAD_TAP_FAST_TAP,
+                                     8,
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
         } else  if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
+                                     8,
                                      NULL,
                                      gconf_value_get_bool(value),
                                      NULL);
@@ -117,6 +119,7 @@ cb_gconf_client_notify (GConfClient *client,
 
             gpds_xinput_set_property(xinput,
                                      GPDS_TOUCHPAD_EDGE_SCROLLING,
+                                     16,
                                      NULL,
                                      enable_vertical ? 1 : 0,
                                      enable_horizontal ? 1 : 0,
@@ -127,6 +130,7 @@ cb_gconf_client_notify (GConfClient *client,
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_TIME_KEY)) {
             gpds_xinput_set_property(xinput,
                                      GPDS_TOUCHPAD_TAP_TIME,
+                                     16,
                                      NULL,
                                      gconf_value_get_int(value),
                                      NULL);
@@ -145,6 +149,7 @@ cb_gconf_client_notify (GConfClient *client,
                                      NULL);
             gpds_xinput_set_property(xinput,
                                      GPDS_TOUCHPAD_SCROLLING_DISTANCE,
+                                     16,
                                      NULL,
                                      vertical_scrolling_distance,
                                      horizontal_scrolling_distance,
