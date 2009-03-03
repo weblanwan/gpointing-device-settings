@@ -156,13 +156,12 @@ show_error (GError *error)
 static void
 set_widget_sensitivity (GtkBuilder *builder,
                         const gchar *widget_id, 
-                        GtkToggleButton *button)
+                        gboolean sensitivity)
 {
     GObject *object;
 
     object = gtk_builder_get_object(builder, widget_id);
-    gtk_widget_set_sensitive(GTK_WIDGET(object),
-                             gtk_toggle_button_get_active(button));
+    gtk_widget_set_sensitive(GTK_WIDGET(object), sensitivity);
 }
 
 static void
@@ -194,12 +193,12 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
     gint properties[3];
 
     object = gtk_builder_get_object(builder, "vertical_scrolling");
-    set_widget_sensitivity(builder, "vertical_scrolling", GTK_TOGGLE_BUTTON(object));
     properties[0] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
+    set_widget_sensitivity(builder, "vertical_scrolling_box", properties[0]);
 
     object = gtk_builder_get_object(builder, "horizontal_scrolling");
-    set_widget_sensitivity(builder, "horizontal_scrolling", GTK_TOGGLE_BUTTON(object));
     properties[1] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
+    set_widget_sensitivity(builder, "horizontal_scrolling_box", properties[1]);
 
     properties[2] = 0;
 
@@ -316,9 +315,9 @@ cb_circular_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
     builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, GPDS_TOUCHPAD_CIRCULAR_SCROLLING);
-    set_widget_sensitivity(builder, "circular_scroling_box", button);
 
     check = gtk_toggle_button_get_active(button);
+    set_widget_sensitivity(builder, "circular_scrolling_box", check);
     gconf_client_set_bool(ui->gconf, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY, check, NULL);
 }
 
@@ -465,6 +464,28 @@ DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(any, ANY)
 #undef DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK
 
 static void
+set_sensitivity_depends_on_use_type (GpdsTouchpadUI *ui,
+                                     GpdsTouchpadUseType use_type)
+{
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+    switch (use_type) {
+    case GPDS_TOUCHPAD_USE_TYPE_OFF:
+    case GPDS_TOUCHPAD_USE_TYPE_CURSOR_MOVE_ONLY:
+        set_widget_sensitivity(builder, "scrolling_vbox", FALSE);
+        set_widget_sensitivity(builder, "tapping_vbox", FALSE);
+        break;
+    case GPDS_TOUCHPAD_USE_TYPE_NORMAL:
+        set_widget_sensitivity(builder, "scrolling_vbox", TRUE);
+        set_widget_sensitivity(builder, "tapping_vbox", TRUE);
+    default:
+        break;
+    }
+}
+
+static void
 set_touchpad_use_type_combo_state (GpdsTouchpadUI *ui, 
                                    GpdsTouchpadUseType use_type)
 {
@@ -475,6 +496,7 @@ set_touchpad_use_type_combo_state (GpdsTouchpadUI *ui,
 
     combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, "touchpad_use_type"));
     gtk_combo_box_set_active(combo, (gint)use_type);
+    set_sensitivity_depends_on_use_type(ui, use_type);
 }
 
 static void
@@ -497,6 +519,7 @@ cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
         }
     }
     gconf_client_set_bool(ui->gconf, GPDS_TOUCHPAD_OFF_KEY, properties[0], NULL);
+    set_sensitivity_depends_on_use_type(ui, properties[0]);
 }
 
 static void
@@ -582,7 +605,7 @@ set_integer_property_from_preference (GpdsTouchpadUI *ui,
     g_free(values);
 }
 
-static void
+static gboolean
 set_boolean_property_from_preference (GpdsTouchpadUI *ui,
                                       GpdsTouchpadProperty property,
                                       const gchar *gconf_key_name,
@@ -596,7 +619,7 @@ set_boolean_property_from_preference (GpdsTouchpadUI *ui,
 
     if (!get_integer_property(ui->xinput, property,
                               &values, &n_values)) {
-        return;
+        return FALSE;
     }
 
     dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_TOUCHPAD_GCONF_DIR, NULL);
@@ -607,6 +630,8 @@ set_boolean_property_from_preference (GpdsTouchpadUI *ui,
     object = gtk_builder_get_object(builder, object_name);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
     g_free(values);
+
+    return enable;
 }
 
 static void
@@ -635,6 +660,7 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
         enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, "vertical_scrolling");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
+    set_widget_sensitivity(builder, "vertical_scrolling_box", enable);
 
     if (dir_exists)
         enable = gconf_client_get_bool(ui->gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, NULL);
@@ -642,6 +668,7 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
         enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, "horizontal_scrolling");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
+    set_widget_sensitivity(builder, "horizontal_scrolling_box", enable);
 
     g_free(values);
 }
@@ -684,6 +711,21 @@ set_scroll_distance_property_from_preference (GpdsTouchpadUI *ui,
         g_clear_error(&error);
 
     g_free(values);
+}
+
+static void
+set_circular_scrolling_property_from_preference (GpdsTouchpadUI *ui,
+                                                 GtkBuilder *builder)
+{
+    gboolean enable;
+
+    enable = set_boolean_property_from_preference(ui,
+                                                  GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
+                                                  GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY,
+                                                  builder,
+                                                  "circular_scrolling");
+
+    set_widget_sensitivity(builder, "circular_scrolling_box", enable);
 }
 
 static void
@@ -751,11 +793,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          GPDS_TOUCHPAD_TAP_FAST_TAP_KEY,
                                          builder,
                                          "faster_tapping_check");
-    set_boolean_property_from_preference(touchpad_ui,
-                                         GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
-                                         GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY, 
-                                         builder,
-                                         "circular_scrolling");
+    set_circular_scrolling_property_from_preference(touchpad_ui, builder);
     set_edge_scroll_property_from_preference(touchpad_ui, builder);
     set_scroll_distance_property_from_preference(touchpad_ui, builder);
     set_circular_scrolling_trigger_property_from_preference(touchpad_ui, builder);
