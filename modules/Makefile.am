@@ -1,9 +1,10 @@
-@GSD_INTLTOOL_PLUGIN_RULE@
+SUBDIRS = common gnome-settings-daemon-plugins
 
-INCLUDES = 			\
-	 -I$(top_builddir)	\
-	 -I$(top_srcdir)	\
-	 -I$(top_srcdir)/src
+INCLUDES = 			        \
+	 -I$(top_builddir)	        \
+	 -I$(top_srcdir)	        \
+	 -I$(top_srcdir)/src            \
+	 -I$(top_srcdir)/modules/common
 
 AM_CFLAGS =			\
 	$(GPDS_CFLAGS)		\
@@ -25,61 +26,12 @@ LIBS =					\
 	$(GCONF2_LIBS)			\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
-trackpoint_common_SOURCES =             \
-        gpds-trackpoint-xinput.c        \
-        gpds-trackpoint-xinput.h        \
-	gpds-trackpoint-definitions.h
-
 trackpoint_la_SOURCES = 		\
-	gpds-trackpoint-ui.c		\
-        $(trackpoint_common_SOURCES)
+	gpds-trackpoint-ui.c
 
-touchpad_common_SOURCES =               \
-        gpds-touchpad-xinput.c          \
-        gpds-touchpad-xinput.h          \
-	gpds-touchpad-definitions.h
-        
+trackpoint_la_LIBADD = $(top_builddir)/modules/common/libtrackpoint_common.la
+
 touchpad_la_SOURCES = 			\
-	gpds-touchpad-ui.c		\
-        $(touchpad_common_SOURCES)
+	gpds-touchpad-ui.c
 
-# plugins for gnome-settings-daemon
-gsd_plugin_LTLIBRARIES =	\
-	libtrackpoint.la	\
-	libtouchpad.la
-
-gsd_plugin_CFLAGS =					\
-	$(AM_CFLAGS)					\
-	$(GNOME_SETTINGS_DAEMON_CFLAGS)			\
-	-DGNOME_SETTINGS_LOCALEDIR=\""$(localedir)"\"
-
-libtrackpoint_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libtrackpoint_la_SOURCES = 		\
-	gsd-trackpoint-plugin.c		\
-	gsd-trackpoint-manager.h	\
-	gsd-trackpoint-manager.c        \
-        $(trackpoint_common_SOURCES)
-
-libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libtouchpad_la_SOURCES = 		\
-	gsd-touchpad-plugin.c		\
-	gsd-touchpad-manager.h		\
-	gsd-touchpad-manager.c          \
-        $(touchpad_common_SOURCES)
-
-gsd_plugin_in_files =	 			\
-	trackpoint.gnome-settings-plugin.in	\
-	touchpad.gnome-settings-plugin.in
-
-gsd_plugin_DATA = $(gsd_plugin_in_files:.gnome-settings-plugin.in=.gnome-settings-plugin)
-
-EXTRA_DIST = 			\
-	$(gsd_plugin_in_files)	\
-	gnome-settings-plugin.h
-
-CLEANFILES = 			\
-	$(gsd_plugin_DATA)
-
-DISTCLEANFILES =		\
-	$(gsd_plugin_DATA)
-
+touchpad_la_LIBADD = $(top_builddir)/modules/common/libtouchpad_common.la

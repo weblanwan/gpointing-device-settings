@@ -20,6 +20,8 @@
 #ifndef __GPDS_TOUCHPAD_XINPUT_H__
 #define __GPDS_TOUCHPAD_XINPUT_H__
 
+#include <glib.h>
+
 typedef enum {
     GPDS_TOUCHPAD_EDGES,
     GPDS_TOUCHPAD_FINGER,

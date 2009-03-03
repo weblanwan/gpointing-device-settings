@@ -33,5 +33,5 @@ po/gpointing-device-settings.pot
 po/stamp-it
 po/.intltool-merge-cache
 src/gpointing-device-settings
-modules/touchpad.gnome-settings-plugin
-modules/trackpoint.gnome-settings-plugin
+modules/gnome-settings-daemon-plugins/touchpad.gnome-settings-plugin
+modules/gnome-settings-daemon-plugins/trackpoint.gnome-settings-plugin

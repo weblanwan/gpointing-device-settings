@@ -21,12 +21,10 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gsd-trackpoint-manager.h"
+#include "gpds-trackpoint-xinput.h"
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
-
-#include "gpds-trackpoint-xinput.h"
 
 static GpdsTrackPointXInputProperty properties[] = {
     {GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", 8, 1},

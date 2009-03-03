@@ -153,6 +153,8 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 modules/Makefile
+modules/common/Makefile
+modules/gnome-settings-daemon-plugins/Makefile
 data/Makefile
 data/trackpoint.ui
 data/touchpad.ui

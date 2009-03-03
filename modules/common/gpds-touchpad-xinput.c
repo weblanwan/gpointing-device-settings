@@ -21,12 +21,10 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gsd-trackpoint-manager.h"
+#include "gpds-touchpad-xinput.h"
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
-
-#include "gpds-touchpad-xinput.h"
 
 static GpdsTouchpadXInputProperty properties[] = {
     {GPDS_TOUCHPAD_EDGES,                      "Synaptics Edges", 32, 4},
