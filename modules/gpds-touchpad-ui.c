@@ -30,14 +30,6 @@
 #include "gpds-touchpad-definitions.h"
 #include "gpds-touchpad-xinput.h"
 
-static const gchar *touchpad_device_names[] =
-{
-    "SynPS/2 Synaptics TouchPad",
-    "AlpsPS/2 ALPS GlidePoint"
-};
-
-static const gint n_touchpad_device_names = G_N_ELEMENTS(touchpad_device_names);
-
 #define GPDS_TYPE_TOUCHPAD_UI            (gpds_touchpad_ui_get_type())
 #define GPDS_TOUCHPAD_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUI))
 #define GPDS_TOUCHPAD_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TOUCHPAD_UI, GpdsTouchpadUIClass))
@@ -714,23 +706,11 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     set_circular_scrolling_trigger_property_from_preference(touchpad_ui, builder);
 }
 
-static const gchar *
-find_device_name (void)
-{
-    gint i;
-
-    for (i = 0; i < n_touchpad_device_names; i++) {
-        if (gpds_xinput_exist_device(touchpad_device_names[i]))
-            return touchpad_device_names[i];
-    }
-    return NULL;
-}
-
 static gboolean
 is_available (GpdsUI *ui, GError **error)
 {
     const gchar *device_name;
-    device_name = find_device_name();
+    device_name = gpds_touchpad_xinput_find_device_name();
 
     if (!device_name) {
         g_set_error(error,

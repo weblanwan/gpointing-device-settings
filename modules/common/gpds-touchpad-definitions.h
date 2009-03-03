@@ -20,8 +20,6 @@
 #ifndef __GPDS_TOUCHPAD_GCONF_H__
 #define __GPDS_TOUCHPAD_GCONF_H__
 
-#define GPDS_TOUCHPAD_DEVICE_NAME "SynPS/2 Synaptics TouchPad"
-
 #define GPDS_TOUCHPAD_GCONF_DIR                   "/desktop/gnome/peripherals/touchpad"
 
 #define GPDS_TOUCHPAD_EDGES_KEY                         GPDS_TOUCHPAD_GCONF_DIR "/edges"

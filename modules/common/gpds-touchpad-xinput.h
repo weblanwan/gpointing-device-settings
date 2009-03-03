@@ -80,6 +80,7 @@ struct _GpdsTouchpadXInputProperty
 const gchar *gpds_touchpad_xinput_get_name            (GpdsTouchpadProperty property);
 gint         gpds_touchpad_xinput_get_format_type     (GpdsTouchpadProperty property);
 gint         gpds_touchpad_xinput_get_max_value_count (GpdsTouchpadProperty property);
+const gchar *gpds_touchpad_xinput_find_device_name    (void);
 
 #endif /* __GPDS_TOUCHPAD_XINPUT_H__ */
 /*
