@@ -123,7 +123,7 @@
                        </row>
                        <row>
                          <col id="0">3</col>
-                         <col id="1">Touchpad uses only for moving cursor</col>
+                         <col id="1">Touchpad tapping and scrolling off</col>
                        </row>
                     </data>
                   </object>

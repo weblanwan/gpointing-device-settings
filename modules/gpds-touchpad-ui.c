@@ -473,7 +473,7 @@ set_sensitivity_depends_on_use_type (GpdsTouchpadUI *ui,
 
     switch (use_type) {
     case GPDS_TOUCHPAD_USE_TYPE_OFF:
-    case GPDS_TOUCHPAD_USE_TYPE_CURSOR_MOVE_ONLY:
+    case GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF:
         set_widget_sensitivity(builder, "scrolling_vbox", FALSE);
         set_widget_sensitivity(builder, "tapping_vbox", FALSE);
         break;

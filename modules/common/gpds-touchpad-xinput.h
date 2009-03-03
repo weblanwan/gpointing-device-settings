@@ -71,7 +71,7 @@ typedef enum {
 typedef enum {
     GPDS_TOUCHPAD_USE_TYPE_NORMAL,
     GPDS_TOUCHPAD_USE_TYPE_OFF,
-    GPDS_TOUCHPAD_USE_TYPE_CURSOR_MOVE_ONLY,
+    GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF,
 } GpdsTouchpadUseType;
 
 typedef struct _GpdsTouchpadXInputProperty GpdsTouchpadXInputProperty;
