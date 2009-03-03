@@ -137,7 +137,15 @@ cb_gconf_client_notify (GConfClient *client,
         }
         break;
     case GCONF_VALUE_INT:
-        if (!strcmp(key, GPDS_TOUCHPAD_TAP_TIME_KEY)) {
+        if (!strcmp(key, GPDS_TOUCHPAD_OFF_KEY)) {
+            properties[0] = gconf_value_get_int(value);
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_OFF),
+                                           gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_OFF),
+                                           NULL,
+                                           properties,
+                                           1);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_TAP_TIME_KEY)) {
             properties[0] = gconf_value_get_int(value);
             gpds_xinput_set_int_properties(xinput,
                                            gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TAP_TIME),
