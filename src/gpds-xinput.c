@@ -196,7 +196,9 @@ open_device (const gchar *device_name, GError **error)
         return NULL;
     }
 
+    gdk_error_trap_push();
     device = XOpenDevice(GDK_DISPLAY(), device_info->id);
+    gdk_error_trap_pop();
     if (!device) {
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
@@ -300,8 +302,10 @@ get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
         name = XGetAtomName(GDK_DISPLAY(), properties[i]);
         if (!strcmp(name, property_name)) {
             found_atom = properties[i];
+            XFree(name);
             break;
         }
+        XFree(name);
     }
     XFree(properties);
 
