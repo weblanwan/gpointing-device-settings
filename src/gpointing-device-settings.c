@@ -70,7 +70,7 @@ append_uis (GtkNotebook *notebook)
 
         if (!gpds_ui_is_available(ui, &error)) {
             if (error) {
-                g_warning("%s", error->message);
+                g_message("%s", error->message);
                 g_clear_error(&error);
             }
             continue;
