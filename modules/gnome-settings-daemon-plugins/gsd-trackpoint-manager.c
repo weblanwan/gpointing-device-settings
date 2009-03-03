@@ -84,11 +84,16 @@ cb_gconf_client_notify (GConfClient *client,
     const gchar *key;
     GpdsXInput *xinput;
     gint properties[4];
+    const gchar *device_name;
 
-    if (!gpds_xinput_exist_device(GPDS_TRACK_POINT_DEVICE_NAME))
+    device_name = gpds_track_point_xinput_find_device_name();
+    if (!device_name)
         return;
 
-    xinput = gpds_xinput_new(GPDS_TRACK_POINT_DEVICE_NAME);
+    if (!gpds_xinput_exist_device(device_name))
+        return;
+
+    xinput = gpds_xinput_new(device_name);
 
     value = gconf_entry_get_value(entry);
     key = gconf_entry_get_key(entry);

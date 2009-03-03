@@ -20,8 +20,6 @@
 #ifndef __GPDS_TRACK_POINT_GCONF_H__
 #define __GPDS_TRACK_POINT_GCONF_H__
 
-#define GPDS_TRACK_POINT_DEVICE_NAME "TPPS/2 IBM TrackPoint"
-
 #define GPDS_TRACK_POINT_GCONF_DIR                   "/desktop/gnome/peripherals/trackpoint"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY GPDS_TRACK_POINT_GCONF_DIR "/middle_button_emulation"
 #define GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY   GPDS_TRACK_POINT_GCONF_DIR "/middle_button_timeoue"

@@ -46,6 +46,7 @@ struct _GpdsTrackPointUI
     GpdsXInput *xinput;
     gchar *ui_file_path;
     GConfClient *gconf;
+    gchar *device_name;
 };
 
 struct _GpdsTrackPointUIClass
@@ -99,6 +100,7 @@ gpds_track_point_ui_init (GpdsTrackPointUI *ui)
                                         "trackpoint.ui",
                                         NULL);
     ui->gconf = gconf_client_get_default();
+    ui->device_name = NULL;
 }
 
 G_MODULE_EXPORT void
@@ -137,6 +139,7 @@ dispose (GObject *object)
     }
 
     g_free(ui->ui_file_path);
+    g_free(ui->device_name);
 
     if (G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose(object);
@@ -539,7 +542,10 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 static gboolean
 is_available (GpdsUI *ui, GError **error)
 {
-    if (!gpds_xinput_exist_device(GPDS_TRACK_POINT_DEVICE_NAME)) {
+    const gchar *device_name;
+    device_name = gpds_track_point_xinput_find_device_name();
+
+    if (!device_name) {
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
@@ -557,6 +563,8 @@ is_available (GpdsUI *ui, GError **error)
         return FALSE;
     }
 
+    GPDS_TRACK_POINT_UI(ui)->device_name = g_strdup(device_name);
+
     return TRUE;
 }
 
@@ -573,7 +581,7 @@ build (GpdsUI  *ui, GError **error)
         return FALSE;
     }
 
-    GPDS_TRACK_POINT_UI(ui)->xinput = gpds_xinput_new(GPDS_TRACK_POINT_DEVICE_NAME);
+    GPDS_TRACK_POINT_UI(ui)->xinput = gpds_xinput_new(GPDS_TRACK_POINT_UI(ui)->device_name);
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);

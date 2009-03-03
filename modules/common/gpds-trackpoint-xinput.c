@@ -26,6 +26,12 @@
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
 
+static const gchar *track_point_device_names[] = {
+    "TPPS/2 IBM TrackPoint"
+};
+
+static const gint n_track_point_device_names = G_N_ELEMENTS(track_point_device_names);
+
 static GpdsTrackPointXInputProperty properties[] = {
     {GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", 8, 1},
     {GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT, "Evdev Middle Button Timeout", 32, 1},
@@ -78,6 +84,17 @@ gpds_track_point_xinput_get_max_value_count (GpdsTrackPointProperty property)
     return -1;
 }
 
+const gchar *
+gpds_track_point_xinput_find_device_name (void)
+{
+    gint i;
+
+    for (i = 0; i < n_track_point_device_names; i++) {
+        if (gpds_xinput_exist_device(track_point_device_names[i]))
+            return track_point_device_names[i];
+    }
+    return NULL;
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

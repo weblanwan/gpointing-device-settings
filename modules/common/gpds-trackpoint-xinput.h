@@ -45,6 +45,7 @@ struct _GpdsTrackPointXInputProperty
 const gchar *gpds_track_point_xinput_get_name            (GpdsTrackPointProperty property);
 gint         gpds_track_point_xinput_get_format_type     (GpdsTrackPointProperty property);
 gint         gpds_track_point_xinput_get_max_value_count (GpdsTrackPointProperty property);
+const gchar *gpds_track_point_xinput_find_device_name    (void);
 
 
 #endif /* __GPDS_TRACK_POINT_XINPUT_H__ */

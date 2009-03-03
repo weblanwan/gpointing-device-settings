@@ -26,8 +26,7 @@
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
 
-static const gchar *touchpad_device_names[] =
-{
+static const gchar *touchpad_device_names[] = {
     "SynPS/2 Synaptics TouchPad",
     "AlpsPS/2 ALPS GlidePoint"
 };
