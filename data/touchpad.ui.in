@@ -127,14 +127,14 @@
                        </row>
                     </data>
                   </object>
-                  <object class="GtkComboBox" id="general_use">
+                  <object class="GtkComboBox" id="touchpad_use_type">
                     <property name="visible">True</property>
                     <property name="model">general_use_list_store</property>
                     <property name="can_focus">True</property>
                     <property name="focus_on_click">True</property>
                     <property name="active">0</property>
                     <child>
-                      <object class="GtkCellRendererText" id="touchpad_use_type"/>
+                      <object class="GtkCellRendererText" id="touchpad_use_type_text"/>
                       <attributes>
                         <attribute name="text">1</attribute>
                       </attributes>
