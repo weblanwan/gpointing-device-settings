@@ -1,0 +1,162 @@
+# Swedish translation for gpointing-device-settings.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gpointing-device-settings package.
+# Daniel Nylander <po@danielnylander.se>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-03 18:16+0100\n"
+"PO-Revision-Date: 2009-03-03 18:18+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/gpds-xinput.c:195
+#, c-format
+msgid "No device found."
+msgstr "Ingen enhet hittades."
+
+#: ../src/gpds-xinput.c:206
+#, c-format
+msgid "Could not open %s device."
+msgstr "Kunde inte öppna %s-enhet."
+
+#: ../src/gpointing-device-settings.c:119
+msgid "Pointing Device Settings"
+msgstr "Inställningar för pekenhet"
+
+#: ../modules/gpds-touchpad-ui.c:814
+#, c-format
+msgid "No Touchpad device found."
+msgstr ""
+
+#: ../modules/gpds-touchpad-ui.c:822
+#: ../modules/gpds-trackpoint-ui.c:561
+#, c-format
+msgid "%s did not find."
+msgstr "%s hittades inte."
+
+#: ../modules/gpds-touchpad-ui.c:866
+#: ../modules/gpds-touchpad-ui.c:886
+#: ../modules/gpds-trackpoint-ui.c:605
+#: ../modules/gpds-trackpoint-ui.c:625
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Det finns ingen widget(%s)."
+
+#: ../modules/gpds-trackpoint-ui.c:552
+#, c-format
+msgid "No TrackPoint device found."
+msgstr ""
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/trackpoint.ui.in.h:1
+msgid "(ms)"
+msgstr "(ms)"
+
+#: ../data/trackpoint.ui.in.h:2
+msgid "Enable horizontal scroll"
+msgstr "Aktivera horisontell rullning"
+
+#: ../data/trackpoint.ui.in.h:3
+msgid "Enable vertical scroll"
+msgstr "Aktivera vertikal rullning"
+
+#: ../data/trackpoint.ui.in.h:4
+msgid "Middle button timeout"
+msgstr ""
+
+#: ../data/trackpoint.ui.in.h:5
+msgid "TrackPoint"
+msgstr ""
+
+#: ../data/trackpoint.ui.in.h:6
+msgid "Use middle button emulation"
+msgstr ""
+
+#: ../data/trackpoint.ui.in.h:7
+msgid "Use wheel emulation"
+msgstr "Använd hjulemulering"
+
+#: ../data/trackpoint.ui.in.h:8
+msgid "Wheel emulation inertia"
+msgstr ""
+
+#: ../data/trackpoint.ui.in.h:9
+msgid "Wheel emulation timeout"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:1
+msgid "<b>Scrolling</b>"
+msgstr "<b>Rullning</b>"
+
+#: ../data/touchpad.ui.in.h:2
+msgid "<i>Fast</i>"
+msgstr "<i>Snabb</i>"
+
+#: ../data/touchpad.ui.in.h:3
+msgid "<i>Long</i>"
+msgstr "<i>Lång</i>"
+
+#: ../data/touchpad.ui.in.h:4
+msgid "<i>Short</i>"
+msgstr "<i>Kort</i>"
+
+#: ../data/touchpad.ui.in.h:5
+msgid "<i>Slow</i>"
+msgstr "<i>Långsam</i>"
+
+#: ../data/touchpad.ui.in.h:6
+msgid "Enable Ci_rcular scrolling"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:7
+msgid "Enable _faster tapping"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:8
+msgid "Enable _horizontal scrolling"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:9
+msgid "Enable _vertical scrolling"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:10
+msgid "General"
+msgstr "Allmänt"
+
+#: ../data/touchpad.ui.in.h:11
+msgid "Scrolling"
+msgstr "Rullning"
+
+#: ../data/touchpad.ui.in.h:12
+msgid "Start point of circular scrolling:"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:13
+msgid "Tapping"
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:14
+msgid "Tapping time: "
+msgstr ""
+
+#: ../data/touchpad.ui.in.h:15
+msgid "Touchpad"
+msgstr "Pekplatta"
+
+#: ../data/gnome-settings-daemon.schemas.in.h:1
+msgid "Enable trackpoint plugin"
+msgstr ""
+
+#: ../data/gnome-settings-daemon.schemas.in.h:2
+msgid "Set to True to enable the plugin to manage trackpoint settings."
+msgstr ""
+
