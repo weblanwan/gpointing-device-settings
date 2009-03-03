@@ -68,6 +68,12 @@ typedef enum {
     GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_LEFT_TOP
 } GpdsTouchpadCircularScrollingTrigger;
 
+typedef enum {
+    GPDS_TOUCHPAD_USE_TYPE_NORMAL,
+    GPDS_TOUCHPAD_USE_TYPE_OFF,
+    GPDS_TOUCHPAD_USE_TYPE_CURSOR_MOVE_ONLY,
+} GpdsTouchpadUseType;
+
 typedef struct _GpdsTouchpadXInputProperty GpdsTouchpadXInputProperty;
 struct _GpdsTouchpadXInputProperty
 {

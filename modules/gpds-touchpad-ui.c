@@ -287,10 +287,7 @@ static void
 cb_tapping_time_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
     gdouble time;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_range_property(ui->xinput, range, GPDS_TOUCHPAD_TAP_TIME);
 
@@ -302,10 +299,7 @@ static void
 cb_faster_tapping_check_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
     gboolean check;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
 
     set_toggle_property(ui->xinput, button, GPDS_TOUCHPAD_TAP_FAST_TAP);
     check = gtk_toggle_button_get_active(button);
@@ -471,6 +465,41 @@ DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK(any, ANY)
 #undef DEFINE_CIRCULAR_SCROLLING_TRIGGER_CALLBACK
 
 static void
+set_touchpad_use_type_combo_state (GpdsTouchpadUI *ui, 
+                                   GpdsTouchpadUseType use_type)
+{
+    GtkComboBox *combo;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+    combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, "touchpad_use_type"));
+    gtk_combo_box_set_active(combo, (gint)use_type);
+}
+
+static void
+cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
+{
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
+    gint properties[1];
+    GError *error = NULL;
+
+    properties[0] = gtk_combo_box_get_active(combo);
+    if (!gpds_xinput_set_int_properties(ui->xinput,
+                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_OFF),
+                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_OFF),
+                                        &error,
+                                        properties,
+                                        1)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+    gconf_client_set_bool(ui->gconf, GPDS_TOUCHPAD_OFF_KEY, properties[0], NULL);
+}
+
+static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
     GObject *object;
@@ -481,6 +510,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
                      G_CALLBACK(cb_ ## object_name ## _ ## signal_name),\
                      ui)
 
+    CONNECT(touchpad_use_type, changed);
     CONNECT(tapping_time_scale, value_changed);
     CONNECT(faster_tapping_check, toggled);
     CONNECT(circular_scrolling, toggled);
@@ -682,6 +712,31 @@ set_circular_scrolling_trigger_property_from_preference (GpdsTouchpadUI *ui,
 }
 
 static void
+set_touchpad_use_type_property_from_preference (GpdsTouchpadUI *ui,
+                                                GtkBuilder *builder)
+{
+    GError *error = NULL;
+    gint *values;
+    gulong n_values;
+    GpdsTouchpadUseType type;
+
+    if (!get_integer_property(ui->xinput,
+                              GPDS_TOUCHPAD_OFF,
+                              &values, &n_values)) {
+        return;
+    }
+
+    type = gconf_client_get_int(ui->gconf,
+                                GPDS_TOUCHPAD_OFF_KEY,
+                                &error);
+    set_touchpad_use_type_combo_state(ui, error ? values[0] : type);
+    if (error)
+        g_clear_error(&error);
+
+    g_free(values);
+}
+
+static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsTouchpadUI *touchpad_ui = GPDS_TOUCHPAD_UI(ui);
@@ -704,6 +759,8 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     set_edge_scroll_property_from_preference(touchpad_ui, builder);
     set_scroll_distance_property_from_preference(touchpad_ui, builder);
     set_circular_scrolling_trigger_property_from_preference(touchpad_ui, builder);
+
+    set_touchpad_use_type_property_from_preference(touchpad_ui, builder);
 }
 
 static gboolean
