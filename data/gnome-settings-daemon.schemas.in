@@ -31,9 +31,9 @@
       <owner>gnome-settings-daemon</owner>
       <type>bool</type>
       <default>true</default>
-      <locale name="c">
-        <short>enable touchpad plugin</short>
-        <long>set to true to enable the plugin to manage touchpad settings.</long>
+      <locale name="C">
+        <short>Enable touchpad plugin</short>
+        <long>Set to True to enable the plugin to manage touchpad settings.</long>
       </locale>
     </schema>
     <schema>
@@ -42,7 +42,7 @@
       <owner>gnome-settings-daemon</owner>
       <type>int</type>
       <default>7</default>
-      <locale name="c">
+      <locale name="C">
         <short></short>
         <long></long>
       </locale>
