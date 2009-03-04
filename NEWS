@@ -1,4 +1,17 @@
 ============================
+GPointinDeviceSettings 1.0.0
+============================
+
+* Overrall 
+ - Address XInput-1.4.0
+ - Fix crashes due to X errors
+* Touchpad
+ - support for on/off/tapping and scrolling/off
+ - support for circular scrolling trigger
+* New translation
+ - Swedish
+
+============================
 GPointinDeviceSettings 0.9.0
 ============================
 
