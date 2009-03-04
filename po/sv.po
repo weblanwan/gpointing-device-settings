@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-03 18:16+0100\n"
+"POT-Creation-Date: 2009-03-04 15:20+0900\n"
 "PO-Revision-Date: 2009-03-03 18:18+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -34,16 +34,13 @@ msgstr "Inställningar för pekenhet"
 msgid "No Touchpad device found."
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:822
-#: ../modules/gpds-trackpoint-ui.c:561
+#: ../modules/gpds-touchpad-ui.c:822 ../modules/gpds-trackpoint-ui.c:561
 #, c-format
 msgid "%s did not find."
 msgstr "%s hittades inte."
 
-#: ../modules/gpds-touchpad-ui.c:866
-#: ../modules/gpds-touchpad-ui.c:886
-#: ../modules/gpds-trackpoint-ui.c:605
-#: ../modules/gpds-trackpoint-ui.c:625
+#: ../modules/gpds-touchpad-ui.c:866 ../modules/gpds-touchpad-ui.c:886
+#: ../modules/gpds-trackpoint-ui.c:605 ../modules/gpds-trackpoint-ui.c:625
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Det finns ingen widget(%s)."
@@ -153,10 +150,17 @@ msgid "Touchpad"
 msgstr "Pekplatta"
 
 #: ../data/gnome-settings-daemon.schemas.in.h:1
-msgid "Enable trackpoint plugin"
+msgid "Enable touchpad plugin"
 msgstr ""
 
 #: ../data/gnome-settings-daemon.schemas.in.h:2
-msgid "Set to True to enable the plugin to manage trackpoint settings."
+msgid "Enable trackpoint plugin"
 msgstr ""
 
+#: ../data/gnome-settings-daemon.schemas.in.h:3
+msgid "Set to True to enable the plugin to manage touchpad settings."
+msgstr ""
+
+#: ../data/gnome-settings-daemon.schemas.in.h:4
+msgid "Set to True to enable the plugin to manage trackpoint settings."
+msgstr ""
