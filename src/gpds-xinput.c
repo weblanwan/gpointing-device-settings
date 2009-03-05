@@ -377,11 +377,11 @@ get_int_property (GpdsXInput *xinput,
 }
 
 gboolean
-gpds_xinput_get_property (GpdsXInput *xinput,
-                          const gchar *property_name,
-                          GError **error,
-                          gint **values,
-                          gulong *n_values)
+gpds_xinput_get_int_property (GpdsXInput *xinput,
+                              const gchar *property_name,
+                              GError **error,
+                              gint **values,
+                              gulong *n_values)
 {
     XDevice *device;
 

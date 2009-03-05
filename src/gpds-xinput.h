@@ -56,19 +56,26 @@ GQuark      gpds_xinput_error_quark        (void);
 GType       gpds_xinput_get_type           (void) G_GNUC_CONST;
 gboolean    gpds_xinput_exist_device       (const gchar *device_name);
 
-GpdsXInput *gpds_xinput_new                (const gchar *device_name);
-gboolean    gpds_xinput_set_int_properties (GpdsXInput *xinput,
-                                            const gchar *property_name,
-                                            gint format_type,
-                                            GError **error,
-                                            gint *properties,
-                                            guint n_properties);
-gboolean    gpds_xinput_get_property       (GpdsXInput *xinput,
-                                            const gchar *property_name,
-                                            GError **error,
-                                            gint **values,
-                                            gulong *n_values);
-
+GpdsXInput *gpds_xinput_new                  (const gchar *device_name);
+gboolean    gpds_xinput_set_int_properties   (GpdsXInput *xinput,
+                                              const gchar *property_name,
+                                              gint format_type,
+                                              GError **error,
+                                              gint *properties,
+                                              guint n_properties);
+gboolean    gpds_xinput_get_int_property     (GpdsXInput *xinput,
+                                              const gchar *property_name,
+                                              GError **error,
+                                              gint **values,
+                                              gulong *n_values);
+#if 0
+gboolean    gpds_xinput_set_float_properties (GpdsXInput *xinput,
+                                              const gchar *property_name,
+                                              gint format_type,
+                                              GError **error,
+                                              gdouble *properties,
+                                              guint n_properties);
+#endif
 G_END_DECLS
 
 #endif /* __GPDS_XINPUT_H__ */

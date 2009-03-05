@@ -381,10 +381,10 @@ get_integer_property (GpdsXInput *xinput, const gchar *property_name,
 {
     GError *error = NULL;
 
-    if (!gpds_xinput_get_property(xinput,
-                                  property_name,
-                                  &error,
-                                  values, n_values)) {
+    if (!gpds_xinput_get_int_property(xinput,
+                                      property_name,
+                                      &error,
+                                      values, n_values)) {
         if (error) {
             show_error(error);
             g_error_free(error);
