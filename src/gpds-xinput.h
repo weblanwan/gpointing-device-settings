@@ -36,7 +36,8 @@ G_BEGIN_DECLS
 typedef enum
 {
     GPDS_XINPUT_ERROR_NO_DEVICE,
-    GPDS_XINPUT_ERROR_UNABLE_TO_OPEN_DEVICE
+    GPDS_XINPUT_ERROR_UNABLE_TO_OPEN_DEVICE,
+    GPDS_XINPUT_ERROR_NO_FLOAT_ATOM
 } GpdsXInputError;
 
 typedef struct _GpdsXInput GpdsXInput;
@@ -68,14 +69,17 @@ gboolean    gpds_xinput_get_int_properties   (GpdsXInput *xinput,
                                               GError **error,
                                               gint **values,
                                               gulong *n_values);
-#if 0
 gboolean    gpds_xinput_set_float_properties (GpdsXInput *xinput,
                                               const gchar *property_name,
-                                              gint format_type,
                                               GError **error,
                                               gdouble *properties,
                                               guint n_properties);
-#endif
+gboolean    gpds_xinput_get_float_properties (GpdsXInput *xinput,
+                                              const gchar *property_name,
+                                              GError **error,
+                                              gdouble **properties,
+                                              gulong *n_properties);
+
 G_END_DECLS
 
 #endif /* __GPDS_XINPUT_H__ */

@@ -376,6 +376,22 @@ get_int_properties (GpdsXInput *xinput,
     return TRUE;
 }
 
+static Atom
+get_float_atom (GError **error)
+{
+    Atom float_atom;
+
+    float_atom = XInternAtom(GDK_DISPLAY(), "FLOAT", False);
+    if (float_atom == 0) {
+        g_set_error(error,
+                    GPDS_XINPUT_ERROR,
+                    GPDS_XINPUT_ERROR_NO_FLOAT_ATOM,
+                    _("No float atom in XServer"));
+    }
+
+    return float_atom;
+}
+
 gboolean
 gpds_xinput_get_int_properties (GpdsXInput *xinput,
                                 const gchar *property_name,
@@ -392,6 +408,105 @@ gpds_xinput_get_int_properties (GpdsXInput *xinput,
         return FALSE;
 
     return get_int_properties(xinput, property_name, error, values, n_values);
+}
+
+gboolean
+gpds_xinput_set_float_properties (GpdsXInput *xinput,
+                                  const gchar *property_name,
+                                  GError **error,
+                                  gdouble *properties,
+                                  guint n_properties)
+{
+    XDevice *device;
+    Atom float_atom, property_atom;
+    gint i;
+    gfloat *property_data;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    device = get_device(xinput, error);
+    if (!device)
+        return FALSE;
+
+    float_atom = get_float_atom(error);
+    if (float_atom == 0)
+        return FALSE;
+
+    property_atom = XInternAtom(GDK_DISPLAY(), property_name, False);
+
+    property_data = g_new(gfloat, n_properties);
+    for (i = 0; i < n_properties; i++)
+        *(property_data + i) = (gfloat)properties[i];
+
+    gdk_error_trap_push();
+    XChangeDeviceProperty(GDK_DISPLAY(),
+                          device, property_atom,
+                          float_atom, 32, PropModeReplace,
+                          (unsigned char*)property_data, n_properties);
+    gdk_error_trap_pop();
+
+    g_free(property_data);
+
+    return TRUE;
+}
+
+gboolean
+gpds_xinput_get_float_properties (GpdsXInput *xinput,
+                                  const gchar *property_name,
+                                  GError **error,
+                                  gdouble **properties,
+                                  gulong *n_properties)
+{
+    XDevice *device;
+    Atom property_atom, float_atom;
+    Atom actual_type;
+    int actual_format;
+    unsigned long bytes_after;
+    unsigned char *data, *data_position;
+    gulong i;
+    gdouble *double_values;
+    Status status;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    device = get_device(xinput, error);
+    if (!device)
+        return FALSE;
+
+    float_atom = get_float_atom(error);
+    if (float_atom == 0)
+        return FALSE;
+
+    property_atom = get_atom(xinput, property_name, error);
+    if (property_atom < 0)
+        return FALSE;
+
+    gdk_error_trap_push();
+    status =  XGetDeviceProperty(GDK_DISPLAY(), device, property_atom, 0, 1000, False,
+                                 float_atom, &actual_type, &actual_format,
+                                 n_properties, &bytes_after, &data);
+    gdk_error_trap_pop();
+
+    if (status != Success)
+        return FALSE;
+
+    if (actual_type != float_atom) {
+        XFree(data);
+        return FALSE;
+    }
+
+    data_position = data;
+    double_values = g_new(gdouble, *n_properties);
+
+    for (i = 0; i < *n_properties; i++) {
+        double_values[i] = *((float*)data_position);
+        data_position += actual_format / 8;
+    }
+
+    *properties = double_values;
+    XFree(data);
+
+    return TRUE;
 }
 
 gboolean
