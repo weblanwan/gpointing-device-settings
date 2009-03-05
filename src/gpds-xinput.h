@@ -63,7 +63,7 @@ gboolean    gpds_xinput_set_int_properties   (GpdsXInput *xinput,
                                               GError **error,
                                               gint *properties,
                                               guint n_properties);
-gboolean    gpds_xinput_get_int_property     (GpdsXInput *xinput,
+gboolean    gpds_xinput_get_int_properties   (GpdsXInput *xinput,
                                               const gchar *property_name,
                                               GError **error,
                                               gint **values,

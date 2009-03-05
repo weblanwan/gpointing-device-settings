@@ -557,15 +557,15 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static gboolean
-get_integer_property (GpdsXInput *xinput, GpdsTouchpadProperty property,
+get_integer_properties (GpdsXInput *xinput, GpdsTouchpadProperty property,
                       gint **values, gulong *n_values)
 {
     GError *error = NULL;
 
-    if (!gpds_xinput_get_int_property(xinput,
-                                      gpds_touchpad_xinput_get_name(property),
-                                      &error,
-                                      values, n_values)) {
+    if (!gpds_xinput_get_int_properties(xinput,
+                                        gpds_touchpad_xinput_get_name(property),
+                                        &error,
+                                        values, n_values)) {
         if (error) {
             show_error(error);
             g_error_free(error);
@@ -590,8 +590,8 @@ set_integer_property_from_preference (GpdsTouchpadUI *ui,
     gint value;
     gboolean dir_exists;
 
-    if (!get_integer_property(ui->xinput, property,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput, property,
+                                &values, &n_values)) {
         return;
     }
 
@@ -617,8 +617,8 @@ set_boolean_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     gboolean enable, dir_exists;
 
-    if (!get_integer_property(ui->xinput, property,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput, property,
+                                &values, &n_values)) {
         return FALSE;
     }
 
@@ -643,8 +643,8 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     gboolean enable, dir_exists;
 
-    if (!get_integer_property(ui->xinput, GPDS_TOUCHPAD_EDGE_SCROLLING,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput, GPDS_TOUCHPAD_EDGE_SCROLLING,
+                                &values, &n_values)) {
         return;
     }
 
@@ -683,9 +683,9 @@ set_scroll_distance_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     gint distance;
 
-    if (!get_integer_property(ui->xinput,
-                              GPDS_TOUCHPAD_SCROLLING_DISTANCE,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput,
+                                GPDS_TOUCHPAD_SCROLLING_DISTANCE,
+                                &values, &n_values)) {
         return;
     }
 
@@ -737,9 +737,9 @@ set_circular_scrolling_trigger_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     GpdsTouchpadCircularScrollingTrigger trigger;
 
-    if (!get_integer_property(ui->xinput,
-                              GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput,
+                                GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER,
+                                &values, &n_values)) {
         return;
     }
 
@@ -762,9 +762,9 @@ set_touchpad_use_type_property_from_preference (GpdsTouchpadUI *ui,
     gulong n_values;
     GpdsTouchpadUseType type;
 
-    if (!get_integer_property(ui->xinput,
-                              GPDS_TOUCHPAD_OFF,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput,
+                                GPDS_TOUCHPAD_OFF,
+                                &values, &n_values)) {
         return;
     }
 

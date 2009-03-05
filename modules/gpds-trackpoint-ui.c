@@ -376,15 +376,15 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static gboolean
-get_integer_property (GpdsXInput *xinput, const gchar *property_name,
-                      gint **values, gulong *n_values)
+get_integer_properties (GpdsXInput *xinput, const gchar *property_name,
+                        gint **values, gulong *n_values)
 {
     GError *error = NULL;
 
-    if (!gpds_xinput_get_int_property(xinput,
-                                      property_name,
-                                      &error,
-                                      values, n_values)) {
+    if (!gpds_xinput_get_int_properties(xinput,
+                                        property_name,
+                                        &error,
+                                        values, n_values)) {
         if (error) {
             show_error(error);
             g_error_free(error);
@@ -412,8 +412,8 @@ set_integer_property_from_preference (GpdsTrackPointUI *ui,
 
     property_name = gpds_track_point_xinput_get_name(property);
 
-    if (!get_integer_property(ui->xinput, property_name,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput, property_name,
+                                &values, &n_values)) {
         return;
     }
 
@@ -444,8 +444,8 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
 
     property_name = gpds_track_point_xinput_get_name(property);
 
-    if (!get_integer_property(ui->xinput, property_name,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput, property_name,
+                                &values, &n_values)) {
         return;
     }
 
@@ -476,8 +476,8 @@ set_scroll_axes_property_from_preference (GpdsTrackPointUI *ui,
 
     property_name = gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES);
 
-    if (!get_integer_property(ui->xinput, property_name,
-                              &values, &n_values)) {
+    if (!get_integer_properties(ui->xinput, property_name,
+                                &values, &n_values)) {
         return;
     }
 

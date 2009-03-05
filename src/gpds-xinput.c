@@ -313,10 +313,10 @@ get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
 }
 
 static gboolean
-get_int_property (GpdsXInput *xinput,
-                  const gchar *property_name,
-                  GError **error,
-                  gint **values, gulong *n_values)
+get_int_properties (GpdsXInput *xinput,
+                    const gchar *property_name,
+                    GError **error,
+                    gint **values, gulong *n_values)
 {
     XDevice *device;
     Atom atom;
@@ -377,11 +377,11 @@ get_int_property (GpdsXInput *xinput,
 }
 
 gboolean
-gpds_xinput_get_int_property (GpdsXInput *xinput,
-                              const gchar *property_name,
-                              GError **error,
-                              gint **values,
-                              gulong *n_values)
+gpds_xinput_get_int_properties (GpdsXInput *xinput,
+                                const gchar *property_name,
+                                GError **error,
+                                gint **values,
+                                gulong *n_values)
 {
     XDevice *device;
 
@@ -391,7 +391,7 @@ gpds_xinput_get_int_property (GpdsXInput *xinput,
     if (!device)
         return FALSE;
 
-    return get_int_property(xinput, property_name, error, values, n_values);
+    return get_int_properties(xinput, property_name, error, values, n_values);
 }
 
 gboolean
