@@ -106,9 +106,6 @@ gpds_track_point_ui_init (GpdsTrackPointUI *ui)
 G_MODULE_EXPORT void
 GPDS_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
-    if (GPDS_TYPE_TRACK_POINT_UI)
-        return;
-
     gpds_track_point_ui_register_type(type_module);
 }
 

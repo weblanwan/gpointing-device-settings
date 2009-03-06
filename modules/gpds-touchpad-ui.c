@@ -105,9 +105,6 @@ gpds_touchpad_ui_init (GpdsTouchpadUI *ui)
 G_MODULE_EXPORT void
 GPDS_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
-    if (GPDS_TYPE_TOUCHPAD_UI)
-        return;
-
     gpds_touchpad_ui_register_type(type_module);
 }
 
