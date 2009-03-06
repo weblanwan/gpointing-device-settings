@@ -20,7 +20,7 @@
 #ifndef __GPDS_TOUCHPAD_XINPUT_H__
 #define __GPDS_TOUCHPAD_XINPUT_H__
 
-#include <glib.h>
+#include <glib-object.h>
 
 typedef enum {
     GPDS_TOUCHPAD_EDGES,
@@ -79,6 +79,7 @@ struct _GpdsTouchpadXInputProperty
 {
     GpdsTouchpadProperty property;
     const gchar *name;
+    GType property_type; /* G_TYPE_INT or G_TYPE_FLOAT */
     gint format_type;
     gint max_value_count;
 };
