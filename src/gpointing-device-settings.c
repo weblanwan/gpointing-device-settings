@@ -68,7 +68,7 @@ append_uis (GtkNotebook *notebook)
         GError *error = NULL;
 
         type_name = g_ascii_strdown(gpds_xinput_pointer_info_get_type_name(info), -1);
-        ui = gpds_ui_new(g_ascii_strdown(type_name, -1),
+        ui = gpds_ui_new(type_name,
                          "device-name", gpds_xinput_pointer_info_get_name(info),
                          NULL);
         g_free(type_name);
