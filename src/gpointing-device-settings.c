@@ -65,7 +65,7 @@ append_uis (GtkNotebook *notebook)
         GtkWidget *label = NULL;
         GError *error = NULL;
 
-        ui = gpds_ui_new(name->data);
+        ui = gpds_ui_new(name->data, NULL);
         uis = g_list_prepend(uis, ui);
 
         if (!gpds_ui_is_available(ui, &error)) {

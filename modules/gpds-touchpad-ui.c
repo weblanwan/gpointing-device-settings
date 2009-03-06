@@ -114,9 +114,9 @@ GPDS_MODULE_IMPL_EXIT (void)
 }
 
 G_MODULE_EXPORT GObject *
-GPDS_MODULE_IMPL_INSTANTIATE (void)
+GPDS_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new(GPDS_TYPE_TOUCHPAD_UI, NULL);
+    return g_object_new_valist(GPDS_TYPE_TOUCHPAD_UI, first_property, var_args);
 }
 
 static void

@@ -64,7 +64,9 @@ GList      *gpds_uis_get_names           (void);
 
 GQuark      gpds_ui_error_quark          (void);
 GType       gpds_ui_get_type             (void) G_GNUC_CONST;
-GpdsUI     *gpds_ui_new                  (const gchar *name);
+GpdsUI     *gpds_ui_new                  (const gchar *type_name,
+                                          const gchar *first_property,
+                                          ...);
 gboolean    gpds_ui_is_available         (GpdsUI *ui, GError **error);
 gboolean    gpds_ui_build                (GpdsUI *ui, GError **error);
 GtkWidget  *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);

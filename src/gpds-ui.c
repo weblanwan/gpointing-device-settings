@@ -110,9 +110,11 @@ gpds_ui_error_quark (void)
 }
 
 GpdsUI *
-gpds_ui_new (const gchar *name)
+gpds_ui_new (const gchar *name, const gchar *first_property, ...)
 {
     GpdsModule *module;
+    GObject *ui;
+    va_list var_args;
 
     module = gpds_module_find(uis, name);
     if (!module)
@@ -122,8 +124,11 @@ gpds_ui_new (const gchar *name)
 
         uis = g_list_prepend(uis, module);
     }
+    va_start(var_args, first_property);
+    ui = gpds_module_instantiate(module, first_property, var_args);
+    va_end(var_args);
 
-    return GPDS_UI(gpds_module_instantiate(module));
+    return GPDS_UI(ui);
 }
 
 gboolean

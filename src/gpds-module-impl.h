@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 typedef void     (*GpdsModuleInitFunc)         (GTypeModule *module);
 typedef void     (*GpdsModuleExitFunc)         (void);
-typedef GObject *(*GpdsModuleInstantiateFunc)  (void);
+typedef GObject *(*GpdsModuleInstantiateFunc)  (const gchar *first_property, ...);
 
 #define GPDS_MODULE_IMPL_INIT           gpds_module_impl_init
 #define GPDS_MODULE_IMPL_EXIT           gpds_module_impl_exit
@@ -34,12 +34,13 @@ typedef GObject *(*GpdsModuleInstantiateFunc)  (void);
 
 void     GPDS_MODULE_IMPL_INIT           (GTypeModule  *module);
 void     GPDS_MODULE_IMPL_EXIT           (void);
-GObject *GPDS_MODULE_IMPL_INSTANTIATE    (void);
+GObject *GPDS_MODULE_IMPL_INSTANTIATE    (const gchar *first_property,
+                                          va_list var_args);
 
 G_END_DECLS
 
 #endif /* __GPDS_MODULE_IMPL_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

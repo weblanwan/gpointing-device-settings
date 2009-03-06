@@ -184,14 +184,15 @@ gpds_module_find (GList *modules, const gchar *name)
 }
 
 GObject *
-gpds_module_instantiate (GpdsModule *module)
+gpds_module_instantiate (GpdsModule *module,
+                         const gchar *first_property, va_list var_args)
 {
     GObject *object = NULL;
     GpdsModulePrivate *priv;
 
     priv = GPDS_MODULE_GET_PRIVATE(module);
     if (g_type_module_use(G_TYPE_MODULE(module))) {
-        object = priv->instantiate();
+        object = priv->instantiate(first_property, var_args);
         g_type_module_unuse(G_TYPE_MODULE(module));
     }
 

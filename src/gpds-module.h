@@ -57,8 +57,10 @@ const gchar *gpds_module_directory           (void);
 
 GList       *gpds_module_collect_names            (GList *modules);
 
-GObject     *gpds_module_instantiate              (GpdsModule *module);
-void         gpds_module_unload                   (GpdsModule *module);
+GObject     *gpds_module_instantiate              (GpdsModule  *module,
+                                                   const gchar *first_property,
+                                                   va_list      var_args);
+void         gpds_module_unload                   (GpdsModule  *module);
 
 
 G_END_DECLS
