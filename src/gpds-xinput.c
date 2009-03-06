@@ -29,6 +29,7 @@
 #include <X11/extensions/XInput.h>
 #include <X11/Xatom.h>
 #include <string.h>
+#include "gpds-xinput-utils.h"
 
 typedef struct _GpdsXInputPriv GpdsXInputPriv;
 struct _GpdsXInputPriv
@@ -163,55 +164,6 @@ gpds_xinput_new (const gchar *device_name)
                         NULL);
 }
 
-static XDeviceInfo *
-get_device_info (const gchar *device_name)
-{
-    XDeviceInfo *device_infos;
-    gint i, n_device_infos;
-
-    device_infos = XListInputDevices(GDK_DISPLAY(), &n_device_infos);
-
-    for (i = 0; i < n_device_infos; i++) {
-        if (device_infos[i].use != IsXExtensionPointer)
-            continue;
-        if (!strcmp(device_infos[i].name, device_name))
-            return &device_infos[i];
-    }
-
-    XFreeDeviceList(device_infos);
-
-    return NULL;
-}
-
-static XDevice *
-open_device (const gchar *device_name, GError **error)
-{
-    XDeviceInfo *device_info;
-    XDevice *device;
-
-    device_info = get_device_info(device_name);
-    if (!device_info) {
-        g_set_error(error,
-                    GPDS_XINPUT_ERROR,
-                    GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("No device found."));
-        return NULL;
-    }
-
-    gdk_error_trap_push();
-    device = XOpenDevice(GDK_DISPLAY(), device_info->id);
-    gdk_error_trap_pop();
-    if (!device) {
-        g_set_error(error,
-                    GPDS_XINPUT_ERROR,
-                    GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("Could not open %s device."), device_name);
-        return NULL;
-    }
-
-    return device;
-}
-
 static XDevice *
 get_device (GpdsXInput *xinput, GError **error)
 {
@@ -220,7 +172,7 @@ get_device (GpdsXInput *xinput, GError **error)
     if (priv->device)
         return priv->device;
 
-    priv->device = open_device(priv->device_name, error);
+    priv->device = gpds_xinput_utils_open_device(priv->device_name, error);
     return priv->device;
 }
 
@@ -378,22 +330,6 @@ get_int_properties (GpdsXInput *xinput,
     return TRUE;
 }
 
-static Atom
-get_float_atom (GError **error)
-{
-    Atom float_atom;
-
-    float_atom = XInternAtom(GDK_DISPLAY(), "FLOAT", False);
-    if (float_atom == 0) {
-        g_set_error(error,
-                    GPDS_XINPUT_ERROR,
-                    GPDS_XINPUT_ERROR_NO_FLOAT_ATOM,
-                    _("No float atom in XServer"));
-    }
-
-    return float_atom;
-}
-
 gboolean
 gpds_xinput_get_int_properties (GpdsXInput *xinput,
                                 const gchar *property_name,
@@ -430,7 +366,7 @@ gpds_xinput_set_float_properties (GpdsXInput *xinput,
     if (!device)
         return FALSE;
 
-    float_atom = get_float_atom(error);
+    float_atom = gpds_xinput_utils_get_float_atom(error);
     if (float_atom == 0)
         return FALSE;
 
@@ -475,7 +411,7 @@ gpds_xinput_get_float_properties (GpdsXInput *xinput,
     if (!device)
         return FALSE;
 
-    float_atom = get_float_atom(error);
+    float_atom = gpds_xinput_utils_get_float_atom(error);
     if (float_atom == 0)
         return FALSE;
 
