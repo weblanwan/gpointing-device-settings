@@ -17,7 +17,7 @@ AM_LDFLAGS =			\
   	-export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 gpds_module_LTLIBRARIES = 	\
-	trackpoint.la		\
+	mouse.la		\
 	touchpad.la
 
 LIBS =					\
@@ -26,10 +26,10 @@ LIBS =					\
 	$(GCONF2_LIBS)			\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
-trackpoint_la_SOURCES = 		\
-	gpds-trackpoint-ui.c
+mouse_la_SOURCES = 		\
+	gpds-mouse-ui.c
 
-trackpoint_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
+mouse_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
 
 touchpad_la_SOURCES = 			\
 	gpds-touchpad-ui.c

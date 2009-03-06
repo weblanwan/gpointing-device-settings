@@ -1,0 +1,8 @@
+[GNOME Settings Plugin]
+Module=mouse-extension
+IAge=0
+_Name=MouseExtension
+_Description=MouseExtension plugin
+Authors=
+Copyright=Copyright © 2009
+Website=

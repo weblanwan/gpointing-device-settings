@@ -156,7 +156,7 @@ modules/Makefile
 modules/common/Makefile
 modules/gnome-settings-daemon-plugins/Makefile
 data/Makefile
-data/trackpoint.ui
+data/mouse.ui
 data/touchpad.ui
 test/Makefile
 po/Makefile.in

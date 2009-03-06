@@ -22,8 +22,8 @@ LIBS =					\
 	$(GCONF2_LIBS)			\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
-gsd_plugin_LTLIBRARIES =	\
-	libtrackpoint.la	\
+gsd_plugin_LTLIBRARIES =	        \
+	libmouse-extension.la           \
 	libtouchpad.la
 
 gsd_plugin_CFLAGS =					\
@@ -31,13 +31,13 @@ gsd_plugin_CFLAGS =					\
 	$(GNOME_SETTINGS_DAEMON_CFLAGS)			\
 	-DGNOME_SETTINGS_LOCALEDIR=\""$(localedir)"\"
 
-libtrackpoint_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libtrackpoint_la_SOURCES = 		\
-	gsd-trackpoint-plugin.c		\
-	gsd-trackpoint-manager.h	\
-	gsd-trackpoint-manager.c
+libmouse_extension_la_CFLAGS = $(gsd_plugin_CFLAGS)
+libmouse_extension_la_SOURCES = 		\
+	gsd-mouse-extension-plugin.c	\
+	gsd-mouse-extension-manager.h	\
+	gsd-mouse-extension-manager.c
 
-libtrackpoint_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
+libmouse_extension_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
 
 libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
 libtouchpad_la_SOURCES = 		\
@@ -47,8 +47,8 @@ libtouchpad_la_SOURCES = 		\
 
 libtouchpad_la_LIBADD = $(top_builddir)/modules/common/libtouchpad_common.la
 
-gsd_plugin_in_files =	 			\
-	trackpoint.gnome-settings-plugin.in	\
+gsd_plugin_in_files =	 			        \
+	mouse-extension.gnome-settings-plugin.in	\
 	touchpad.gnome-settings-plugin.in
 
 gsd_plugin_DATA = $(gsd_plugin_in_files:.gnome-settings-plugin.in=.gnome-settings-plugin)

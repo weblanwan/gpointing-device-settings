@@ -25,7 +25,7 @@ coverage.info
 *.gcno
 *.gcda
 data/touchpad.ui
-data/trackpoint.ui
+data/mouse.ui
 data/gnome-settings-daemon.schemas
 po/Makefile.in.in
 po/POTFILES
@@ -34,4 +34,4 @@ po/stamp-it
 po/.intltool-merge-cache
 src/gpointing-device-settings
 modules/gnome-settings-daemon-plugins/touchpad.gnome-settings-plugin
-modules/gnome-settings-daemon-plugins/trackpoint.gnome-settings-plugin
+modules/gnome-settings-daemon-plugins/mouse-extension.gnome-settings-plugin

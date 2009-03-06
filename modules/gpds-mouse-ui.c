@@ -30,17 +30,17 @@
 #include "gpds-mouse-definitions.h"
 #include "gpds-mouse-xinput.h"
 
-#define GPDS_TYPE_TRACK_POINT_UI            (gpds_track_point_ui_get_type())
-#define GPDS_TRACK_POINT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUI))
-#define GPDS_TRACK_POINT_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIClass))
-#define G_IS_TRACK_POINT_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_TRACK_POINT_UI))
-#define G_IS_TRACK_POINT_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_TRACK_POINT_UI))
-#define GPDS_TRACK_POINT_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_TRACK_POINT_UI, GpdsTrackPointUIClass))
+#define GPDS_TYPE_MOUSE_UI            (gpds_mouse_ui_get_type())
+#define GPDS_MOUSE_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_MOUSE_UI, GpdsMouseUI))
+#define GPDS_MOUSE_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_MOUSE_UI, GpdsMouseUIClass))
+#define G_IS_MOUSE_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_MOUSE_UI))
+#define G_IS_MOUSE_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_MOUSE_UI))
+#define GPDS_MOUSE_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_MOUSE_UI, GpdsMouseUIClass))
 
-typedef struct _GpdsTrackPointUI GpdsTrackPointUI;
-typedef struct _GpdsTrackPointUIClass GpdsTrackPointUIClass;
+typedef struct _GpdsMouseUI GpdsMouseUI;
+typedef struct _GpdsMouseUIClass GpdsMouseUIClass;
 
-struct _GpdsTrackPointUI
+struct _GpdsMouseUI
 {
     GpdsUI parent;
     GpdsXInput *xinput;
@@ -49,12 +49,12 @@ struct _GpdsTrackPointUI
     gchar *device_name;
 };
 
-struct _GpdsTrackPointUIClass
+struct _GpdsMouseUIClass
 {
     GpdsUIClass parent_class;
 };
 
-GType gpds_track_point_ui_get_type (void) G_GNUC_CONST;
+GType gpds_mouse_ui_get_type (void) G_GNUC_CONST;
 
 static void       dispose            (GObject *object);
 static gboolean   is_available       (GpdsUI  *ui, GError **error);
@@ -62,10 +62,10 @@ static gboolean   build              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GtkWidget *get_label_widget   (GpdsUI  *ui, GError **error);
 
-G_DEFINE_DYNAMIC_TYPE(GpdsTrackPointUI, gpds_track_point_ui, GPDS_TYPE_UI)
+G_DEFINE_DYNAMIC_TYPE(GpdsMouseUI, gpds_mouse_ui, GPDS_TYPE_UI)
 
 static void
-gpds_track_point_ui_class_init (GpdsTrackPointUIClass *klass)
+gpds_mouse_ui_class_init (GpdsMouseUIClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GpdsUIClass *ui_class = GPDS_UI_CLASS(klass);
@@ -79,7 +79,7 @@ gpds_track_point_ui_class_init (GpdsTrackPointUIClass *klass)
 }
 
 static void
-gpds_track_point_ui_class_finalize (GpdsTrackPointUIClass *klass)
+gpds_mouse_ui_class_finalize (GpdsMouseUIClass *klass)
 {
 }
 
@@ -93,11 +93,11 @@ get_ui_file_directory (void)
 }
 
 static void
-gpds_track_point_ui_init (GpdsTrackPointUI *ui)
+gpds_mouse_ui_init (GpdsMouseUI *ui)
 {
     ui->xinput = NULL;
     ui->ui_file_path = g_build_filename(get_ui_file_directory(),
-                                        "trackpoint.ui",
+                                        "mouse.ui",
                                         NULL);
     ui->gconf = gconf_client_get_default();
     ui->device_name = NULL;
@@ -106,7 +106,7 @@ gpds_track_point_ui_init (GpdsTrackPointUI *ui)
 G_MODULE_EXPORT void
 GPDS_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
-    gpds_track_point_ui_register_type(type_module);
+    gpds_mouse_ui_register_type(type_module);
 }
 
 G_MODULE_EXPORT void
@@ -117,13 +117,13 @@ GPDS_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 GPDS_MODULE_IMPL_INSTANTIATE (void)
 {
-    return g_object_new(GPDS_TYPE_TRACK_POINT_UI, NULL);
+    return g_object_new(GPDS_TYPE_MOUSE_UI, NULL);
 }
 
 static void
 dispose (GObject *object)
 {
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(object);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(object);
 
     if (ui->xinput) {
         g_object_unref(ui->xinput);
@@ -138,12 +138,12 @@ dispose (GObject *object)
     g_free(ui->ui_file_path);
     g_free(ui->device_name);
 
-    if (G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose)
-        G_OBJECT_CLASS(gpds_track_point_ui_parent_class)->dispose(object);
+    if (G_OBJECT_CLASS(gpds_mouse_ui_parent_class)->dispose)
+        G_OBJECT_CLASS(gpds_mouse_ui_parent_class)->dispose(object);
 }
 
 static gchar *
-build_gconf_key (GpdsTrackPointUI *ui, const gchar *key)
+build_gconf_key (GpdsMouseUI *ui, const gchar *key)
 {
     gchar *gconf_key;
     gchar *device_name;
@@ -232,7 +232,7 @@ set_widget_sensitivity (GtkBuilder *builder,
 }
 
 static gboolean
-exist_gconf_dir (GpdsTrackPointUI *ui)
+exist_gconf_dir (GpdsMouseUI *ui)
 {
     gboolean exist;
     gchar *dir;
@@ -248,7 +248,7 @@ exist_gconf_dir (GpdsTrackPointUI *ui)
 }
 
 static void
-set_gconf_bool (GpdsTrackPointUI *ui, const gchar *key, gboolean value)
+set_gconf_bool (GpdsMouseUI *ui, const gchar *key, gboolean value)
 {
     gchar *gconf_key;
 
@@ -258,7 +258,7 @@ set_gconf_bool (GpdsTrackPointUI *ui, const gchar *key, gboolean value)
 }
 
 static gboolean
-get_gconf_bool (GpdsTrackPointUI *ui, const gchar *key)
+get_gconf_bool (GpdsMouseUI *ui, const gchar *key)
 {
     gchar *gconf_key;
     gboolean value;
@@ -270,7 +270,7 @@ get_gconf_bool (GpdsTrackPointUI *ui, const gchar *key)
 }
 
 static void
-set_gconf_int (GpdsTrackPointUI *ui, const gchar *key, gint value)
+set_gconf_int (GpdsMouseUI *ui, const gchar *key, gint value)
 {
     gchar *gconf_key;
 
@@ -280,7 +280,7 @@ set_gconf_int (GpdsTrackPointUI *ui, const gchar *key, gint value)
 }
 
 static gint
-get_gconf_int (GpdsTrackPointUI *ui, const gchar *key)
+get_gconf_int (GpdsMouseUI *ui, const gchar *key)
 {
     gchar *gconf_key;
     gint value;
@@ -294,7 +294,7 @@ get_gconf_int (GpdsTrackPointUI *ui, const gchar *key)
 static void
 cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     GtkBuilder *builder;
     gboolean enable;
 
@@ -310,7 +310,7 @@ cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 static void
 cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     GtkBuilder *builder;
     gboolean enable;
 
@@ -324,7 +324,7 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 static void
-set_scroll_axes_property (GpdsTrackPointUI *ui)
+set_scroll_axes_property (GpdsMouseUI *ui)
 {
     GtkBuilder *builder;
     GtkToggleButton *button;
@@ -375,7 +375,7 @@ static void
 cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data)
 {
     gboolean enable;
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     set_scroll_axes_property(ui);
 
     enable = gtk_toggle_button_get_active(button);
@@ -386,7 +386,7 @@ static void
 cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_data)
 {
     gboolean enable;
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     set_scroll_axes_property(ui);
 
     enable = gtk_toggle_button_get_active(button);
@@ -397,7 +397,7 @@ static void
 cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
     gdouble time;
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     set_spin_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT);
 
     time = gtk_spin_button_get_value(button);
@@ -408,7 +408,7 @@ static void
 cb_wheel_emulation_inertia_value_changed (GtkSpinButton *button, gpointer user_data)
 {
     gdouble inertia;
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     set_spin_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION_INERTIA);
 
     inertia = gtk_spin_button_get_value(button);
@@ -419,7 +419,7 @@ static void
 cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_data)
 {
     gdouble time;
-    GpdsTrackPointUI *ui = GPDS_TRACK_POINT_UI(user_data);
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
     set_spin_property(ui->xinput, button, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT);
 
     time = gtk_spin_button_get_value(button);
@@ -470,7 +470,7 @@ get_integer_properties (GpdsXInput *xinput, const gchar *property_name,
 }
 
 static void
-set_integer_property_from_preference (GpdsTrackPointUI *ui,
+set_integer_property_from_preference (GpdsMouseUI *ui,
                                       GpdsMouseProperty property,
                                       const gchar *gconf_key_name,
                                       GtkBuilder *builder,
@@ -502,7 +502,7 @@ set_integer_property_from_preference (GpdsTrackPointUI *ui,
 }
 
 static void
-set_boolean_property_from_preference (GpdsTrackPointUI *ui,
+set_boolean_property_from_preference (GpdsMouseUI *ui,
                                       GpdsMouseProperty property,
                                       const gchar *gconf_key_name,
                                       GtkBuilder *builder,
@@ -538,7 +538,7 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
 }
 
 static void
-set_scroll_axes_property_from_preference (GpdsTrackPointUI *ui,
+set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
                                           GtkBuilder *builder)
 {
     GObject *object;
@@ -576,35 +576,35 @@ set_scroll_axes_property_from_preference (GpdsTrackPointUI *ui,
 static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
-    GpdsTrackPointUI *track_point_ui = GPDS_TRACK_POINT_UI(ui);
+    GpdsMouseUI *mouse_ui = GPDS_MOUSE_UI(ui);
 
-    set_boolean_property_from_preference(track_point_ui,
+    set_boolean_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
                                          GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY,
                                          builder,
                                          "middle_button_emulation");
-    set_boolean_property_from_preference(track_point_ui,
+    set_boolean_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_WHEEL_EMULATION,
                                          GPDS_MOUSE_WHEEL_EMULATION_KEY,
                                          builder,
                                          "wheel_emulation");
-    set_integer_property_from_preference(track_point_ui,
+    set_integer_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
                                          GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY,
                                          builder,
                                          "middle_button_timeout");
-    set_integer_property_from_preference(track_point_ui,
+    set_integer_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT,
                                          GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY,
                                          builder,
                                          "wheel_emulation_timeout");
-    set_integer_property_from_preference(track_point_ui,
+    set_integer_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_WHEEL_EMULATION_INERTIA,
                                          GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY,
                                          builder,
                                          "wheel_emulation_inertia");
 
-    set_scroll_axes_property_from_preference(track_point_ui,
+    set_scroll_axes_property_from_preference(mouse_ui,
                                              builder);
 }
 
@@ -618,21 +618,21 @@ is_available (GpdsUI *ui, GError **error)
         g_set_error(error,
                     GPDS_XINPUT_ERROR,
                     GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("No TrackPoint device found."));
+                    _("No Mouse device found."));
         return FALSE;
     }
 
-    if (!g_file_test(GPDS_TRACK_POINT_UI(ui)->ui_file_path,
+    if (!g_file_test(GPDS_MOUSE_UI(ui)->ui_file_path,
                      G_FILE_TEST_EXISTS)) {
         g_set_error(error,
                     GPDS_UI_ERROR,
                     GPDS_UI_ERROR_NO_UI_FILE,
                     _("%s did not find."),
-                    GPDS_TRACK_POINT_UI(ui)->ui_file_path);
+                    GPDS_MOUSE_UI(ui)->ui_file_path);
         return FALSE;
     }
 
-    GPDS_TRACK_POINT_UI(ui)->device_name = g_strdup(device_name);
+    GPDS_MOUSE_UI(ui)->device_name = g_strdup(device_name);
 
     return TRUE;
 }
@@ -645,12 +645,12 @@ build (GpdsUI  *ui, GError **error)
     builder = gpds_ui_get_builder(ui);
 
     if (!gtk_builder_add_from_file(builder, 
-                                   GPDS_TRACK_POINT_UI(ui)->ui_file_path,
+                                   GPDS_MOUSE_UI(ui)->ui_file_path,
                                    error)) {
         return FALSE;
     }
 
-    GPDS_TRACK_POINT_UI(ui)->xinput = gpds_xinput_new(GPDS_TRACK_POINT_UI(ui)->device_name);
+    GPDS_MOUSE_UI(ui)->xinput = gpds_xinput_new(GPDS_MOUSE_UI(ui)->device_name);
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);
