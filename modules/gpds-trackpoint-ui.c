@@ -231,6 +231,22 @@ set_widget_sensitivity (GtkBuilder *builder,
                              gtk_toggle_button_get_active(button));
 }
 
+static gboolean
+exist_gconf_dir (GpdsTrackPointUI *ui)
+{
+    gboolean exist;
+    gchar *dir;
+    gchar *device_name;
+
+    device_name = gconf_escape_key(gpds_xinput_get_device_name(ui->xinput), -1);
+    dir = g_strdup_printf("%s/%s", GPDS_MOUSE_GCONF_DIR, device_name);
+    exist = gconf_client_dir_exists(ui->gconf, GPDS_MOUSE_GCONF_DIR, NULL);
+    g_free(device_name);
+    g_free(dir);
+
+    return exist;
+}
+
 static void
 set_gconf_bool (GpdsTrackPointUI *ui, const gchar *key, gboolean value)
 {
@@ -474,7 +490,7 @@ set_integer_property_from_preference (GpdsTrackPointUI *ui,
         return;
     }
 
-    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_MOUSE_GCONF_DIR, NULL);
+    dir_exists = exist_gconf_dir(ui);
     if (dir_exists)
         value = get_gconf_int(ui, gconf_key_name);
     else
@@ -506,7 +522,7 @@ set_boolean_property_from_preference (GpdsTrackPointUI *ui,
         return;
     }
 
-    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_MOUSE_GCONF_DIR, NULL);
+    dir_exists = exist_gconf_dir(ui);
     if (dir_exists)
         enable = get_gconf_bool(ui, gconf_key_name);
     else
@@ -538,7 +554,7 @@ set_scroll_axes_property_from_preference (GpdsTrackPointUI *ui,
         return;
     }
 
-    dir_exists = gconf_client_dir_exists(ui->gconf, GPDS_MOUSE_GCONF_DIR, NULL);
+    dir_exists = exist_gconf_dir(ui);
     if (dir_exists) {
         horizontal_enable = get_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY);
         vertical_enable = get_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY);
