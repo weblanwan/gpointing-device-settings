@@ -48,8 +48,8 @@ teardown (void)
 void
 test_names (void)
 {
+    expected_names = g_list_append(expected_names, "mouse");
     expected_names = g_list_append(expected_names, "touchpad");
-    expected_names = g_list_append(expected_names, "trackpoint");
 
     names = gpds_uis_get_names();
 

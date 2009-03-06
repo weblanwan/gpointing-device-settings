@@ -49,8 +49,8 @@ teardown (void)
 void
 test_collect_names (void)
 {
+    expected_names = g_list_append(expected_names, "mouse");
     expected_names = g_list_append(expected_names, "touchpad");
-    expected_names = g_list_append(expected_names, "trackpoint");
 
     names = gpds_module_collect_names(modules);
 
@@ -60,8 +60,8 @@ test_collect_names (void)
 void
 test_find (void)
 {
+    cut_assert(gpds_module_find(modules, "mouse"));
     cut_assert(gpds_module_find(modules, "touchpad"));
-    cut_assert(gpds_module_find(modules, "trackpoint"));
 }
 
 /*
