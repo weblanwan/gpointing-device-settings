@@ -172,6 +172,8 @@ get_device_info (const gchar *device_name)
     device_infos = XListInputDevices(GDK_DISPLAY(), &n_device_infos);
 
     for (i = 0; i < n_device_infos; i++) {
+        if (device_infos[i].use != IsXExtensionPointer)
+            continue;
         if (!strcmp(device_infos[i].name, device_name))
             return &device_infos[i];
     }
