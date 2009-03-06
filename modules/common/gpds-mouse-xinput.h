@@ -17,38 +17,38 @@
  *
  */
 
-#ifndef __GPDS_TRACK_POINT_XINPUT_H__
-#define __GPDS_TRACK_POINT_XINPUT_H__
+#ifndef __GPDS_MOUSE_XINPUT_H__
+#define __GPDS_MOUSE_XINPUT_H__
 
 #include <glib.h>
 
 typedef enum {
-    GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION,
-    GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT,
-    GPDS_TRACK_POINT_WHEEL_EMULATION,
-    GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA,
-    GPDS_TRACK_POINT_WHEEL_EMULATION_AXES,
-    GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT,
-    GPDS_TRACK_POINT_WHEEL_EMULATION_BUTTON,
-    GPDS_TRACK_POINT_DRAG_LOCK_BUTTONS,
-} GpdsTrackPointProperty;
+    GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
+    GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
+    GPDS_MOUSE_WHEEL_EMULATION,
+    GPDS_MOUSE_WHEEL_EMULATION_INERTIA,
+    GPDS_MOUSE_WHEEL_EMULATION_AXES,
+    GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT,
+    GPDS_MOUSE_WHEEL_EMULATION_BUTTON,
+    GPDS_MOUSE_DRAG_LOCK_BUTTONS,
+} GpdsMouseProperty;
 
-typedef struct _GpdsTrackPointXInputProperty GpdsTrackPointXInputProperty;
-struct _GpdsTrackPointXInputProperty
+typedef struct _GpdsMouseXInputProperty GpdsMouseXInputProperty;
+struct _GpdsMouseXInputProperty
 {
-    GpdsTrackPointProperty property;
+    GpdsMouseProperty property;
     const gchar *name;
     gint format_type;
     gint max_value_count;
 };
 
-const gchar *gpds_track_point_xinput_get_name            (GpdsTrackPointProperty property);
-gint         gpds_track_point_xinput_get_format_type     (GpdsTrackPointProperty property);
-gint         gpds_track_point_xinput_get_max_value_count (GpdsTrackPointProperty property);
-const gchar *gpds_track_point_xinput_find_device_name    (void);
+const gchar *gpds_mouse_xinput_get_name            (GpdsMouseProperty property);
+gint         gpds_mouse_xinput_get_format_type     (GpdsMouseProperty property);
+gint         gpds_mouse_xinput_get_max_value_count (GpdsMouseProperty property);
+const gchar *gpds_mouse_xinput_find_device_name    (void);
 
 
-#endif /* __GPDS_TRACK_POINT_XINPUT_H__ */
+#endif /* __GPDS_MOUSE_XINPUT_H__ */
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

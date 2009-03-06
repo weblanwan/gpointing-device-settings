@@ -27,8 +27,8 @@
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
 
-#include "gpds-trackpoint-definitions.h"
-#include "gpds-trackpoint-xinput.h"
+#include "gpds-mouse-definitions.h"
+#include "gpds-mouse-xinput.h"
 
 #define GSD_TRACK_POINT_MANAGER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GSD_TYPE_TRACK_POINT_MANAGER, GsdTrackPointManagerPrivate))
 
@@ -87,7 +87,7 @@ cb_gconf_client_notify (GConfClient *client,
     gint properties[4];
     const gchar *device_name;
 
-    device_name = gpds_track_point_xinput_find_device_name();
+    device_name = gpds_mouse_xinput_find_device_name();
     if (!device_name)
         return;
 
@@ -101,27 +101,27 @@ cb_gconf_client_notify (GConfClient *client,
 
     switch (value->type) {
     case GCONF_VALUE_BOOL:
-        if (!strcmp(key, GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION_KEY)) {
+        if (!strcmp(key, GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY)) {
             properties[0] = gconf_value_get_bool(value) ? 1 : 0;
             gpds_xinput_set_int_properties(xinput,
-                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION),
-                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION),
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_MIDDLE_BUTTON_EMULATION),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_MIDDLE_BUTTON_EMULATION),
                                            NULL,
                                            properties,
                                            1);
-        } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_KEY)) {
+        } else  if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_KEY)) {
             properties[0] = gconf_value_get_bool(value) ? 1 : 0;
             gpds_xinput_set_int_properties(xinput,
-                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION),
-                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION),
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION),
                                            NULL,
                                            properties,
                                            1);
-        } else  if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY) ||
-                    !strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY)) {
+        } else  if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY) ||
+                    !strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY)) {
             gboolean enable;
             enable = gconf_client_get_bool(client,
-                                           GPDS_TRACK_POINT_WHEEL_EMULATION_Y_AXIS_KEY,
+                                           GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY,
                                            NULL);
             if (enable) {
                 properties[0] = 6;
@@ -132,7 +132,7 @@ cb_gconf_client_notify (GConfClient *client,
             }
 
             enable = gconf_client_get_bool(client,
-                                           GPDS_TRACK_POINT_WHEEL_EMULATION_X_AXIS_KEY,
+                                           GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY,
                                            NULL);
             if (enable) {
                 properties[2] = 4;
@@ -142,8 +142,8 @@ cb_gconf_client_notify (GConfClient *client,
                 properties[3] = 0;
             }
             gpds_xinput_set_int_properties(xinput,
-                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES),
-                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_AXES),
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_AXES),
                                            NULL,
                                            properties,
                                            4);
@@ -151,24 +151,24 @@ cb_gconf_client_notify (GConfClient *client,
         break;
     case GCONF_VALUE_INT:
         properties[0] = gconf_value_get_int(value);
-        if (!strcmp(key, GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT_KEY)) {
+        if (!strcmp(key, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY)) {
             gpds_xinput_set_int_properties(xinput,
-                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT),
-                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT),
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT),
                                            NULL,
                                            properties,
                                            1);
-        } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT_KEY)) {
+        } else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY)) {
             gpds_xinput_set_int_properties(xinput,
-                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT),
-                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT),
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT),
                                            NULL,
                                            properties,
                                            1);
-        } else if (!strcmp(key, GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA_KEY)) {
+        } else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY)) {
             gpds_xinput_set_int_properties(xinput,
-                                           gpds_track_point_xinput_get_name(GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA),
-                                           gpds_track_point_xinput_get_format_type(GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA),
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_INERTIA),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_INERTIA),
                                            NULL,
                                            properties,
                                            1);
@@ -186,19 +186,32 @@ gsd_track_point_manager_start (GsdTrackPointManager *manager,
                                GError              **error)
 {
     GsdTrackPointManagerPrivate *priv;
+    gchar *gconf_dir;
+    const gchar *device_name;
+    gchar *escaped_device_name;
 
     priv = GSD_TRACK_POINT_MANAGER_GET_PRIVATE(manager);
     priv->gconf = gconf_client_get_default();
 
+    device_name = gpds_mouse_xinput_find_device_name();
+    if (!device_name)
+        return FALSE;
+
+    escaped_device_name = gconf_escape_key(device_name, -1);
+    gconf_dir = g_strdup_printf("%s/%s",
+                                GPDS_MOUSE_GCONF_DIR,
+                                escaped_device_name);
     gconf_client_add_dir(priv->gconf,
-                         GPDS_TRACK_POINT_GCONF_DIR,
+                         gconf_dir,
                          GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
     priv->notify_id = gconf_client_notify_add(priv->gconf,
-                                              GPDS_TRACK_POINT_GCONF_DIR,
+                                              gconf_dir,
                                               cb_gconf_client_notify,
                                               manager,
                                               NULL,
                                               NULL);
+    g_free(escaped_device_name);
+    g_free(gconf_dir);
 
     return TRUE;
 }
@@ -212,7 +225,7 @@ gsd_track_point_manager_stop (GsdTrackPointManager *manager)
 
     if (priv->notify_id) {
         gconf_client_remove_dir(priv->gconf,
-                                GPDS_TRACK_POINT_GCONF_DIR,
+                                GPDS_MOUSE_GCONF_DIR,
                                 NULL);
         gconf_client_notify_remove(priv->gconf, priv->notify_id);
         priv->notify_id = 0;

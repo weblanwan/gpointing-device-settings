@@ -37,7 +37,7 @@ libtrackpoint_la_SOURCES = 		\
 	gsd-trackpoint-manager.h	\
 	gsd-trackpoint-manager.c
 
-libtrackpoint_la_LIBADD = $(top_builddir)/modules/common/libtrackpoint_common.la
+libtrackpoint_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
 
 libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
 libtouchpad_la_SOURCES = 		\

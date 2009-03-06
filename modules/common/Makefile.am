@@ -9,7 +9,7 @@ AM_CFLAGS =			\
 	$(COVERAGE_CFLAGS)
 
 noinst_LTLIBRARIES =            \
-        libtrackpoint_common.la \
+        libmouse_common.la \
         libtouchpad_common.la
 
 LIBADD =				\
@@ -18,10 +18,10 @@ LIBADD =				\
 	$(GCONF2_LIBS)			\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
-libtrackpoint_common_la_SOURCES =       \
-        gpds-trackpoint-xinput.c        \
-        gpds-trackpoint-xinput.h        \
-	gpds-trackpoint-definitions.h
+libmouse_common_la_SOURCES =       \
+        gpds-mouse-xinput.c        \
+        gpds-mouse-xinput.h        \
+	gpds-mouse-definitions.h
 
 libtouchpad_common_la_SOURCES =         \
         gpds-touchpad-xinput.c          \

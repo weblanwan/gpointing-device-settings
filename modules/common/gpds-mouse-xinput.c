@@ -21,33 +21,33 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gpds-trackpoint-xinput.h"
+#include "gpds-mouse-xinput.h"
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
 
-static const gchar *track_point_device_names[] = {
+static const gchar *mouse_device_names[] = {
     "TPPS/2 IBM TrackPoint"
 };
 
-static const gint n_track_point_device_names = G_N_ELEMENTS(track_point_device_names);
+static const gint n_mouse_device_names = G_N_ELEMENTS(mouse_device_names);
 
-static GpdsTrackPointXInputProperty properties[] = {
-    {GPDS_TRACK_POINT_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", 8, 1},
-    {GPDS_TRACK_POINT_MIDDLE_BUTTON_TIMEOUT, "Evdev Middle Button Timeout", 32, 1},
-    {GPDS_TRACK_POINT_WHEEL_EMULATION, "Evdev Wheel Emulation", 8, 1},
-    {GPDS_TRACK_POINT_WHEEL_EMULATION_INERTIA, "Evdev Wheel Emulation Inertia", 16, 1},
-    {GPDS_TRACK_POINT_WHEEL_EMULATION_AXES, "Evdev Wheel Emulation Axes", 8, 4},
-    {GPDS_TRACK_POINT_WHEEL_EMULATION_TIMEOUT, "Evdev Wheel Emulation Timeout", 16, 1},
-    {GPDS_TRACK_POINT_WHEEL_EMULATION_BUTTON, "Evdev Wheel Emulation Button", 8, 1},
-    {GPDS_TRACK_POINT_DRAG_LOCK_BUTTONS, "Evdev Drag Lock Buttons", 8, 2}
+static GpdsMouseXInputProperty properties[] = {
+    {GPDS_MOUSE_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", 8, 1},
+    {GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT, "Evdev Middle Button Timeout", 32, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION, "Evdev Wheel Emulation", 8, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION_INERTIA, "Evdev Wheel Emulation Inertia", 16, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION_AXES, "Evdev Wheel Emulation Axes", 8, 4},
+    {GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT, "Evdev Wheel Emulation Timeout", 16, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION_BUTTON, "Evdev Wheel Emulation Button", 8, 1},
+    {GPDS_MOUSE_DRAG_LOCK_BUTTONS, "Evdev Drag Lock Buttons", 8, 2}
 };
 
 static const gint n_properties = G_N_ELEMENTS(properties);
 
 const gchar *
-gpds_track_point_xinput_get_name (GpdsTrackPointProperty property)
+gpds_mouse_xinput_get_name (GpdsMouseProperty property)
 {
     gint i;
 
@@ -60,7 +60,7 @@ gpds_track_point_xinput_get_name (GpdsTrackPointProperty property)
 }
 
 gint
-gpds_track_point_xinput_get_format_type (GpdsTrackPointProperty property)
+gpds_mouse_xinput_get_format_type (GpdsMouseProperty property)
 {
     gint i;
 
@@ -73,7 +73,7 @@ gpds_track_point_xinput_get_format_type (GpdsTrackPointProperty property)
 }
 
 gint
-gpds_track_point_xinput_get_max_value_count (GpdsTrackPointProperty property)
+gpds_mouse_xinput_get_max_value_count (GpdsMouseProperty property)
 {
     gint i;
 
@@ -86,13 +86,13 @@ gpds_track_point_xinput_get_max_value_count (GpdsTrackPointProperty property)
 }
 
 const gchar *
-gpds_track_point_xinput_find_device_name (void)
+gpds_mouse_xinput_find_device_name (void)
 {
     gint i;
 
-    for (i = 0; i < n_track_point_device_names; i++) {
-        if (gpds_xinput_utils_exist_device(track_point_device_names[i]))
-            return track_point_device_names[i];
+    for (i = 0; i < n_mouse_device_names; i++) {
+        if (gpds_xinput_utils_exist_device(mouse_device_names[i]))
+            return mouse_device_names[i];
     }
     return NULL;
 }

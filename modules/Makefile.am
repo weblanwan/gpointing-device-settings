@@ -29,7 +29,7 @@ LIBS =					\
 trackpoint_la_SOURCES = 		\
 	gpds-trackpoint-ui.c
 
-trackpoint_la_LIBADD = $(top_builddir)/modules/common/libtrackpoint_common.la
+trackpoint_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
 
 touchpad_la_SOURCES = 			\
 	gpds-touchpad-ui.c
