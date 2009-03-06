@@ -164,6 +164,14 @@ gpds_xinput_new (const gchar *device_name)
                         NULL);
 }
 
+const gchar *
+gpds_xinput_get_device_name (GpdsXInput *xinput)
+{
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), NULL);
+
+    return GPDS_XINPUT_GET_PRIVATE(xinput)->device_name;
+}
+
 static XDevice *
 get_device (GpdsXInput *xinput, GError **error)
 {

@@ -3,6 +3,7 @@
 #include <gcutter.h>
 
 void test_new (void);
+void test_device_name (void);
 void test_set_int_properties (void);
 
 static GpdsXInput *xinput;
@@ -33,6 +34,15 @@ test_new (void)
 {
     xinput = gpds_xinput_new("TPPS/2 IBM TrackPoint");
     cut_assert(xinput);
+}
+
+void
+test_device_name (void)
+{
+    cut_trace(test_new());
+
+    cut_assert_equal_string("TPPS/2 IBM TrackPoint",
+                            gpds_xinput_get_device_name(xinput));
 }
 
 void

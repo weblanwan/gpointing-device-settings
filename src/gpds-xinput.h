@@ -53,31 +53,32 @@ struct _GpdsXInputClass
     GObjectClass parent_class;
 };
 
-GQuark      gpds_xinput_error_quark        (void);
-GType       gpds_xinput_get_type           (void) G_GNUC_CONST;
+GQuark        gpds_xinput_error_quark         (void);
+GType         gpds_xinput_get_type            (void) G_GNUC_CONST;
 
-GpdsXInput *gpds_xinput_new                  (const gchar *device_name);
-gboolean    gpds_xinput_set_int_properties   (GpdsXInput *xinput,
-                                              const gchar *property_name,
-                                              gint format_type,
-                                              GError **error,
-                                              gint *properties,
-                                              guint n_properties);
-gboolean    gpds_xinput_get_int_properties   (GpdsXInput *xinput,
-                                              const gchar *property_name,
-                                              GError **error,
-                                              gint **values,
-                                              gulong *n_values);
-gboolean    gpds_xinput_set_float_properties (GpdsXInput *xinput,
-                                              const gchar *property_name,
-                                              GError **error,
-                                              gdouble *properties,
-                                              guint n_properties);
-gboolean    gpds_xinput_get_float_properties (GpdsXInput *xinput,
-                                              const gchar *property_name,
-                                              GError **error,
-                                              gdouble **properties,
-                                              gulong *n_properties);
+GpdsXInput  *gpds_xinput_new                  (const gchar *device_name);
+const gchar *gpds_xinput_get_device_name      (GpdsXInput *xinput);
+gboolean     gpds_xinput_set_int_properties   (GpdsXInput *xinput,
+                                               const gchar *property_name,
+                                               gint format_type,
+                                               GError **error,
+                                               gint *properties,
+                                               guint n_properties);
+gboolean     gpds_xinput_get_int_properties   (GpdsXInput *xinput,
+                                               const gchar *property_name,
+                                               GError **error,
+                                               gint **values,
+                                               gulong *n_values);
+gboolean     gpds_xinput_set_float_properties (GpdsXInput *xinput,
+                                               const gchar *property_name,
+                                               GError **error,
+                                               gdouble *properties,
+                                               guint n_properties);
+gboolean     gpds_xinput_get_float_properties (GpdsXInput *xinput,
+                                               const gchar *property_name,
+                                               GError **error,
+                                               gdouble **properties,
+                                               gulong *n_properties);
 
 
 G_END_DECLS
