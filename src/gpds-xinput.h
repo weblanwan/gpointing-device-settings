@@ -55,7 +55,6 @@ struct _GpdsXInputClass
 
 GQuark      gpds_xinput_error_quark        (void);
 GType       gpds_xinput_get_type           (void) G_GNUC_CONST;
-gboolean    gpds_xinput_exist_device       (const gchar *device_name);
 
 GpdsXInput *gpds_xinput_new                  (const gchar *device_name);
 gboolean    gpds_xinput_set_int_properties   (GpdsXInput *xinput,
@@ -79,6 +78,7 @@ gboolean    gpds_xinput_get_float_properties (GpdsXInput *xinput,
                                               GError **error,
                                               gdouble **properties,
                                               gulong *n_properties);
+
 
 G_END_DECLS
 

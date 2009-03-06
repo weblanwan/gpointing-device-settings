@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
+#include <gpds-xinput-utils.h>
 
 static const gchar *track_point_device_names[] = {
     "TPPS/2 IBM TrackPoint"
@@ -90,7 +91,7 @@ gpds_track_point_xinput_find_device_name (void)
     gint i;
 
     for (i = 0; i < n_track_point_device_names; i++) {
-        if (gpds_xinput_exist_device(track_point_device_names[i]))
+        if (gpds_xinput_utils_exist_device(track_point_device_names[i]))
             return track_point_device_names[i];
     }
     return NULL;

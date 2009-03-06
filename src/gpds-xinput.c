@@ -511,12 +511,6 @@ gpds_xinput_get_float_properties (GpdsXInput *xinput,
     return TRUE;
 }
 
-gboolean
-gpds_xinput_exist_device (const gchar *device_name)
-{
-    return get_device_info(device_name) ? TRUE : FALSE;
-}
-
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
+#include <gpds-xinput-utils.h>
 
 #include "gpds-trackpoint-definitions.h"
 #include "gpds-trackpoint-xinput.h"
@@ -90,7 +91,7 @@ cb_gconf_client_notify (GConfClient *client,
     if (!device_name)
         return;
 
-    if (!gpds_xinput_exist_device(device_name))
+    if (!gpds_xinput_utils_exist_device(device_name))
         return;
 
     xinput = gpds_xinput_new(device_name);

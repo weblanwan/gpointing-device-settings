@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
+#include <gpds-xinput-utils.h>
 
 static const gchar *touchpad_device_names[] = {
     "SynPS/2 Synaptics TouchPad",
@@ -114,7 +115,7 @@ gpds_touchpad_xinput_find_device_name (void)
     gint i;
 
     for (i = 0; i < n_touchpad_device_names; i++) {
-        if (gpds_xinput_exist_device(touchpad_device_names[i]))
+        if (gpds_xinput_utils_exist_device(touchpad_device_names[i]))
             return touchpad_device_names[i];
     }
     return NULL;

@@ -33,7 +33,7 @@ typedef enum
     GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
     GPDS_XINPUT_UTILS_ERROR_UNABLE_TO_OPEN_DEVICE,
     GPDS_XINPUT_UTILS_ERROR_NO_FLOAT_ATOM
-} GpdsXInputError;
+} GpdsXInputUtilsError;
 
 GQuark       gpds_xinput_utils_error_quark              (void);
 XDeviceInfo *gpds_xinput_utils_get_device_info          (const gchar *device_name);
