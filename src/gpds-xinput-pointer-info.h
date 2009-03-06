@@ -17,33 +17,29 @@
  *
  */
 
-#ifndef __GPDS_XINPUT_UTILS_H__
-#define __GPDS_XINPUT_UTILS_H__
+#ifndef __GPDS_XINPUT_POINTER_INFO_H__
+#define __GPDS_XINPUT_POINTER_INFO_H__
 
 #include <glib.h>
-#include <X11/extensions/XInput.h>
-#include <X11/Xatom.h>
 
 G_BEGIN_DECLS
 
-#define GPDS_XINPUT_UTILS_ERROR           (gpds_xinput_utils_error_quark())
-
-typedef enum
+typedef struct _GpdsXInputPointerInfo GpdsXInputPointerInfo;
+struct _GpdsXInputPointerInfo
 {
-    GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
-    GPDS_XINPUT_UTILS_ERROR_UNABLE_TO_OPEN_DEVICE,
-    GPDS_XINPUT_UTILS_ERROR_NO_FLOAT_ATOM
-} GpdsXInputUtilsError;
+    gchar *name;
+    gchar *type_name; /* MOUSE, TOUCHPAD, ... */
+};
 
-GQuark       gpds_xinput_utils_error_quark              (void);
-XDeviceInfo *gpds_xinput_utils_get_device_info          (const gchar *device_name);
-XDevice     *gpds_xinput_utils_open_device              (const gchar *device_name, GError **error);
-Atom         gpds_xinput_utils_get_float_atom           (GError **error);
-gboolean     gpds_xinput_utils_exist_device             (const gchar *device_name);
+GpdsXInputPointerInfo *gpds_xinput_pointer_info_new     (const gchar *name,
+                                                         const gchar *type_name);
+void                   gpds_xinput_pointer_info_free    (GpdsXInputPointerInfo *info);
+GList                 *gpds_xinput_utils_collect_pointer_infos
+                                                        (void);
 
 G_END_DECLS
 
-#endif /* __GPDS_XINPUT_UTILS_H__ */
+#endif /* __GPDS_XINPUT_POINTER_INFO_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

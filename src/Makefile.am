@@ -5,6 +5,7 @@ libgpds_public_headers = 		\
 	gpds-module-impl.h		\
 	gpds-ui.h			\
 	gpds-xinput.h                   \
+	gpds-xinput-pointer-info.h      \
 	gpds-xinput-utils.h
 
 libgpds_la_SOURCES =			\
@@ -13,6 +14,7 @@ libgpds_la_SOURCES =			\
 	gpds-module.h			\
 	gpds-ui.c			\
 	gpds-xinput.c                   \
+	gpds-xinput-pointer-info.c      \
 	gpds-xinput-utils.c
 
 AM_CFLAGS = -DG_LOG_DOMAIN=\"GPointingDeviceSettings\"

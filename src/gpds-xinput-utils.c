@@ -27,6 +27,7 @@
 #include <gdk/gdkx.h>
 #include <glib/gi18n.h>
 #include <string.h>
+#include "gpds-xinput-pointer-info.h"
 
 GQuark
 gpds_xinput_utils_error_quark (void)
@@ -103,51 +104,6 @@ gboolean
 gpds_xinput_utils_exist_device (const gchar *device_name)
 {
     return gpds_xinput_utils_get_device_info(device_name) ? TRUE : FALSE;
-}
-
-GpdsXInputPointerInfo *
-gpds_xinput_pointer_info_new (const gchar *name, const gchar *type_name)
-{
-    GpdsXInputPointerInfo *info;
-
-    info = g_new0(GpdsXInputPointerInfo, 1);
-    info->name = g_strdup(name);
-    info->type_name = g_strdup(type_name);
-
-    return info;
-}
-
-void
-gpds_xinput_pointer_info_free (GpdsXInputPointerInfo *info)
-{
-    g_free(info->name);
-    g_free(info->type_name);
-    g_free(info);
-}
-
-GList *
-gpds_xinput_utils_collect_pointer_infos (void)
-{
-    GList *device_names = NULL;
-    XDeviceInfo *device_infos;
-    gint i, n_device_infos;
-
-    device_infos = XListInputDevices(GDK_DISPLAY(), &n_device_infos);
-
-    for (i = 0; i < n_device_infos; i++) {
-        GpdsXInputPointerInfo *info;
-
-        if (device_infos[i].use != IsXExtensionPointer)
-            continue;
-        info = gpds_xinput_pointer_info_new(device_infos[i].name,
-                                            XGetAtomName(GDK_DISPLAY(), device_infos[i].type));
-
-        device_names = g_list_prepend(device_names, info);
-    }
-
-    XFreeDeviceList(device_infos);
-
-    return device_names;
 }
 
 /*
