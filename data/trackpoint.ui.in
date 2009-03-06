@@ -32,6 +32,9 @@
           <property name="visible">True</property>
           <property name="label" translatable="yes">Middle button timeout</property>
         </object>
+        <packing>
+          <property name="expand">False</property>
+        </packing>
       </child>
       <child>
         <object class="GtkAdjustment" id="middle_button_timeout_adjustment">
@@ -44,12 +47,18 @@
           <property name="visible">True</property>
           <property name="adjustment">middle_button_timeout_adjustment</property>
         </object>
+        <packing>
+          <property name="expand">False</property>
+        </packing>
       </child>
       <child>
         <object class="GtkLabel" id="middle_button_timeout_unit">
           <property name="visible">True</property>
           <property name="label" translatable="yes">(ms)</property>
         </object>
+        <packing>
+          <property name="expand">False</property>
+        </packing>
       </child>
       </object>
     </child>
@@ -71,6 +80,9 @@
             <property name="visible">True</property>
             <property name="label" translatable="yes">Wheel emulation timeout</property>
           </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
         </child>
         <child>
           <object class="GtkAdjustment" id="wheel_emulation_timeout_adjustment">
@@ -83,12 +95,18 @@
             <property name="visible">True</property>
             <property name="adjustment">wheel_emulation_timeout_adjustment</property>
           </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="wheel_emulation_timeout_unit">
             <property name="visible">True</property>
             <property name="label" translatable="yes">(ms)</property>
           </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
         </child>
         </object>
       </child>
@@ -100,6 +118,9 @@
             <property name="visible">True</property>
             <property name="label" translatable="yes">Wheel emulation inertia</property>
           </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
         </child>
         <child>
           <object class="GtkAdjustment" id="wheel_emulation_inertia_adjustment">
@@ -112,6 +133,9 @@
             <property name="visible">True</property>
             <property name="adjustment">wheel_emulation_inertia_adjustment</property>
           </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
         </child>
         </object>
       </child>
