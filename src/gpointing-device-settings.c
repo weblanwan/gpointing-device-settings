@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include "gpds-xinput.h"
+#include "gpds-xinput-pointer-info.h"
 #include "gpds-module.h"
 #include "gpds-ui.h"
 
@@ -55,17 +55,23 @@ cb_response (GtkDialog *dialog, gint response_id, gpointer user_data)
 static void
 append_uis (GtkNotebook *notebook)
 {
-    GList *ui_names, *name;
+    GList *node, *pointer_infos;;
 
-    ui_names = gpds_uis_get_names();
+    pointer_infos = gpds_xinput_utils_collect_pointer_infos();
     
-    for (name = ui_names; name; name = g_list_next(name)) {
+    for (node = pointer_infos; node; node = g_list_next(node)) {
         GpdsUI *ui;
+        GpdsXInputPointerInfo *info = node->data;
+        gchar *type_name;
         GtkWidget *widget = NULL;
         GtkWidget *label = NULL;
         GError *error = NULL;
 
-        ui = gpds_ui_new(name->data, NULL);
+        type_name = g_ascii_strdown(gpds_xinput_pointer_info_get_type_name(info), -1);
+        ui = gpds_ui_new(g_ascii_strdown(type_name, -1),
+                         "device-name", gpds_xinput_pointer_info_get_name(info),
+                         NULL);
+        g_free(type_name);
         uis = g_list_prepend(uis, ui);
 
         if (!gpds_ui_is_available(ui, &error)) {
@@ -100,7 +106,8 @@ append_uis (GtkNotebook *notebook)
 
     }
 
-    g_list_free(ui_names);
+    g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
+    g_list_free(pointer_infos);
 }
 
 int

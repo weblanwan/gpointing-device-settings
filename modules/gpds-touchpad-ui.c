@@ -862,6 +862,7 @@ get_content_widget (GpdsUI *ui, GError **error)
                     GPDS_UI_ERROR_NO_WIDGET,
                     _("There is no widget(%s)."),
                     "main-widget");
+        return NULL;
     }
 
     return GTK_WIDGET(widget);
@@ -871,7 +872,7 @@ static GtkWidget *
 get_label_widget (GpdsUI *ui, GError **error)
 {
     GtkBuilder *builder;
-    GObject *widget;
+    GObject *widget, *label;
 
     builder = gpds_ui_get_builder(ui);
 
@@ -882,7 +883,11 @@ get_label_widget (GpdsUI *ui, GError **error)
                     GPDS_UI_ERROR_NO_WIDGET,
                     _("There is no widget(%s)."),
                     "main-widget-label");
+        return NULL;
     }
+    label = gtk_builder_get_object(builder, "main-widget-label-text");
+    if (label)
+        gtk_label_set_text(GTK_LABEL(label), gpds_ui_get_device_name(ui));
 
     return GTK_WIDGET(widget);
 }
