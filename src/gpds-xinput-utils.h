@@ -35,12 +35,23 @@ typedef enum
     GPDS_XINPUT_UTILS_ERROR_NO_FLOAT_ATOM
 } GpdsXInputUtilsError;
 
+typedef struct _GpdsXInputPointerInfo GpdsXInputPointerInfo;
+struct _GpdsXInputPointerInfo
+{
+    gchar *name;
+    gchar *type_name; /* MOUSE, TOUCHPAD, ... */
+};
+
+GpdsXInputPointerInfo *gpds_xinput_pointer_info_new     (const gchar *name,
+                                                         const gchar *type_name);
+void                   gpds_xinput_pointer_info_free    (GpdsXInputPointerInfo *info);
+
 GQuark       gpds_xinput_utils_error_quark              (void);
 XDeviceInfo *gpds_xinput_utils_get_device_info          (const gchar *device_name);
 XDevice     *gpds_xinput_utils_open_device              (const gchar *device_name, GError **error);
 Atom         gpds_xinput_utils_get_float_atom           (GError **error);
 gboolean     gpds_xinput_utils_exist_device             (const gchar *device_name);
-GList       *gpds_xinput_utils_get_pointer_device_names (void);
+GList       *gpds_xinput_utils_collect_pointer_infos    (void);
 
 G_END_DECLS
 

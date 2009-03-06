@@ -181,7 +181,7 @@ cb_gconf_client_notify (GConfClient *client,
 
 gboolean
 gsd_touchpad_manager_start (GsdTouchpadManager *manager,
-                               GError              **error)
+                            GError              **error)
 {
     GsdTouchpadManagerPrivate *priv;
 
