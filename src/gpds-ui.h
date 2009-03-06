@@ -58,20 +58,21 @@ struct _GpdsUIClass
     GtkWidget *(*get_label_widget)      (GpdsUI *ui, GError **error);
 };
 
-gboolean    gpds_uis_load                (void);
-gboolean    gpds_uis_unload              (void);
-GList      *gpds_uis_get_names           (void);
+gboolean     gpds_uis_load                (void);
+gboolean     gpds_uis_unload              (void);
+GList       *gpds_uis_get_names           (void);
 
-GQuark      gpds_ui_error_quark          (void);
-GType       gpds_ui_get_type             (void) G_GNUC_CONST;
-GpdsUI     *gpds_ui_new                  (const gchar *type_name,
-                                          const gchar *first_property,
-                                          ...);
-gboolean    gpds_ui_is_available         (GpdsUI *ui, GError **error);
-gboolean    gpds_ui_build                (GpdsUI *ui, GError **error);
-GtkWidget  *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);
-GtkWidget  *gpds_ui_get_label_widget     (GpdsUI *ui, GError **error);
-GtkBuilder *gpds_ui_get_builder          (GpdsUI *ui);
+GQuark       gpds_ui_error_quark          (void);
+GType        gpds_ui_get_type             (void) G_GNUC_CONST;
+GpdsUI      *gpds_ui_new                  (const gchar *type_name,
+                                           const gchar *first_property,
+                                           ...);
+gboolean     gpds_ui_is_available         (GpdsUI *ui, GError **error);
+gboolean     gpds_ui_build                (GpdsUI *ui, GError **error);
+GtkWidget   *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);
+GtkWidget   *gpds_ui_get_label_widget     (GpdsUI *ui, GError **error);
+GtkBuilder  *gpds_ui_get_builder          (GpdsUI *ui);
+const gchar *gpds_ui_get_device_name      (GpdsUI *ui);
 
 G_END_DECLS
 

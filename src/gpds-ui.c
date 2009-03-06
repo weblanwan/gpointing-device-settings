@@ -57,6 +57,13 @@ struct _GpdsUIPriv
 {
     GtkBuilder *builder;
     GpdsXInput *xinput;
+    gchar *device_name;
+};
+
+enum
+{
+    PROP_0,
+    PROP_DEVICE_NAME
 };
 
 #define GPDS_UI_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GPDS_TYPE_UI, GpdsUIPriv))
@@ -64,6 +71,14 @@ struct _GpdsUIPriv
 G_DEFINE_ABSTRACT_TYPE(GpdsUI, gpds_ui, G_TYPE_OBJECT)
 
 static void dispose      (GObject      *object);
+static void set_property (GObject      *object,
+                          guint         prop_id,
+                          const GValue *value,
+                          GParamSpec   *pspec);
+static void get_property (GObject      *object,
+                          guint         prop_id,
+                          GValue       *value,
+                          GParamSpec   *pspec);
 
 static void
 gpds_ui_class_init (GpdsUIClass *klass)
@@ -71,6 +86,17 @@ gpds_ui_class_init (GpdsUIClass *klass)
     GObjectClass   *gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
+
+    g_object_class_install_property
+        (gobject_class,
+         PROP_DEVICE_NAME,
+         g_param_spec_string("device-name",
+             "Device Name",
+             "The device name",
+             NULL,
+             G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     g_type_class_add_private(gobject_class, sizeof(GpdsUIPriv));
 }
@@ -80,6 +106,7 @@ gpds_ui_init (GpdsUI *ui)
 {
     GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(ui);
 
+    priv->device_name = NULL;
     priv->xinput = NULL;
     priv->builder = gtk_builder_new();
 }
@@ -88,6 +115,8 @@ static void
 dispose (GObject *object)
 {
     GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(object);
+
+    g_free(priv->device_name);
 
     if (priv->builder) {
         g_object_unref(priv->builder);
@@ -101,6 +130,43 @@ dispose (GObject *object)
 
     if (G_OBJECT_CLASS(gpds_ui_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_ui_parent_class)->dispose(object);
+}
+
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(object);
+
+    switch (prop_id) {
+    case PROP_DEVICE_NAME:
+        g_free(priv->device_name);
+        priv->device_name = g_value_dup_string(value);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(object);
+
+    switch (prop_id) {
+    case PROP_DEVICE_NAME:
+        g_value_set_string(value, priv->device_name);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
 }
 
 GQuark
@@ -179,7 +245,17 @@ gpds_ui_get_label_widget (GpdsUI *ui, GError **error)
 GtkBuilder *
 gpds_ui_get_builder (GpdsUI *ui)
 {
+    g_return_val_if_fail(GPDS_IS_UI(ui), NULL);
+
     return GPDS_UI_GET_PRIVATE(ui)->builder;
+}
+
+const gchar *
+gpds_ui_get_device_name (GpdsUI *ui)
+{
+    g_return_val_if_fail(GPDS_IS_UI(ui), NULL);
+
+    return GPDS_UI_GET_PRIVATE(ui)->device_name;
 }
 
 /*
