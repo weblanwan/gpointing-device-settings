@@ -4,13 +4,17 @@
 #include <gdk/gdkx.h>
 
 void test_collect (void);
+void test_name (void);
+void test_type_name (void);
 
 static GList *pointer_infos;
 static GList *expected_pointer_infos;
+static GpdsXInputPointerInfo *pointer_info;
 
 void
 setup (void)
 {
+    pointer_info = NULL;
     pointer_infos = NULL;
     expected_pointer_infos = NULL;
 }
@@ -18,10 +22,37 @@ setup (void)
 void
 teardown (void)
 {
+    if (pointer_info) {
+        gpds_xinput_pointer_info_free(pointer_info);
+        pointer_info = NULL;
+    }
     if (pointer_infos) {
         g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
         g_list_free(pointer_infos);
     }
+}
+
+static void
+test_new (void)
+{
+    pointer_info = gpds_xinput_pointer_info_new("Name", "TypeName");
+    cut_assert(pointer_info);
+}
+
+void
+test_name (void)
+{
+    cut_trace(test_new());
+
+    cut_assert_equal_string("Name", gpds_xinput_pointer_info_get_name(pointer_info));
+}
+
+void
+test_type_name (void)
+{
+    cut_trace(test_new());
+
+    cut_assert_equal_string("TypeName", gpds_xinput_pointer_info_get_type_name(pointer_info));
 }
 
 static void

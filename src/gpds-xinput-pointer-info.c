@@ -71,6 +71,18 @@ gpds_xinput_utils_collect_pointer_infos (void)
     return device_names;
 }
 
+const gchar *
+gpds_xinput_pointer_info_get_name (GpdsXInputPointerInfo *info)
+{
+    return info->name;
+}
+
+const gchar *
+gpds_xinput_pointer_info_get_type_name (GpdsXInputPointerInfo *info)
+{
+    return info->type_name;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -34,6 +34,10 @@ struct _GpdsXInputPointerInfo
 GpdsXInputPointerInfo *gpds_xinput_pointer_info_new     (const gchar *name,
                                                          const gchar *type_name);
 void                   gpds_xinput_pointer_info_free    (GpdsXInputPointerInfo *info);
+const gchar           *gpds_xinput_pointer_info_get_name
+                                                        (GpdsXInputPointerInfo *info);
+const gchar           *gpds_xinput_pointer_info_get_type_name
+                                                        (GpdsXInputPointerInfo *info);
 GList                 *gpds_xinput_utils_collect_pointer_infos
                                                         (void);
 
