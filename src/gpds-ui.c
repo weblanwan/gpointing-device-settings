@@ -275,8 +275,7 @@ build_gconf_key (GpdsUI *ui, const gchar *key)
     gchar *device_name;
     GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(ui);
 
-    device_name = gconf_escape_key(gpds_xinput_get_device_name(priv->xinput),
-                                   -1);
+    device_name = gconf_escape_key(priv->device_name, -1);
     gconf_key = g_strdup_printf("%s/%s/%s",
                                 GPDS_GCONF_DIR,
                                 device_name,
