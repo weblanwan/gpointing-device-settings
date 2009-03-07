@@ -45,8 +45,6 @@ struct _GpdsMouseXInputProperty
 const gchar *gpds_mouse_xinput_get_name            (GpdsMouseProperty property);
 gint         gpds_mouse_xinput_get_format_type     (GpdsMouseProperty property);
 gint         gpds_mouse_xinput_get_max_value_count (GpdsMouseProperty property);
-const gchar *gpds_mouse_xinput_find_device_name    (void);
-
 
 #endif /* __GPDS_MOUSE_XINPUT_H__ */
 /*

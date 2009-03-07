@@ -27,12 +27,6 @@
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
 
-static const gchar *mouse_device_names[] = {
-    "TPPS/2 IBM TrackPoint"
-};
-
-static const gint n_mouse_device_names = G_N_ELEMENTS(mouse_device_names);
-
 static GpdsMouseXInputProperty properties[] = {
     {GPDS_MOUSE_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", 8, 1},
     {GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT, "Evdev Middle Button Timeout", 32, 1},
@@ -83,18 +77,6 @@ gpds_mouse_xinput_get_max_value_count (GpdsMouseProperty property)
     }
 
     return -1;
-}
-
-const gchar *
-gpds_mouse_xinput_find_device_name (void)
-{
-    gint i;
-
-    for (i = 0; i < n_mouse_device_names; i++) {
-        if (gpds_xinput_utils_exist_device(mouse_device_names[i]))
-            return mouse_device_names[i];
-    }
-    return NULL;
 }
 
 /*
