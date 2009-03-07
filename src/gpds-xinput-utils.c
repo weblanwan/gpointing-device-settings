@@ -66,7 +66,7 @@ gpds_xinput_utils_open_device (const gchar *device_name, GError **error)
         g_set_error(error,
                     GPDS_XINPUT_UTILS_ERROR,
                     GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
-                    _("No device found."));
+                    _("No %s found."), device_name);
         return NULL;
     }
 
