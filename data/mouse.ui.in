@@ -5,7 +5,6 @@
     <child>
       <object class="GtkImage" id ="main-widget-label-icon">
         <property name="visible">True</property>
-        <property name="file">@prefix@/share/gpointing-device-settings/icon/mouse.png</property>
       </object>
     </child>
     <child>

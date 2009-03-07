@@ -574,7 +574,7 @@ static GtkWidget *
 get_label_widget (GpdsUI *ui, GError **error)
 {
     GtkBuilder *builder;
-    GObject *widget, *label;
+    GObject *widget, *label, *image;
 
     builder = gpds_ui_get_builder(ui);
 
@@ -591,6 +591,10 @@ get_label_widget (GpdsUI *ui, GError **error)
     label = gtk_builder_get_object(builder, "main-widget-label-text");
     if (label)
         gtk_label_set_text(GTK_LABEL(label), gpds_ui_get_device_name(ui));
+
+    image = gtk_builder_get_object(builder, "main-widget-label-icon");
+    if (image && strstr(gpds_ui_get_device_name(ui), "TrackPoint"))
+        gtk_image_set_from_file(GTK_IMAGE(image), GPDS_ICONDIR "/trackpoint.png");
 
     return GTK_WIDGET(widget);
 }
