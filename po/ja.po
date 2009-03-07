@@ -2,13 +2,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-07 18:33+0900\n"
+"POT-Creation-Date: 2009-03-07 19:19+0900\n"
 "PO-Revision-Date: 2009-02-27 18:59+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/gpds-xinput-utils.c:69
+#, c-format
+msgid "No %s found."
+msgstr "%sが見つかりません。"
+
+#: ../src/gpds-xinput-utils.c:80
+#, c-format
+msgid "Could not open %s device."
+msgstr "%sが開けません。"
+
+#: ../src/gpds-xinput-utils.c:97
+#, c-format
+msgid "No float atom in XServer"
+msgstr "float atomがXServerにありません"
 
 #: ../src/gpointing-device-settings.c:126
 msgid "Pointing Device Settings"
@@ -25,6 +40,9 @@ msgstr "%sが見つかりません。"
 msgid "There is no widget(%s)."
 msgstr "ウィジェット(%s)がありません。"
 
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
 #: ../data/mouse.ui.in.h:1
 msgid "(ms)"
 msgstr "(ミリ秒)"
@@ -113,12 +131,11 @@ msgstr "タッピング"
 msgid "Tapping time: "
 msgstr "タッピング間隔"
 
-#: ../data/gnome-settings-daemon.schemas.in.h:1
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
 msgstr "ポインティングデバイスプラグインを有効にする"
 
-#: ../data/gnome-settings-daemon.schemas.in.h:2
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr "ポインティングデバイスの設定を管理するにはTrueに設定します"
-
