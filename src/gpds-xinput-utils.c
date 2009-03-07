@@ -76,7 +76,7 @@ gpds_xinput_utils_open_device (const gchar *device_name, GError **error)
     if (!device) {
         g_set_error(error,
                     GPDS_XINPUT_UTILS_ERROR,
-                    GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
+                    GPDS_XINPUT_UTILS_ERROR_UNABLE_TO_OPEN_DEVICE,
                     _("Could not open %s device."), device_name);
         return NULL;
     }
