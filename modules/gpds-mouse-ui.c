@@ -45,8 +45,6 @@ struct _GpdsMouseUI
     GpdsUI parent;
     GpdsXInput *xinput;
     gchar *ui_file_path;
-    GConfClient *gconf;
-    gchar *device_name;
 };
 
 struct _GpdsMouseUIClass
@@ -99,8 +97,6 @@ gpds_mouse_ui_init (GpdsMouseUI *ui)
     ui->ui_file_path = g_build_filename(get_ui_file_directory(),
                                         "mouse.ui",
                                         NULL);
-    ui->gconf = gconf_client_get_default();
-    ui->device_name = NULL;
 }
 
 G_MODULE_EXPORT void
@@ -130,32 +126,10 @@ dispose (GObject *object)
         ui->xinput = NULL;
     }
 
-    if (ui->gconf) {
-        g_object_unref(ui->gconf);
-        ui->gconf = NULL;
-    }
-
     g_free(ui->ui_file_path);
-    g_free(ui->device_name);
 
     if (G_OBJECT_CLASS(gpds_mouse_ui_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_mouse_ui_parent_class)->dispose(object);
-}
-
-static gchar *
-build_gconf_key (GpdsMouseUI *ui, const gchar *key)
-{
-    gchar *gconf_key;
-    gchar *device_name;
-
-    device_name = gconf_escape_key(gpds_xinput_get_device_name(ui->xinput), -1);
-    gconf_key = g_strdup_printf("%s/%s/%s",
-                                GPDS_MOUSE_GCONF_DIR,
-                                device_name,
-                                key);
-    g_free(device_name);
-
-    return gconf_key;
 }
 
 static void
@@ -231,66 +205,6 @@ set_widget_sensitivity (GtkBuilder *builder,
                              gtk_toggle_button_get_active(button));
 }
 
-static gboolean
-exist_gconf_dir (GpdsMouseUI *ui)
-{
-    gboolean exist;
-    gchar *dir;
-    gchar *device_name;
-
-    device_name = gconf_escape_key(gpds_xinput_get_device_name(ui->xinput), -1);
-    dir = g_strdup_printf("%s/%s", GPDS_MOUSE_GCONF_DIR, device_name);
-    exist = gconf_client_dir_exists(ui->gconf, GPDS_MOUSE_GCONF_DIR, NULL);
-    g_free(device_name);
-    g_free(dir);
-
-    return exist;
-}
-
-static void
-set_gconf_bool (GpdsMouseUI *ui, const gchar *key, gboolean value)
-{
-    gchar *gconf_key;
-
-    gconf_key = build_gconf_key(ui, key);
-    gconf_client_set_bool(ui->gconf, gconf_key, value, NULL);
-    g_free(gconf_key);
-}
-
-static gboolean
-get_gconf_bool (GpdsMouseUI *ui, const gchar *key)
-{
-    gchar *gconf_key;
-    gboolean value;
-
-    gconf_key = build_gconf_key(ui, key);
-    value = gconf_client_get_bool(ui->gconf, gconf_key, NULL);
-    g_free(gconf_key);
-    return value;
-}
-
-static void
-set_gconf_int (GpdsMouseUI *ui, const gchar *key, gint value)
-{
-    gchar *gconf_key;
-
-    gconf_key = build_gconf_key(ui, key);
-    gconf_client_set_int(ui->gconf, gconf_key, value, NULL);
-    g_free(gconf_key);
-}
-
-static gint
-get_gconf_int (GpdsMouseUI *ui, const gchar *key)
-{
-    gchar *gconf_key;
-    gint value;
-
-    gconf_key = build_gconf_key(ui, key);
-    value = gconf_client_get_int(ui->gconf, gconf_key, NULL);
-    g_free(gconf_key);
-    return value;
-}
-
 static void
 cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 {
@@ -303,7 +217,7 @@ cb_middle_button_emulation_toggled (GtkToggleButton *button, gpointer user_data)
     set_toggle_property(ui->xinput, button, GPDS_MOUSE_MIDDLE_BUTTON_EMULATION);
 
     enable = gtk_toggle_button_get_active(button);
-    set_gconf_bool(ui, GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY, enable);
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY, enable);
     set_widget_sensitivity(builder, "middle_button_emulation_box", button);
 }
 
@@ -319,7 +233,7 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
     set_toggle_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION);
 
     enable = gtk_toggle_button_get_active(button);
-    set_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_KEY, enable);
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_KEY, enable);
     set_widget_sensitivity(builder, "wheel_emulation_box", button);
 }
 
@@ -379,7 +293,7 @@ cb_wheel_emulation_vertical_toggled (GtkToggleButton *button, gpointer user_data
     set_scroll_axes_property(ui);
 
     enable = gtk_toggle_button_get_active(button);
-    set_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, enable);
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, enable);
 }
 
 static void
@@ -390,7 +304,7 @@ cb_wheel_emulation_horizontal_toggled (GtkToggleButton *button, gpointer user_da
     set_scroll_axes_property(ui);
 
     enable = gtk_toggle_button_get_active(button);
-    set_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, enable);
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, enable);
 }
 
 static void
@@ -401,7 +315,7 @@ cb_wheel_emulation_timeout_value_changed (GtkSpinButton *button, gpointer user_d
     set_spin_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT);
 
     time = gtk_spin_button_get_value(button);
-    set_gconf_int(ui, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY, (gint)time);
+    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY, (gint)time);
 }
 
 static void
@@ -412,7 +326,7 @@ cb_wheel_emulation_inertia_value_changed (GtkSpinButton *button, gpointer user_d
     set_spin_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION_INERTIA);
 
     inertia = gtk_spin_button_get_value(button);
-    set_gconf_int(ui, GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY, (gint)inertia);
+    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY, (gint)inertia);
 }
 
 static void
@@ -423,7 +337,7 @@ cb_middle_button_timeout_value_changed (GtkSpinButton *button, gpointer user_dat
     set_spin_property(ui->xinput, button, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT);
 
     time = gtk_spin_button_get_value(button);
-    set_gconf_int(ui, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY, (gint)time);
+    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY, (gint)time);
 }
 
 static void
@@ -480,7 +394,6 @@ set_integer_property_from_preference (GpdsMouseUI *ui,
     gint *values;
     gulong n_values;
     gint value;
-    gboolean dir_exists;
     const gchar *property_name;
 
     property_name = gpds_mouse_xinput_get_name(property);
@@ -490,10 +403,7 @@ set_integer_property_from_preference (GpdsMouseUI *ui,
         return;
     }
 
-    dir_exists = exist_gconf_dir(ui);
-    if (dir_exists)
-        value = get_gconf_int(ui, gconf_key_name);
-    else
+    if (!gpds_ui_get_gconf_int(GPDS_UI(ui), gconf_key_name, &value))
         value = values[0];
 
     object = gtk_builder_get_object(builder, object_name);
@@ -511,7 +421,7 @@ set_boolean_property_from_preference (GpdsMouseUI *ui,
     GObject *object;
     gint *values;
     gulong n_values;
-    gboolean enable, dir_exists;
+    gboolean enable;
     const gchar *property_name;
     gchar *box_name;
 
@@ -522,10 +432,7 @@ set_boolean_property_from_preference (GpdsMouseUI *ui,
         return;
     }
 
-    dir_exists = exist_gconf_dir(ui);
-    if (dir_exists)
-        enable = get_gconf_bool(ui, gconf_key_name);
-    else
+    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), gconf_key_name, &enable))
         enable = (values[0] == 1);
 
     object = gtk_builder_get_object(builder, object_name);
@@ -544,7 +451,7 @@ set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
     GObject *object;
     gint *values;
     gulong n_values;
-    gboolean horizontal_enable = FALSE, vertical_enable = FALSE, dir_exists;
+    gboolean horizontal_enable = FALSE, vertical_enable = FALSE;
     const gchar *property_name;
 
     property_name = gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES);
@@ -554,16 +461,12 @@ set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
         return;
     }
 
-    dir_exists = exist_gconf_dir(ui);
-    if (dir_exists) {
-        horizontal_enable = get_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY);
-        vertical_enable = get_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY);
-    } else {
+    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, &horizontal_enable))
         if (n_values >= 2)
             horizontal_enable = (values[0] != 0 && values[1] != 0);
+    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, &vertical_enable))
         if (n_values >= 4)
             vertical_enable = (values[2] != 0 && values[3] != 0);
-    }
 
     object = gtk_builder_get_object(builder, "wheel_emulation_horizontal");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), horizontal_enable);
@@ -611,17 +514,6 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 static gboolean
 is_available (GpdsUI *ui, GError **error)
 {
-    const gchar *device_name;
-    device_name = gpds_mouse_xinput_find_device_name();
-
-    if (!device_name) {
-        g_set_error(error,
-                    GPDS_XINPUT_ERROR,
-                    GPDS_XINPUT_ERROR_NO_DEVICE,
-                    _("No Mouse device found."));
-        return FALSE;
-    }
-
     if (!g_file_test(GPDS_MOUSE_UI(ui)->ui_file_path,
                      G_FILE_TEST_EXISTS)) {
         g_set_error(error,
@@ -631,8 +523,6 @@ is_available (GpdsUI *ui, GError **error)
                     GPDS_MOUSE_UI(ui)->ui_file_path);
         return FALSE;
     }
-
-    GPDS_MOUSE_UI(ui)->device_name = g_strdup(device_name);
 
     return TRUE;
 }
@@ -650,7 +540,7 @@ build (GpdsUI  *ui, GError **error)
         return FALSE;
     }
 
-    GPDS_MOUSE_UI(ui)->xinput = gpds_xinput_new(GPDS_MOUSE_UI(ui)->device_name);
+    GPDS_MOUSE_UI(ui)->xinput = gpds_xinput_new(gpds_ui_get_device_name(ui));
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);
