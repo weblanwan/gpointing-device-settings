@@ -85,6 +85,12 @@ void         gpds_ui_set_gconf_int        (GpdsUI *ui,
 gboolean     gpds_ui_get_gconf_int        (GpdsUI *ui,
                                            const gchar *key,
                                            gboolean *value);
+void         gpds_ui_set_gconf_string     (GpdsUI *ui,
+                                           const gchar *key,
+                                           const gchar *value);
+gboolean     gpds_ui_get_gconf_string     (GpdsUI *ui,
+                                           const gchar *key,
+                                           const gchar **value);
 
 G_END_DECLS
 

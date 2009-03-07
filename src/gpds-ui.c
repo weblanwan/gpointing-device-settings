@@ -359,6 +359,43 @@ gpds_ui_get_gconf_int (GpdsUI *ui, const gchar *key, gint *value)
     return exist_value;
 }
 
+void
+gpds_ui_set_gconf_string (GpdsUI *ui, const gchar *key, const gchar *value)
+{
+    gchar *gconf_key;
+    GpdsUIPriv *priv;
+
+    g_return_if_fail(GPDS_IS_UI(ui));
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_client_set_string(priv->gconf, gconf_key, value, NULL);
+    g_free(gconf_key);
+}
+
+gboolean
+gpds_ui_get_gconf_string (GpdsUI *ui, const gchar *key, const gchar **value)
+{
+    GConfValue *gconf_value;
+    gchar *gconf_key;
+    gboolean exist_value = FALSE;
+    GpdsUIPriv *priv;
+
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_value = gconf_client_get(priv->gconf, gconf_key, NULL);
+    if (gconf_value) {
+        *value = gconf_value_get_string(gconf_value);
+        gconf_value_free(gconf_value);
+        exist_value = TRUE;
+    }
+    g_free(gconf_key);
+
+    return exist_value;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
