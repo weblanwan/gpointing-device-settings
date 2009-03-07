@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-07 19:19+0900\n"
+"POT-Creation-Date: 2009-03-08 08:39+0900\n"
 "PO-Revision-Date: 2009-02-27 18:59+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,13 +29,13 @@ msgstr "float atomがXServerにありません"
 msgid "Pointing Device Settings"
 msgstr "ポインティングデバイスの設定"
 
-#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:522
+#: ../modules/gpds-touchpad-ui.c:762 ../modules/gpds-mouse-ui.c:513
 #, c-format
 msgid "%s did not find."
 msgstr "%sが見つかりません。"
 
-#: ../modules/gpds-touchpad-ui.c:814 ../modules/gpds-touchpad-ui.c:835
-#: ../modules/gpds-mouse-ui.c:565 ../modules/gpds-mouse-ui.c:586
+#: ../modules/gpds-touchpad-ui.c:805 ../modules/gpds-touchpad-ui.c:826
+#: ../modules/gpds-mouse-ui.c:556 ../modules/gpds-mouse-ui.c:577
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "ウィジェット(%s)がありません。"
@@ -56,8 +56,8 @@ msgid "Enable vertical scroll"
 msgstr "縦スクロールを有効にする"
 
 #: ../data/mouse.ui.in.h:4
-msgid "Middle button timeout"
-msgstr "中ボタンタイムアウト"
+msgid "Middle button timeout:"
+msgstr "中ボタンタイムアウト:"
 
 #: ../data/mouse.ui.in.h:5
 msgid "Use middle button emulation"
@@ -68,12 +68,12 @@ msgid "Use wheel emulation"
 msgstr "ホイールエミュレーションを使用する"
 
 #: ../data/mouse.ui.in.h:7
-msgid "Wheel emulation inertia"
-msgstr "ホイールエミュレーションの惰性"
+msgid "Wheel emulation inertia:"
+msgstr "ホイールエミュレーションの惰性:"
 
 #: ../data/mouse.ui.in.h:8
-msgid "Wheel emulation timeout"
-msgstr "ホイールエミュレーションタイムアウト"
+msgid "Wheel emulation timeout:"
+msgstr "ホイールエミュレーションタイムアウト:"
 
 #: ../data/touchpad.ui.in.h:1
 msgid "<b>Scrolling</b>"

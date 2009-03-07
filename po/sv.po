@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-07 19:19+0900\n"
+"POT-Creation-Date: 2009-03-08 08:39+0900\n"
 "PO-Revision-Date: 2009-03-03 18:18+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -34,13 +34,13 @@ msgstr ""
 msgid "Pointing Device Settings"
 msgstr "Inställningar för pekenhet"
 
-#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:522
+#: ../modules/gpds-touchpad-ui.c:762 ../modules/gpds-mouse-ui.c:513
 #, c-format
 msgid "%s did not find."
 msgstr "%s hittades inte."
 
-#: ../modules/gpds-touchpad-ui.c:814 ../modules/gpds-touchpad-ui.c:835
-#: ../modules/gpds-mouse-ui.c:565 ../modules/gpds-mouse-ui.c:586
+#: ../modules/gpds-touchpad-ui.c:805 ../modules/gpds-touchpad-ui.c:826
+#: ../modules/gpds-mouse-ui.c:556 ../modules/gpds-mouse-ui.c:577
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Det finns ingen widget(%s)."
@@ -61,7 +61,7 @@ msgid "Enable vertical scroll"
 msgstr "Aktivera vertikal rullning"
 
 #: ../data/mouse.ui.in.h:4
-msgid "Middle button timeout"
+msgid "Middle button timeout:"
 msgstr ""
 
 #: ../data/mouse.ui.in.h:5
@@ -73,12 +73,14 @@ msgid "Use wheel emulation"
 msgstr "Använd hjulemulering"
 
 #: ../data/mouse.ui.in.h:7
-msgid "Wheel emulation inertia"
-msgstr ""
+#, fuzzy
+msgid "Wheel emulation inertia:"
+msgstr "Använd hjulemulering"
 
 #: ../data/mouse.ui.in.h:8
-msgid "Wheel emulation timeout"
-msgstr ""
+#, fuzzy
+msgid "Wheel emulation timeout:"
+msgstr "Använd hjulemulering"
 
 #: ../data/touchpad.ui.in.h:1
 msgid "<b>Scrolling</b>"
