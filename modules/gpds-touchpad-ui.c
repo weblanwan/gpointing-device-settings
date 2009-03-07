@@ -81,21 +81,12 @@ gpds_touchpad_ui_class_finalize (GpdsTouchpadUIClass *klass)
 {
 }
 
-static const gchar *
-get_ui_file_directory (void)
-{
-    const gchar *dir;
-
-    dir = g_getenv("GPDS_UI_DIR");
-    return dir ? dir : GPDS_UIDIR;
-}
-
 static void
 gpds_touchpad_ui_init (GpdsTouchpadUI *ui)
 {
     ui->xinput = NULL;
     ui->ui_file_path = 
-        g_build_filename(get_ui_file_directory(), "touchpad.ui", NULL);
+        g_build_filename(gpds_get_ui_file_directory(), "touchpad.ui", NULL);
 }
 
 G_MODULE_EXPORT void

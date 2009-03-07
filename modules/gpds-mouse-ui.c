@@ -81,20 +81,11 @@ gpds_mouse_ui_class_finalize (GpdsMouseUIClass *klass)
 {
 }
 
-static const gchar *
-get_ui_file_directory (void)
-{
-    const gchar *dir;
-
-    dir = g_getenv("GPDS_UI_DIR");
-    return dir ? dir : GPDS_UIDIR;
-}
-
 static void
 gpds_mouse_ui_init (GpdsMouseUI *ui)
 {
     ui->xinput = NULL;
-    ui->ui_file_path = g_build_filename(get_ui_file_directory(),
+    ui->ui_file_path = g_build_filename(gpds_get_ui_file_directory(),
                                         "mouse.ui",
                                         NULL);
 }
