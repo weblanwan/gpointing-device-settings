@@ -24,21 +24,12 @@
 
 G_BEGIN_DECLS
 
-#define GPDS_XINPUT_ERROR           (gpds_xinput_error_quark())
-
 #define GPDS_TYPE_XINPUT            (gpds_xinput_get_type ())
 #define GPDS_XINPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_XINPUT, GpdsXInput))
 #define GPDS_XINPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_XINPUT, GpdsXInputClass))
 #define GPDS_IS_XINPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_XINPUT))
 #define GPDS_IS_XINPUT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_XINPUT))
 #define GPDS_XINPUT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_XINPUT, GpdsXInputClass))
-
-typedef enum
-{
-    GPDS_XINPUT_ERROR_NO_DEVICE,
-    GPDS_XINPUT_ERROR_UNABLE_TO_OPEN_DEVICE,
-    GPDS_XINPUT_ERROR_NO_FLOAT_ATOM
-} GpdsXInputError;
 
 typedef struct _GpdsXInput GpdsXInput;
 typedef struct _GpdsXInputClass GpdsXInputClass;
@@ -53,7 +44,6 @@ struct _GpdsXInputClass
     GObjectClass parent_class;
 };
 
-GQuark        gpds_xinput_error_quark         (void);
 GType         gpds_xinput_get_type            (void) G_GNUC_CONST;
 
 GpdsXInput  *gpds_xinput_new                  (const gchar *device_name);

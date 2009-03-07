@@ -148,12 +148,6 @@ get_property (GObject    *object,
     }
 }
 
-GQuark
-gpds_xinput_error_quark (void)
-{
-    return g_quark_from_static_string("gpds-xinput-error-quark");
-}
-
 GpdsXInput *
 gpds_xinput_new (const gchar *device_name)
 {
