@@ -25,9 +25,6 @@ msgstr "%sが見つかりません。"
 msgid "There is no widget(%s)."
 msgstr "ウィジェット(%s)がありません。"
 
-#.
-#. vi:ts=4:nowrap:ai:expandtab:sw=4
-#.
 #: ../data/mouse.ui.in.h:1
 msgid "(ms)"
 msgstr "(ミリ秒)"
@@ -117,36 +114,11 @@ msgid "Tapping time: "
 msgstr "タッピング間隔"
 
 #: ../data/gnome-settings-daemon.schemas.in.h:1
-#, fuzzy
 msgid "Enable pointing-device plugin"
-msgstr "トラックポイントプラグインを有効にする"
+msgstr "ポインティングデバイスプラグインを有効にする"
 
 #: ../data/gnome-settings-daemon.schemas.in.h:2
-#, fuzzy
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
-msgstr "トラックポイントの設定を管理するにはTrueに設定します"
+msgstr "ポインティングデバイスの設定を管理するにはTrueに設定します"
 
-#~ msgid "No device found."
-#~ msgstr "デバイスが見つかりません。"
-
-#~ msgid "Could not open %s device."
-#~ msgstr "%sを開けません。"
-
-#~ msgid "No Touchpad device found."
-#~ msgstr "タッチパッドが見つかりません。"
-
-#~ msgid "No TrackPoint device found."
-#~ msgstr "トラックポイントが見つかりません。"
-
-#~ msgid "TrackPoint"
-#~ msgstr "トラックポイント"
-
-#~ msgid "Touchpad"
-#~ msgstr "タッチパッド"
-
-#~ msgid "Enable touchpad plugin"
-#~ msgstr "タッチパッドプラグインを有効にする"
-
-#~ msgid "Set to True to enable the plugin to manage touchpad settings."
-#~ msgstr "タッチパッドの設定を管理するにはTrueに設定します"
