@@ -28,6 +28,7 @@
 #include <gconf/gconf-client.h>
 #include "gpds-module.h"
 #include "gpds-xinput.h"
+#include "gpds-gconf.h"
 
 static GList *uis = NULL;
 
@@ -52,8 +53,6 @@ gpds_uis_get_names (void)
 {
     return gpds_module_collect_names(uis);
 }
-
-#define GPDS_GCONF_DIR                   "/desktop/gnome/peripherals"
 
 typedef struct _GpdsUIPriv GpdsUIPriv;
 struct _GpdsUIPriv

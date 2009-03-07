@@ -3,6 +3,7 @@ lib_LTLIBRARIES = libgpds.la
 libgpds_public_headers = 		\
 	gpointing-device-settings.h	\
 	gpds-module-impl.h		\
+        gpds-gconf.h                    \
 	gpds-ui.h			\
 	gpds-xinput.h                   \
 	gpds-xinput-pointer-info.h      \

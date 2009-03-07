@@ -17,14 +17,18 @@
  *
  */
 
-#ifndef __GPOINTING_DEVICE_SETTINGS_H__
-#define __GPOINTING_DEVICE_SETTINGS_H__
+#ifndef __GPDS_GCONF_H__
+#define __GPDS_GCONF_H__
 
-#include <gpds-ui.h>
-#include <gpds-module-impl.h>
-#include <gpds-gconf.h>
+#include <glib.h>
 
-#endif /* __GPOINTING_DEVICE_SETTINGS_H__ */
+G_BEGIN_DECLS
+
+#define GPDS_GCONF_DIR "/desktop/gnome/peripherals"
+
+G_END_DECLS
+
+#endif /* __GPDS_GCONF_H__ */
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
