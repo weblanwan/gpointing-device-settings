@@ -536,7 +536,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 
 static gboolean
 get_integer_properties (GpdsXInput *xinput, GpdsTouchpadProperty property,
-                      gint **values, gulong *n_values)
+                        gint **values, gulong *n_values)
 {
     GError *error = NULL;
 

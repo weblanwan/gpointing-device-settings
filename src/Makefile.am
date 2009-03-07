@@ -3,11 +3,11 @@ lib_LTLIBRARIES = libgpds.la
 libgpds_public_headers = 		\
 	gpointing-device-settings.h	\
 	gpds-module-impl.h		\
-        gpds-gconf.h                    \
+	gpds-gconf.h			\
 	gpds-utils.h			\
 	gpds-ui.h			\
-	gpds-xinput.h                   \
-	gpds-xinput-pointer-info.h      \
+	gpds-xinput.h			\
+	gpds-xinput-pointer-info.h	\
 	gpds-xinput-utils.h
 
 libgpds_la_SOURCES =			\
@@ -16,8 +16,8 @@ libgpds_la_SOURCES =			\
 	gpds-module.h			\
 	gpds-ui.c			\
 	gpds-utils.c			\
-	gpds-xinput.c                   \
-	gpds-xinput-pointer-info.c      \
+	gpds-xinput.c			\
+	gpds-xinput-pointer-info.c	\
 	gpds-xinput-utils.c
 
 AM_CFLAGS = -DG_LOG_DOMAIN=\"GPointingDeviceSettings\"
@@ -36,7 +36,7 @@ libgpds_la_LIBADD =			\
 	$(GCONF2_LIBS)			\
 	$(XINPUT_LIBS)
 
-pkginclude_HEADERS =				\
+pkginclude_HEADERS =			\
 	$(libgpds_public_headers)
 
 bin_PROGRAMS = gpointing-device-settings
