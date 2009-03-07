@@ -56,7 +56,6 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
                       guint cnxn_id,
                       GConfEntry *entry)
 {
-{
     GConfValue *value;
     const gchar *key;
     GpdsXInput *xinput;
