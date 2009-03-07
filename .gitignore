@@ -26,7 +26,7 @@ coverage.info
 *.gcda
 data/touchpad.ui
 data/mouse.ui
-data/gnome-settings-daemon.schemas
+data/gpointing-device-settings_gnome_settings_daemon.schemas
 po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot

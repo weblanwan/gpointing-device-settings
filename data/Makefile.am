@@ -10,7 +10,7 @@ gpds_icon_DATA = 	\
 
 schemasdir = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = 				\
-	gnome-settings-daemon.schemas.in
+	gpointing-device-settings_gnome_settings_daemon.schemas.in
 
 schemas_DATA = $(schemas_in_files:.schemas.in=.schemas)
 
