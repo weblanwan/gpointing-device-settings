@@ -20,7 +20,7 @@
 #ifndef __GSD_TOUCHPAD_MANAGER_H__
 #define __GSD_TOUCHPAD_MANAGER_H__
 
-#include <glib-object.h>
+#include "gsd-pointing-device-manager.h"
 
 G_BEGIN_DECLS
 
@@ -36,20 +36,15 @@ typedef struct _GsdTouchpadManagerClass GsdTouchpadManagerClass;
 
 struct _GsdTouchpadManager
 {
-    GObject parent;
+    GsdPointingDeviceManager parent;
 };
 
 struct _GsdTouchpadManagerClass
 {
-    GObjectClass parent_class;
+    GsdPointingDeviceManagerClass parent_class;
 }; 
 
 GType gsd_touchpad_manager_get_type (void) G_GNUC_CONST;
-
-GsdTouchpadManager *gsd_touchpad_manager_new   (void);
-gboolean            gsd_touchpad_manager_start (GsdTouchpadManager *manager,
-                                                GError            **error);
-void                gsd_touchpad_manager_stop  (GsdTouchpadManager *manager);
 
 G_END_DECLS
 

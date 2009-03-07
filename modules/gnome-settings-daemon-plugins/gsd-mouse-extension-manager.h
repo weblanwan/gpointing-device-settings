@@ -20,7 +20,7 @@
 #ifndef __GSD_MOUSE_EXTENSION_MANAGER_H__
 #define __GSD_MOUSE_EXTENSION_MANAGER_H__
 
-#include <glib-object.h>
+#include "gsd-pointing-device-manager.h"
 
 G_BEGIN_DECLS
 
@@ -36,20 +36,15 @@ typedef struct _GsdMouseExtensionManagerClass GsdMouseExtensionManagerClass;
 
 struct _GsdMouseExtensionManager
 {
-    GObject parent;
+    GsdPointingDeviceManager parent;
 };
 
 struct _GsdMouseExtensionManagerClass
 {
-    GObjectClass parent_class;
+    GsdPointingDeviceManagerClass parent_class;
 }; 
 
 GType gsd_mouse_extension_manager_get_type (void) G_GNUC_CONST;
-
-GsdMouseExtensionManager *gsd_mouse_extension_manager_new   (void);
-gboolean                  gsd_mouse_extension_manager_start (GsdMouseExtensionManager *manager,
-                                                             GError                  **error);
-void                      gsd_mouse_extension_manager_stop  (GsdMouseExtensionManager *manager);
 
 G_END_DECLS
 

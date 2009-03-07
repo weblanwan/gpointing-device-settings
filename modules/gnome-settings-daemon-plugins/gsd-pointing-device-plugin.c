@@ -24,8 +24,11 @@
 /* #include <gnome-settings-daemon/gnome-settings-plugin.h> */
 #include "gnome-settings-plugin.h"
 #include <glib/gi18n.h>
+#include <gconf/gconf-client.h>
 
-#include "gsd-mouse-extension-manager.h"
+#include "gsd-pointing-device-manager.h"
+#include "gpds-gconf.h"
+#include "gpds-xinput-pointer-info.h"
 
 #define GSD_TYPE_MOUSE_EXTENSION_PLUGIN            (gsd_mouse_extension_plugin_get_type ())
 #define GSD_MOUSE_EXTENSION_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSD_TYPE_MOUSE_EXTENSION_PLUGIN, GsdMouseExtensionPlugin))
@@ -40,7 +43,7 @@ typedef struct _GsdMouseExtensionPluginClass GsdMouseExtensionPluginClass;
 struct _GsdMouseExtensionPlugin
 {
     GnomeSettingsPlugin parent;
-    GsdMouseExtensionManager *manager;
+    GList *managers;
 };
 
 struct _GsdMouseExtensionPluginClass
@@ -56,30 +59,91 @@ GNOME_SETTINGS_PLUGIN_REGISTER(GsdMouseExtensionPlugin, gsd_mouse_extension_plug
 static void
 gsd_mouse_extension_plugin_init (GsdMouseExtensionPlugin *plugin)
 {
-    plugin->manager = NULL;
+    plugin->managers = NULL;
+}
+
+static GList *
+collect_pointer_device_infos_from_gconf (void)
+{
+    GConfClient *gconf;
+    GSList *dirs, *node;
+    GList *infos = NULL;
+
+    gconf = gconf_client_get_default();
+    dirs = gconf_client_all_dirs(gconf, GPDS_GCONF_DIR, NULL);
+
+    for (node = dirs; node; node = g_slist_next(node)) {
+        const gchar *dir = node->data;
+        gchar *device_type;
+        gchar *device_type_key;
+
+        device_type_key = gconf_concat_dir_and_key(dir, GPDS_GCONF_DEVICE_TYPE_KEY);
+        device_type = gconf_client_get_string(gconf, device_type_key, NULL);
+        if (device_type && !strcmp(device_type, "mouse")) {
+            GpdsXInputPointerInfo *info;
+            gchar *device_name;
+
+            device_name = g_path_get_basename(dir);
+            info = gpds_xinput_pointer_info_new(device_name, device_type);
+            infos = g_list_prepend(infos, info);
+            g_free(device_name);
+        }
+
+        g_free(device_type_key);
+        g_free(device_type);
+    }
+
+    g_slist_foreach(dirs, (GFunc)g_free, NULL);
+    g_slist_free(dirs);
+
+    return infos;
 }
 
 static void
 activate (GnomeSettingsPlugin *plugin)
 {
     GsdMouseExtensionPlugin *mouse_extension_plugin;
+    GList *pointer_device_infos, *node;
 
     mouse_extension_plugin = GSD_MOUSE_EXTENSION_PLUGIN(plugin); 
-    mouse_extension_plugin->manager = gsd_mouse_extension_manager_new();
-    gsd_mouse_extension_manager_start(mouse_extension_plugin->manager, NULL);
+
+    pointer_device_infos = collect_pointer_device_infos_from_gconf();
+    for (node = pointer_device_infos; node; node = g_list_next(node)) {
+        GsdPointingDeviceManager *manager;
+        GpdsXInputPointerInfo *info = node->data;
+
+        manager = gsd_pointing_device_manager_new(gpds_xinput_pointer_info_get_type_name(info),
+                                                  gpds_xinput_pointer_info_get_name(info));
+        if (!manager)
+            continue;
+
+        gsd_pointing_device_manager_start(manager, NULL);
+        mouse_extension_plugin->managers =
+            g_list_prepend(mouse_extension_plugin->managers, manager);
+    }
+
+}
+
+static void
+stop_all_managers (GsdMouseExtensionPlugin *plugin)
+{
+    GList *node;
+
+    for (node = plugin->managers; node; node = g_list_next(node)) {
+        GsdPointingDeviceManager *manager = node->data;
+
+        gsd_pointing_device_manager_stop(manager);
+        g_object_unref(manager);
+    }
+
+    g_list_free(plugin->managers);
+    plugin->managers = NULL;
 }
 
 static void
 deactivate (GnomeSettingsPlugin *plugin)
 {
-    GsdMouseExtensionPlugin *mouse_extension_plugin;
-
-    mouse_extension_plugin = GSD_MOUSE_EXTENSION_PLUGIN(plugin); 
-    if (mouse_extension_plugin->manager) {
-        gsd_mouse_extension_manager_stop(mouse_extension_plugin->manager);
-        g_object_unref(mouse_extension_plugin->manager);
-        mouse_extension_plugin->manager = NULL;
-    }
+    stop_all_managers(GSD_MOUSE_EXTENSION_PLUGIN(plugin));
 }
 
 static void

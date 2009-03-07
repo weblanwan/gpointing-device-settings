@@ -1,0 +1,8 @@
+[GNOME Settings Plugin]
+Module=pointing-device
+IAge=0
+_Name=PointingDevice
+_Description=PointingDevice plugin
+Authors=
+Copyright=Copyright © 2009
+Website=

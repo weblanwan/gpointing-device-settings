@@ -540,6 +540,7 @@ build (GpdsUI  *ui, GError **error)
         return FALSE;
     }
 
+    gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "mouse");
     GPDS_MOUSE_UI(ui)->xinput = gpds_xinput_new(gpds_ui_get_device_name(ui));
 
     setup_current_values(ui, builder);

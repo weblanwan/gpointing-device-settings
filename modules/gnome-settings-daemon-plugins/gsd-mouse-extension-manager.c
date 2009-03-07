@@ -30,56 +30,31 @@
 #include "gpds-mouse-definitions.h"
 #include "gpds-mouse-xinput.h"
 
-#define GSD_MOUSE_EXTENSION_MANAGER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GSD_TYPE_MOUSE_EXTENSION_MANAGER, GsdMouseExtensionManagerPrivate))
+G_DEFINE_TYPE (GsdMouseExtensionManager, gsd_mouse_extension_manager, GSD_TYPE_POINTING_DEVICE_MANAGER)
 
-typedef struct _GsdMouseExtensionManagerPrivate  GsdMouseExtensionManagerPrivate;
-struct _GsdMouseExtensionManagerPrivate
-{
-    GConfClient *gconf;
-    guint notify_id;
-};
-
-G_DEFINE_TYPE (GsdMouseExtensionManager, gsd_mouse_extension_manager, G_TYPE_OBJECT)
-
-static gpointer manager_object = NULL;
+static void _gconf_client_notify (GsdPointingDeviceManager *manager,
+                                  GConfClient *client,
+                                  guint cnxn_id,
+                                  GConfEntry *entry);
 
 static void
 gsd_mouse_extension_manager_init (GsdMouseExtensionManager *manager)
 {
-    GsdMouseExtensionManagerPrivate *priv;
-
-    priv = GSD_MOUSE_EXTENSION_MANAGER_GET_PRIVATE(manager);
-
-    priv->gconf = NULL;
-    priv->notify_id = 0;
 }
 
 static void
 gsd_mouse_extension_manager_class_init (GsdMouseExtensionManagerClass *klass)
 {
-    GObjectClass   *gobject_class = G_OBJECT_CLASS(klass);
+    GsdPointingDeviceManagerClass *manager_class = GSD_POINTING_DEVICE_MANAGER_CLASS(klass);
 
-    g_type_class_add_private(gobject_class, sizeof(GsdMouseExtensionManagerPrivate));
-}
-
-GsdMouseExtensionManager *
-gsd_mouse_extension_manager_new (void)
-{
-    if (manager_object != NULL) {
-        g_object_ref(manager_object);
-    } else {
-        manager_object = g_object_new(GSD_TYPE_MOUSE_EXTENSION_MANAGER, NULL);
-        g_object_add_weak_pointer(manager_object, (gpointer *)&manager_object);
-    }
-
-    return GSD_MOUSE_EXTENSION_MANAGER(manager_object);
+    manager_class->gconf_client_notify = _gconf_client_notify;
 }
 
 static void
-cb_gconf_client_notify (GConfClient *client,
-                        guint cnxn_id,
-                        GConfEntry *entry,
-                        gpointer user_data)
+_gconf_client_notify (GsdPointingDeviceManager *manager,
+                      GConfClient *client,
+                      guint cnxn_id,
+                      GConfEntry *entry)
 {
     GConfValue *value;
     const gchar *key;
@@ -87,7 +62,7 @@ cb_gconf_client_notify (GConfClient *client,
     gint properties[4];
     const gchar *device_name;
 
-    device_name = gpds_mouse_xinput_find_device_name();
+    device_name = gsd_pointing_device_manager_get_device_name(manager);
     if (!device_name)
         return;
 
@@ -179,79 +154,6 @@ cb_gconf_client_notify (GConfClient *client,
     }
 
     g_object_unref(xinput);
-}
-
-static gchar *
-build_gconf_dir (const gchar *device_name)
-{
-    gchar *escaped_device_name;
-    gchar *gconf_dir;
-
-    escaped_device_name = gconf_escape_key(device_name, -1);
-    gconf_dir = g_strdup_printf("%s/%s",
-                                GPDS_MOUSE_GCONF_DIR,
-                                escaped_device_name);
-    g_free(escaped_device_name);
-    return gconf_dir;
-}
-
-gboolean
-gsd_mouse_extension_manager_start (GsdMouseExtensionManager *manager,
-                                   GError              **error)
-{
-    GsdMouseExtensionManagerPrivate *priv;
-    gchar *gconf_dir;
-    const gchar *device_name;
-
-    device_name = gpds_mouse_xinput_find_device_name();
-    if (!device_name)
-        return FALSE;
-
-    priv = GSD_MOUSE_EXTENSION_MANAGER_GET_PRIVATE(manager);
-    priv->gconf = gconf_client_get_default();
-
-    gconf_dir = build_gconf_dir(device_name);
-    gconf_client_add_dir(priv->gconf,
-                         gconf_dir,
-                         GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-    priv->notify_id = gconf_client_notify_add(priv->gconf,
-                                              gconf_dir,
-                                              cb_gconf_client_notify,
-                                              manager,
-                                              NULL,
-                                              NULL);
-    g_free(gconf_dir);
-
-    return TRUE;
-}
-
-void
-gsd_mouse_extension_manager_stop (GsdMouseExtensionManager *manager)
-{
-    GsdMouseExtensionManagerPrivate *priv;
-
-    priv = GSD_MOUSE_EXTENSION_MANAGER_GET_PRIVATE(manager);
-
-    if (priv->notify_id) {
-        const gchar *device_name;
-
-        device_name = gpds_mouse_xinput_find_device_name();
-        if (device_name) {
-            gchar *gconf_dir;
-            gconf_dir = build_gconf_dir(device_name);
-            gconf_client_remove_dir(priv->gconf,
-                                    GPDS_MOUSE_GCONF_DIR,
-                                    NULL);
-            g_free(gconf_dir);
-        }
-        gconf_client_notify_remove(priv->gconf, priv->notify_id);
-        priv->notify_id = 0;
-    }
-
-    if (priv->gconf) {
-        g_object_unref(priv->gconf);
-        priv->gconf = NULL;
-    }
 }
 
 /*

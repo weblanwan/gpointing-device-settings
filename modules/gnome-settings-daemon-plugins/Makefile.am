@@ -23,33 +23,27 @@ LIBS =					\
 	$(GNOME_SETTINGS_DAEMON_LIBS)
 
 gsd_plugin_LTLIBRARIES =	        \
-	libmouse-extension.la           \
-	libtouchpad.la
+	libpointing-device.la
 
 gsd_plugin_CFLAGS =					\
 	$(AM_CFLAGS)					\
 	$(GNOME_SETTINGS_DAEMON_CFLAGS)			\
 	-DGNOME_SETTINGS_LOCALEDIR=\""$(localedir)"\"
 
-libmouse_extension_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libmouse_extension_la_SOURCES = 		\
-	gsd-mouse-extension-plugin.c	\
+libpointing_device_la_CFLAGS = $(gsd_plugin_CFLAGS)
+libpointing_device_la_SOURCES = 	\
+	gsd-pointing-device-plugin.c	\
+	gsd-pointing-device-manager.h	\
+	gsd-pointing-device-manager.c   \
 	gsd-mouse-extension-manager.h	\
 	gsd-mouse-extension-manager.c
 
-libmouse_extension_la_LIBADD = $(top_builddir)/modules/common/libmouse_common.la
-
-libtouchpad_la_CFLAGS = $(gsd_plugin_CFLAGS)
-libtouchpad_la_SOURCES = 		\
-	gsd-touchpad-plugin.c		\
-	gsd-touchpad-manager.h		\
-	gsd-touchpad-manager.c
-
-libtouchpad_la_LIBADD = $(top_builddir)/modules/common/libtouchpad_common.la
+libpointing_device_la_LIBADD =					\
+        $(top_builddir)/modules/common/libmouse_common.la	\
+        $(top_builddir)/modules/common/libtouchpad_common.la
 
 gsd_plugin_in_files =	 			        \
-	mouse-extension.gnome-settings-plugin.in	\
-	touchpad.gnome-settings-plugin.in
+	pointing-device.gnome-settings-plugin.in
 
 gsd_plugin_DATA = $(gsd_plugin_in_files:.gnome-settings-plugin.in=.gnome-settings-plugin)
 

@@ -30,56 +30,32 @@
 #include "gpds-touchpad-definitions.h"
 #include "gpds-touchpad-xinput.h"
 
-#define GSD_TOUCHPAD_MANAGER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GSD_TYPE_TOUCHPAD_MANAGER, GsdTouchpadManagerPrivate))
+G_DEFINE_TYPE (GsdTouchpadManager, gsd_touchpad_manager, GSD_TYPE_POINTING_DEVICE_MANAGER)
 
-typedef struct _GsdTouchpadManagerPrivate  GsdTouchpadManagerPrivate;
-struct _GsdTouchpadManagerPrivate
-{
-    GConfClient *gconf;
-    guint notify_id;
-};
-
-G_DEFINE_TYPE (GsdTouchpadManager, gsd_touchpad_manager, G_TYPE_OBJECT)
-
-static gpointer manager_object = NULL;
+static void _gconf_client_notify (GsdPointingDeviceManager *manager,
+                                  GConfClient *client,
+                                  guint cnxn_id,
+                                  GConfEntry *entry);
 
 static void
 gsd_touchpad_manager_init (GsdTouchpadManager *manager)
 {
-    GsdTouchpadManagerPrivate *priv;
-
-    priv = GSD_TOUCHPAD_MANAGER_GET_PRIVATE(manager);
-
-    priv->gconf = NULL;
-    priv->notify_id = 0;
 }
 
 static void
 gsd_touchpad_manager_class_init (GsdTouchpadManagerClass *klass)
 {
-    GObjectClass   *gobject_class = G_OBJECT_CLASS(klass);
+    GsdPointingDeviceManagerClass *manager_class = GSD_POINTING_DEVICE_MANAGER_CLASS(klass);
 
-    g_type_class_add_private(gobject_class, sizeof(GsdTouchpadManagerPrivate));
-}
-
-GsdTouchpadManager *
-gsd_touchpad_manager_new (void)
-{
-    if (manager_object != NULL) {
-        g_object_ref(manager_object);
-    } else {
-        manager_object = g_object_new(GSD_TYPE_TOUCHPAD_MANAGER, NULL);
-        g_object_add_weak_pointer(manager_object, (gpointer *)&manager_object);
-    }
-
-    return GSD_TOUCHPAD_MANAGER(manager_object);
+    manager_class->gconf_client_notify = _gconf_client_notify;
 }
 
 static void
-cb_gconf_client_notify (GConfClient *client,
-                        guint cnxn_id,
-                        GConfEntry *entry,
-                        gpointer user_data)
+_gconf_client_notify (GsdPointingDeviceManager *manager,
+                      GConfClient *client,
+                      guint cnxn_id,
+                      GConfEntry *entry)
+{
 {
     GConfValue *value;
     const gchar *key;
@@ -87,7 +63,7 @@ cb_gconf_client_notify (GConfClient *client,
     gint properties[4];
     const gchar *device_name;
 
-    device_name = gpds_touchpad_xinput_find_device_name();
+    device_name = gsd_pointing_device_manager_get_device_name(manager);
     if (!device_name)
         return;
 
@@ -177,49 +153,6 @@ cb_gconf_client_notify (GConfClient *client,
     }
 
     g_object_unref(xinput);
-}
-
-gboolean
-gsd_touchpad_manager_start (GsdTouchpadManager *manager,
-                            GError              **error)
-{
-    GsdTouchpadManagerPrivate *priv;
-
-    priv = GSD_TOUCHPAD_MANAGER_GET_PRIVATE(manager);
-    priv->gconf = gconf_client_get_default();
-
-    gconf_client_add_dir(priv->gconf,
-                         GPDS_TOUCHPAD_GCONF_DIR,
-                         GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-    priv->notify_id = gconf_client_notify_add(priv->gconf,
-                                              GPDS_TOUCHPAD_GCONF_DIR,
-                                              cb_gconf_client_notify,
-                                              manager,
-                                              NULL,
-                                              NULL);
-
-    return TRUE;
-}
-
-void
-gsd_touchpad_manager_stop (GsdTouchpadManager *manager)
-{
-    GsdTouchpadManagerPrivate *priv;
-
-    priv = GSD_TOUCHPAD_MANAGER_GET_PRIVATE(manager);
-
-    if (priv->notify_id) {
-        gconf_client_remove_dir(priv->gconf,
-                                GPDS_TOUCHPAD_GCONF_DIR,
-                                NULL);
-        gconf_client_notify_remove(priv->gconf, priv->notify_id);
-        priv->notify_id = 0;
-    }
-
-    if (priv->gconf) {
-        g_object_unref(priv->gconf);
-        priv->gconf = NULL;
-    }
 }
 
 /*
