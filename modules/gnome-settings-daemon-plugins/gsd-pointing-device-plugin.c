@@ -95,6 +95,7 @@ collect_pointer_device_infos_from_gconf (void)
 
     g_slist_foreach(dirs, (GFunc)g_free, NULL);
     g_slist_free(dirs);
+    g_object_unref(gconf);
 
     return infos;
 }
@@ -121,7 +122,9 @@ activate (GnomeSettingsPlugin *plugin)
         mouse_extension_plugin->managers =
             g_list_prepend(mouse_extension_plugin->managers, manager);
     }
-
+    g_list_foreach(pointer_device_infos,
+                   (GFunc)gpds_xinput_pointer_info_free, NULL);
+    g_list_free(pointer_device_infos);
 }
 
 static void
