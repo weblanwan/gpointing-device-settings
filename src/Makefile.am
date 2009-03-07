@@ -4,6 +4,7 @@ libgpds_public_headers = 		\
 	gpointing-device-settings.h	\
 	gpds-module-impl.h		\
         gpds-gconf.h                    \
+	gpds-utils.h			\
 	gpds-ui.h			\
 	gpds-xinput.h                   \
 	gpds-xinput-pointer-info.h      \
@@ -14,6 +15,7 @@ libgpds_la_SOURCES =			\
 	gpds-module.c			\
 	gpds-module.h			\
 	gpds-ui.c			\
+	gpds-utils.c			\
 	gpds-xinput.c                   \
 	gpds-xinput-pointer-info.c      \
 	gpds-xinput-utils.c

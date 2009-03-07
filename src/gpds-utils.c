@@ -17,15 +17,21 @@
  *
  */
 
-#ifndef __GPOINTING_DEVICE_SETTINGS_H__
-#define __GPOINTING_DEVICE_SETTINGS_H__
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif /* HAVE_CONFIG_H */
 
-#include <gpds-ui.h>
-#include <gpds-module-impl.h>
-#include <gpds-gconf.h>
-#include <gpds-utils.h>
+#include "gpds-utils.h"
 
-#endif /* __GPOINTING_DEVICE_SETTINGS_H__ */
+const gchar *
+gpds_get_ui_file_directory (void)
+{
+    const gchar *dir;
+
+    dir = g_getenv("GPDS_UI_DIR");
+    return dir ? dir : GPDS_UIDIR;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
