@@ -27,7 +27,6 @@
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include "gpds-module.h"
-#include "gpds-xinput.h"
 #include "gpds-gconf.h"
 
 static GList *uis = NULL;
@@ -58,7 +57,6 @@ typedef struct _GpdsUIPriv GpdsUIPriv;
 struct _GpdsUIPriv
 {
     GtkBuilder *builder;
-    GpdsXInput *xinput;
     gchar *device_name;
     GConfClient *gconf;
 };
@@ -110,7 +108,6 @@ gpds_ui_init (GpdsUI *ui)
     GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(ui);
 
     priv->device_name = NULL;
-    priv->xinput = NULL;
     priv->builder = gtk_builder_new();
     priv->gconf = gconf_client_get_default();
 }
@@ -125,11 +122,6 @@ dispose (GObject *object)
     if (priv->builder) {
         g_object_unref(priv->builder);
         priv->builder = NULL;
-    }
-
-    if (priv->xinput) {
-        g_object_unref(priv->xinput);
-        priv->xinput = NULL;
     }
 
     if (priv->gconf) {
