@@ -1,7 +1,8 @@
 src/gpds-xinput.c
+src/gpds-xinput-utils.c
 src/gpointing-device-settings.c
 modules/gpds-touchpad-ui.c
-modules/gpds-trackpoint-ui.c
-[type: gettext/glade]data/trackpoint.ui.in
+modules/gpds-mouse-ui.c
+[type: gettext/glade]data/mouse.ui.in
 [type: gettext/glade]data/touchpad.ui.in
 data/gnome-settings-daemon.schemas.in

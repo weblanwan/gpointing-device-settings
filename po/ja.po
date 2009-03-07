@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-04 15:20+0900\n"
+"POT-Creation-Date: 2009-03-07 18:33+0900\n"
 "PO-Revision-Date: 2009-02-27 18:59+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,77 +10,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/gpds-xinput.c:195
-#, c-format
-msgid "No device found."
-msgstr "デバイスが見つかりません。"
-
-#: ../src/gpds-xinput.c:206
-#, c-format
-msgid "Could not open %s device."
-msgstr "%sを開けません。"
-
-#: ../src/gpointing-device-settings.c:119
+#: ../src/gpointing-device-settings.c:126
 msgid "Pointing Device Settings"
 msgstr "ポインティングデバイスの設定"
 
-#: ../modules/gpds-touchpad-ui.c:814
-#, c-format
-msgid "No Touchpad device found."
-msgstr "タッチパッドが見つかりません。"
-
-#: ../modules/gpds-touchpad-ui.c:822 ../modules/gpds-trackpoint-ui.c:561
+#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:522
 #, c-format
 msgid "%s did not find."
 msgstr "%sが見つかりません。"
 
-#: ../modules/gpds-touchpad-ui.c:866 ../modules/gpds-touchpad-ui.c:886
-#: ../modules/gpds-trackpoint-ui.c:605 ../modules/gpds-trackpoint-ui.c:625
+#: ../modules/gpds-touchpad-ui.c:814 ../modules/gpds-touchpad-ui.c:835
+#: ../modules/gpds-mouse-ui.c:565 ../modules/gpds-mouse-ui.c:586
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "ウィジェット(%s)がありません。"
 
-#: ../modules/gpds-trackpoint-ui.c:552
-#, c-format
-msgid "No TrackPoint device found."
-msgstr "トラックポイントが見つかりません。"
-
 #.
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
-#: ../data/trackpoint.ui.in.h:1
+#: ../data/mouse.ui.in.h:1
 msgid "(ms)"
 msgstr "(ミリ秒)"
 
-#: ../data/trackpoint.ui.in.h:2
+#: ../data/mouse.ui.in.h:2
 msgid "Enable horizontal scroll"
 msgstr "横スクロールを有効にする"
 
-#: ../data/trackpoint.ui.in.h:3
+#: ../data/mouse.ui.in.h:3
 msgid "Enable vertical scroll"
 msgstr "縦スクロールを有効にする"
 
-#: ../data/trackpoint.ui.in.h:4
+#: ../data/mouse.ui.in.h:4
 msgid "Middle button timeout"
 msgstr "中ボタンタイムアウト"
 
-#: ../data/trackpoint.ui.in.h:5
-msgid "TrackPoint"
-msgstr "トラックポイント"
-
-#: ../data/trackpoint.ui.in.h:6
+#: ../data/mouse.ui.in.h:5
 msgid "Use middle button emulation"
 msgstr "中ボタンエミュレーションを使用する"
 
-#: ../data/trackpoint.ui.in.h:7
+#: ../data/mouse.ui.in.h:6
 msgid "Use wheel emulation"
 msgstr "ホイールエミュレーションを使用する"
 
-#: ../data/trackpoint.ui.in.h:8
+#: ../data/mouse.ui.in.h:7
 msgid "Wheel emulation inertia"
 msgstr "ホイールエミュレーションの惰性"
 
-#: ../data/trackpoint.ui.in.h:9
+#: ../data/mouse.ui.in.h:8
 msgid "Wheel emulation timeout"
 msgstr "ホイールエミュレーションタイムアウト"
 
@@ -140,22 +116,37 @@ msgstr "タッピング"
 msgid "Tapping time: "
 msgstr "タッピング間隔"
 
-#: ../data/touchpad.ui.in.h:15
-msgid "Touchpad"
-msgstr "タッチパッド"
-
 #: ../data/gnome-settings-daemon.schemas.in.h:1
-msgid "Enable touchpad plugin"
-msgstr "タッチパッドプラグインを有効にする"
-
-#: ../data/gnome-settings-daemon.schemas.in.h:2
-msgid "Enable trackpoint plugin"
+#, fuzzy
+msgid "Enable pointing-device plugin"
 msgstr "トラックポイントプラグインを有効にする"
 
-#: ../data/gnome-settings-daemon.schemas.in.h:3
-msgid "Set to True to enable the plugin to manage touchpad settings."
-msgstr "タッチパッドの設定を管理するにはTrueに設定します"
-
-#: ../data/gnome-settings-daemon.schemas.in.h:4
-msgid "Set to True to enable the plugin to manage trackpoint settings."
+#: ../data/gnome-settings-daemon.schemas.in.h:2
+#, fuzzy
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr "トラックポイントの設定を管理するにはTrueに設定します"
+
+#~ msgid "No device found."
+#~ msgstr "デバイスが見つかりません。"
+
+#~ msgid "Could not open %s device."
+#~ msgstr "%sを開けません。"
+
+#~ msgid "No Touchpad device found."
+#~ msgstr "タッチパッドが見つかりません。"
+
+#~ msgid "No TrackPoint device found."
+#~ msgstr "トラックポイントが見つかりません。"
+
+#~ msgid "TrackPoint"
+#~ msgstr "トラックポイント"
+
+#~ msgid "Touchpad"
+#~ msgstr "タッチパッド"
+
+#~ msgid "Enable touchpad plugin"
+#~ msgstr "タッチパッドプラグインを有効にする"
+
+#~ msgid "Set to True to enable the plugin to manage touchpad settings."
+#~ msgstr "タッチパッドの設定を管理するにはTrueに設定します"
