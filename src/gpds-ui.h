@@ -73,6 +73,18 @@ GtkWidget   *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);
 GtkWidget   *gpds_ui_get_label_widget     (GpdsUI *ui, GError **error);
 GtkBuilder  *gpds_ui_get_builder          (GpdsUI *ui);
 const gchar *gpds_ui_get_device_name      (GpdsUI *ui);
+void         gpds_ui_set_gconf_bool       (GpdsUI *ui,
+                                           const gchar *key,
+                                           gboolean value);
+gboolean     gpds_ui_get_gconf_bool       (GpdsUI *ui,
+                                           const gchar *key,
+                                           gboolean *value);
+void         gpds_ui_set_gconf_int        (GpdsUI *ui,
+                                           const gchar *key,
+                                           gboolean value);
+gboolean     gpds_ui_get_gconf_int        (GpdsUI *ui,
+                                           const gchar *key,
+                                           gboolean *value);
 
 G_END_DECLS
 

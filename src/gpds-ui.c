@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gconf/gconf-client.h>
 #include "gpds-module.h"
 #include "gpds-xinput.h"
 
@@ -52,12 +53,15 @@ gpds_uis_get_names (void)
     return gpds_module_collect_names(uis);
 }
 
+#define GPDS_GCONF_DIR                   "/desktop/gnome/peripherals"
+
 typedef struct _GpdsUIPriv GpdsUIPriv;
 struct _GpdsUIPriv
 {
     GtkBuilder *builder;
     GpdsXInput *xinput;
     gchar *device_name;
+    GConfClient *gconf;
 };
 
 enum
@@ -109,6 +113,7 @@ gpds_ui_init (GpdsUI *ui)
     priv->device_name = NULL;
     priv->xinput = NULL;
     priv->builder = gtk_builder_new();
+    priv->gconf = gconf_client_get_default();
 }
 
 static void
@@ -126,6 +131,11 @@ dispose (GObject *object)
     if (priv->xinput) {
         g_object_unref(priv->xinput);
         priv->xinput = NULL;
+    }
+
+    if (priv->gconf) {
+        g_object_unref(priv->gconf);
+        priv->gconf = NULL;
     }
 
     if (G_OBJECT_CLASS(gpds_ui_parent_class)->dispose)
@@ -256,6 +266,98 @@ gpds_ui_get_device_name (GpdsUI *ui)
     g_return_val_if_fail(GPDS_IS_UI(ui), NULL);
 
     return GPDS_UI_GET_PRIVATE(ui)->device_name;
+}
+
+static gchar *
+build_gconf_key (GpdsUI *ui, const gchar *key)
+{
+    gchar *gconf_key;
+    gchar *device_name;
+    GpdsUIPriv *priv = GPDS_UI_GET_PRIVATE(ui);
+
+    device_name = gconf_escape_key(gpds_xinput_get_device_name(priv->xinput),
+                                   -1);
+    gconf_key = g_strdup_printf("%s/%s/%s",
+                                GPDS_GCONF_DIR,
+                                device_name,
+                                key);
+    g_free(device_name);
+
+    return gconf_key;
+}
+
+void
+gpds_ui_set_gconf_bool (GpdsUI *ui, const gchar *key, gboolean value)
+{
+    gchar *gconf_key;
+    GpdsUIPriv *priv;
+
+    g_return_if_fail(GPDS_IS_UI(ui));
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_client_set_bool(priv->gconf, gconf_key, value, NULL);
+    g_free(gconf_key);
+}
+
+gboolean
+gpds_ui_get_gconf_bool (GpdsUI *ui, const gchar *key, gboolean *value)
+{
+    GConfValue *gconf_value;
+    gchar *gconf_key;
+    gboolean exist_value = FALSE;
+    GpdsUIPriv *priv;
+
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_value = gconf_client_get(priv->gconf, gconf_key, NULL);
+    if (gconf_value) {
+        *value = gconf_value_get_bool(gconf_value);
+        gconf_value_free(gconf_value);
+        exist_value = TRUE;
+    }
+    g_free(gconf_key);
+
+    return exist_value;
+}
+
+void
+gpds_ui_set_gconf_int (GpdsUI *ui, const gchar *key, gint value)
+{
+    gchar *gconf_key;
+    GpdsUIPriv *priv;
+
+    g_return_if_fail(GPDS_IS_UI(ui));
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_client_set_int(priv->gconf, gconf_key, value, NULL);
+    g_free(gconf_key);
+}
+
+gboolean
+gpds_ui_get_gconf_int (GpdsUI *ui, const gchar *key, gint *value)
+{
+    GConfValue *gconf_value;
+    gchar *gconf_key;
+    gboolean exist_value = FALSE;
+    GpdsUIPriv *priv;
+
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_value = gconf_client_get(priv->gconf, gconf_key, NULL);
+    if (gconf_value) {
+        *value = gconf_value_get_int(gconf_value);
+        gconf_value_free(gconf_value);
+        exist_value = TRUE;
+    }
+    g_free(gconf_key);
+
+    return exist_value;
 }
 
 /*

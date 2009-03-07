@@ -21,6 +21,7 @@ AM_CFLAGS = -DG_LOG_DOMAIN=\"GPointingDeviceSettings\"
 
 libgpds_la_CFLAGS =			\
 	$(GPDS_CFLAGS)			\
+	$(GCONF2_CFLAGS)	        \
 	$(COVERAGE_CFLAGS)
 
 libgpds_la_LDFLAGS =				\
@@ -29,6 +30,7 @@ libgpds_la_LDFLAGS =				\
 
 libgpds_la_LIBADD =			\
 	$(GTK_LIBS)			\
+	$(GCONF2_LIBS)			\
 	$(XINPUT_LIBS)
 
 pkginclude_HEADERS =				\
