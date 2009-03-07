@@ -63,7 +63,7 @@ gpds_xinput_utils_collect_pointer_infos (void)
         info = gpds_xinput_pointer_info_new(device_infos[i].name,
                                             XGetAtomName(GDK_DISPLAY(), device_infos[i].type));
 
-        device_names = g_list_prepend(device_names, info);
+        device_names = g_list_append(device_names, info);
     }
 
     XFreeDeviceList(device_infos);
