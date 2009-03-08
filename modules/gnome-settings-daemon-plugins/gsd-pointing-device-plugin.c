@@ -79,7 +79,7 @@ collect_pointer_device_infos_from_gconf (void)
 
         device_type_key = gconf_concat_dir_and_key(dir, GPDS_GCONF_DEVICE_TYPE_KEY);
         device_type = gconf_client_get_string(gconf, device_type_key, NULL);
-        if (device_type && !strcmp(device_type, "mouse")) {
+        if (device_type) {
             GpdsXInputPointerInfo *info;
             gchar *device_name;
 
