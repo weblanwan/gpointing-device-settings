@@ -253,15 +253,13 @@ get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
 
     properties = XListDeviceProperties(GDK_DISPLAY(), device, &n_properties);
     for (i = 0; i < n_properties; i++) {
-        gchar *name;
+        const gchar *name;
 
         name = gdk_x11_get_xatom_name(properties[i]);
         if (!strcmp(name, property_name)) {
             found_atom = properties[i];
-            XFree(name);
             break;
         }
-        XFree(name);
     }
     XFree(properties);
 
