@@ -148,6 +148,13 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
                                            NULL,
                                            properties,
                                            1);
+        } else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY)) {
+            gpds_xinput_set_int_properties(xinput,
+                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                           NULL,
+                                           properties,
+                                           1);
         }
         break;
     default:

@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <gpointing-device-settings.h>
 #include <gpds-xinput.h>
+#include <gpds-xinput-utils.h>
 #include <gconf/gconf-client.h>
 
 #include "gpds-mouse-definitions.h"
@@ -229,6 +230,17 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 static void
+cb_wheel_emulation_button_value_changed (GtkSpinButton *button, gpointer user_data)
+{
+    gdouble value;
+    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
+    set_spin_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION_BUTTON);
+
+    value = gtk_spin_button_get_value(button);
+    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY, (gint)value);
+}
+
+static void
 set_scroll_axes_property (GpdsMouseUI *ui)
 {
     GtkBuilder *builder;
@@ -346,6 +358,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(middle_button_timeout, value_changed);
     CONNECT(wheel_emulation, toggled);
     CONNECT(wheel_emulation_timeout, value_changed);
+    CONNECT(wheel_emulation_button, value_changed);
     CONNECT(wheel_emulation_inertia, value_changed);
     CONNECT(wheel_emulation_vertical, toggled);
     CONNECT(wheel_emulation_horizontal, toggled);
@@ -468,6 +481,29 @@ set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
 }
 
 static void
+setup_num_buttons (GpdsUI *ui)
+{
+    GObject *spin;
+    gshort num_buttons;
+    GError *error = NULL;
+    GtkBuilder *builder;
+    GtkAdjustment *adjustment;
+
+    builder = gpds_ui_get_builder(ui);
+
+    spin = gtk_builder_get_object(builder, "wheel_emulation_button");
+    num_buttons = gpds_xinput_utils_get_device_num_buttons(gpds_ui_get_device_name(ui),
+                                                           &error);
+    if (error) {
+        show_error(error);
+        g_error_free(error);
+        return;
+    }
+    adjustment = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON(spin));
+    gtk_adjustment_set_upper(adjustment, num_buttons - 1);
+}
+
+static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsMouseUI *mouse_ui = GPDS_MOUSE_UI(ui);
@@ -482,6 +518,12 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          GPDS_MOUSE_WHEEL_EMULATION_KEY,
                                          builder,
                                          "wheel_emulation");
+    set_integer_property_from_preference(mouse_ui,
+                                         GPDS_MOUSE_WHEEL_EMULATION_BUTTON,
+                                         GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY,
+                                         builder,
+                                         "wheel_emulation_button");
+    setup_num_buttons(ui);
     set_integer_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
                                          GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY,
