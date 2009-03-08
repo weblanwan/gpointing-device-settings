@@ -81,11 +81,13 @@ collect_pointer_device_infos_from_gconf (void)
         device_type = gconf_client_get_string(gconf, device_type_key, NULL);
         if (device_type) {
             GpdsXInputPointerInfo *info;
-            gchar *device_name;
+            gchar *device_name, *unescaped_device_name;
 
             device_name = g_path_get_basename(dir);
-            info = gpds_xinput_pointer_info_new(device_name, device_type);
+            unescaped_device_name = gconf_unescape_key(device_name, -1);
+            info = gpds_xinput_pointer_info_new(unescaped_device_name, device_type);
             infos = g_list_prepend(infos, info);
+            g_free(unescaped_device_name);
             g_free(device_name);
         }
 
