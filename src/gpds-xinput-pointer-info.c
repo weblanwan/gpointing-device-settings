@@ -61,7 +61,7 @@ gpds_xinput_utils_collect_pointer_infos (void)
         if (device_infos[i].use != IsXExtensionPointer)
             continue;
         info = gpds_xinput_pointer_info_new(device_infos[i].name,
-                                            XGetAtomName(GDK_DISPLAY(), device_infos[i].type));
+                                            gdk_x11_get_xatom_name(device_infos[i].type));
 
         device_names = g_list_append(device_names, info);
     }

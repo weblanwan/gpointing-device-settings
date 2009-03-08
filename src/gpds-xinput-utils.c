@@ -89,7 +89,7 @@ gpds_xinput_utils_get_float_atom (GError **error)
 {
     Atom float_atom;
 
-    float_atom = XInternAtom(GDK_DISPLAY(), "FLOAT", False);
+    float_atom = gdk_x11_get_xatom_by_name("FLOAT");
     if (float_atom == 0) {
         g_set_error(error,
                     GPDS_XINPUT_UTILS_ERROR,

@@ -197,7 +197,7 @@ gpds_xinput_set_int_properties (GpdsXInput *xinput,
     if (!device)
         return FALSE;
 
-    property_atom = XInternAtom(GDK_DISPLAY(), property_name, False);
+    property_atom = gdk_x11_get_xatom_by_name(property_name);
 
     switch (format_type) {
     case 8:
@@ -255,7 +255,7 @@ get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
     for (i = 0; i < n_properties; i++) {
         gchar *name;
 
-        name = XGetAtomName(GDK_DISPLAY(), properties[i]);
+        name = gdk_x11_get_xatom_name(properties[i]);
         if (!strcmp(name, property_name)) {
             found_atom = properties[i];
             XFree(name);
@@ -372,7 +372,7 @@ gpds_xinput_set_float_properties (GpdsXInput *xinput,
     if (float_atom == 0)
         return FALSE;
 
-    property_atom = XInternAtom(GDK_DISPLAY(), property_name, False);
+    property_atom = gdk_x11_get_xatom_by_name(property_name);
 
     property_data = g_new(gfloat, n_properties);
     for (i = 0; i < n_properties; i++)
