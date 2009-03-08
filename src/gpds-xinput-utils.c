@@ -46,13 +46,45 @@ gpds_xinput_utils_get_device_info (const gchar *device_name)
     for (i = 0; i < n_device_infos; i++) {
         if (device_infos[i].use != IsXExtensionPointer)
             continue;
-        if (!strcmp(device_infos[i].name, device_name))
+        if (!strcmp(device_infos[i].name, device_name)) {
+            XFreeDeviceList(device_infos);
             return &device_infos[i];
+        }
     }
 
     XFreeDeviceList(device_infos);
 
     return NULL;
+}
+
+gshort
+gpds_xinput_utils_get_device_num_buttons (const gchar *device_name, GError **error)
+{
+    XDeviceInfo *device_info;
+    XAnyClassInfo *class_info;
+    gint i;
+
+    device_info = gpds_xinput_utils_get_device_info(device_name);
+    if (!device_info) {
+        g_set_error(error,
+                    GPDS_XINPUT_UTILS_ERROR,
+                    GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
+                    _("No %s found."), device_name);
+        return -1;
+    }
+
+    for (i = 0, class_info = device_info->inputclassinfo;
+         i < device_info->num_classes;
+         i++) {
+        if (class_info->class == ButtonClass) {
+            XButtonInfo *button_info;
+
+            button_info = (XButtonInfo *)class_info;
+            return button_info->num_buttons;
+        }
+        class_info = (XAnyClassInfo *)(class_info + class_info->length);
+    }
+    return -1;
 }
 
 XDevice *
