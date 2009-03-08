@@ -17,16 +17,23 @@
  *
  */
 
-#ifndef __GPOINTING_DEVICE_SETTINGS_H__
-#define __GPOINTING_DEVICE_SETTINGS_H__
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif /* HAVE_CONFIG_H */
 
-#include <gpds-ui.h>
-#include <gpds-module-impl.h>
-#include <gpds-gconf.h>
-#include <gpds-utils.h>
-#include <gpds-gconf.h>
+#include "gpds-gconf.h"
+#include <string.h>
 
-#endif /* __GPOINTING_DEVICE_SETTINGS_H__ */
+const gchar *
+gpds_gconf_get_key_from_path (const gchar *path)
+{
+    const gchar *segment;
+
+    segment = strrchr(path, '/');
+
+    return segment ? segment + 1 : NULL;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

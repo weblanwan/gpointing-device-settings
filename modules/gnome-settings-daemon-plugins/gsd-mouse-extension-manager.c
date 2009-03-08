@@ -26,6 +26,7 @@
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
+#include <gpds-gconf.h>
 
 #include "gpds-mouse-definitions.h"
 #include "gpds-mouse-xinput.h"
@@ -72,7 +73,7 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     xinput = gpds_xinput_new(device_name);
 
     value = gconf_entry_get_value(entry);
-    key = gconf_entry_get_key(entry);
+    key = gpds_gconf_get_key_from_path(gconf_entry_get_key(entry));
 
     switch (value->type) {
     case GCONF_VALUE_BOOL:

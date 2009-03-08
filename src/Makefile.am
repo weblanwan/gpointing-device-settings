@@ -15,6 +15,7 @@ libgpds_la_SOURCES =			\
 	gpds-module.c			\
 	gpds-module.h			\
 	gpds-ui.c			\
+	gpds-gconf.c			\
 	gpds-utils.c			\
 	gpds-xinput.c			\
 	gpds-xinput-pointer-info.c	\

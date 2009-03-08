@@ -27,6 +27,8 @@ G_BEGIN_DECLS
 #define GPDS_GCONF_DIR             "/desktop/gnome/peripherals"
 #define GPDS_GCONF_DEVICE_TYPE_KEY "device_type"
 
+const gchar *gpds_gconf_get_key_from_path (const gchar *path);
+
 G_END_DECLS
 
 #endif /* __GPDS_GCONF_H__ */
