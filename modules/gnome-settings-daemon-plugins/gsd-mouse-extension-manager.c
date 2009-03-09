@@ -33,10 +33,13 @@
 
 G_DEFINE_TYPE (GsdMouseExtensionManager, gsd_mouse_extension_manager, GSD_TYPE_POINTING_DEVICE_MANAGER)
 
-static void _gconf_client_notify (GsdPointingDeviceManager *manager,
-                                  GConfClient *client,
-                                  guint cnxn_id,
-                                  GConfEntry *entry);
+static gboolean start                (GsdPointingDeviceManager *manager,
+                                      GError **error);
+static void     stop                 (GsdPointingDeviceManager *manager);
+static void     _gconf_client_notify (GsdPointingDeviceManager *manager,
+                                      GConfClient *client,
+                                      guint cnxn_id,
+                                      GConfEntry *entry);
 
 static void
 gsd_mouse_extension_manager_init (GsdMouseExtensionManager *manager)
@@ -48,7 +51,116 @@ gsd_mouse_extension_manager_class_init (GsdMouseExtensionManagerClass *klass)
 {
     GsdPointingDeviceManagerClass *manager_class = GSD_POINTING_DEVICE_MANAGER_CLASS(klass);
 
+    manager_class->start               = start;
+    manager_class->stop                = stop;
     manager_class->gconf_client_notify = _gconf_client_notify;
+}
+
+#define DEFINE_SET_VALUE_FUNCTION(function_name, key_name, value_type)              \
+static void                                                                         \
+set_ ## function_name (GsdPointingDeviceManager *manager,                           \
+                       GpdsXInput *xinput,                                          \
+                       GConfClient *gconf)                                          \
+{                                                                                   \
+    g ## value_type value;                                                          \
+    gint properties[1];                                                             \
+    gchar *key;                                                                     \
+    gboolean value_exist;                                                           \
+    key = gsd_pointing_device_manager_build_gconf_key(manager, key_name ## _KEY);   \
+    value_exist = gpds_gconf_get_ ## value_type (gconf, key_name ## _KEY, &value);  \
+    g_free(key);                                                                    \
+    if (!value_exist)                                                               \
+        return;                                                                     \
+    properties[0] = value;                                                          \
+    gpds_xinput_set_int_properties(xinput,                                          \
+                                   gpds_mouse_xinput_get_name(key_name),            \
+                                   gpds_mouse_xinput_get_format_type(key_name),     \
+                                   NULL,                                            \
+                                   properties,                                      \
+                                   1);                                              \
+}
+
+#define DEFINE_SET_BOOLEAN_FUNCTION(function_name, key_name)                    \
+    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, boolean)
+
+#define DEFINE_SET_INT_FUNCTION(function_name, key_name)                        \
+    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, int)
+
+DEFINE_SET_BOOLEAN_FUNCTION (wheel_emulation, GPDS_MOUSE_WHEEL_EMULATION)
+DEFINE_SET_BOOLEAN_FUNCTION (middle_button_emulation, GPDS_MOUSE_MIDDLE_BUTTON_EMULATION)
+DEFINE_SET_INT_FUNCTION (middle_button_timeout, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT)
+DEFINE_SET_INT_FUNCTION (wheel_emulation_button, GPDS_MOUSE_WHEEL_EMULATION_BUTTON)
+DEFINE_SET_INT_FUNCTION (wheel_emulation_timeout, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT)
+DEFINE_SET_INT_FUNCTION (wheel_emulation_inertia, GPDS_MOUSE_WHEEL_EMULATION_INERTIA)
+
+static void
+set_horizontal_and_vertical_scroll (GsdPointingDeviceManager *manager,
+                                    GpdsXInput *xinput,
+                                    GConfClient *gconf)
+{
+    gboolean y_enable, x_enable;
+    gint properties[4];
+
+    if (!gpds_gconf_get_boolean(gconf, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, &y_enable))
+        return;
+    if (!gpds_gconf_get_boolean(gconf, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, &x_enable))
+        return;
+
+    if (y_enable) {
+        properties[0] = 6;
+        properties[1] = 7;
+    } else {
+        properties[0] = 0;
+        properties[1] = 0;
+    }
+    if (x_enable) {
+        properties[2] = 4;
+        properties[3] = 5;
+    } else {
+        properties[2] = 0;
+        properties[3] = 0;
+    }
+    gpds_xinput_set_int_properties(xinput,
+                                   gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES),
+                                   gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_AXES),
+                                   NULL,
+                                   properties,
+                                   4);
+}
+
+static gboolean
+start (GsdPointingDeviceManager *manager, GError **error)
+{
+    GpdsXInput *xinput;
+    GConfClient *gconf;
+
+    xinput = gsd_pointing_device_manager_get_xinput(manager);
+    if (!xinput)
+        return FALSE;
+
+    gconf = gconf_client_get_default();
+    if (!gconf) {
+        g_object_unref(xinput);
+        return FALSE;
+    }
+
+    set_middle_button_emulation(manager, xinput, gconf);
+    set_wheel_emulation(manager, xinput, gconf);
+    set_middle_button_timeout(manager, xinput, gconf);
+    set_wheel_emulation_button(manager, xinput, gconf);
+    set_wheel_emulation_timeout(manager, xinput, gconf);
+    set_wheel_emulation_inertia(manager, xinput, gconf);
+    set_horizontal_and_vertical_scroll(manager, xinput, gconf);
+
+    g_object_unref(gconf);
+    g_object_unref(xinput);
+
+    return TRUE;
+}
+
+static void
+stop (GsdPointingDeviceManager *manager)
+{
 }
 
 static void
@@ -60,17 +172,10 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     GConfValue *value;
     const gchar *key;
     GpdsXInput *xinput;
-    gint properties[4];
-    const gchar *device_name;
 
-    device_name = gsd_pointing_device_manager_get_device_name(manager);
-    if (!device_name)
+    xinput = gsd_pointing_device_manager_get_xinput(manager);
+    if (!xinput)
         return;
-
-    if (!gpds_xinput_utils_exist_device(device_name))
-        return;
-
-    xinput = gpds_xinput_new(device_name);
 
     value = gconf_entry_get_value(entry);
     key = gpds_gconf_get_key_from_path(gconf_entry_get_key(entry));
@@ -78,84 +183,23 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     switch (value->type) {
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY)) {
-            properties[0] = gconf_value_get_bool(value) ? 1 : 0;
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_MIDDLE_BUTTON_EMULATION),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_MIDDLE_BUTTON_EMULATION),
-                                           NULL,
-                                           properties,
-                                           1);
+            set_middle_button_emulation(manager, xinput, client);
         } else  if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_KEY)) {
-            properties[0] = gconf_value_get_bool(value) ? 1 : 0;
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION),
-                                           NULL,
-                                           properties,
-                                           1);
+            set_wheel_emulation(manager, xinput, client);
         } else  if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY) ||
-                    !strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY)) {
-            gboolean enable;
-            enable = gconf_client_get_bool(client,
-                                           GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY,
-                                           NULL);
-            if (enable) {
-                properties[0] = 6;
-                properties[1] = 7;
-            } else {
-                properties[0] = 0;
-                properties[1] = 0;
-            }
-
-            enable = gconf_client_get_bool(client,
-                                           GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY,
-                                           NULL);
-            if (enable) {
-                properties[2] = 4;
-                properties[3] = 5;
-            } else {
-                properties[2] = 0;
-                properties[3] = 0;
-            }
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_AXES),
-                                           NULL,
-                                           properties,
-                                           4);
+                  !strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY)) {
+            set_horizontal_and_vertical_scroll(manager, xinput, client);
         }
         break;
     case GCONF_VALUE_INT:
-        properties[0] = gconf_value_get_int(value);
-        if (!strcmp(key, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY)) {
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT),
-                                           NULL,
-                                           properties,
-                                           1);
-        } else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY)) {
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT),
-                                           NULL,
-                                           properties,
-                                           1);
-        } else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY)) {
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_INERTIA),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_INERTIA),
-                                           NULL,
-                                           properties,
-                                           1);
-        } else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY)) {
-            gpds_xinput_set_int_properties(xinput,
-                                           gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
-                                           gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
-                                           NULL,
-                                           properties,
-                                           1);
-        }
+        if (!strcmp(key, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY))
+            set_middle_button_timeout(manager, xinput, client);
+        else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY))
+            set_wheel_emulation_timeout(manager, xinput, client);
+        else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY))
+            set_wheel_emulation_inertia(manager, xinput, client);
+        else if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY))
+            set_wheel_emulation_button(manager, xinput, client);
         break;
     default:
         break;

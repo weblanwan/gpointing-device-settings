@@ -550,6 +550,7 @@ set_wheel_emulation_button_property_from_preference (GpdsMouseUI *ui)
 
     g_free(values);
 }
+
 static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {

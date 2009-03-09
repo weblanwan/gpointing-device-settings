@@ -22,6 +22,7 @@
 
 #include <glib-object.h>
 #include <gconf/gconf-client.h>
+#include <gpds-xinput.h>
 
 G_BEGIN_DECLS
 
@@ -44,10 +45,13 @@ struct _GsdPointingDeviceManagerClass
 {
     GObjectClass parent_class;
 
-    void (*gconf_client_notify) (GsdPointingDeviceManager *manager,
-                                 GConfClient              *client,
-                                 guint                     cnxn_id,
-                                 GConfEntry               *entry);
+    gboolean (*start)               (GsdPointingDeviceManager *manager,
+                                     GError                  **error);
+    void     (*stop)                (GsdPointingDeviceManager *manager);
+    void     (*gconf_client_notify) (GsdPointingDeviceManager *manager,
+                                     GConfClient              *client,
+                                     guint                     cnxn_id,
+                                     GConfEntry               *entry);
 }; 
 
 GType gsd_pointing_device_manager_get_type (void) G_GNUC_CONST;
@@ -59,6 +63,11 @@ const gchar              *gsd_pointing_device_manager_get_device_name
 gboolean                  gsd_pointing_device_manager_start (GsdPointingDeviceManager *manager,
                                                              GError                  **error);
 void                      gsd_pointing_device_manager_stop  (GsdPointingDeviceManager *manager);
+GpdsXInput               *gsd_pointing_device_manager_get_xinput
+                                                            (GsdPointingDeviceManager *manager);
+gchar                    *gsd_pointing_device_manager_build_gconf_key 
+                                                            (GsdPointingDeviceManager *manager,
+                                                             const gchar *key);
 
 G_END_DECLS
 

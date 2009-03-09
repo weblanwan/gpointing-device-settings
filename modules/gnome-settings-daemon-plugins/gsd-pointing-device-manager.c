@@ -204,8 +204,9 @@ cb_gconf_client_notify (GConfClient *client,
 
 gboolean
 gsd_pointing_device_manager_start (GsdPointingDeviceManager *manager,
-                                   GError              **error)
+                                   GError                  **error)
 {
+    GsdPointingDeviceManagerClass *klass;
     GsdPointingDeviceManagerPrivate *priv;
     gchar *gconf_dir;
 
@@ -222,12 +223,21 @@ gsd_pointing_device_manager_start (GsdPointingDeviceManager *manager,
                                               NULL);
     g_free(gconf_dir);
 
-    return TRUE;
+    klass = GSD_POINTING_DEVICE_MANAGER_GET_CLASS(manager);
+
+    return (klass->start) ? klass->start(manager, error) : TRUE;
 }
 
 void
 gsd_pointing_device_manager_stop (GsdPointingDeviceManager *manager)
 {
+    GsdPointingDeviceManagerClass *klass;
+
+    klass = GSD_POINTING_DEVICE_MANAGER_GET_CLASS(manager);
+
+    if (klass->stop)
+        klass->stop(manager);
+
     dispose_gconf(GSD_POINTING_DEVICE_MANAGER_GET_PRIVATE(manager));
 }
 
@@ -237,6 +247,40 @@ gsd_pointing_device_manager_get_device_name (GsdPointingDeviceManager *manager)
     return GSD_POINTING_DEVICE_MANAGER_GET_PRIVATE(manager)->device_name;
 }
 
+GpdsXInput *
+gsd_pointing_device_manager_get_xinput (GsdPointingDeviceManager *manager)
+{
+    const gchar *device_name;
+
+    device_name = gsd_pointing_device_manager_get_device_name(manager);
+    if (!device_name)
+        return NULL;
+
+    if (!gpds_xinput_utils_exist_device(device_name))
+        return NULL;
+
+    return gpds_xinput_new(device_name);
+}
+
+gchar *
+gsd_pointing_device_manager_build_gconf_key (GsdPointingDeviceManager *manager, const gchar *key)
+{
+    const gchar *device_name;
+    gchar *escaped_device_name, *gconf_key;
+
+    device_name = gsd_pointing_device_manager_get_device_name(manager);
+    if (!device_name)
+        return NULL;
+
+    escaped_device_name = gconf_escape_key(device_name, -1);
+    gconf_key = g_strdup_printf("%s/%s/%s",
+                                GPDS_GCONF_DIR,
+                                escaped_device_name,
+                                key);
+    g_free(escaped_device_name);
+
+    return gconf_key;
+}
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
