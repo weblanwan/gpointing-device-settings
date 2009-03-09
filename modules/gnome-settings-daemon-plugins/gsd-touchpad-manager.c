@@ -105,6 +105,7 @@ DEFINE_SET_BOOLEAN_FUNCTION (tap_fast_tap, GPDS_TOUCHPAD_TAP_FAST_TAP)
 DEFINE_SET_BOOLEAN_FUNCTION (circular_scrolling, GPDS_TOUCHPAD_CIRCULAR_SCROLLING)
 DEFINE_SET_INT_FUNCTION (touchpad_off, GPDS_TOUCHPAD_OFF)
 DEFINE_SET_INT_FUNCTION (tap_time, GPDS_TOUCHPAD_TAP_TIME)
+DEFINE_SET_INT_FUNCTION (circular_scrolling_trigger, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER)
 
 static void
 set_horizontal_and_vertical_scrolling (GsdPointingDeviceManager *manager,
@@ -171,11 +172,13 @@ start (GsdPointingDeviceManager *manager, GError **error)
         return FALSE;
     }
 
-    set_tap_fast_tap(manager, xinput, gconf);
-    set_circular_scrolling(manager, xinput, gconf);
     set_touchpad_off(manager, xinput, gconf);
+    set_tap_fast_tap(manager, xinput, gconf);
     set_tap_time(manager, xinput, gconf);
     set_horizontal_and_vertical_scrolling(manager, xinput, gconf);
+    set_horizontal_and_vertical_scrolling_distance(manager, xinput, gconf);
+    set_circular_scrolling(manager, xinput, gconf);
+    set_circular_scrolling_trigger(manager, xinput, gconf);
 
     g_object_unref(gconf);
     g_object_unref(xinput);
