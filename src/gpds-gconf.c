@@ -35,7 +35,7 @@ gpds_gconf_get_key_from_path (const gchar *path)
 }
 
 gboolean
-gpds_gconf_get_bool (GConfClient *gconf, const gchar *key, gboolean *value)
+gpds_gconf_get_boolean (GConfClient *gconf, const gchar *key, gboolean *value)
 {
     GConfValue *gconf_value;
     gboolean exist_value = FALSE;

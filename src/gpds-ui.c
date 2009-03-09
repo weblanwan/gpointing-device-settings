@@ -301,7 +301,7 @@ gpds_ui_get_gconf_bool (GpdsUI *ui, const gchar *key, gboolean *value)
 
     priv = GPDS_UI_GET_PRIVATE(ui);
     gconf_key = build_gconf_key(ui, key);
-    exist_value =gpds_gconf_get_bool(priv->gconf, gconf_key, value);
+    exist_value =gpds_gconf_get_boolean(priv->gconf, gconf_key, value);
     g_free(gconf_key);
 
     return exist_value;

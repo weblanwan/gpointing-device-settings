@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 const gchar *gpds_gconf_get_key_from_path (const gchar *path);
 
-gboolean     gpds_gconf_get_bool          (GConfClient *gconf,
+gboolean     gpds_gconf_get_boolean       (GConfClient *gconf,
                                            const gchar *key,
                                            gboolean *value);
 gboolean     gpds_gconf_get_int           (GConfClient *gconf,
