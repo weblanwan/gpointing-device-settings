@@ -164,7 +164,7 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsTouchpadPr
 }
 
 static void
-set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
+set_edge_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
     GError *error = NULL;
     GObject *object;
@@ -187,6 +187,35 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
                                         &error,
                                         properties,
                                         3)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+}
+
+static void
+set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
+{
+    GError *error = NULL;
+    GObject *object;
+    gint properties[2];
+
+    object = gtk_builder_get_object(builder, "two_finger_vertical_scrolling");
+    properties[0] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
+
+    object = gtk_builder_get_object(builder, "two_finger_horizontal_scrolling");
+    properties[1] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
+
+    object = gtk_builder_get_object(builder, "continuous_edge_scrolling");
+    properties[2] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
+
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
+                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
+                                        &error,
+                                        properties,
+                                        2)) {
         if (error) {
             show_error(error);
             g_error_free(error);
@@ -301,36 +330,6 @@ cb_circular_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 static void
-cb_vertical_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
-    gboolean check;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_edge_scroll_toggle_property(ui->xinput, builder);
-
-    check = gtk_toggle_button_get_active(button);
-    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY, check);
-}
-
-static void
-cb_horizontal_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
-    gboolean check;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_edge_scroll_toggle_property(ui->xinput, builder);
-
-    check = gtk_toggle_button_get_active(button);
-    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, check);
-}
-
-static void
 cb_vertical_scrolling_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
@@ -360,20 +359,40 @@ cb_horizontal_scrolling_scale_value_changed (GtkRange *range, gpointer user_data
     gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY, (gint)distance);
 }
 
-static void
-cb_continuous_edge_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
-    gboolean check;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_edge_scroll_toggle_property(ui->xinput, builder);
-
-    check = gtk_toggle_button_get_active(button);
-    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, check);
+#define DEFINE_EDGE_SCROLLING_CALLBACK(type, TYPE)                                          \
+static void                                                                                 \
+cb_ ## type ## _scrolling_toggled (GtkToggleButton *button,                                 \
+                                   gpointer user_data)                                      \
+{                                                                                           \
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);                                       \
+    GtkBuilder *builder;                                                                    \
+    gboolean check;                                                                         \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                      \
+    set_edge_scrolling_toggle_property(ui->xinput, builder);                                \
+    check = gtk_toggle_button_get_active(button);                                           \
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_ ## TYPE ## _SCROLLING_KEY, check);   \
 }
+
+DEFINE_EDGE_SCROLLING_CALLBACK(vertical, VERTICAL)
+DEFINE_EDGE_SCROLLING_CALLBACK(horizontal, HORIZONTAL)
+DEFINE_EDGE_SCROLLING_CALLBACK(continuous_edge, CONTINUOUS_EDGE)
+
+#define DEFINE_TWO_FINGER_SCROLLING_CALLBACK(direction, DIRECTION)                                          \
+static void                                                                                                 \
+cb_two_finger_ ## direction ## _scrolling_toggled (GtkToggleButton *button,                                 \
+                                                   gpointer user_data)                                      \
+{                                                                                                           \
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);                                                       \
+    GtkBuilder *builder;                                                                                    \
+    gboolean check;                                                                                         \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                      \
+    set_two_finger_scrolling_toggle_property(ui->xinput, builder);                                          \
+    check = gtk_toggle_button_get_active(button);                                                           \
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_TWO_FINGER_ ## DIRECTION ## _SCROLLING_KEY, check);   \
+}
+
+DEFINE_TWO_FINGER_SCROLLING_CALLBACK(vertical, VERTICAL)
+DEFINE_TWO_FINGER_SCROLLING_CALLBACK(horizontal, HORIZONTAL)
 
 static void
 set_circular_scrolling_trigger_button_state (GpdsTouchpadUI *ui, 
@@ -536,6 +555,8 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(vertical_scrolling_scale, value_changed);
     CONNECT(horizontal_scrolling, toggled);
     CONNECT(horizontal_scrolling_scale, value_changed);
+    CONNECT(two_finger_vertical_scrolling, toggled);
+    CONNECT(two_finger_horizontal_scrolling, toggled);
 
     /* cirlular scrolling trigger */
     CONNECT(trigger_top_toggle, button_press_event);
@@ -623,8 +644,8 @@ set_boolean_property_from_preference (GpdsTouchpadUI *ui,
 }
 
 static void
-set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
-                                          GtkBuilder *builder)
+set_edge_scrolling_property_from_preference (GpdsTouchpadUI *ui,
+                                             GtkBuilder *builder)
 {
     GObject *object;
     gint *values;
@@ -656,6 +677,38 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
     if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, &enable))
         enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, "continuos_edge_scrolling");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
+
+    g_free(values);
+}
+
+static void
+set_two_finger_scrolling_property_from_preference (GpdsTouchpadUI *ui,
+                                                   GtkBuilder *builder)
+{
+    GObject *object;
+    gint *values;
+    gulong n_values;
+    gboolean enable;
+
+    if (!get_integer_properties(ui->xinput, GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,
+                                &values, &n_values)) {
+        return;
+    }
+
+    if (n_values != 2) {
+        g_free(values);
+        return;
+    }
+
+    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY, &enable))
+        enable = (values[0] == 1);
+    object = gtk_builder_get_object(builder, "two_finger_vertical_scrolling");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
+
+    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY, &enable))
+        enable = (values[0] == 1);
+    object = gtk_builder_get_object(builder, "two_finger_horizontal_scrolling");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
 
     g_free(values);
@@ -767,9 +820,10 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          builder,
                                          "faster_tapping_check");
     set_circular_scrolling_property_from_preference(touchpad_ui, builder);
-    set_edge_scroll_property_from_preference(touchpad_ui, builder);
+    set_edge_scrolling_property_from_preference(touchpad_ui, builder);
     set_scroll_distance_property_from_preference(touchpad_ui, builder);
     set_circular_scrolling_trigger_property_from_preference(touchpad_ui, builder);
+    set_two_finger_scrolling_property_from_preference(touchpad_ui, builder);
 
     set_touchpad_use_type_property_from_preference(touchpad_ui, builder);
 }

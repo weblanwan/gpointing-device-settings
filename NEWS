@@ -1,11 +1,19 @@
 ============================
+GPointinDeviceSettings 1.0.1
+============================
+
+* Touchpad
+ - Continuous edge scrolling on/off
+ - Two finger scrolling on/off
+
+============================
 GPointinDeviceSettings 1.0.0
 ============================
 
 * Overrall 
  - Try to show all XExtensionPointer
  - Unify plugins for gnome-settings-daemon
-* Touchpad
+* TrackPoint
  - Wheel emulation button support
 
 ============================

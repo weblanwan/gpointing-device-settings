@@ -20,19 +20,21 @@
 #ifndef __GPDS_TOUCHPAD_GCONF_H__
 #define __GPDS_TOUCHPAD_GCONF_H__
 
-#define GPDS_TOUCHPAD_EDGES_KEY                         "edges"
-#define GPDS_TOUCHPAD_FINGER_KEY                        "finger"
-#define GPDS_TOUCHPAD_OFF_KEY                           "off"
-#define GPDS_TOUCHPAD_TAP_TIME_KEY                      "tap_time"
-#define GPDS_TOUCHPAD_TAP_FAST_TAP_KEY                  "tap_fast_tap"
-#define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY "horizontal_scrolling_distance"
-#define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY          "horizontal_scrolling"
-#define GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY   "vertical_scrolling_distance"
-#define GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY            "vertical_scrolling"
-#define GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY     "continuous_edge_scrolling"
-#define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY            "circular_scrolling"
-#define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE_KEY   "circular_scrolling_distance"
-#define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY    "circular_scrolling_trigger"
+#define GPDS_TOUCHPAD_EDGES_KEY                           "edges"
+#define GPDS_TOUCHPAD_FINGER_KEY                          "finger"
+#define GPDS_TOUCHPAD_OFF_KEY                             "off"
+#define GPDS_TOUCHPAD_TAP_TIME_KEY                        "tap_time"
+#define GPDS_TOUCHPAD_TAP_FAST_TAP_KEY                    "tap_fast_tap"
+#define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY   "horizontal_scrolling_distance"
+#define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY            "horizontal_scrolling"
+#define GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY     "vertical_scrolling_distance"
+#define GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY              "vertical_scrolling"
+#define GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY   "two_finger_vertical_scrolling"
+#define GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY "two_finger_horizontal_scrolling"
+#define GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY       "continuous_edge_scrolling"
+#define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY              "circular_scrolling"
+#define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE_KEY     "circular_scrolling_distance"
+#define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY      "circular_scrolling_trigger"
 
 #endif /* __GPDS_TOUCHPAD_GCONF_H__ */
 /*

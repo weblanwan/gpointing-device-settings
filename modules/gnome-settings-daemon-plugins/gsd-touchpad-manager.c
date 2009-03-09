@@ -134,6 +134,30 @@ set_edge_scrolling (GsdPointingDeviceManager *manager,
 }
 
 static void
+set_two_finger_scrolling (GsdPointingDeviceManager *manager,
+                          GpdsXInput *xinput,
+                          GConfClient *gconf)
+{
+    gboolean h_enable, v_enable;
+    gint properties[2];
+
+    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY, &v_enable))
+        return;
+    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY, &h_enable))
+        return;
+
+    properties[0] = v_enable ? 1 : 0;
+    properties[1] = h_enable ? 1 : 0;
+
+    gpds_xinput_set_int_properties(xinput,
+                                   gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
+                                   gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
+                                   NULL,
+                                   properties,
+                                   2);
+}
+
+static void
 set_horizontal_and_vertical_scrolling_distance (GsdPointingDeviceManager *manager,
                                                 GpdsXInput *xinput,
                                                 GConfClient *gconf)
@@ -180,6 +204,7 @@ start (GsdPointingDeviceManager *manager, GError **error)
     set_horizontal_and_vertical_scrolling_distance(manager, xinput, gconf);
     set_circular_scrolling(manager, xinput, gconf);
     set_circular_scrolling_trigger(manager, xinput, gconf);
+    set_two_finger_scrolling(manager, xinput, gconf);
 
     g_object_unref(gconf);
     g_object_unref(xinput);
@@ -219,6 +244,9 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
                    !strcmp(key, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY) ||
                    !strcmp(key, GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY)) {
             set_edge_scrolling(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY) ||
+                   !strcmp(key, GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY)) {
+            set_two_finger_scrolling(manager, xinput, client);
         }
         break;
     case GCONF_VALUE_INT:
