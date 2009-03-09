@@ -30,6 +30,9 @@ teardown (void)
         g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
         g_list_free(pointer_infos);
     }
+    if (expected_pointer_infos) {
+        g_list_free(expected_pointer_infos);
+    }
 }
 
 static void
@@ -83,6 +86,7 @@ void
 test_collect (void)
 {
     pointer_infos = gpds_xinput_utils_collect_pointer_infos();
+    expected_pointer_infos = g_list_copy(pointer_infos);
 
     gcut_assert_equal_list(expected_pointer_infos, pointer_infos,
                            gpds_xinput_pointer_info_equal,
