@@ -4,6 +4,7 @@
 
 void test_names (void);
 void test_new (void);
+void test_device_name (void);
 void test_is_available (void);
 void test_build (void);
 
@@ -63,6 +64,14 @@ test_new (void)
                      "device-name", "touchpad",
                      NULL);
     cut_assert(ui);
+}
+
+void
+test_device_name (void)
+{
+    cut_trace(test_new());
+
+    cut_assert_equal_string("touchpad", gpds_ui_get_device_name(ui));
 }
 
 void
