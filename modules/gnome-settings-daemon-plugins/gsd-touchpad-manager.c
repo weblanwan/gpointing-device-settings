@@ -108,21 +108,22 @@ DEFINE_SET_INT_FUNCTION (tap_time, GPDS_TOUCHPAD_TAP_TIME)
 DEFINE_SET_INT_FUNCTION (circular_scrolling_trigger, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER)
 
 static void
-set_horizontal_and_vertical_scrolling (GsdPointingDeviceManager *manager,
-                                       GpdsXInput *xinput,
-                                       GConfClient *gconf)
+set_edge_scrolling (GsdPointingDeviceManager *manager,
+                    GpdsXInput *xinput,
+                    GConfClient *gconf)
 {
-    gboolean h_enable, v_enable;
+    gboolean h_enable, v_enable, c_enable = FALSE;
     gint properties[3];
 
     if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY, &v_enable))
         return;
     if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, &h_enable))
         return;
+    gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, &c_enable);
 
     properties[0] = v_enable ? 1 : 0;
     properties[1] = h_enable ? 1 : 0;
-    properties[2] = 0;
+    properties[2] = c_enable ? 1 : 0;
 
     gpds_xinput_set_int_properties(xinput,
                                    gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
@@ -175,7 +176,7 @@ start (GsdPointingDeviceManager *manager, GError **error)
     set_touchpad_off(manager, xinput, gconf);
     set_tap_fast_tap(manager, xinput, gconf);
     set_tap_time(manager, xinput, gconf);
-    set_horizontal_and_vertical_scrolling(manager, xinput, gconf);
+    set_edge_scrolling(manager, xinput, gconf);
     set_horizontal_and_vertical_scrolling_distance(manager, xinput, gconf);
     set_circular_scrolling(manager, xinput, gconf);
     set_circular_scrolling_trigger(manager, xinput, gconf);
@@ -212,11 +213,12 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
             set_tap_fast_tap(manager, xinput, client);
-        } else  if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
+        } else if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
             set_circular_scrolling(manager, xinput, client);
-        } else  if (!strcmp(key, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY) ||
-                    !strcmp(key, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY)) {
-            set_horizontal_and_vertical_scrolling(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY) ||
+                   !strcmp(key, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY) ||
+                   !strcmp(key, GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY)) {
+            set_edge_scrolling(manager, xinput, client);
         }
         break;
     case GCONF_VALUE_INT:

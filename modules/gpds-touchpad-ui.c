@@ -178,7 +178,8 @@ set_edge_scroll_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
     properties[1] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
     set_widget_sensitivity(builder, "horizontal_scrolling_box", properties[1]);
 
-    properties[2] = 0;
+    object = gtk_builder_get_object(builder, "continuous_edge_scrolling");
+    properties[2] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
 
     if (!gpds_xinput_set_int_properties(xinput,
                                         gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
@@ -360,6 +361,21 @@ cb_horizontal_scrolling_scale_value_changed (GtkRange *range, gpointer user_data
 }
 
 static void
+cb_continuous_edge_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
+    GtkBuilder *builder;
+    gboolean check;
+
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));
+
+    set_edge_scroll_toggle_property(ui->xinput, builder);
+
+    check = gtk_toggle_button_get_active(button);
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, check);
+}
+
+static void
 set_circular_scrolling_trigger_button_state (GpdsTouchpadUI *ui, 
                                              GpdsTouchpadCircularScrollingTrigger trigger)
 {
@@ -516,6 +532,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(faster_tapping_check, toggled);
     CONNECT(circular_scrolling, toggled);
     CONNECT(vertical_scrolling, toggled);
+    CONNECT(continuous_edge_scrolling, toggled);
     CONNECT(vertical_scrolling_scale, value_changed);
     CONNECT(horizontal_scrolling, toggled);
     CONNECT(horizontal_scrolling_scale, value_changed);
@@ -635,6 +652,11 @@ set_edge_scroll_property_from_preference (GpdsTouchpadUI *ui,
     object = gtk_builder_get_object(builder, "horizontal_scrolling");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
     set_widget_sensitivity(builder, "horizontal_scrolling_box", enable);
+
+    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, &enable))
+        enable = (values[0] == 1);
+    object = gtk_builder_get_object(builder, "continuos_edge_scrolling");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
 
     g_free(values);
 }

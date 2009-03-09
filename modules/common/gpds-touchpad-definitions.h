@@ -29,6 +29,7 @@
 #define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY          "horizontal_scrolling"
 #define GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY   "vertical_scrolling_distance"
 #define GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY            "vertical_scrolling"
+#define GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY     "continuous_edge_scrolling"
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY            "circular_scrolling"
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE_KEY   "circular_scrolling_distance"
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY    "circular_scrolling_trigger"
