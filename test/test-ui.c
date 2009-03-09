@@ -59,7 +59,9 @@ test_names (void)
 void
 test_new (void)
 {
-    ui = gpds_ui_new("touchpad", NULL);
+    ui = gpds_ui_new("touchpad",
+                     "device-name", "touchpad",
+                     NULL);
     cut_assert(ui);
 }
 
