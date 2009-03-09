@@ -21,6 +21,7 @@
 #define __GPDS_GCONF_H__
 
 #include <glib.h>
+#include <gconf/gconf-client.h>
 
 G_BEGIN_DECLS
 
@@ -28,6 +29,16 @@ G_BEGIN_DECLS
 #define GPDS_GCONF_DEVICE_TYPE_KEY "device_type"
 
 const gchar *gpds_gconf_get_key_from_path (const gchar *path);
+
+gboolean     gpds_gconf_get_bool          (GConfClient *gconf,
+                                           const gchar *key,
+                                           gboolean *value);
+gboolean     gpds_gconf_get_int           (GConfClient *gconf,
+                                           const gchar *key,
+                                           gboolean *value);
+gboolean     gpds_gconf_get_string        (GConfClient *gconf,
+                                           const gchar *key,
+                                           const gchar **value);
 
 G_END_DECLS
 

@@ -25,7 +25,6 @@ AM_CFLAGS = -DG_LOG_DOMAIN=\"GPointingDeviceSettings\"
 
 libgpds_la_CFLAGS =			\
 	$(GPDS_CFLAGS)			\
-	$(GCONF2_CFLAGS)	        \
 	$(COVERAGE_CFLAGS)
 
 libgpds_la_LDFLAGS =				\

@@ -293,7 +293,6 @@ gpds_ui_set_gconf_bool (GpdsUI *ui, const gchar *key, gboolean value)
 gboolean
 gpds_ui_get_gconf_bool (GpdsUI *ui, const gchar *key, gboolean *value)
 {
-    GConfValue *gconf_value;
     gchar *gconf_key;
     gboolean exist_value = FALSE;
     GpdsUIPriv *priv;
@@ -302,12 +301,7 @@ gpds_ui_get_gconf_bool (GpdsUI *ui, const gchar *key, gboolean *value)
 
     priv = GPDS_UI_GET_PRIVATE(ui);
     gconf_key = build_gconf_key(ui, key);
-    gconf_value = gconf_client_get(priv->gconf, gconf_key, NULL);
-    if (gconf_value) {
-        *value = gconf_value_get_bool(gconf_value);
-        gconf_value_free(gconf_value);
-        exist_value = TRUE;
-    }
+    exist_value =gpds_gconf_get_bool(priv->gconf, gconf_key, value);
     g_free(gconf_key);
 
     return exist_value;
@@ -330,7 +324,6 @@ gpds_ui_set_gconf_int (GpdsUI *ui, const gchar *key, gint value)
 gboolean
 gpds_ui_get_gconf_int (GpdsUI *ui, const gchar *key, gint *value)
 {
-    GConfValue *gconf_value;
     gchar *gconf_key;
     gboolean exist_value = FALSE;
     GpdsUIPriv *priv;
@@ -339,12 +332,7 @@ gpds_ui_get_gconf_int (GpdsUI *ui, const gchar *key, gint *value)
 
     priv = GPDS_UI_GET_PRIVATE(ui);
     gconf_key = build_gconf_key(ui, key);
-    gconf_value = gconf_client_get(priv->gconf, gconf_key, NULL);
-    if (gconf_value) {
-        *value = gconf_value_get_int(gconf_value);
-        gconf_value_free(gconf_value);
-        exist_value = TRUE;
-    }
+    exist_value =gpds_gconf_get_int(priv->gconf, gconf_key, value);
     g_free(gconf_key);
 
     return exist_value;
@@ -367,7 +355,6 @@ gpds_ui_set_gconf_string (GpdsUI *ui, const gchar *key, const gchar *value)
 gboolean
 gpds_ui_get_gconf_string (GpdsUI *ui, const gchar *key, const gchar **value)
 {
-    GConfValue *gconf_value;
     gchar *gconf_key;
     gboolean exist_value = FALSE;
     GpdsUIPriv *priv;
@@ -376,12 +363,7 @@ gpds_ui_get_gconf_string (GpdsUI *ui, const gchar *key, const gchar **value)
 
     priv = GPDS_UI_GET_PRIVATE(ui);
     gconf_key = build_gconf_key(ui, key);
-    gconf_value = gconf_client_get(priv->gconf, gconf_key, NULL);
-    if (gconf_value) {
-        *value = gconf_value_get_string(gconf_value);
-        gconf_value_free(gconf_value);
-        exist_value = TRUE;
-    }
+    exist_value =gpds_gconf_get_string(priv->gconf, gconf_key, value);
     g_free(gconf_key);
 
     return exist_value;
