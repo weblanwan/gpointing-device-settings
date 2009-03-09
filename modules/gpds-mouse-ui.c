@@ -512,7 +512,7 @@ setup_num_buttons (GpdsUI *ui)
 
     list_store = gtk_builder_get_object(builder, "wheel_emulation_button_list_store");
 
-    for (i = num_buttons -1; i >= 0; i--) {
+    for (i = num_buttons -1; i > 0; i--) {
         GtkTreeIter iter;
         gtk_list_store_prepend(GTK_LIST_STORE(list_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(list_store), &iter, 0, i, -1);
