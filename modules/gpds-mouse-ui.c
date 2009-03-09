@@ -230,14 +230,26 @@ cb_wheel_emulation_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 static void
-cb_wheel_emulation_button_value_changed (GtkSpinButton *button, gpointer user_data)
+cb_wheel_emulation_button_changed (GtkComboBox *combo, gpointer user_data)
 {
-    gdouble value;
+    gint properties[1];
+    GError *error = NULL;
     GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
-    set_spin_property(ui->xinput, button, GPDS_MOUSE_WHEEL_EMULATION_BUTTON);
 
-    value = gtk_spin_button_get_value(button);
-    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY, (gint)value);
+    properties[0] = gtk_combo_box_get_active(combo);
+    if (!gpds_xinput_set_int_properties(ui->xinput,
+                                        gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                        gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                        &error,
+                                        properties,
+                                        1)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+
+    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY, properties[0]);
 }
 
 static void
@@ -358,7 +370,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(middle_button_timeout, value_changed);
     CONNECT(wheel_emulation, toggled);
     CONNECT(wheel_emulation_timeout, value_changed);
-    CONNECT(wheel_emulation_button, value_changed);
+    CONNECT(wheel_emulation_button, changed);
     CONNECT(wheel_emulation_inertia, value_changed);
     CONNECT(wheel_emulation_vertical, toggled);
     CONNECT(wheel_emulation_horizontal, toggled);
@@ -483,15 +495,13 @@ set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
 static void
 setup_num_buttons (GpdsUI *ui)
 {
-    GObject *spin;
-    gshort num_buttons;
+    GObject *list_store;
+    gshort num_buttons, i;
     GError *error = NULL;
     GtkBuilder *builder;
-    GtkAdjustment *adjustment;
 
     builder = gpds_ui_get_builder(ui);
 
-    spin = gtk_builder_get_object(builder, "wheel_emulation_button");
     num_buttons = gpds_xinput_utils_get_device_num_buttons(gpds_ui_get_device_name(ui),
                                                            &error);
     if (error) {
@@ -499,10 +509,47 @@ setup_num_buttons (GpdsUI *ui)
         g_error_free(error);
         return;
     }
-    adjustment = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON(spin));
-    gtk_adjustment_set_upper(adjustment, num_buttons - 1);
+
+    list_store = gtk_builder_get_object(builder, "wheel_emulation_button_list_store");
+
+    for (i = num_buttons -1; i >= 0; i--) {
+        GtkTreeIter iter;
+        gtk_list_store_prepend(GTK_LIST_STORE(list_store), &iter);
+        gtk_list_store_set(GTK_LIST_STORE(list_store), &iter, 0, i, -1);
+    }
 }
 
+static void
+set_wheel_emulation_button_combo_state (GpdsMouseUI *ui, gint button)
+{
+    GtkComboBox *combo;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+    combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, "wheel_emulation_button"));
+    gtk_combo_box_set_active(combo, button);
+}
+
+static void
+set_wheel_emulation_button_property_from_preference (GpdsMouseUI *ui)
+{
+    gint *values;
+    gulong n_values;
+    gint button;
+
+    if (!get_integer_properties(ui->xinput,
+                                gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                &values, &n_values)) {
+        return;
+    }
+
+    if (!gpds_ui_get_gconf_int(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY, &button))
+        button = values[0];
+    set_wheel_emulation_button_combo_state(ui, button);
+
+    g_free(values);
+}
 static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
@@ -518,12 +565,9 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          GPDS_MOUSE_WHEEL_EMULATION_KEY,
                                          builder,
                                          "wheel_emulation");
-    set_integer_property_from_preference(mouse_ui,
-                                         GPDS_MOUSE_WHEEL_EMULATION_BUTTON,
-                                         GPDS_MOUSE_WHEEL_EMULATION_BUTTON_KEY,
-                                         builder,
-                                         "wheel_emulation_button");
     setup_num_buttons(ui);
+    set_wheel_emulation_button_property_from_preference(mouse_ui);
+
     set_integer_property_from_preference(mouse_ui,
                                          GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
                                          GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY,

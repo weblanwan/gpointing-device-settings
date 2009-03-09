@@ -108,15 +108,23 @@
             <property name="left_padding">12</property>
             <property name="right_padding">0</property>
             <child>
-              <object class="GtkAdjustment" id="wheel_emulation_button_adjustment">
-                <property name="lower">1</property>
-                <property name="upper">3</property>
-                <property name="step-increment">1</property>
+              <object class="GtkListStore" id="wheel_emulation_button_list_store">
+                <columns>
+                  <column type="gint"/>
+                </columns>
               </object>
-              <object class="GtkSpinButton" id="wheel_emulation_button">
-                <property name="numeric">True</property>
+              <object class="GtkComboBox" id="wheel_emulation_button">
                 <property name="visible">True</property>
-                <property name="adjustment">wheel_emulation_button_adjustment</property>
+                <property name="model">wheel_emulation_button_list_store</property>
+                <property name="can_focus">True</property>
+                <property name="focus_on_click">True</property>
+                <property name="active">0</property>
+                <child>
+                  <object class="GtkCellRendererText" id="wheel_emulation_button_number"/>
+                  <attributes>
+                    <attribute name="text">0</attribute>
+                  </attributes>
+                </child>
               </object>
             </child>
           </object>
