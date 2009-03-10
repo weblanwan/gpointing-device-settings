@@ -67,6 +67,11 @@ append_uis (GtkNotebook *notebook)
         GtkWidget *label = NULL;
         GError *error = NULL;
 
+        if (!strcmp(gpds_xinput_pointer_info_get_name(info),
+                    "Macintosh mouse button emulation")) {
+            continue;
+        }
+
         type_name = g_ascii_strdown(gpds_xinput_pointer_info_get_type_name(info), -1);
         ui = gpds_ui_new(type_name,
                          "device-name", gpds_xinput_pointer_info_get_name(info),
