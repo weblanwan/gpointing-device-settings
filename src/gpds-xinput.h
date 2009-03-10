@@ -31,6 +31,13 @@ G_BEGIN_DECLS
 #define GPDS_IS_XINPUT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_XINPUT))
 #define GPDS_XINPUT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_XINPUT, GpdsXInputClass))
 
+#define GPDS_XINPUT_ERROR           (gpds_xinput_error_quark())
+
+typedef enum
+{
+    GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY
+} GpdsXInputError;
+
 typedef struct _GpdsXInputPropertyEntry GpdsXInputPropertyEntry;
 struct _GpdsXInputPropertyEntry
 {
@@ -54,7 +61,8 @@ struct _GpdsXInputClass
     GObjectClass parent_class;
 };
 
-GType         gpds_xinput_get_type            (void) G_GNUC_CONST;
+GQuark       gpds_xinput_error_quark          (void);
+GType        gpds_xinput_get_type             (void) G_GNUC_CONST;
 
 GpdsXInput  *gpds_xinput_new                  (const gchar *device_name);
 const gchar *gpds_xinput_get_device_name      (GpdsXInput *xinput);
@@ -87,11 +95,23 @@ gboolean     gpds_xinput_get_int_properties_by_name
                                                gint **values,
                                                gulong *n_values);
 gboolean     gpds_xinput_set_float_properties (GpdsXInput *xinput,
+                                               gint property_enum,
+                                               GError **error,
+                                               gdouble *properties,
+                                               guint n_properties);
+gboolean     gpds_xinput_set_float_properties_by_name
+                                              (GpdsXInput *xinput,
                                                const gchar *property_name,
                                                GError **error,
                                                gdouble *properties,
                                                guint n_properties);
 gboolean     gpds_xinput_get_float_properties (GpdsXInput *xinput,
+                                               gint property_enum,
+                                               GError **error,
+                                               gdouble **properties,
+                                               gulong *n_properties);
+gboolean     gpds_xinput_get_float_properties_by_name
+                                              (GpdsXInput *xinput,
                                                const gchar *property_name,
                                                GError **error,
                                                gdouble **properties,

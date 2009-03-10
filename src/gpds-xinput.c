@@ -159,6 +159,12 @@ get_property (GObject    *object,
     }
 }
 
+GQuark
+gpds_xinput_error_quark (void)
+{
+    return g_quark_from_static_string("gpds-xinput-error-quark");
+}
+
 GpdsXInput *
 gpds_xinput_new (const gchar *device_name)
 {
@@ -252,7 +258,7 @@ gpds_xinput_set_int_properties_by_name_with_format_type
 }
 
 static const gchar *
-get_property_name_from_property_enum (GpdsXInput *xinput, gint property_enum)
+get_property_name_from_property_enum (GpdsXInput *xinput, gint property_enum, GError **error)
 {
     gint i;
     GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
@@ -262,11 +268,15 @@ get_property_name_from_property_enum (GpdsXInput *xinput, gint property_enum)
             return priv->property_entries[i].name;
     }
 
+    g_set_error(error,
+                GPDS_XINPUT_ERROR,
+                GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY,
+                _("There is no registered property for %d."), property_enum);
     return NULL;
 }
 
 static gint
-get_format_type_from_property_enum (GpdsXInput *xinput, gint property_enum)
+get_format_type_from_property_enum (GpdsXInput *xinput, gint property_enum, GError **error)
 {
     gint i;
     GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
@@ -276,11 +286,15 @@ get_format_type_from_property_enum (GpdsXInput *xinput, gint property_enum)
             return priv->property_entries[i].format_type;
     }
 
+    g_set_error(error,
+                GPDS_XINPUT_ERROR,
+                GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY,
+                _("There is no registered property for %d."), property_enum);
     return -1;
 }
 
 static gint
-get_max_value_count_type_from_property_enum (GpdsXInput *xinput, gint property_enum)
+get_max_value_count_type_from_property_enum (GpdsXInput *xinput, gint property_enum, GError **error)
 {
     gint i;
     GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
@@ -290,6 +304,10 @@ get_max_value_count_type_from_property_enum (GpdsXInput *xinput, gint property_e
             return priv->property_entries[i].max_value_count;
     }
 
+    g_set_error(error,
+                GPDS_XINPUT_ERROR,
+                GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY,
+                _("There is no registered property for %d."), property_enum);
     return -1;
 }
 
@@ -305,15 +323,13 @@ gpds_xinput_set_int_properties (GpdsXInput *xinput,
 
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
 
-    property_name = get_property_name_from_property_enum(xinput, property_enum);
-    if (!property_name) {
+    property_name = get_property_name_from_property_enum(xinput, property_enum, error);
+    if (!property_name)
         return FALSE;
-    }
 
-    format_type = get_format_type_from_property_enum(xinput, property_enum);
-    if (format_type < 0) {
+    format_type = get_format_type_from_property_enum(xinput, property_enum, error);
+    if (format_type < 0)
         return FALSE;
-    }
 
     return gpds_xinput_set_int_properties_by_name_with_format_type(xinput,
                                                                    property_name,
@@ -350,11 +366,12 @@ get_atom (GpdsXInput *xinput, const gchar *property_name, GError **error)
     return found_atom;
 }
 
-static gboolean
-get_int_properties (GpdsXInput *xinput,
-                    const gchar *property_name,
-                    GError **error,
-                    gint **values, gulong *n_values)
+gboolean
+gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
+                                        const gchar *property_name,
+                                        GError **error,
+                                        gint **values,
+                                        gulong *n_values)
 {
     XDevice *device;
     Atom atom;
@@ -415,24 +432,6 @@ get_int_properties (GpdsXInput *xinput,
 }
 
 gboolean
-gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
-                                        const gchar *property_name,
-                                        GError **error,
-                                        gint **values,
-                                        gulong *n_values)
-{
-    XDevice *device;
-
-    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
-
-    device = get_device(xinput, error);
-    if (!device)
-        return FALSE;
-
-    return get_int_properties(xinput, property_name, error, values, n_values);
-}
-
-gboolean
 gpds_xinput_get_int_properties (GpdsXInput *xinput,
                                 gint property_enum,
                                 GError **error,
@@ -443,21 +442,23 @@ gpds_xinput_get_int_properties (GpdsXInput *xinput,
 
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
 
-    property_name = get_property_name_from_property_enum(xinput, property_enum);
-    if (!property_name) {
+    property_name = get_property_name_from_property_enum(xinput, property_enum, error);
+    if (!property_name)
         return FALSE;
-    }
 
-    return get_int_properties(xinput, 
-                              property_name, error, values, n_values);
+    return gpds_xinput_get_int_properties_by_name(xinput, 
+                                                 property_name,
+                                                 error,
+                                                 values,
+                                                 n_values);
 }
 
 gboolean
-gpds_xinput_set_float_properties (GpdsXInput *xinput,
-                                  const gchar *property_name,
-                                  GError **error,
-                                  gdouble *properties,
-                                  guint n_properties)
+gpds_xinput_set_float_properties_by_name (GpdsXInput *xinput,
+                                          const gchar *property_name,
+                                          GError **error,
+                                          gdouble *properties,
+                                          guint n_properties)
 {
     XDevice *device;
     Atom float_atom, property_atom;
@@ -493,11 +494,33 @@ gpds_xinput_set_float_properties (GpdsXInput *xinput,
 }
 
 gboolean
-gpds_xinput_get_float_properties (GpdsXInput *xinput,
-                                  const gchar *property_name,
+gpds_xinput_set_float_properties (GpdsXInput *xinput,
+                                  gint property_enum,
                                   GError **error,
-                                  gdouble **properties,
-                                  gulong *n_properties)
+                                  gdouble *properties,
+                                  guint n_properties)
+{
+    const gchar *property_name;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    property_name = get_property_name_from_property_enum(xinput, property_enum, error);
+    if (!property_name)
+        return FALSE;
+
+    return gpds_xinput_set_float_properties_by_name(xinput,
+                                                    property_name,
+                                                    error,
+                                                    properties,
+                                                    n_properties);
+}
+
+gboolean
+gpds_xinput_get_float_properties_by_name (GpdsXInput *xinput,
+                                          const gchar *property_name,
+                                          GError **error,
+                                          gdouble **properties,
+                                          gulong *n_properties)
 {
     XDevice *device;
     Atom property_atom, float_atom;
@@ -549,6 +572,28 @@ gpds_xinput_get_float_properties (GpdsXInput *xinput,
     XFree(data);
 
     return TRUE;
+}
+
+gboolean
+gpds_xinput_get_float_properties (GpdsXInput *xinput,
+                                  gint property_enum,
+                                  GError **error,
+                                  gdouble **values,
+                                  gulong *n_values)
+{
+    const gchar *property_name;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    property_name = get_property_name_from_property_enum(xinput, property_enum, error);
+    if (!property_name)
+        return FALSE;
+
+    return gpds_xinput_get_float_properties_by_name(xinput, 
+                                                    property_name,
+                                                    error,
+                                                    values,
+                                                    n_values);
 }
 
 void
