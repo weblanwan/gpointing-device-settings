@@ -50,14 +50,16 @@ test_set_int_properties (void)
 {
     cut_trace(test_new());
 
-    cut_assert_true(gpds_xinput_get_int_properties(xinput,
+    cut_assert_true(gpds_xinput_get_int_properties_by_name
+                                                  (xinput,
                                                    "Evdev Middle Button Emulation",
                                                    &error,
                                                    &values, &n_values));
     gcut_assert_error(error);
     cut_assert_equal_int(1, n_values);
 
-    cut_assert_true(gpds_xinput_set_int_properties(xinput,
+    cut_assert_true(gpds_xinput_set_int_properties_by_name_with_format_type
+                                                  (xinput,
                                                    "Evdev Middle Button Emulation",
                                                    8,
                                                    &error,

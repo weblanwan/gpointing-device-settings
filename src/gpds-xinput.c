@@ -37,6 +37,8 @@ struct _GpdsXInputPriv
     gchar *device_name;
     XDeviceInfo *device_info_list;
     XDevice *device;
+    GpdsXInputPropertyEntry *property_entries;
+    guint n_property_entries;
 };
 
 enum
@@ -88,6 +90,7 @@ gpds_xinput_init (GpdsXInput *xinput)
     priv->device_name = NULL;
     priv->device_info_list = NULL;
     priv->device = NULL;
+    priv->property_entries = NULL;
 }
 
 static void
@@ -105,6 +108,14 @@ dispose (GObject *object)
     if (priv->device) {
         XCloseDevice(GDK_DISPLAY(), priv->device);
         priv->device = NULL;
+    }
+
+    if (priv->property_entries) {
+        guint i;
+        for (i = 0; i < priv->n_property_entries; i++) {
+            g_free((gchar *)priv->property_entries[i].name);
+        }
+        g_free(priv->property_entries);
     }
 
     if (G_OBJECT_CLASS(gpds_xinput_parent_class)->dispose)
@@ -179,7 +190,8 @@ get_device (GpdsXInput *xinput, GError **error)
 }
 
 gboolean
-gpds_xinput_set_int_properties (GpdsXInput *xinput,
+gpds_xinput_set_int_properties_by_name_with_format_type 
+                               (GpdsXInput *xinput,
                                 const gchar *property_name,
                                 gint format_type,
                                 GError **error,
@@ -237,6 +249,78 @@ gpds_xinput_set_int_properties (GpdsXInput *xinput,
     g_free(property_data);
 
     return TRUE;
+}
+
+static const gchar *
+get_property_name_from_property_enum (GpdsXInput *xinput, gint property_enum)
+{
+    gint i;
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+
+    for (i = 0; i < priv->n_property_entries; i++) {
+        if (property_enum == priv->property_entries[i].property_enum)
+            return priv->property_entries[i].name;
+    }
+
+    return NULL;
+}
+
+static gint
+get_format_type_from_property_enum (GpdsXInput *xinput, gint property_enum)
+{
+    gint i;
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+
+    for (i = 0; i < priv->n_property_entries; i++) {
+        if (property_enum == priv->property_entries[i].property_enum)
+            return priv->property_entries[i].format_type;
+    }
+
+    return -1;
+}
+
+static gint
+get_max_value_count_type_from_property_enum (GpdsXInput *xinput, gint property_enum)
+{
+    gint i;
+    GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+
+    for (i = 0; i < priv->n_property_entries; i++) {
+        if (property_enum == priv->property_entries[i].property_enum)
+            return priv->property_entries[i].max_value_count;
+    }
+
+    return -1;
+}
+
+gboolean
+gpds_xinput_set_int_properties (GpdsXInput *xinput,
+                                gint property_enum,
+                                GError **error,
+                                gint *properties,
+                                guint n_properties)
+{
+    const gchar *property_name;
+    gint format_type;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    property_name = get_property_name_from_property_enum(xinput, property_enum);
+    if (!property_name) {
+        return FALSE;
+    }
+
+    format_type = get_format_type_from_property_enum(xinput, property_enum);
+    if (format_type < 0) {
+        return FALSE;
+    }
+
+    return gpds_xinput_set_int_properties_by_name_with_format_type(xinput,
+                                                                   property_name,
+                                                                   format_type,
+                                                                   error,
+                                                                   properties,
+                                                                   n_properties);
 }
 
 static Atom
@@ -331,11 +415,11 @@ get_int_properties (GpdsXInput *xinput,
 }
 
 gboolean
-gpds_xinput_get_int_properties (GpdsXInput *xinput,
-                                const gchar *property_name,
-                                GError **error,
-                                gint **values,
-                                gulong *n_values)
+gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
+                                        const gchar *property_name,
+                                        GError **error,
+                                        gint **values,
+                                        gulong *n_values)
 {
     XDevice *device;
 
@@ -346,6 +430,26 @@ gpds_xinput_get_int_properties (GpdsXInput *xinput,
         return FALSE;
 
     return get_int_properties(xinput, property_name, error, values, n_values);
+}
+
+gboolean
+gpds_xinput_get_int_properties (GpdsXInput *xinput,
+                                gint property_enum,
+                                GError **error,
+                                gint **values,
+                                gulong *n_values)
+{
+    const gchar *property_name;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    property_name = get_property_name_from_property_enum(xinput, property_enum);
+    if (!property_name) {
+        return FALSE;
+    }
+
+    return get_int_properties(xinput, 
+                              property_name, error, values, n_values);
 }
 
 gboolean
@@ -445,6 +549,29 @@ gpds_xinput_get_float_properties (GpdsXInput *xinput,
     XFree(data);
 
     return TRUE;
+}
+
+void
+gpds_xinput_register_property_entries (GpdsXInput *xinput,
+                                       const GpdsXInputPropertyEntry *entries,
+                                       guint n_entries)
+{
+    guint i;
+    GpdsXInputPriv *priv;
+
+    g_return_if_fail(GPDS_IS_XINPUT(xinput));
+
+    priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+    priv->property_entries = g_new0(GpdsXInputPropertyEntry, n_entries);
+    priv->n_property_entries = n_entries;
+
+    for (i = 0; i < n_entries; i++) {
+        priv->property_entries[i].property_enum = entries[i].property_enum;
+        priv->property_entries[i].name = g_strdup(entries[i].name);
+        priv->property_entries[i].property_type = entries[i].property_type;
+        priv->property_entries[i].format_type = entries[i].format_type;
+        priv->property_entries[i].max_value_count = entries[i].max_value_count;
+    }
 }
 
 /*

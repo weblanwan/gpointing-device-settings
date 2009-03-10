@@ -27,79 +27,57 @@
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
 
-static GpdsTouchpadXInputProperty properties[] = {
-    {GPDS_TOUCHPAD_EDGES,                      "Synaptics Edges", G_TYPE_INT, 32, 4},
-    {GPDS_TOUCHPAD_FINGER,                     "Synaptics Finger", G_TYPE_INT, 32, 3},
-    {GPDS_TOUCHPAD_TAP_TIME,                   "Synaptics Tap Time", G_TYPE_INT, 32, 1},
-    {GPDS_TOUCHPAD_TAP_MOVE,                   "Synaptics Tap Move", G_TYPE_INT, 32, 1},
-    {GPDS_TOUCHPAD_TAP_DURATIONS,              "Synaptics Tap Durations", G_TYPE_INT, 32, 3},
-    {GPDS_TOUCHPAD_TAP_FAST_TAP,               "Synaptics Tap FastTap", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_MIDDLE_BUTTON_TIMEOUT,      "Synaptics Middle Button Timeout", G_TYPE_INT, 32, 1},
-    {GPDS_TOUCHPAD_TWO_FINGER_PRESSURE,        "Synaptics Two-Finger Pressure", G_TYPE_INT, 32, 1},
-    {GPDS_TOUCHPAD_SCROLLING_DISTANCE,         "Synaptics Scrolling Distance", G_TYPE_INT, 32, 2},
-    {GPDS_TOUCHPAD_EDGE_SCROLLING,             "Synaptics Edge Scrolling", G_TYPE_INT, 8, 3},
-    {GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,       "Synaptics Two-Finger Scrolling", G_TYPE_INT, 8, 2},
-    {GPDS_TOUCHPAD_SYNAPTICS_PROP_SPEED,       "Synaptics Move Speed", G_TYPE_FLOAT, 0, 4},
-    {GPDS_TOUCHPAD_EDGE_MOTION_PRESSURE,       "Synaptics Edge Motion Pressure", G_TYPE_INT, 32, 2},
-    {GPDS_TOUCHPAD_EDGE_MOTION_SPEED,          "Synaptics Edge Motion Speed", G_TYPE_INT, 32, 2},
-    {GPDS_TOUCHPAD_BUTTON_SCROLLING,           "Synaptics Button Scrolling", G_TYPE_INT, 8, 2},
-    {GPDS_TOUCHPAD_BUTTON_SCROLLING_REPEAT,    "Synaptics Button Scrolling Repeat", G_TYPE_INT, 8, 2},
-    {GPDS_TOUCHPAD_SCROLLING_TIME,             "Synaptics Button Scrolling Time", G_TYPE_INT, 32, 1},
-    {GPDS_TOUCHPAD_OFF,                        "Synaptics Off", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_GUESTMOUSE_OFF,             "Synaptics Guestmouse Off", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_LOCKED_DRAGS,               "Synaptics Locked Drags", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,       "Synaptics Locked Drags Timeout", G_TYPE_INT, 32, 1},
-    {GPDS_TOUCHPAD_TAP_ACTION,                 "Synaptics Tap Action", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_CLICK_ACTION,               "Synaptics Click Action", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_CIRCULAR_SCROLLING,         "Synaptics Circular Scrolling", G_TYPE_INT, 8, 1},
+static const GpdsXInputPropertyEntry entries[] = {
+    {GPDS_TOUCHPAD_EDGES,                      "Synaptics Edges",                       G_TYPE_INT,  32, 4},
+    {GPDS_TOUCHPAD_FINGER,                     "Synaptics Finger",                      G_TYPE_INT,  32, 3},
+    {GPDS_TOUCHPAD_TAP_TIME,                   "Synaptics Tap Time",                    G_TYPE_INT,  32, 1},
+    {GPDS_TOUCHPAD_TAP_MOVE,                   "Synaptics Tap Move",                    G_TYPE_INT,  32, 1},
+    {GPDS_TOUCHPAD_TAP_DURATIONS,              "Synaptics Tap Durations",               G_TYPE_INT,  32, 3},
+    {GPDS_TOUCHPAD_TAP_FAST_TAP,               "Synaptics Tap FastTap",                 G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_MIDDLE_BUTTON_TIMEOUT,      "Synaptics Middle Button Timeout",       G_TYPE_INT,  32, 1},
+    {GPDS_TOUCHPAD_TWO_FINGER_PRESSURE,        "Synaptics Two-Finger Pressure",         G_TYPE_INT,  32, 1},
+    {GPDS_TOUCHPAD_SCROLLING_DISTANCE,         "Synaptics Scrolling Distance",          G_TYPE_INT,  32, 2},
+    {GPDS_TOUCHPAD_EDGE_SCROLLING,             "Synaptics Edge Scrolling",              G_TYPE_INT,   8, 3},
+    {GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,       "Synaptics Two-Finger Scrolling",        G_TYPE_INT,   8, 2},
+    {GPDS_TOUCHPAD_SYNAPTICS_PROP_SPEED,       "Synaptics Move Speed",                  G_TYPE_FLOAT, 0, 4},
+    {GPDS_TOUCHPAD_EDGE_MOTION_PRESSURE,       "Synaptics Edge Motion Pressure",        G_TYPE_INT,  32, 2},
+    {GPDS_TOUCHPAD_EDGE_MOTION_SPEED,          "Synaptics Edge Motion Speed",           G_TYPE_INT,  32, 2},
+    {GPDS_TOUCHPAD_BUTTON_SCROLLING,           "Synaptics Button Scrolling",            G_TYPE_INT,   8, 2},
+    {GPDS_TOUCHPAD_BUTTON_SCROLLING_REPEAT,    "Synaptics Button Scrolling Repeat",     G_TYPE_INT,   8, 2},
+    {GPDS_TOUCHPAD_SCROLLING_TIME,             "Synaptics Button Scrolling Time",       G_TYPE_INT,  32, 1},
+    {GPDS_TOUCHPAD_OFF,                        "Synaptics Off",                         G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_GUESTMOUSE_OFF,             "Synaptics Guestmouse Off",              G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_LOCKED_DRAGS,               "Synaptics Locked Drags",                G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,       "Synaptics Locked Drags Timeout",        G_TYPE_INT,  32, 1},
+    {GPDS_TOUCHPAD_TAP_ACTION,                 "Synaptics Tap Action",                  G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_CLICK_ACTION,               "Synaptics Click Action",                G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_CIRCULAR_SCROLLING,         "Synaptics Circular Scrolling",          G_TYPE_INT,   8, 1},
     {GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE,"Synaptics Circular Scrolling Distance", G_TYPE_FLOAT, 0, 1},
-    {GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER, "Synaptics Circular Scrolling Trigger", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_CIRCULAR_PAD,               "Synaptics Circular Pad", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_PALM_DETECTION,             "Synaptics Palm Detection", G_TYPE_INT, 8, 1},
-    {GPDS_TOUCHPAD_PALM_DIMENSIONS,            "Synaptics Palm Dimensions", G_TYPE_INT, 32, 2},
-    {GPDS_TOUCHPAD_PRESSURE_MOTION,            "Synaptics Pressure Motion", G_TYPE_INT, 32, 2},
-    {GPDS_TOUCHPAD_GRAB_EVENT_DEVICE,          "Synaptics Grab Event Device", G_TYPE_INT, 8, 1},
+    {GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER, "Synaptics Circular Scrolling Trigger",  G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_CIRCULAR_PAD,               "Synaptics Circular Pad",                G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_PALM_DETECTION,             "Synaptics Palm Detection",              G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_PALM_DIMENSIONS,            "Synaptics Palm Dimensions",             G_TYPE_INT,  32, 2},
+    {GPDS_TOUCHPAD_PRESSURE_MOTION,            "Synaptics Pressure Motion",             G_TYPE_INT,  32, 2},
+    {GPDS_TOUCHPAD_GRAB_EVENT_DEVICE,          "Synaptics Grab Event Device",           G_TYPE_INT,   8, 1},
 };
 
-static const gint n_properties = G_N_ELEMENTS(properties);
+static const gint n_entries = G_N_ELEMENTS(entries);
 
-const gchar *
-gpds_touchpad_xinput_get_name (GpdsTouchpadProperty property)
+GpdsXInput *
+gpds_touchpad_xinput_new (const gchar *device_name)
 {
-    gint i;
+    GpdsXInput *xinput;
 
-    for (i = 0; i < n_properties; i++) {
-        if (property == properties[i].property)
-            return properties[i].name;
-    }
+    xinput = gpds_xinput_new(device_name);
+    gpds_xinput_register_property_entries(xinput, entries, n_entries);
 
-    return NULL;
+    return xinput;
 }
 
-gint
-gpds_touchpad_xinput_get_format_type (GpdsTouchpadProperty property)
+void
+gpds_touchpad_xinput_setup_property_entries (GpdsXInput *xinput)
 {
-    gint i;
-
-    for (i = 0; i < n_properties; i++) {
-        if (property == properties[i].property)
-            return properties[i].format_type;
-    }
-
-    return -1;
-}
-
-gint
-gpds_touchpad_xinput_get_max_value_count (GpdsTouchpadProperty property)
-{
-    gint i;
-
-    for (i = 0; i < n_properties; i++) {
-        if (property == properties[i].property)
-            return properties[i].max_value_count;
-    }
-
-    return -1;
+    gpds_xinput_register_property_entries(xinput, entries, n_entries);
 }
 
 /*

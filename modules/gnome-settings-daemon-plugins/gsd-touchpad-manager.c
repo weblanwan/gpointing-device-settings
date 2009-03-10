@@ -56,51 +56,6 @@ gsd_touchpad_manager_class_init (GsdTouchpadManagerClass *klass)
     manager_class->gconf_client_notify = _gconf_client_notify;
 }
 
-static GpdsXInput *
-get_xinput (GsdPointingDeviceManager *manager)
-{
-    const gchar *device_name;
-
-    device_name = gsd_pointing_device_manager_get_device_name(manager);
-    if (!device_name)
-        return NULL;
-
-    if (!gpds_xinput_utils_exist_device(device_name))
-        return NULL;
-
-    return gpds_xinput_new(device_name);
-}
-
-#define DEFINE_SET_VALUE_FUNCTION(function_name, key_name, value_type)              \
-static void                                                                         \
-set_ ## function_name (GsdPointingDeviceManager *manager,                           \
-                       GpdsXInput *xinput,                                          \
-                       GConfClient *gconf)                                          \
-{                                                                                   \
-    g ## value_type value;                                                          \
-    gint properties[1];                                                             \
-    gchar *key;                                                                     \
-    gboolean value_exist;                                                           \
-    key = gsd_pointing_device_manager_build_gconf_key(manager, key_name ## _KEY);   \
-    value_exist = gpds_gconf_get_ ## value_type (gconf, key_name ## _KEY, &value);  \
-    g_free(key);                                                                    \
-    if (!value_exist)                                                               \
-        return;                                                                     \
-    properties[0] = value;                                                          \
-    gpds_xinput_set_int_properties(xinput,                                          \
-                                   gpds_touchpad_xinput_get_name(key_name),         \
-                                   gpds_touchpad_xinput_get_format_type(key_name),  \
-                                   NULL,                                            \
-                                   properties,                                      \
-                                   1);                                              \
-}
-
-#define DEFINE_SET_BOOLEAN_FUNCTION(function_name, key_name)                    \
-    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, boolean)
-
-#define DEFINE_SET_INT_FUNCTION(function_name, key_name)                        \
-    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, int)
-
 DEFINE_SET_BOOLEAN_FUNCTION (tap_fast_tap, GPDS_TOUCHPAD_TAP_FAST_TAP)
 DEFINE_SET_BOOLEAN_FUNCTION (circular_scrolling, GPDS_TOUCHPAD_CIRCULAR_SCROLLING)
 DEFINE_SET_INT_FUNCTION (touchpad_off, GPDS_TOUCHPAD_OFF)
@@ -115,19 +70,30 @@ set_edge_scrolling (GsdPointingDeviceManager *manager,
     gboolean h_enable, v_enable, c_enable = FALSE;
     gint properties[3];
 
-    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY, &v_enable))
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY,
+                                                       &v_enable)) {
         return;
-    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, &h_enable))
+    }
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY,
+                                                       &h_enable)) {
         return;
-    gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, &c_enable);
+    }
+
+    gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                  gconf,
+                                                  GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY,
+                                                  &c_enable);
 
     properties[0] = v_enable ? 1 : 0;
     properties[1] = h_enable ? 1 : 0;
     properties[2] = c_enable ? 1 : 0;
 
     gpds_xinput_set_int_properties(xinput,
-                                   gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
-                                   gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                   GPDS_TOUCHPAD_EDGE_SCROLLING,
                                    NULL,
                                    properties,
                                    3);
@@ -141,17 +107,24 @@ set_two_finger_scrolling (GsdPointingDeviceManager *manager,
     gboolean h_enable, v_enable;
     gint properties[2];
 
-    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY, &v_enable))
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY,
+                                                       &v_enable)) {
         return;
-    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY, &h_enable))
+    }
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY,
+                                                       &h_enable)) {
         return;
+    }
 
     properties[0] = v_enable ? 1 : 0;
     properties[1] = h_enable ? 1 : 0;
 
     gpds_xinput_set_int_properties(xinput,
-                                   gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
-                                   gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
+                                   GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,
                                    NULL,
                                    properties,
                                    2);
@@ -165,17 +138,24 @@ set_horizontal_and_vertical_scrolling_distance (GsdPointingDeviceManager *manage
     gint h_distance, v_distance;
     gint properties[2];
 
-    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY, &v_distance))
+    if (!gsd_pointing_device_manager_get_gconf_int(manager,
+                                                   gconf,
+                                                   GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY,
+                                                   &v_distance)) {
         return;
-    if (!gpds_gconf_get_boolean(gconf, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY, &h_distance))
+    }
+    if (!gsd_pointing_device_manager_get_gconf_int(manager,
+                                                   gconf,
+                                                   GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY,
+                                                   &h_distance)) {
         return;
+    }
 
-    properties[0] = v_distance ? 1 : 0;
-    properties[1] = h_distance ? 1 : 0;
+    properties[0] = v_distance;
+    properties[1] = h_distance;
 
     gpds_xinput_set_int_properties(xinput,
-                                   gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
-                                   gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                   GPDS_TOUCHPAD_SCROLLING_DISTANCE,
                                    NULL,
                                    properties,
                                    2);
@@ -187,9 +167,11 @@ start (GsdPointingDeviceManager *manager, GError **error)
     GpdsXInput *xinput;
     GConfClient *gconf;
 
-    xinput = get_xinput(manager);
+    xinput = gsd_pointing_device_manager_get_xinput(manager);
     if (!xinput)
         return FALSE;
+
+    gpds_touchpad_xinput_setup_property_entries(xinput);
 
     gconf = gconf_client_get_default();
     if (!gconf) {
@@ -230,6 +212,8 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     xinput = gsd_pointing_device_manager_get_xinput(manager);
     if (!xinput)
         return;
+
+    gpds_touchpad_xinput_setup_property_entries(xinput);
 
     value = gconf_entry_get_value(entry);
     key = gpds_gconf_get_key_from_path(gconf_entry_get_key(entry));

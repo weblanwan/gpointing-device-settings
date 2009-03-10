@@ -151,8 +151,7 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsTouchpadPr
     properties[0] = gtk_toggle_button_get_active(button) ? 1 : 0;
 
     if (!gpds_xinput_set_int_properties(xinput,
-                                        gpds_touchpad_xinput_get_name(property),
-                                        gpds_touchpad_xinput_get_format_type(property),
+                                        property,
                                         &error,
                                         properties,
                                         1)) {
@@ -182,8 +181,7 @@ set_edge_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
     properties[2] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
 
     if (!gpds_xinput_set_int_properties(xinput,
-                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_EDGE_SCROLLING),
-                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_EDGE_SCROLLING),
+                                        GPDS_TOUCHPAD_EDGE_SCROLLING,
                                         &error,
                                         properties,
                                         3)) {
@@ -211,8 +209,7 @@ set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builde
     properties[2] = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object)) ? 1 :0;
 
     if (!gpds_xinput_set_int_properties(xinput,
-                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
-                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_TWO_FINGER_SCROLLING),
+                                        GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,
                                         &error,
                                         properties,
                                         2)) {
@@ -231,8 +228,7 @@ set_range_property (GpdsXInput *xinput, GtkRange *range, GpdsTouchpadProperty pr
 
     properties[0] = (gint)gtk_range_get_value(range);
     if (!gpds_xinput_set_int_properties(xinput,
-                                        gpds_touchpad_xinput_get_name(property),
-                                        gpds_touchpad_xinput_get_format_type(property),
+                                        property,
                                         &error,
                                         properties,
                                         1)) {
@@ -257,8 +253,7 @@ set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
     properties[1] = (gint)gtk_range_get_value(GTK_RANGE(object));
 
     if (!gpds_xinput_set_int_properties(xinput,
-                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
-                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_SCROLLING_DISTANCE),
+                                        GPDS_TOUCHPAD_SCROLLING_DISTANCE,
                                         &error,
                                         properties,
                                         2)) {
@@ -278,8 +273,7 @@ set_circular_scrolling_trigger_property (GpdsTouchpadUI *ui, GpdsTouchpadCircula
     properties[0] = trigger;
 
     if (!gpds_xinput_set_int_properties(ui->xinput,
-                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER),
-                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER),
+                                        GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER,
                                         &error,
                                         properties,
                                         1)) {
@@ -521,8 +515,7 @@ cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
 
     properties[0] = gtk_combo_box_get_active(combo);
     if (!gpds_xinput_set_int_properties(ui->xinput,
-                                        gpds_touchpad_xinput_get_name(GPDS_TOUCHPAD_OFF),
-                                        gpds_touchpad_xinput_get_format_type(GPDS_TOUCHPAD_OFF),
+                                        GPDS_TOUCHPAD_OFF,
                                         &error,
                                         properties,
                                         1)) {
@@ -579,7 +572,7 @@ get_integer_properties (GpdsXInput *xinput, GpdsTouchpadProperty property,
     GError *error = NULL;
 
     if (!gpds_xinput_get_int_properties(xinput,
-                                        gpds_touchpad_xinput_get_name(property),
+                                        property,
                                         &error,
                                         values, n_values)) {
         if (error) {
@@ -857,7 +850,7 @@ build (GpdsUI  *ui, GError **error)
     }
 
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "touchpad");
-    GPDS_TOUCHPAD_UI(ui)->xinput = gpds_xinput_new(gpds_ui_get_device_name(ui));
+    GPDS_TOUCHPAD_UI(ui)->xinput = gpds_touchpad_xinput_new(gpds_ui_get_device_name(ui));
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);

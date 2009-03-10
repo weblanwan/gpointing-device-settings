@@ -27,56 +27,34 @@
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
 
-static GpdsMouseXInputProperty properties[] = {
-    {GPDS_MOUSE_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", 8, 1},
-    {GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT, "Evdev Middle Button Timeout", 32, 1},
-    {GPDS_MOUSE_WHEEL_EMULATION, "Evdev Wheel Emulation", 8, 1},
-    {GPDS_MOUSE_WHEEL_EMULATION_INERTIA, "Evdev Wheel Emulation Inertia", 16, 1},
-    {GPDS_MOUSE_WHEEL_EMULATION_AXES, "Evdev Wheel Emulation Axes", 8, 4},
-    {GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT, "Evdev Wheel Emulation Timeout", 16, 1},
-    {GPDS_MOUSE_WHEEL_EMULATION_BUTTON, "Evdev Wheel Emulation Button", 8, 1},
-    {GPDS_MOUSE_DRAG_LOCK_BUTTONS, "Evdev Drag Lock Buttons", 8, 2}
+static const GpdsXInputPropertyEntry entries[] = {
+    {GPDS_MOUSE_MIDDLE_BUTTON_EMULATION, "Evdev Middle Button Emulation", G_TYPE_INT,  8, 1},
+    {GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,   "Evdev Middle Button Timeout",   G_TYPE_INT, 32, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION,         "Evdev Wheel Emulation",         G_TYPE_INT,  8, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION_INERTIA, "Evdev Wheel Emulation Inertia", G_TYPE_INT, 16, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION_AXES,    "Evdev Wheel Emulation Axes",    G_TYPE_INT,  8, 4},
+    {GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT, "Evdev Wheel Emulation Timeout", G_TYPE_INT, 16, 1},
+    {GPDS_MOUSE_WHEEL_EMULATION_BUTTON,  "Evdev Wheel Emulation Button",  G_TYPE_INT,  8, 1},
+    {GPDS_MOUSE_DRAG_LOCK_BUTTONS,       "Evdev Drag Lock Buttons",       G_TYPE_INT,  8, 2}
 };
 
-static const gint n_properties = G_N_ELEMENTS(properties);
+static const gint n_entries = G_N_ELEMENTS(entries);
 
-const gchar *
-gpds_mouse_xinput_get_name (GpdsMouseProperty property)
+GpdsXInput *
+gpds_mouse_xinput_new (const gchar *device_name)
 {
-    gint i;
+    GpdsXInput *xinput;
 
-    for (i = 0; i < n_properties; i++) {
-        if (property == properties[i].property)
-            return properties[i].name;
-    }
+    xinput = gpds_xinput_new(device_name);
+    gpds_xinput_register_property_entries(xinput, entries, n_entries);
 
-    return NULL;
+    return xinput;
 }
 
-gint
-gpds_mouse_xinput_get_format_type (GpdsMouseProperty property)
+void
+gpds_mouse_xinput_setup_property_entries (GpdsXInput *xinput)
 {
-    gint i;
-
-    for (i = 0; i < n_properties; i++) {
-        if (property == properties[i].property)
-            return properties[i].format_type;
-    }
-
-    return -1;
-}
-
-gint
-gpds_mouse_xinput_get_max_value_count (GpdsMouseProperty property)
-{
-    gint i;
-
-    for (i = 0; i < n_properties; i++) {
-        if (property == properties[i].property)
-            return properties[i].max_value_count;
-    }
-
-    return -1;
+    gpds_xinput_register_property_entries(xinput, entries, n_entries);
 }
 
 /*

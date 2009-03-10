@@ -56,36 +56,6 @@ gsd_mouse_extension_manager_class_init (GsdMouseExtensionManagerClass *klass)
     manager_class->gconf_client_notify = _gconf_client_notify;
 }
 
-#define DEFINE_SET_VALUE_FUNCTION(function_name, key_name, value_type)              \
-static void                                                                         \
-set_ ## function_name (GsdPointingDeviceManager *manager,                           \
-                       GpdsXInput *xinput,                                          \
-                       GConfClient *gconf)                                          \
-{                                                                                   \
-    g ## value_type value;                                                          \
-    gint properties[1];                                                             \
-    gchar *key;                                                                     \
-    gboolean value_exist;                                                           \
-    key = gsd_pointing_device_manager_build_gconf_key(manager, key_name ## _KEY);   \
-    value_exist = gpds_gconf_get_ ## value_type (gconf, key_name ## _KEY, &value);  \
-    g_free(key);                                                                    \
-    if (!value_exist)                                                               \
-        return;                                                                     \
-    properties[0] = value;                                                          \
-    gpds_xinput_set_int_properties(xinput,                                          \
-                                   gpds_mouse_xinput_get_name(key_name),            \
-                                   gpds_mouse_xinput_get_format_type(key_name),     \
-                                   NULL,                                            \
-                                   properties,                                      \
-                                   1);                                              \
-}
-
-#define DEFINE_SET_BOOLEAN_FUNCTION(function_name, key_name)                    \
-    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, boolean)
-
-#define DEFINE_SET_INT_FUNCTION(function_name, key_name)                        \
-    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, int)
-
 DEFINE_SET_BOOLEAN_FUNCTION (wheel_emulation, GPDS_MOUSE_WHEEL_EMULATION)
 DEFINE_SET_BOOLEAN_FUNCTION (middle_button_emulation, GPDS_MOUSE_MIDDLE_BUTTON_EMULATION)
 DEFINE_SET_INT_FUNCTION (middle_button_timeout, GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT)
@@ -101,10 +71,18 @@ set_horizontal_and_vertical_scroll (GsdPointingDeviceManager *manager,
     gboolean y_enable, x_enable;
     gint properties[4];
 
-    if (!gpds_gconf_get_boolean(gconf, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, &y_enable))
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY,
+                                                       &y_enable)) {
         return;
-    if (!gpds_gconf_get_boolean(gconf, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, &x_enable))
+    }
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY,
+                                                       &x_enable)) {
         return;
+    }
 
     if (y_enable) {
         properties[0] = 6;
@@ -121,8 +99,7 @@ set_horizontal_and_vertical_scroll (GsdPointingDeviceManager *manager,
         properties[3] = 0;
     }
     gpds_xinput_set_int_properties(xinput,
-                                   gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES),
-                                   gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_AXES),
+                                   GPDS_MOUSE_WHEEL_EMULATION_AXES,
                                    NULL,
                                    properties,
                                    4);
@@ -144,6 +121,7 @@ start (GsdPointingDeviceManager *manager, GError **error)
         return FALSE;
     }
 
+    gpds_mouse_xinput_setup_property_entries(xinput);
     set_middle_button_emulation(manager, xinput, gconf);
     set_wheel_emulation(manager, xinput, gconf);
     set_middle_button_timeout(manager, xinput, gconf);
@@ -177,6 +155,7 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     if (!xinput)
         return;
 
+    gpds_mouse_xinput_setup_property_entries(xinput);
     value = gconf_entry_get_value(entry);
     key = gpds_gconf_get_key_from_path(gconf_entry_get_key(entry));
 

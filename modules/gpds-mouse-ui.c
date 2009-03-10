@@ -138,18 +138,13 @@ set_toggle_property (GpdsXInput *xinput, GtkToggleButton *button, GpdsMousePrope
 {
     GError *error = NULL;
     gboolean active;
-    const gchar *property_name;
-    gint format_type;
     gint properties[1];
 
     active = gtk_toggle_button_get_active(button);
-    property_name = gpds_mouse_xinput_get_name(property);
-    format_type = gpds_mouse_xinput_get_format_type(property);
 
     properties[0] = active ? 1 : 0;
     gpds_xinput_set_int_properties(xinput,
-                                   property_name,
-                                   format_type,
+                                   property,
                                    &error,
                                    properties,
                                    1);
@@ -164,18 +159,13 @@ set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, GpdsMouseProperty 
 {
     GError *error = NULL;
     gdouble value;
-    const gchar *property_name;
-    gint format_type;
     gint properties[1];
 
     value = gtk_spin_button_get_value(button);
-    property_name = gpds_mouse_xinput_get_name(property);
-    format_type = gpds_mouse_xinput_get_format_type(property);
 
     properties[0] = (gint)value;
     gpds_xinput_set_int_properties(xinput,
-                                   property_name,
-                                   format_type,
+                                   property,
                                    &error,
                                    properties,
                                    1);
@@ -238,8 +228,7 @@ cb_wheel_emulation_button_changed (GtkComboBox *combo, gpointer user_data)
 
     properties[0] = gtk_combo_box_get_active(combo);
     if (!gpds_xinput_set_int_properties(ui->xinput,
-                                        gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
-                                        gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                        GPDS_MOUSE_WHEEL_EMULATION_BUTTON,
                                         &error,
                                         properties,
                                         1)) {
@@ -259,8 +248,6 @@ set_scroll_axes_property (GpdsMouseUI *ui)
     GtkToggleButton *button;
     GError *error = NULL;
     gboolean active;
-    const gchar *property_name;
-    gint format_type;
     gint properties[4];
 
     builder = gpds_ui_get_builder(GPDS_UI(ui));
@@ -285,12 +272,8 @@ set_scroll_axes_property (GpdsMouseUI *ui)
         properties[3] = 0;
     }
 
-    property_name = gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES);
-    format_type = gpds_mouse_xinput_get_format_type(GPDS_MOUSE_WHEEL_EMULATION_AXES);
-
     gpds_xinput_set_int_properties(ui->xinput,
-                                   property_name,
-                                   format_type,
+                                   GPDS_MOUSE_WHEEL_EMULATION_AXES,
                                    &error,
                                    properties,
                                    4);
@@ -379,13 +362,13 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static gboolean
-get_integer_properties (GpdsXInput *xinput, const gchar *property_name,
+get_integer_properties (GpdsXInput *xinput, gint property_enum,
                         gint **values, gulong *n_values)
 {
     GError *error = NULL;
 
     if (!gpds_xinput_get_int_properties(xinput,
-                                        property_name,
+                                        property_enum,
                                         &error,
                                         values, n_values)) {
         if (error) {
@@ -410,11 +393,8 @@ set_integer_property_from_preference (GpdsMouseUI *ui,
     gint *values;
     gulong n_values;
     gint value;
-    const gchar *property_name;
 
-    property_name = gpds_mouse_xinput_get_name(property);
-
-    if (!get_integer_properties(ui->xinput, property_name,
+    if (!get_integer_properties(ui->xinput, property,
                                 &values, &n_values)) {
         return;
     }
@@ -438,12 +418,9 @@ set_boolean_property_from_preference (GpdsMouseUI *ui,
     gint *values;
     gulong n_values;
     gboolean enable;
-    const gchar *property_name;
     gchar *box_name;
 
-    property_name = gpds_mouse_xinput_get_name(property);
-
-    if (!get_integer_properties(ui->xinput, property_name,
+    if (!get_integer_properties(ui->xinput, property,
                                 &values, &n_values)) {
         return;
     }
@@ -468,11 +445,9 @@ set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
     gint *values;
     gulong n_values;
     gboolean horizontal_enable = FALSE, vertical_enable = FALSE;
-    const gchar *property_name;
 
-    property_name = gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_AXES);
-
-    if (!get_integer_properties(ui->xinput, property_name,
+    if (!get_integer_properties(ui->xinput, 
+                                GPDS_MOUSE_WHEEL_EMULATION_AXES,
                                 &values, &n_values)) {
         return;
     }
@@ -539,7 +514,7 @@ set_wheel_emulation_button_property_from_preference (GpdsMouseUI *ui)
     gint button;
 
     if (!get_integer_properties(ui->xinput,
-                                gpds_mouse_xinput_get_name(GPDS_MOUSE_WHEEL_EMULATION_BUTTON),
+                                GPDS_MOUSE_WHEEL_EMULATION_BUTTON,
                                 &values, &n_values)) {
         return;
     }
@@ -619,7 +594,7 @@ build (GpdsUI  *ui, GError **error)
     }
 
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "mouse");
-    GPDS_MOUSE_UI(ui)->xinput = gpds_xinput_new(gpds_ui_get_device_name(ui));
+    GPDS_MOUSE_UI(ui)->xinput = gpds_mouse_xinput_new(gpds_ui_get_device_name(ui));
 
     setup_current_values(ui, builder);
     setup_signals(ui, builder);

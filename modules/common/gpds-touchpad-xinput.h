@@ -21,6 +21,7 @@
 #define __GPDS_TOUCHPAD_XINPUT_H__
 
 #include <glib-object.h>
+#include <gpds-xinput.h>
 
 typedef enum {
     GPDS_TOUCHPAD_EDGES,
@@ -74,19 +75,8 @@ typedef enum {
     GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF,
 } GpdsTouchpadUseType;
 
-typedef struct _GpdsTouchpadXInputProperty GpdsTouchpadXInputProperty;
-struct _GpdsTouchpadXInputProperty
-{
-    GpdsTouchpadProperty property;
-    const gchar *name;
-    GType property_type; /* G_TYPE_INT or G_TYPE_FLOAT */
-    gint format_type;
-    gint max_value_count;
-};
-
-const gchar *gpds_touchpad_xinput_get_name            (GpdsTouchpadProperty property);
-gint         gpds_touchpad_xinput_get_format_type     (GpdsTouchpadProperty property);
-gint         gpds_touchpad_xinput_get_max_value_count (GpdsTouchpadProperty property);
+GpdsXInput *gpds_touchpad_xinput_new                    (const gchar *device_name);
+void        gpds_touchpad_xinput_setup_property_entries (GpdsXInput *xinput);
 
 #endif /* __GPDS_TOUCHPAD_XINPUT_H__ */
 /*

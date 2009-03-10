@@ -68,6 +68,43 @@ GpdsXInput               *gsd_pointing_device_manager_get_xinput
 gchar                    *gsd_pointing_device_manager_build_gconf_key 
                                                             (GsdPointingDeviceManager *manager,
                                                              const gchar *key);
+gboolean                  gsd_pointing_device_manager_get_gconf_boolean 
+                                                            (GsdPointingDeviceManager *manager,
+                                                             GConfClient *gconf,
+                                                             const gchar *key,
+                                                             gboolean *value);
+gboolean                  gsd_pointing_device_manager_get_gconf_int
+                                                            (GsdPointingDeviceManager *manager,
+                                                             GConfClient *gconf,
+                                                             const gchar *key,
+                                                             gint *value);
+
+#define DEFINE_SET_VALUE_FUNCTION(function_name, key_name, value_type)              \
+static void                                                                         \
+set_ ## function_name (GsdPointingDeviceManager *manager,                           \
+                       GpdsXInput *xinput,                                          \
+                       GConfClient *gconf)                                          \
+{                                                                                   \
+    g ## value_type value;                                                          \
+    gint properties[1];                                                             \
+    if (!gsd_pointing_device_manager_get_gconf_ ## value_type (manager,             \
+                                                               gconf,               \
+                                                               key_name ## _KEY,    \
+                                                               &value))             \
+        return;                                                                     \
+    properties[0] = value;                                                          \
+    gpds_xinput_set_int_properties(xinput,                                          \
+                                   key_name,                                        \
+                                   NULL,                                            \
+                                   properties,                                      \
+                                   1);                                              \
+}
+
+#define DEFINE_SET_BOOLEAN_FUNCTION(function_name, key_name)                    \
+    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, boolean)
+
+#define DEFINE_SET_INT_FUNCTION(function_name, key_name)                        \
+    DEFINE_SET_VALUE_FUNCTION(function_name, key_name, int)
 
 G_END_DECLS
 

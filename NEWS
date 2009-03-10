@@ -1,5 +1,5 @@
 ============================
-GPointinDeviceSettings 1.0.1
+GPointinDeviceSettings 1.1.0
 ============================
 
 * Touchpad
@@ -10,7 +10,7 @@ GPointinDeviceSettings 1.0.1
 GPointinDeviceSettings 1.0.0
 ============================
 
-* Overrall 
+* Overall 
  - Try to show all XExtensionPointer
  - Unify plugins for gnome-settings-daemon
 * TrackPoint
@@ -20,7 +20,7 @@ GPointinDeviceSettings 1.0.0
 GPointinDeviceSettings 0.9.1
 ============================
 
-* Overrall 
+* Overall 
  - Address XInput-1.4.0
  - Fix crashes due to X errors
 * Touchpad

@@ -31,6 +31,16 @@ G_BEGIN_DECLS
 #define GPDS_IS_XINPUT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_XINPUT))
 #define GPDS_XINPUT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_XINPUT, GpdsXInputClass))
 
+typedef struct _GpdsXInputPropertyEntry GpdsXInputPropertyEntry;
+struct _GpdsXInputPropertyEntry
+{
+    gint property_enum;
+    const gchar *name;
+    GType property_type; /* G_TYPE_INT or G_TYPE_FLOAT */
+    gint format_type;
+    gint max_value_count;
+};
+
 typedef struct _GpdsXInput GpdsXInput;
 typedef struct _GpdsXInputClass GpdsXInputClass;
 
@@ -48,13 +58,30 @@ GType         gpds_xinput_get_type            (void) G_GNUC_CONST;
 
 GpdsXInput  *gpds_xinput_new                  (const gchar *device_name);
 const gchar *gpds_xinput_get_device_name      (GpdsXInput *xinput);
+void         gpds_xinput_register_property_entries
+                                              (GpdsXInput *xinput,
+                                               const GpdsXInputPropertyEntry *entries,
+                                               guint n_entries);
 gboolean     gpds_xinput_set_int_properties   (GpdsXInput *xinput,
+                                               gint property_enum,
+                                               GError **error,
+                                               gint *properties,
+                                               guint n_properties);
+gboolean     gpds_xinput_set_int_properties_by_name_with_format_type
+                                              (GpdsXInput *xinput,
                                                const gchar *property_name,
                                                gint format_type,
                                                GError **error,
                                                gint *properties,
                                                guint n_properties);
-gboolean     gpds_xinput_get_int_properties   (GpdsXInput *xinput,
+gboolean     gpds_xinput_get_int_properties
+                                              (GpdsXInput *xinput,
+                                               gint property_enum,
+                                               GError **error,
+                                               gint **values,
+                                               gulong *n_values);
+gboolean     gpds_xinput_get_int_properties_by_name
+                                              (GpdsXInput *xinput,
                                                const gchar *property_name,
                                                GError **error,
                                                gint **values,

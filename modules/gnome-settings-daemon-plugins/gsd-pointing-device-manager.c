@@ -281,6 +281,39 @@ gsd_pointing_device_manager_build_gconf_key (GsdPointingDeviceManager *manager, 
 
     return gconf_key;
 }
+
+gboolean
+gsd_pointing_device_manager_get_gconf_boolean (GsdPointingDeviceManager *manager,
+                                               GConfClient *gconf,
+                                               const gchar *key,
+                                               gboolean *value)
+{
+    gboolean value_exist;
+    gchar *gconf_key;
+
+    gconf_key = gsd_pointing_device_manager_build_gconf_key(manager, key);
+    value_exist = gpds_gconf_get_boolean(gconf, gconf_key, value);
+    g_free(gconf_key);
+
+    return value_exist;
+}
+
+gboolean
+gsd_pointing_device_manager_get_gconf_int (GsdPointingDeviceManager *manager,
+                                               GConfClient *gconf,
+                                               const gchar *key,
+                                               gint *value)
+{
+    gint value_exist;
+    gchar *gconf_key;
+
+    gconf_key = gsd_pointing_device_manager_build_gconf_key(manager, key);
+    value_exist = gpds_gconf_get_int(gconf, gconf_key, value);
+    g_free(gconf_key);
+
+    return value_exist;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

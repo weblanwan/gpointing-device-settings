@@ -21,6 +21,7 @@
 #define __GPDS_MOUSE_XINPUT_H__
 
 #include <glib.h>
+#include <gpds-xinput.h>
 
 typedef enum {
     GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
@@ -33,18 +34,8 @@ typedef enum {
     GPDS_MOUSE_DRAG_LOCK_BUTTONS,
 } GpdsMouseProperty;
 
-typedef struct _GpdsMouseXInputProperty GpdsMouseXInputProperty;
-struct _GpdsMouseXInputProperty
-{
-    GpdsMouseProperty property;
-    const gchar *name;
-    gint format_type;
-    gint max_value_count;
-};
-
-const gchar *gpds_mouse_xinput_get_name            (GpdsMouseProperty property);
-gint         gpds_mouse_xinput_get_format_type     (GpdsMouseProperty property);
-gint         gpds_mouse_xinput_get_max_value_count (GpdsMouseProperty property);
+GpdsXInput *gpds_mouse_xinput_new                    (const gchar *device_name);
+void        gpds_mouse_xinput_setup_property_entries (GpdsXInput *xinput);
 
 #endif /* __GPDS_MOUSE_XINPUT_H__ */
 /*
