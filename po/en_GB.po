@@ -1,0 +1,184 @@
+# English (British) translation.
+# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Abigail Brady <morwen@evilmagic.org>, Bastien Nocera <hadess@hadess.net>, 2009.
+# Abigail Brady <morwen@evilmagic.org>, 2009.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-11 06:56+0000\n"
+"PO-Revision-Date: 2009-03-11 21:03+0000\n"
+"Last-Translator: Jen Ockwell <jenfraggleubuntu@gmail.com>\n"
+"Language-Team: English/GB <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/gpds-xinput.c:221
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "An X error occurred. The error was %s."
+
+#: ../src/gpds-xinput.c:307 ../src/gpds-xinput.c:325 ../src/gpds-xinput.c:343
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "There is no registered property for %d."
+
+#: ../src/gpds-xinput.c:445 ../src/gpds-xinput.c:612
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+
+#: ../src/gpds-xinput-utils.c:72 ../src/gpds-xinput-utils.c:101
+#, c-format
+msgid "No %s found."
+msgstr "No %s found."
+
+#: ../src/gpds-xinput-utils.c:112
+#, c-format
+msgid "Could not open %s device."
+msgstr "Could not open %s device."
+
+#: ../src/gpds-xinput-utils.c:129
+#, c-format
+msgid "No float atom in XServer"
+msgstr "No float atom in XServer"
+
+#: ../src/gpointing-device-settings.c:131
+msgid "Pointing Device Settings"
+msgstr "Pointing Device Settings"
+
+#: ../modules/gpds-touchpad-ui.c:831 ../modules/gpds-mouse-ui.c:537
+#, c-format
+msgid "%s did not find."
+msgstr "%s did not find."
+
+#: ../modules/gpds-touchpad-ui.c:874 ../modules/gpds-touchpad-ui.c:895
+#: ../modules/gpds-mouse-ui.c:580 ../modules/gpds-mouse-ui.c:601
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "There is no widget (%s)."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.in.h:1
+msgid "(ms)"
+msgstr "(ms)"
+
+#: ../data/mouse.ui.in.h:2
+msgid "Enable _horizontal scroll"
+msgstr "Enable _horizontal scroll"
+
+#: ../data/mouse.ui.in.h:3
+msgid "Enable _vertical scroll"
+msgstr "Enable _vertical scroll"
+
+#: ../data/mouse.ui.in.h:4
+msgid "Middle button _timeout:"
+msgstr "Middle button _timeout:"
+
+#: ../data/mouse.ui.in.h:5
+msgid "Use _middle button emulation"
+msgstr "Use _middle button emulation"
+
+#: ../data/mouse.ui.in.h:6
+msgid "Use _wheel emulation"
+msgstr "Use _wheel emulation"
+
+#: ../data/mouse.ui.in.h:7
+msgid "Wheel emulation _button:"
+msgstr "Wheel emulation _button:"
+
+#: ../data/mouse.ui.in.h:8
+msgid "Wheel emulation _inertia:"
+msgstr "Wheel emulation _inertia:"
+
+#: ../data/mouse.ui.in.h:9
+msgid "Wheel emulation time_out:"
+msgstr "Wheel emulation time_out:"
+
+#: ../data/touchpad.ui.in.h:1
+msgid "<b>Scrolling</b>"
+msgstr "<b>Scrolling</b>"
+
+#: ../data/touchpad.ui.in.h:2
+msgid "<i>Fast</i>"
+msgstr "<i>Fast</i>"
+
+#: ../data/touchpad.ui.in.h:3
+msgid "<i>Long</i>"
+msgstr "<i>Long</i>"
+
+#: ../data/touchpad.ui.in.h:4
+msgid "<i>Short</i>"
+msgstr "<i>Short</i>"
+
+#: ../data/touchpad.ui.in.h:5
+msgid "<i>Slow</i>"
+msgstr "<i>Slow</i>"
+
+#: ../data/touchpad.ui.in.h:6
+msgid "Enable Ci_rcular scrolling"
+msgstr "Enable Ci_rcular scrolling"
+
+#: ../data/touchpad.ui.in.h:7
+msgid "Enable _faster tapping"
+msgstr "Enable _faster tapping"
+
+#: ../data/touchpad.ui.in.h:8
+msgid "Enable _horizontal scrolling"
+msgstr "Enable _horizontal scrolling"
+
+#: ../data/touchpad.ui.in.h:9
+msgid "Enable _vertical scrolling"
+msgstr "Enable _vertical scrolling"
+
+#: ../data/touchpad.ui.in.h:10
+msgid "Enable continuous edge scrolling"
+msgstr "Enable continuous edge scrolling"
+
+#: ../data/touchpad.ui.in.h:11
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Enable horizontal scrolling when dragging with two fingers"
+
+#: ../data/touchpad.ui.in.h:12
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Enable vertical scrolling when dragging with two fingers"
+
+#: ../data/touchpad.ui.in.h:13
+msgid "General"
+msgstr "General"
+
+#: ../data/touchpad.ui.in.h:14
+msgid "Scrolling"
+msgstr "Scrolling"
+
+#: ../data/touchpad.ui.in.h:15
+msgid "Start point of circular scrolling:"
+msgstr "Start point of circular scrolling:"
+
+#: ../data/touchpad.ui.in.h:16
+msgid "Tapping"
+msgstr "Tapping"
+
+#: ../data/touchpad.ui.in.h:17
+msgid "Tapping time: "
+msgstr "Tapping time: "
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Enable pointing-device plugin"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
