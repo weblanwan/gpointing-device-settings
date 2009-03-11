@@ -7,6 +7,7 @@ void test_exist_device (void);
 void test_get_float_atom (void);
 void test_get_device_info (void);
 void test_open_device (void);
+void test_get_device_num_buttons (void);
 
 static GError *error;
 static XDevice *device;
@@ -50,8 +51,21 @@ test_get_device_info (void)
 void
 test_open_device (void)
 {
-    device = gpds_xinput_utils_open_device ("Macintosh mouse button emulation", &error);
+    device = gpds_xinput_utils_open_device("Macintosh mouse button emulation", &error);
     cut_assert(device);
+
+    gcut_assert_error(error);
+}
+
+void
+test_get_device_num_buttons (void)
+{
+    gshort n_buttons;
+
+    n_buttons = gpds_xinput_utils_get_device_num_buttons("Macintosh mouse button emulation", &error);
+    cut_assert_equal_int(32, n_buttons);
+
+    gcut_assert_error(error);
 }
 
 /*
