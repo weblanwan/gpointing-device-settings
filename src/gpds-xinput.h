@@ -35,7 +35,8 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-    GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY
+    GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY,
+    GPDS_XINPUT_ERROR_X_ERROR
 } GpdsXInputError;
 
 typedef struct _GpdsXInputPropertyEntry GpdsXInputPropertyEntry;

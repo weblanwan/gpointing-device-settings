@@ -195,6 +195,34 @@ get_device (GpdsXInput *xinput, GError **error)
     return priv->device;
 }
 
+static gchar *
+get_x_error_text (int x_error_code)
+{
+    gchar buf[64];
+
+    XGetErrorText(GDK_DISPLAY(), x_error_code, buf, sizeof(buf) - 1);
+
+    return g_strdup(buf);
+}
+
+static void
+set_x_error (GError **error , int x_error_code)
+{
+    gchar *error_message;
+
+    if (!error || x_error_code == 0)
+        return;
+
+    error_message = get_x_error_text(x_error_code);
+
+    g_set_error(error,
+                GPDS_XINPUT_ERROR,
+                GPDS_XINPUT_ERROR_X_ERROR,
+                _("An X error occurred. The error was %s."),
+                error_message);
+    g_free(error_message);
+}
+
 gboolean
 gpds_xinput_set_int_properties_by_name_with_format_type 
                                (GpdsXInput *xinput,
@@ -206,7 +234,7 @@ gpds_xinput_set_int_properties_by_name_with_format_type
 {
     XDevice *device;
     Atom property_atom;
-    gint i;
+    gint i, x_error_code;
     gchar *property_data;
 
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
@@ -251,7 +279,11 @@ gpds_xinput_set_int_properties_by_name_with_format_type
                           XA_INTEGER, format_type, PropModeReplace,
                           (unsigned char*)property_data, n_properties);
     gdk_flush();
-    gdk_error_trap_pop();
+    x_error_code = gdk_error_trap_pop();
+    if (x_error_code != 0) {
+        set_x_error(error, x_error_code);
+        return FALSE;
+    }
 
     g_free(property_data);
 
@@ -382,6 +414,7 @@ gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
     unsigned char *data, *data_position;
     gulong i;
     gint *int_values;
+    gint x_error_code;
     Status status;
 
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
@@ -399,10 +432,11 @@ gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
                                  XA_INTEGER, &actual_type, &actual_format,
                                  n_values, &bytes_after, &data);
     gdk_flush();
-    gdk_error_trap_pop();
-
-    if (status != Success)
+    x_error_code = gdk_error_trap_pop();
+    if (status != Success || x_error_code != 0) {
+        set_x_error(error, x_error_code);
         return FALSE;
+    }
 
     if (actual_type != XA_INTEGER) {
         XFree(data);
@@ -464,7 +498,7 @@ gpds_xinput_set_float_properties_by_name (GpdsXInput *xinput,
 {
     XDevice *device;
     Atom float_atom, property_atom;
-    gint i;
+    gint i, x_error_code;
     gfloat *property_data;
 
     g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
@@ -489,7 +523,11 @@ gpds_xinput_set_float_properties_by_name (GpdsXInput *xinput,
                           float_atom, 32, PropModeReplace,
                           (unsigned char*)property_data, n_properties);
     gdk_flush();
-    gdk_error_trap_pop();
+    x_error_code = gdk_error_trap_pop();
+    if (x_error_code != 0) {
+        set_x_error(error, x_error_code);
+        return FALSE;
+    }
 
     g_free(property_data);
 
@@ -532,6 +570,7 @@ gpds_xinput_get_float_properties_by_name (GpdsXInput *xinput,
     unsigned long bytes_after;
     unsigned char *data, *data_position;
     gulong i;
+    gint x_error_code;
     gdouble *double_values;
     Status status;
 
@@ -554,10 +593,11 @@ gpds_xinput_get_float_properties_by_name (GpdsXInput *xinput,
                                  float_atom, &actual_type, &actual_format,
                                  n_properties, &bytes_after, &data);
     gdk_flush();
-    gdk_error_trap_pop();
-
-    if (status != Success)
+    x_error_code = gdk_error_trap_pop();
+    if (status != Success || x_error_code != 0) {
+        set_x_error(error, x_error_code);
         return FALSE;
+    }
 
     if (actual_type != float_atom) {
         XFree(data);
