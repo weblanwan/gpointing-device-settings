@@ -250,6 +250,7 @@ gpds_xinput_set_int_properties_by_name_with_format_type
                           device, property_atom,
                           XA_INTEGER, format_type, PropModeReplace,
                           (unsigned char*)property_data, n_properties);
+    gdk_flush();
     gdk_error_trap_pop();
 
     g_free(property_data);
@@ -397,6 +398,7 @@ gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
     status =  XGetDeviceProperty(GDK_DISPLAY(), device, atom, 0, 1000, False,
                                  XA_INTEGER, &actual_type, &actual_format,
                                  n_values, &bytes_after, &data);
+    gdk_flush();
     gdk_error_trap_pop();
 
     if (status != Success)
@@ -486,6 +488,7 @@ gpds_xinput_set_float_properties_by_name (GpdsXInput *xinput,
                           device, property_atom,
                           float_atom, 32, PropModeReplace,
                           (unsigned char*)property_data, n_properties);
+    gdk_flush();
     gdk_error_trap_pop();
 
     g_free(property_data);
@@ -550,6 +553,7 @@ gpds_xinput_get_float_properties_by_name (GpdsXInput *xinput,
     status =  XGetDeviceProperty(GDK_DISPLAY(), device, property_atom, 0, 1000, False,
                                  float_atom, &actual_type, &actual_format,
                                  n_properties, &bytes_after, &data);
+    gdk_flush();
     gdk_error_trap_pop();
 
     if (status != Success)
