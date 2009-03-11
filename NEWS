@@ -1,7 +1,8 @@
 ============================
 GPointinDeviceSettings 1.1.0
 ============================
-
+* Overall
+ - When gnome-settings-daemon plugin starts, restoring the values which are set by user.
 * Touchpad
  - Continuous edge scrolling on/off
  - Two finger scrolling on/off
