@@ -600,6 +600,12 @@ gpds_xinput_get_float_properties_by_name (GpdsXInput *xinput,
     }
 
     if (actual_type != float_atom) {
+        g_set_error(error,
+                    GPDS_XINPUT_ERROR,
+                    GPDS_XINPUT_ERROR_FORMAT_TYPE_MISMATCH,
+                    _("Format type is mismatched.\n%s is specified but %s returns."),
+                    gdk_x11_get_xatom_name(float_atom), 
+                    gdk_x11_get_xatom_name(actual_type));
         XFree(data);
         return FALSE;
     }

@@ -6,9 +6,12 @@ void test_new (void);
 void test_device_name (void);
 void test_set_int_properties_by_name (void);
 void test_set_int_properties (void);
+void test_set_float_properties (void);
 void test_register_property_entries (void);
 void test_set_int_properties_by_name_invalid_format_type (void);
 void test_set_int_properties_invalid_n_values (void);
+void test_set_float_properties_fail (void);
+void test_get_float_properties_fail (void);
 
 static GpdsXInput *xinput;
 static gint *values;
@@ -151,6 +154,45 @@ test_set_int_properties (void)
                                    (gint*)&values,
                                    n_values);
     gcut_assert_error(error);
+}
+
+void
+test_set_float_properties_fail (void)
+{
+    gdouble double_value[1];
+    expected_error = g_error_new(GPDS_XINPUT_ERROR,
+                                 GPDS_XINPUT_ERROR_X_ERROR,
+                                 "An X error occurred. "
+                                 "The error was BadMatch (invalid parameter attributes).");
+
+    cut_trace(test_register_property_entries());
+
+    double_value[0] = 1.1;
+    gpds_xinput_set_float_properties(xinput,
+                                     GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
+                                     &error,
+                                     double_value,
+                                     1);
+    gcut_assert_equal_error(expected_error, error);
+}
+
+void
+test_get_float_properties_fail (void)
+{
+    gdouble *double_value;
+    expected_error = g_error_new(GPDS_XINPUT_ERROR,
+                                 GPDS_XINPUT_ERROR_FORMAT_TYPE_MISMATCH,
+                                 "Format type is mismatched.\n"
+                                 "FLOAT is specified but INTEGER returns.");
+
+    cut_trace(test_register_property_entries());
+
+    gpds_xinput_get_float_properties(xinput,
+                                     GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
+                                     &error,
+                                     &double_value,
+                                     &n_values);
+    gcut_assert_equal_error(expected_error, error);
 }
 
 void
