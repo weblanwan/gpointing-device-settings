@@ -439,6 +439,12 @@ gpds_xinput_get_int_properties_by_name (GpdsXInput *xinput,
     }
 
     if (actual_type != XA_INTEGER) {
+        g_set_error(error,
+                    GPDS_XINPUT_ERROR,
+                    GPDS_XINPUT_ERROR_FORMAT_TYPE_MISMATCH,
+                    _("Format type is mismatched.\n%s is specified but %s returns."),
+                    gdk_x11_get_xatom_name(XA_INTEGER), 
+                    gdk_x11_get_xatom_name(actual_type));
         XFree(data);
         return FALSE;
     }
