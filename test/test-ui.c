@@ -7,11 +7,16 @@ void test_new (void);
 void test_device_name (void);
 void test_is_available (void);
 void test_build (void);
+void test_get_content_widget (void);
+void test_get_label_widget (void);
 
 static GError *error;
 static GpdsUI *ui;
 static GList *names;
 static GList *expected_names;
+static GtkWidget *widget;
+
+#define DEVICE_NAME "Macintosh mouse button emulation"
 
 void
 cut_startup (void)
@@ -29,6 +34,7 @@ void
 setup (void)
 {
     ui = NULL;
+    widget = NULL;
     error = NULL;
     names = NULL;
     expected_names = NULL;
@@ -49,19 +55,16 @@ teardown (void)
 void
 test_names (void)
 {
-    expected_names = g_list_append(expected_names, "mouse");
-    expected_names = g_list_append(expected_names, "touchpad");
-
     names = gpds_uis_get_names();
 
-    gcut_assert_equal_list_string(expected_names, names);
+    cut_assert(names);
 }
 
 void
 test_new (void)
 {
-    ui = gpds_ui_new("touchpad",
-                     "device-name", "touchpad",
+    ui = gpds_ui_new("mouse",
+                     "device-name", DEVICE_NAME,
                      NULL);
     cut_assert(ui);
 }
@@ -71,7 +74,7 @@ test_device_name (void)
 {
     cut_trace(test_new());
 
-    cut_assert_equal_string("touchpad", gpds_ui_get_device_name(ui));
+    cut_assert_equal_string(DEVICE_NAME, gpds_ui_get_device_name(ui));
 }
 
 void
@@ -95,10 +98,32 @@ test_build (void)
 
     available = gpds_ui_is_available(ui, &error);
     if (!available)
-        cut_omit("No touchpad device.");
+        cut_omit("No %s.", DEVICE_NAME);
     cut_assert_true(gpds_ui_build(ui, &error));
     gcut_assert_error(error);
 }
+
+void
+test_get_content_widget (void)
+{
+    cut_trace(test_build());
+
+    widget = gpds_ui_get_content_widget(ui, &error);
+    gcut_assert_error(error);
+    cut_assert_true(GTK_IS_WIDGET(widget));
+}
+
+void
+test_get_label_widget (void)
+{
+    cut_trace(test_build());
+
+    widget = gpds_ui_get_label_widget(ui, &error);
+    gcut_assert_error(error);
+    cut_assert_true(GTK_IS_WIDGET(widget));
+}
+
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
