@@ -31,6 +31,7 @@
           <property name="visible">True</property>
           <property name="label" translatable="yes">Middle button _timeout:</property>
           <property name="use_underline">True</property>
+          <property name="mnemonic-widget">middle_button_timeout</property>
         </object>
         <packing>
           <property name="expand">False</property>
@@ -91,6 +92,7 @@
             <property name="visible">True</property>
             <property name="label" translatable="yes">Wheel emulation _button:</property>
             <property name="use_underline">True</property>
+            <property name="mnemonic-widget">wheel_emulation_button</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -137,8 +139,9 @@
         <child>
           <object class="GtkLabel" id="wheel_emulation_timeout_label">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Wheel emulation time_out:</property>
+            <property name="label" translatable="yes">Wheel _emulation timeout:</property>
             <property name="use_underline">True</property>
+            <property name="mnemonic-widget">wheel_emulation_timeout</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -188,6 +191,7 @@
             <property name="visible">True</property>
             <property name="label" translatable="yes">Wheel emulation _inertia:</property>
             <property name="use_underline">True</property>
+            <property name="mnemonic-widget">wheel_emulation_inertia</property>
           </object>
           <packing>
             <property name="expand">False</property>
