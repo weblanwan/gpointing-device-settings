@@ -162,7 +162,7 @@ set_horizontal_and_vertical_scrolling_distance (GsdPointingDeviceManager *manage
 }
 
 static gboolean
-start (GsdPointingDeviceManager *manager, GError **error)
+start_manager (GsdPointingDeviceManager *manager)
 {
     GpdsXInput *xinput;
     GConfClient *gconf;
@@ -190,6 +190,14 @@ start (GsdPointingDeviceManager *manager, GError **error)
 
     g_object_unref(gconf);
     g_object_unref(xinput);
+
+    return FALSE;
+}
+
+static gboolean
+start (GsdPointingDeviceManager *manager, GError **error)
+{
+    g_idle_add((GSourceFunc)start_manager, manager);
 
     return TRUE;
 }
