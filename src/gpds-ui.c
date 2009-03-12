@@ -28,6 +28,7 @@
 #include <gconf/gconf-client.h>
 #include "gpds-module.h"
 #include "gpds-gconf.h"
+#include "gpds-xinput-utils.h"
 
 static GList *uis = NULL;
 
@@ -205,7 +206,17 @@ gpds_ui_is_available (GpdsUI *ui, GError **error)
 
     g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
 
+    if (!gpds_xinput_utils_exist_device(gpds_ui_get_device_name(ui))) {
+        g_set_error(error,
+                    GPDS_XINPUT_UTILS_ERROR,
+                    GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
+                    _("No %s found."), 
+                    gpds_ui_get_device_name(ui));
+        return FALSE;
+    }
+
     klass = GPDS_UI_GET_CLASS(ui);
+
     return (klass->is_available) ? klass->is_available(ui, error) : FALSE;
 }
 
