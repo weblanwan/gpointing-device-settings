@@ -1,3 +1,4 @@
+src/gpds-ui.c
 src/gpds-xinput.c
 src/gpds-xinput-utils.c
 src/gpointing-device-settings.c
