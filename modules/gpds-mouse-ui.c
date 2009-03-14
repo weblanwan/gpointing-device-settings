@@ -238,7 +238,7 @@ set_scroll_axes_property (GpdsMouseUI *ui)
 
     builder = gpds_ui_get_builder(GPDS_UI(ui));
 
-    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_vertical"));
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_horizontal"));
     active = gtk_toggle_button_get_active(button);
     if (active) {
         properties[0] = 6;
@@ -248,7 +248,7 @@ set_scroll_axes_property (GpdsMouseUI *ui)
         properties[1] = 0;
     }
 
-    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_horizontal"));
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "wheel_emulation_vertical"));
     active = gtk_toggle_button_get_active(button);
     if (active) {
         properties[2] = 4;

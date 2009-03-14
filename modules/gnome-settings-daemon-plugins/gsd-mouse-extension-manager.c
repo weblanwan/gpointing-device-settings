@@ -84,14 +84,14 @@ set_horizontal_and_vertical_scroll (GsdPointingDeviceManager *manager,
         return;
     }
 
-    if (y_enable) {
+    if (x_enable) {
         properties[0] = 6;
         properties[1] = 7;
     } else {
         properties[0] = 0;
         properties[1] = 0;
     }
-    if (x_enable) {
+    if (y_enable) {
         properties[2] = 4;
         properties[3] = 5;
     } else {
