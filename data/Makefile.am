@@ -20,6 +20,11 @@ EXTRA_DIST = 			\
 	$(gpds_icon_DATA)	\
 	$(schemas_in_files)
 
+if GCONF_SCHEMAS_INSTALL
+install-data-local:
+	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/data/$(schemas_DATA)
+endif
+
 CLEANFILES = 			\
 	$(schemas_DATA)
 
