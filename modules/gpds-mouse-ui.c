@@ -209,10 +209,25 @@ static void
 cb_wheel_emulation_button_changed (GtkComboBox *combo, gpointer user_data)
 {
     gint properties[1];
+    GtkTreeIter iter;
+    GObject *list_store;
+    GValue value = {0};
     GError *error = NULL;
     GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);
+    GtkBuilder *builder;
 
-    properties[0] = gtk_combo_box_get_active(combo);
+    if (!gtk_combo_box_get_active_iter(combo, &iter))
+        return;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+    list_store = gtk_builder_get_object(builder, "wheel_emulation_button_list_store");
+    gtk_tree_model_get_value(GTK_TREE_MODEL(list_store),
+                             &iter,
+                             0,
+                             &value);
+    properties[0] = g_value_get_int(&value);
+    g_value_unset(&value);
+
     if (!gpds_xinput_set_int_properties(ui->xinput,
                                         GPDS_MOUSE_WHEEL_EMULATION_BUTTON,
                                         &error,
@@ -456,16 +471,48 @@ setup_num_buttons (GpdsUI *ui)
     }
 }
 
+static gboolean
+each_tree_model_iter (GtkTreeModel *model,
+                      GtkTreePath *path,
+                      GtkTreeIter *iter,
+                      gpointer data)
+{
+    GValue value = {0};
+    gint *list_index = data;
+    gint int_value;
+    gtk_tree_model_get_value(model,
+                             iter,
+                             0,
+                             &value);
+    int_value = g_value_get_int(&value);
+    g_value_unset(&value);
+
+    if (int_value == *list_index)  {
+        gint *indices;
+        indices = gtk_tree_path_get_indices(path);
+        if (indices)
+            *list_index = indices[0];
+        return TRUE;
+    }
+    return FALSE;
+}
+
 static void
 set_wheel_emulation_button_combo_state (GpdsMouseUI *ui, gint button)
 {
+    GObject *list_store;
     GtkComboBox *combo;
     GtkBuilder *builder;
+    gint list_index = button;
 
     builder = gpds_ui_get_builder(GPDS_UI(ui));
 
+    list_store = gtk_builder_get_object(builder, "wheel_emulation_button_list_store");
+    gtk_tree_model_foreach(GTK_TREE_MODEL(list_store),
+                           each_tree_model_iter, &list_index);
+
     combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, "wheel_emulation_button"));
-    gtk_combo_box_set_active(combo, button);
+    gtk_combo_box_set_active(combo, list_index);
 }
 
 static void
