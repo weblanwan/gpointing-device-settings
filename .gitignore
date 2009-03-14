@@ -1,3 +1,5 @@
+Makefile
+Makefile.in
 m4
 autom4te.cache
 config.guess
@@ -22,6 +24,11 @@ mkinstalldirs
 libgpointing-device-settings.pc
 coverage
 coverage.info
+.libs
+.deps
+*.o
+*.lo
+*.la
 *.gcno
 *.gcda
 data/touchpad.ui
@@ -32,5 +39,6 @@ po/POTFILES
 po/gpointing-device-settings.pot
 po/stamp-it
 po/.intltool-merge-cache
+po/*.gmo
 src/gpointing-device-settings
 modules/gnome-settings-daemon-plugins/pointing-device.gnome-settings-plugin
