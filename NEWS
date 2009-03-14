@@ -2,10 +2,20 @@
 GPointinDeviceSettings 1.1.0
 ============================
 * Overall
- - When gnome-settings-daemon plugin starts, restoring the values which are set by user.
+ - When gnome-settings-daemon plugin starts, restoring the values which are set by user
+ - Install GConf schema
+ - Set user's preference values at the start up of gnome-settings-daemon
 * Touchpad
  - Continuous edge scrolling on/off
  - Two finger scrolling on/off
+* Wheel type mouse
+ - Change wheel emulation button widget to GtkComboBox
+ - Fix vertical and horizontal inversion
+ - Fix wrong wheel emulation button
+ - Fix key mnemonic
+ - Ignore "Macintosh mouse button emulation" device
+* New translation
+ - British English
 
 ============================
 GPointinDeviceSettings 1.0.0
