@@ -242,17 +242,16 @@ gpds_ui_get_content_widget (GpdsUI *ui, GError **error)
     return (klass->get_content_widget) ? klass->get_content_widget(ui, error) : FALSE;
 }
 
-GtkWidget *
-gpds_ui_get_label_widget (GpdsUI *ui, GError **error)
+GdkPixbuf *
+gpds_ui_get_icon_pixbuf (GpdsUI *ui, GError **error)
 {
     GpdsUIClass *klass;
 
     g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
 
     klass = GPDS_UI_GET_CLASS(ui);
-    return (klass->get_label_widget) ? klass->get_label_widget(ui, error) : FALSE;
+    return (klass->get_icon_pixbuf) ? klass->get_icon_pixbuf(ui, error) : FALSE;
 }
-
 
 GtkBuilder *
 gpds_ui_get_builder (GpdsUI *ui)

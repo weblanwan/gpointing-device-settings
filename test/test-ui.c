@@ -8,13 +8,14 @@ void test_device_name (void);
 void test_is_available (void);
 void test_build (void);
 void test_get_content_widget (void);
-void test_get_label_widget (void);
+void test_get_icon_pixbuf (void);
 
 static GError *error;
 static GpdsUI *ui;
 static GList *names;
 static GList *expected_names;
 static GtkWidget *widget;
+static GdkPixbuf *pixbuf;
 
 #define DEVICE_NAME "Macintosh mouse button emulation"
 
@@ -38,6 +39,7 @@ setup (void)
     error = NULL;
     names = NULL;
     expected_names = NULL;
+    pixbuf = NULL;
 }
 
 void
@@ -48,6 +50,8 @@ teardown (void)
     g_list_free(names);
     g_list_free(expected_names);
 
+    if (pixbuf)
+        g_object_unref(pixbuf);
     if (error)
         g_clear_error(&error);
 }
@@ -114,13 +118,13 @@ test_get_content_widget (void)
 }
 
 void
-test_get_label_widget (void)
+test_get_icon_pixbuf (void)
 {
     cut_trace(test_build());
 
-    widget = gpds_ui_get_label_widget(ui, &error);
+    pixbuf = gpds_ui_get_icon_pixbuf(ui, &error);
     gcut_assert_error(error);
-    cut_assert_true(GTK_IS_WIDGET(widget));
+    cut_assert_true(GDK_IS_PIXBUF(pixbuf));
 }
 
 

@@ -59,7 +59,7 @@ static void       dispose            (GObject *object);
 static gboolean   is_available       (GpdsUI  *ui, GError **error);
 static gboolean   build              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
-static GtkWidget *get_label_widget   (GpdsUI  *ui, GError **error);
+static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
 
 G_DEFINE_DYNAMIC_TYPE(GpdsMouseUI, gpds_mouse_ui, GPDS_TYPE_UI)
 
@@ -74,7 +74,7 @@ gpds_mouse_ui_class_init (GpdsMouseUIClass *klass)
     ui_class->is_available       = is_available;
     ui_class->build              = build;
     ui_class->get_content_widget = get_content_widget;
-    ui_class->get_label_widget   = get_label_widget;
+    ui_class->get_icon_pixbuf    = get_icon_pixbuf;
 }
 
 static void
@@ -632,33 +632,12 @@ get_content_widget (GpdsUI *ui, GError **error)
     return GTK_WIDGET(widget);
 }
 
-static GtkWidget *
-get_label_widget (GpdsUI *ui, GError **error)
+static GdkPixbuf *
+get_icon_pixbuf (GpdsUI *ui, GError **error)
 {
-    GtkBuilder *builder;
-    GObject *widget, *label, *image;
-
-    builder = gpds_ui_get_builder(ui);
-
-    widget = gtk_builder_get_object(builder, "main-widget-label");
-    if (!widget) {
-        g_set_error(error,
-                    GPDS_UI_ERROR,
-                    GPDS_UI_ERROR_NO_WIDGET,
-                    _("There is no widget(%s)."),
-                    "main-widget-label");
-        return NULL;
-    }
-
-    label = gtk_builder_get_object(builder, "main-widget-label-text");
-    if (label)
-        gtk_label_set_text(GTK_LABEL(label), gpds_ui_get_device_name(ui));
-
-    image = gtk_builder_get_object(builder, "main-widget-label-icon");
-    if (image && strstr(gpds_ui_get_device_name(ui), "TrackPoint"))
-        gtk_image_set_from_file(GTK_IMAGE(image), GPDS_ICONDIR "/trackpoint.png");
-
-    return GTK_WIDGET(widget);
+    if (strstr(gpds_ui_get_device_name(ui), "TrackPoint"))
+        return gdk_pixbuf_new_from_file(GPDS_ICONDIR "/trackpoint.png", error);
+    return NULL;
 }
 
 /*

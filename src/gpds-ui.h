@@ -55,7 +55,7 @@ struct _GpdsUIClass
     gboolean   (*is_available)          (GpdsUI *ui, GError **error);
     gboolean   (*build)                 (GpdsUI *ui, GError **error);
     GtkWidget *(*get_content_widget)    (GpdsUI *ui, GError **error);
-    GtkWidget *(*get_label_widget)      (GpdsUI *ui, GError **error);
+    GdkPixbuf *(*get_icon_pixbuf)       (GpdsUI *ui, GError **error);
 };
 
 gboolean     gpds_uis_load                (void);
@@ -70,7 +70,7 @@ GpdsUI      *gpds_ui_new                  (const gchar *type_name,
 gboolean     gpds_ui_is_available         (GpdsUI *ui, GError **error);
 gboolean     gpds_ui_build                (GpdsUI *ui, GError **error);
 GtkWidget   *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);
-GtkWidget   *gpds_ui_get_label_widget     (GpdsUI *ui, GError **error);
+GdkPixbuf   *gpds_ui_get_icon_pixbuf      (GpdsUI *ui, GError **error);
 GtkBuilder  *gpds_ui_get_builder          (GpdsUI *ui);
 const gchar *gpds_ui_get_device_name      (GpdsUI *ui);
 void         gpds_ui_set_gconf_bool       (GpdsUI *ui,

@@ -1,18 +1,5 @@
 <?xml version="1.0" standalone="no"?>
 <interface>
-  <object class="GtkHBox" id ="main-widget-label">
-    <property name="visible">True</property>
-    <child>
-      <object class="GtkImage" id ="main-widget-label-icon">
-        <property name="visible">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkLabel" id ="main-widget-label-text">
-        <property name="visible">True</property>
-      </object>
-    </child>
-  </object>
   <object class="GtkVBox" id="main-widget">
     <property name="visible">True</property>
     <child>

@@ -27,6 +27,12 @@
 #include "gpds-module.h"
 #include "gpds-ui.h"
 
+enum {
+    DEVICE_NAME_COLUMN,
+    ICON_COLUMN,
+    N_COLUMNS
+};
+
 static GList *uis = NULL;
 
 static gboolean
@@ -52,73 +58,124 @@ cb_response (GtkDialog *dialog, gint response_id, gpointer user_data)
     gtk_main_quit();
 }
 
+static GpdsUI *
+create_ui (GpdsXInputPointerInfo *info)
+{
+    GpdsUI *ui;
+    gchar *type_name;
+    const gchar *device_name;
+    GError *error = NULL;
+
+    device_name = gpds_xinput_pointer_info_get_name(info);
+    if (!strcmp(device_name, "Macintosh mouse button emulation"))
+        return NULL;
+
+    type_name = g_ascii_strdown(gpds_xinput_pointer_info_get_type_name(info), -1);
+    ui = gpds_ui_new(type_name,
+                     "device-name", device_name,
+                     NULL);
+    g_free(type_name);
+
+    if (!gpds_ui_is_available(ui, &error)) {
+        if (error) {
+            g_message("%s", error->message);
+            g_clear_error(&error);
+        }
+        g_object_unref(ui);
+        return NULL;
+    }
+
+    return ui;
+}
+
 static void
-append_uis (GtkNotebook *notebook)
+append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
+           GpdsUI *ui)
+{
+    GtkWidget *widget = NULL;
+    GError *error = NULL;
+    GtkTreeIter iter;
+    GdkPixbuf *pixbuf;
+    GtkListStore *list_store;
+
+    gpds_ui_build(ui, &error);
+    if (error) {
+        g_warning("%s", error->message);
+        g_clear_error(&error);
+    }
+    widget = gpds_ui_get_content_widget(ui, &error);
+    if (error) {
+        g_warning("%s", error->message);
+        g_clear_error(&error);
+    }
+
+    if (!widget)
+        widget = gtk_label_new(error->message);
+
+    list_store = GTK_LIST_STORE(gtk_icon_view_get_model(icon_view));
+    gtk_list_store_append(list_store, &iter);
+    pixbuf = gpds_ui_get_icon_pixbuf(ui, &error);
+    if (error) {
+        g_warning("%s", error->message);
+        g_clear_error(&error);
+    }
+
+    gtk_list_store_set(list_store, &iter,
+                       DEVICE_NAME_COLUMN, gpds_ui_get_device_name(ui),
+                       ICON_COLUMN, pixbuf,
+                       -1);
+    gtk_notebook_append_page(notebook, widget, NULL);
+}
+
+static void
+append_uis (GtkIconView *icon_view, GtkNotebook *notebook)
 {
     GList *node, *pointer_infos;;
 
     pointer_infos = gpds_xinput_utils_collect_pointer_infos();
     
     for (node = pointer_infos; node; node = g_list_next(node)) {
-        GpdsUI *ui;
         GpdsXInputPointerInfo *info = node->data;
-        gchar *type_name;
-        GtkWidget *widget = NULL;
-        GtkWidget *label = NULL;
-        GError *error = NULL;
+        GpdsUI *ui;
 
-        if (!strcmp(gpds_xinput_pointer_info_get_name(info),
-                    "Macintosh mouse button emulation")) {
-            continue;
+        ui = create_ui(info);
+        if (ui) {
+            uis = g_list_prepend(uis, ui);
+            append_ui(icon_view, notebook, ui);
         }
-
-        type_name = g_ascii_strdown(gpds_xinput_pointer_info_get_type_name(info), -1);
-        ui = gpds_ui_new(type_name,
-                         "device-name", gpds_xinput_pointer_info_get_name(info),
-                         NULL);
-        g_free(type_name);
-        uis = g_list_prepend(uis, ui);
-
-        if (!gpds_ui_is_available(ui, &error)) {
-            if (error) {
-                g_message("%s", error->message);
-                g_clear_error(&error);
-            }
-            continue;
-        }
-
-        gpds_ui_build(ui, &error);
-        if (error) {
-            g_warning("%s", error->message);
-            g_clear_error(&error);
-        }
-        widget = gpds_ui_get_content_widget(ui, &error);
-        if (error) {
-            g_warning("%s", error->message);
-            g_clear_error(&error);
-        }
-        label = gpds_ui_get_label_widget(ui, &error);
-        if (error) {
-            g_warning("%s", error->message);
-            g_clear_error(&error);
-        }
-
-        if (!widget)
-            widget = gtk_label_new(error->message);
-
-        gtk_notebook_append_page(notebook,
-                                 widget, label);
-
     }
 
     g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
     g_list_free(pointer_infos);
 }
 
+static void
+cb_selection_changed (GtkIconView *icon_view, gpointer data)
+{
+    GtkTreePath *path = NULL;
+    GtkCellRenderer *cell = NULL;
+    GtkTreeModel *model;
+    GtkNotebook *notebook = GTK_NOTEBOOK(data);
+    gint *indices;
+
+    gtk_icon_view_get_cursor(icon_view, &path, &cell);
+
+    if (!path)
+        return;
+    model = gtk_icon_view_get_model(icon_view);
+    indices = gtk_tree_path_get_indices(path);
+    gtk_notebook_set_current_page(notebook, indices[0]);
+
+    gtk_tree_path_free(path);
+}
+
 int
 main (int argc, char *argv[])
 {
     GtkWidget *dialog, *notebook, *content_area;
+    GtkWidget *hbox;
+    GtkIconView *icon_view;
+    GtkListStore *list_store;
 
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -136,11 +193,25 @@ main (int argc, char *argv[])
     g_signal_connect(dialog, "response",
                      G_CALLBACK(cb_response), NULL);
 
+    hbox = gtk_hbox_new(FALSE, 8);
     notebook = gtk_notebook_new();
+    gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+
+    list_store = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, GDK_TYPE_PIXBUF);
+    icon_view = GTK_ICON_VIEW(gtk_icon_view_new_with_model(GTK_TREE_MODEL(list_store)));
+    gtk_icon_view_set_pixbuf_column(icon_view, ICON_COLUMN);
+    gtk_icon_view_set_text_column(icon_view, DEVICE_NAME_COLUMN);
+    gtk_icon_view_set_selection_mode(icon_view, GTK_SELECTION_MULTIPLE);
+    g_signal_connect(icon_view, "selection-changed",
+                     G_CALLBACK(cb_selection_changed), notebook);
+    g_object_unref(list_store);
+
+    gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(icon_view), FALSE, TRUE, 0);
+    gtk_box_pack_end(GTK_BOX(hbox), notebook, TRUE, TRUE, 0);
     content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
     gtk_container_add(GTK_CONTAINER(content_area),
-                      notebook);
-    append_uis(GTK_NOTEBOOK(notebook));
+                      hbox);
+    append_uis(icon_view, GTK_NOTEBOOK(notebook));
     gtk_widget_show_all(dialog);
     gtk_main();
 
