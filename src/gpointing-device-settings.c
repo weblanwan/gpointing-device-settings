@@ -194,6 +194,7 @@ main (int argc, char *argv[])
                      G_CALLBACK(cb_response), NULL);
 
     hbox = gtk_hbox_new(FALSE, 8);
+    gtk_container_set_border_width(GTK_CONTAINER(hbox), 8);
     notebook = gtk_notebook_new();
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
 
