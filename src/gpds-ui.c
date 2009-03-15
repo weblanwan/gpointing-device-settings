@@ -364,7 +364,7 @@ gpds_ui_set_gconf_string (GpdsUI *ui, const gchar *key, const gchar *value)
 }
 
 gboolean
-gpds_ui_get_gconf_string (GpdsUI *ui, const gchar *key, const gchar **value)
+gpds_ui_get_gconf_string (GpdsUI *ui, const gchar *key, gchar **value)
 {
     gchar *gconf_key;
     gboolean exist_value = FALSE;

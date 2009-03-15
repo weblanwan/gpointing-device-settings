@@ -71,7 +71,7 @@ gpds_gconf_get_int (GConfClient *gconf, const gchar *key, gint *value)
 }
 
 gboolean
-gpds_gconf_get_string (GConfClient *gconf, const gchar *key, const gchar **value)
+gpds_gconf_get_string (GConfClient *gconf, const gchar *key, gchar **value)
 {
     GConfValue *gconf_value;
     gboolean exist_value = FALSE;
@@ -79,7 +79,7 @@ gpds_gconf_get_string (GConfClient *gconf, const gchar *key, const gchar **value
     gconf_value = gconf_client_get(gconf, key, NULL);
     if (gconf_value) {
         if (gconf_value->type == GCONF_VALUE_STRING) {
-            *value = gconf_value_get_string(gconf_value);
+            *value = g_strdup(gconf_value_get_string(gconf_value));
             exist_value = TRUE;
         }
         gconf_value_free(gconf_value);

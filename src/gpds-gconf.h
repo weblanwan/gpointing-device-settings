@@ -38,7 +38,7 @@ gboolean     gpds_gconf_get_int           (GConfClient *gconf,
                                            gboolean *value);
 gboolean     gpds_gconf_get_string        (GConfClient *gconf,
                                            const gchar *key,
-                                           const gchar **value);
+                                           gchar **value);
 
 G_END_DECLS
 

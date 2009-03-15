@@ -90,7 +90,7 @@ void         gpds_ui_set_gconf_string     (GpdsUI *ui,
                                            const gchar *value);
 gboolean     gpds_ui_get_gconf_string     (GpdsUI *ui,
                                            const gchar *key,
-                                           const gchar **value);
+                                           gchar **value);
 
 G_END_DECLS
 

@@ -5,17 +5,19 @@
 void test_get_key_from_path (void);
 void test_get_non_existent (void);
 
-static const gchar *key;
+static gchar *gconf_key;
 static gboolean boolean_value;
 static gint int_value;
-static const gchar *string_value;
+static gchar *string_value;
 static GConfClient *gconf;
+static GError *error;
 
 void
 setup (void)
 {
-    key = NULL;
+    gconf_key = NULL;
     string_value = NULL;
+    error = NULL;
 
     gconf = gconf_client_get_default();
 }
@@ -23,28 +25,72 @@ setup (void)
 void
 teardown (void)
 {
+    if (gconf_key)
+        gconf_client_unset(gconf, gconf_key, NULL);
+    g_free(gconf_key);
+    g_free(string_value);
     g_object_unref(gconf);
+    g_clear_error(&error);
 }
 
 void
 test_get_key_from_path (void)
 {
+    const gchar *key;
     key = gpds_gconf_get_key_from_path("/desktop/gnome/peripherals/TPPS@47@2@32@IBM@32@TrackPoint/middle_button_emulation");
     cut_assert_equal_string("middle_button_emulation", key);
+}
+
+static gchar *
+make_unique_key (void)
+{
+    const gchar *unique_key;
+
+    unique_key = cut_take_string(gconf_unique_key());
+    return gconf_concat_dir_and_key("/", unique_key);
 }
 
 void
 test_get_non_existent (void)
 {
-    gchar *unique_key;
+    gconf_key = make_unique_key();
 
-    unique_key = gconf_unique_key();
-    key = gconf_concat_dir_and_key("/", unique_key);
-    g_free(unique_key);
+    cut_assert_false(gpds_gconf_get_boolean(gconf, gconf_key, &boolean_value));
+    cut_assert_false(gpds_gconf_get_int(gconf, gconf_key, &int_value));
+    cut_assert_false(gpds_gconf_get_string(gconf, gconf_key, &string_value));
+}
 
-    cut_assert_false(gpds_gconf_get_boolean(gconf, key, &boolean_value));
-    cut_assert_false(gpds_gconf_get_int(gconf, key, &int_value));
-    cut_assert_false(gpds_gconf_get_string(gconf, key, &string_value));
+void
+test_boolean (void)
+{
+    gconf_key = make_unique_key();
+    gconf_client_set_bool(gconf, gconf_key, TRUE, &error);
+    gcut_assert_error(error);
+
+    cut_assert_true(gpds_gconf_get_boolean(gconf, gconf_key, &boolean_value));
+    cut_assert_true(boolean_value);
+}
+
+void
+test_int (void)
+{
+    gconf_key = make_unique_key();
+    gconf_client_set_int(gconf, gconf_key, 99, &error);
+    gcut_assert_error(error);
+
+    cut_assert_true(gpds_gconf_get_int(gconf, gconf_key, &int_value));
+    cut_assert_equal_int(99, int_value);
+}
+
+void
+test_string (void)
+{
+    gconf_key = make_unique_key();
+    gconf_client_set_string(gconf, gconf_key, "string", &error);
+    gcut_assert_error(error);
+
+    cut_assert_true(gpds_gconf_get_string(gconf, gconf_key, &string_value));
+    cut_assert_equal_string("string", string_value);
 }
 
 /*
