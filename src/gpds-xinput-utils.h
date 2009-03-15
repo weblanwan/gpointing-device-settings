@@ -36,7 +36,8 @@ typedef enum
 } GpdsXInputUtilsError;
 
 GQuark       gpds_xinput_utils_error_quark              (void);
-XDeviceInfo *gpds_xinput_utils_get_device_info          (const gchar *device_name);
+XDeviceInfo *gpds_xinput_utils_get_device_info          (const gchar *device_name,
+                                                         GError **error);
 XDevice     *gpds_xinput_utils_open_device              (const gchar *device_name, GError **error);
 Atom         gpds_xinput_utils_get_float_atom           (GError **error);
 gshort       gpds_xinput_utils_get_device_num_buttons   (const gchar *device_name, GError **error);

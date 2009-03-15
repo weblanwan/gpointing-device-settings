@@ -36,7 +36,7 @@ gpds_xinput_utils_error_quark (void)
 }
 
 XDeviceInfo *
-gpds_xinput_utils_get_device_info (const gchar *device_name)
+gpds_xinput_utils_get_device_info (const gchar *device_name, GError **error)
 {
     XDeviceInfo *device_infos;
     gint i, n_device_infos;
@@ -54,6 +54,11 @@ gpds_xinput_utils_get_device_info (const gchar *device_name)
 
     XFreeDeviceList(device_infos);
 
+    g_set_error(error,
+                GPDS_XINPUT_UTILS_ERROR,
+                GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
+                _("No %s found."), device_name);
+
     return NULL;
 }
 
@@ -64,14 +69,9 @@ gpds_xinput_utils_get_device_num_buttons (const gchar *device_name, GError **err
     XAnyClassInfo *class_info;
     gint i;
 
-    device_info = gpds_xinput_utils_get_device_info(device_name);
-    if (!device_info) {
-        g_set_error(error,
-                    GPDS_XINPUT_UTILS_ERROR,
-                    GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
-                    _("No %s found."), device_name);
+    device_info = gpds_xinput_utils_get_device_info(device_name, error);
+    if (!device_info)
         return -1;
-    }
 
     for (i = 0, class_info = device_info->inputclassinfo;
          i < device_info->num_classes;
@@ -93,14 +93,9 @@ gpds_xinput_utils_open_device (const gchar *device_name, GError **error)
     XDeviceInfo *device_info;
     XDevice *device;
 
-    device_info = gpds_xinput_utils_get_device_info(device_name);
-    if (!device_info) {
-        g_set_error(error,
-                    GPDS_XINPUT_UTILS_ERROR,
-                    GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
-                    _("No %s found."), device_name);
+    device_info = gpds_xinput_utils_get_device_info(device_name, error);
+    if (!device_info)
         return NULL;
-    }
 
     gdk_error_trap_push();
     device = XOpenDevice(GDK_DISPLAY(), device_info->id);
@@ -135,7 +130,7 @@ gpds_xinput_utils_get_float_atom (GError **error)
 gboolean
 gpds_xinput_utils_exist_device (const gchar *device_name)
 {
-    return gpds_xinput_utils_get_device_info(device_name) ? TRUE : FALSE;
+    return gpds_xinput_utils_get_device_info(device_name, NULL) ? TRUE : FALSE;
 }
 
 /*
