@@ -28,8 +28,7 @@
 #include "gpds-ui.h"
 
 enum {
-    SHORT_DEVICE_NAME_COLUMN,
-    FULL_DEVICE_NAME_COLUMN,
+    DEVICE_NAME_COLUMN,
     ICON_COLUMN,
     N_COLUMNS
 };
@@ -98,7 +97,6 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
     GtkTreeIter iter;
     GdkPixbuf *pixbuf;
     GtkListStore *list_store;
-    gchar shorten_device_name[25];
     const gchar *device_name;
 
     gpds_ui_build(ui, &error);
@@ -124,10 +122,8 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
     }
 
     device_name = gpds_ui_get_device_name(ui);
-    g_utf8_strncpy(shorten_device_name, device_name, 24);
     gtk_list_store_set(list_store, &iter,
-                       SHORT_DEVICE_NAME_COLUMN, shorten_device_name,
-                       FULL_DEVICE_NAME_COLUMN, device_name,
+                       DEVICE_NAME_COLUMN, device_name,
                        ICON_COLUMN, pixbuf,
                        -1);
     gtk_notebook_append_page(notebook, widget, NULL);
@@ -181,7 +177,7 @@ int
 main (int argc, char *argv[])
 {
     GtkWidget *dialog, *notebook, *content_area;
-    GtkWidget *hbox;
+    GtkWidget *hbox, *scrolled_window;
     GtkIconView *icon_view;
     GtkListStore *list_store;
 
@@ -203,23 +199,31 @@ main (int argc, char *argv[])
 
     hbox = gtk_hbox_new(FALSE, 8);
     gtk_container_set_border_width(GTK_CONTAINER(hbox), 8);
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+                                   GTK_POLICY_NEVER,
+                                   GTK_POLICY_AUTOMATIC);
     notebook = gtk_notebook_new();
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
 
     list_store = gtk_list_store_new(N_COLUMNS,
                                     G_TYPE_STRING,
-                                    G_TYPE_STRING,
                                     GDK_TYPE_PIXBUF);
     icon_view = GTK_ICON_VIEW(gtk_icon_view_new_with_model(GTK_TREE_MODEL(list_store)));
+    gtk_icon_view_set_columns(icon_view, 1);
     gtk_icon_view_set_pixbuf_column(icon_view, ICON_COLUMN);
-    gtk_icon_view_set_text_column(icon_view, SHORT_DEVICE_NAME_COLUMN);
-    gtk_icon_view_set_tooltip_column(icon_view, FULL_DEVICE_NAME_COLUMN);
+    gtk_icon_view_set_text_column(icon_view, DEVICE_NAME_COLUMN);
     gtk_icon_view_set_selection_mode(icon_view, GTK_SELECTION_MULTIPLE);
+    gtk_icon_view_set_item_width(icon_view, 128);
+    gtk_icon_view_set_margin(icon_view, 0);
+    gtk_icon_view_set_row_spacing(icon_view, 0);
+    gtk_icon_view_set_column_spacing(icon_view, 0);
     g_signal_connect(icon_view, "selection-changed",
                      G_CALLBACK(cb_selection_changed), notebook);
     g_object_unref(list_store);
 
-    gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(icon_view), FALSE, TRUE, 0);
+    gtk_container_add(GTK_CONTAINER(scrolled_window), GTK_WIDGET(icon_view));
+    gtk_box_pack_start(GTK_BOX(hbox), scrolled_window, FALSE, TRUE, 0);
     gtk_box_pack_end(GTK_BOX(hbox), notebook, TRUE, TRUE, 0);
     content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
     gtk_container_add(GTK_CONTAINER(content_area),
