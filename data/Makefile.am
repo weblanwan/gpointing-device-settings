@@ -3,6 +3,7 @@ gpds_ui_DATA = 		\
 	touchpad.ui
 
 gpds_icon_DATA = 	\
+	mouse.png	\
 	trackpoint.png	\
 	touchpad.png
 

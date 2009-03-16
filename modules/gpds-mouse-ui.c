@@ -637,7 +637,7 @@ get_icon_pixbuf (GpdsUI *ui, GError **error)
 {
     if (strstr(gpds_ui_get_device_name(ui), "TrackPoint"))
         return gdk_pixbuf_new_from_file(GPDS_ICONDIR "/trackpoint.png", error);
-    return NULL;
+    return gdk_pixbuf_new_from_file(GPDS_ICONDIR "/mouse.png", error);
 }
 
 /*
