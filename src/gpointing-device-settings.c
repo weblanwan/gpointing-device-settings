@@ -132,6 +132,20 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
 }
 
 static void
+select_first_device (GtkIconView *icon_view)
+{
+    GtkTreeModel *model;
+    GtkTreePath *path;
+    GtkTreeIter iter;
+
+    model = gtk_icon_view_get_model(icon_view);
+    gtk_tree_model_get_iter_first(model, &iter);
+    path = gtk_tree_model_get_path(model, &iter);
+    gtk_icon_view_select_path(icon_view, path);
+    gtk_tree_path_free(path);
+}
+
+static void
 append_uis (GtkIconView *icon_view, GtkNotebook *notebook)
 {
     GpdsUI *ui;
@@ -146,7 +160,7 @@ append_uis (GtkIconView *icon_view, GtkNotebook *notebook)
         if (ui) {
             uis = g_list_prepend(uis, ui);
             loaded_ui_names = g_list_prepend(loaded_ui_names,
-                                             (gpointer)gpds_ui_get_device_name(ui));
+                                             g_strdup(gpds_xinput_pointer_info_get_type_name(info)));
             append_ui(icon_view, notebook, ui);
         }
     }
@@ -159,7 +173,7 @@ append_uis (GtkIconView *icon_view, GtkNotebook *notebook)
         const gchar *ui_name = node->data;
 
         if (g_list_find_custom(loaded_ui_names, ui_name,
-                               (GCompareFunc)strcmp)) {
+                               (GCompareFunc)g_str_equal)) {
             continue;
         }
 
@@ -172,7 +186,10 @@ append_uis (GtkIconView *icon_view, GtkNotebook *notebook)
         append_ui(icon_view, notebook, ui);
     }
     g_list_free(ui_names);
+    g_list_foreach(loaded_ui_names, (GFunc)g_free, NULL);
     g_list_free(loaded_ui_names);
+
+    select_first_device(icon_view);
 }
 
 static void
