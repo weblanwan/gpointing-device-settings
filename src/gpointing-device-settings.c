@@ -28,7 +28,8 @@
 #include "gpds-ui.h"
 
 enum {
-    DEVICE_NAME_COLUMN,
+    SHORT_DEVICE_NAME_COLUMN,
+    FULL_DEVICE_NAME_COLUMN,
     ICON_COLUMN,
     N_COLUMNS
 };
@@ -97,6 +98,8 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
     GtkTreeIter iter;
     GdkPixbuf *pixbuf;
     GtkListStore *list_store;
+    gchar shorten_device_name[25];
+    const gchar *device_name;
 
     gpds_ui_build(ui, &error);
     if (error) {
@@ -120,11 +123,16 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
         g_clear_error(&error);
     }
 
+    device_name = gpds_ui_get_device_name(ui);
+    g_utf8_strncpy(shorten_device_name, device_name, 24);
     gtk_list_store_set(list_store, &iter,
-                       DEVICE_NAME_COLUMN, gpds_ui_get_device_name(ui),
+                       SHORT_DEVICE_NAME_COLUMN, shorten_device_name,
+                       FULL_DEVICE_NAME_COLUMN, device_name,
                        ICON_COLUMN, pixbuf,
                        -1);
     gtk_notebook_append_page(notebook, widget, NULL);
+    if (pixbuf)
+        g_object_unref(pixbuf);
 }
 
 static void
@@ -198,10 +206,14 @@ main (int argc, char *argv[])
     notebook = gtk_notebook_new();
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
 
-    list_store = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, GDK_TYPE_PIXBUF);
+    list_store = gtk_list_store_new(N_COLUMNS,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING,
+                                    GDK_TYPE_PIXBUF);
     icon_view = GTK_ICON_VIEW(gtk_icon_view_new_with_model(GTK_TREE_MODEL(list_store)));
     gtk_icon_view_set_pixbuf_column(icon_view, ICON_COLUMN);
-    gtk_icon_view_set_text_column(icon_view, DEVICE_NAME_COLUMN);
+    gtk_icon_view_set_text_column(icon_view, SHORT_DEVICE_NAME_COLUMN);
+    gtk_icon_view_set_tooltip_column(icon_view, FULL_DEVICE_NAME_COLUMN);
     gtk_icon_view_set_selection_mode(icon_view, GTK_SELECTION_MULTIPLE);
     g_signal_connect(icon_view, "selection-changed",
                      G_CALLBACK(cb_selection_changed), notebook);
