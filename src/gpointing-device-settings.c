@@ -59,7 +59,7 @@ cb_response (GtkDialog *dialog, gint response_id, gpointer user_data)
 }
 
 static GpdsUI *
-create_ui (GpdsXInputPointerInfo *info)
+create_ui_from_pointer_info (GpdsXInputPointerInfo *info)
 {
     GpdsUI *ui;
     gchar *type_name;
@@ -134,23 +134,45 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
 static void
 append_uis (GtkIconView *icon_view, GtkNotebook *notebook)
 {
+    GpdsUI *ui;
     GList *node, *pointer_infos;;
+    GList *ui_names, *loaded_ui_names = NULL;
 
     pointer_infos = gpds_xinput_utils_collect_pointer_infos();
-    
     for (node = pointer_infos; node; node = g_list_next(node)) {
         GpdsXInputPointerInfo *info = node->data;
-        GpdsUI *ui;
 
-        ui = create_ui(info);
+        ui = create_ui_from_pointer_info(info);
         if (ui) {
             uis = g_list_prepend(uis, ui);
+            loaded_ui_names = g_list_prepend(loaded_ui_names,
+                                             (gpointer)gpds_ui_get_device_name(ui));
             append_ui(icon_view, notebook, ui);
         }
     }
 
     g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
     g_list_free(pointer_infos);
+
+    ui_names = gpds_uis_get_names();
+    for (node = ui_names; node; node = g_list_next(node)) {
+        const gchar *ui_name = node->data;
+
+        if (g_list_find_custom(loaded_ui_names, ui_name,
+                               (GCompareFunc)strcmp)) {
+            continue;
+        }
+
+        ui = gpds_ui_new(ui_name, NULL);
+        if (!gpds_ui_is_available(ui, NULL)) {
+            g_object_unref(ui);
+            continue;
+        }
+        uis = g_list_prepend(uis, ui);
+        append_ui(icon_view, notebook, ui);
+    }
+    g_list_free(ui_names);
+    g_list_free(loaded_ui_names);
 }
 
 static void
