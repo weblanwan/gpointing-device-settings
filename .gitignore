@@ -31,8 +31,6 @@ coverage.info
 *.la
 *.gcno
 *.gcda
-data/touchpad.ui
-data/mouse.ui
 data/gpointing-device-settings_gnome_settings_daemon.schemas
 po/Makefile.in.in
 po/POTFILES
