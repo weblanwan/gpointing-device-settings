@@ -1,6 +1,7 @@
 #include "gpds-ui.h"
 
 #include <gcutter.h>
+#include "gpds-xinput.h"
 
 void test_names (void);
 void test_new (void);
@@ -9,6 +10,8 @@ void test_is_available (void);
 void test_build (void);
 void test_get_content_widget (void);
 void test_get_icon_pixbuf (void);
+void test_create_window (void);
+void test_wheel_emulation (void);
 
 static GError *error;
 static GpdsUI *ui;
@@ -16,6 +19,9 @@ static GList *names;
 static GList *expected_names;
 static GtkWidget *widget;
 static GdkPixbuf *pixbuf;
+static GtkWidget *window;
+static GpdsXInput *xinput;
+static gint *values;
 
 #define DEVICE_NAME "Macintosh mouse button emulation"
 
@@ -40,6 +46,9 @@ setup (void)
     names = NULL;
     expected_names = NULL;
     pixbuf = NULL;
+    window = NULL;
+    xinput = NULL;
+    values = NULL;
 }
 
 void
@@ -54,6 +63,11 @@ teardown (void)
         g_object_unref(pixbuf);
     if (error)
         g_clear_error(&error);
+    if (window)
+        gtk_widget_destroy(window);
+    if (xinput)
+        g_object_unref(xinput);
+    g_free(values);
 }
 
 void
@@ -127,7 +141,56 @@ test_get_icon_pixbuf (void)
     cut_assert_true(GDK_IS_PIXBUF(pixbuf));
 }
 
+static GtkWidget *
+get_widget (const gchar *id)
+{
+    GtkBuilder *builder;
 
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+    return GTK_WIDGET(gtk_builder_get_object(builder, id));
+}
+
+void
+test_create_window (void)
+{
+    cut_trace(test_get_content_widget());
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_container_add(GTK_CONTAINER(window), widget);
+    gtk_widget_show_all(window);
+}
+
+static gboolean
+get_boolean_property_of_xinput (const gchar *property_name)
+{
+    gulong n_values;
+
+    xinput = gpds_xinput_new(DEVICE_NAME);
+    gpds_xinput_get_int_properties_by_name(xinput,
+                                   property_name,
+                                   &error,
+                                   &values, &n_values);
+    gcut_assert_error(error);
+
+    return values[0] != 0;
+}
+
+void
+test_wheel_emulation (void)
+{
+    GtkWidget *button;
+    gboolean active;
+    gboolean current_value;
+
+    cut_trace(test_create_window());
+
+    button = get_widget("wheel_emulation");
+    cut_assert_true(GTK_IS_TOGGLE_BUTTON(button));
+
+    current_value = get_boolean_property_of_xinput("Evdev Wheel Emulation");
+    active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    cut_assert_equal_int(current_value, active);
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
