@@ -17,6 +17,7 @@ schemas_in_files = 				\
 schemas_DATA = $(schemas_in_files:.schemas.in=.schemas)
 
 EXTRA_DIST = 			\
+	$(gpds_ui_DATA)		\
 	$(gpds_icon_DATA)	\
 	$(schemas_in_files)
 
