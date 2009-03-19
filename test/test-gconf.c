@@ -4,6 +4,9 @@
 
 void test_get_key_from_path (void);
 void test_get_non_existent (void);
+void test_boolean (void);
+void test_int (void);
+void test_string (void);
 
 static gchar *gconf_key;
 static gboolean boolean_value;
