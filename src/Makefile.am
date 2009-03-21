@@ -50,6 +50,6 @@ gpointing_device_settings_SOURCES =	\
 	gpointing-device-settings.c
 
 gpointing_device_settings_LDADD =	\
-	$(top_builddir)/src/libgpds.la	\
+	libgpds.la			\
 	$(GTK_LIBS)			\
 	$(XINPUT_LIBS)
