@@ -33,9 +33,9 @@
 
 G_DEFINE_TYPE (GsdMouseExtensionManager, gsd_mouse_extension_manager, GSD_TYPE_POINTING_DEVICE_MANAGER)
 
-static gboolean start                (GsdPointingDeviceManager *manager,
+static gboolean _start               (GsdPointingDeviceManager *manager,
                                       GError **error);
-static void     stop                 (GsdPointingDeviceManager *manager);
+static void     _stop                (GsdPointingDeviceManager *manager);
 static void     _gconf_client_notify (GsdPointingDeviceManager *manager,
                                       GConfClient *client,
                                       guint cnxn_id,
@@ -51,8 +51,8 @@ gsd_mouse_extension_manager_class_init (GsdMouseExtensionManagerClass *klass)
 {
     GsdPointingDeviceManagerClass *manager_class = GSD_POINTING_DEVICE_MANAGER_CLASS(klass);
 
-    manager_class->start               = start;
-    manager_class->stop                = stop;
+    manager_class->start               = _start;
+    manager_class->stop                = _stop;
     manager_class->gconf_client_notify = _gconf_client_notify;
 }
 
@@ -69,40 +69,62 @@ set_horizontal_and_vertical_scroll (GsdPointingDeviceManager *manager,
                                     GConfClient *gconf)
 {
     gboolean y_enable, x_enable;
+    gboolean y_preference_exist, x_preference_exist;
     gint properties[4];
+    gint *current_values;
+    gulong n_current_values;
 
-    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
-                                                       gconf,
-                                                       GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY,
-                                                       &y_enable)) {
-        return;
-    }
-    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
-                                                       gconf,
-                                                       GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY,
-                                                       &x_enable)) {
+    if (!gpds_xinput_get_int_properties(xinput, 
+                                        GPDS_MOUSE_WHEEL_EMULATION_AXES,
+                                        NULL,
+                                        &current_values, 
+                                        &n_current_values)) {
         return;
     }
 
-    if (x_enable) {
-        properties[0] = 6;
-        properties[1] = 7;
+    y_preference_exist = 
+        gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                      gconf,
+                                                      GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY,
+                                                      &y_enable);
+
+    x_preference_exist =
+        gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                      gconf,
+                                                      GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY,
+                                                      &x_enable);
+
+    if (x_preference_exist) {
+        if (x_enable) {
+            properties[0] = 6;
+            properties[1] = 7;
+        } else {
+            properties[0] = 0;
+            properties[1] = 0;
+        }
     } else {
-        properties[0] = 0;
-        properties[1] = 0;
+        properties[0] = current_values[0];
+        properties[1] = current_values[1];
     }
-    if (y_enable) {
-        properties[2] = 4;
-        properties[3] = 5;
+
+    if (y_preference_exist) {
+        if (y_enable) {
+            properties[2] = 4;
+            properties[3] = 5;
+        } else {
+            properties[2] = 0;
+            properties[3] = 0;
+        }
     } else {
-        properties[2] = 0;
-        properties[3] = 0;
+        properties[2] = current_values[2];
+        properties[3] = current_values[3];
     }
     gpds_xinput_set_int_properties(xinput,
                                    GPDS_MOUSE_WHEEL_EMULATION_AXES,
                                    NULL,
                                    properties,
                                    4);
+    g_free(current_values);
 }
 
 static gboolean
@@ -137,7 +159,7 @@ start_manager (GsdPointingDeviceManager *manager)
 }
 
 static gboolean
-start (GsdPointingDeviceManager *manager, GError **error)
+_start (GsdPointingDeviceManager *manager, GError **error)
 {
     g_idle_add((GSourceFunc)start_manager, manager);
 
@@ -145,7 +167,7 @@ start (GsdPointingDeviceManager *manager, GError **error)
 }
 
 static void
-stop (GsdPointingDeviceManager *manager)
+_stop (GsdPointingDeviceManager *manager)
 {
 }
 
@@ -174,7 +196,7 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
         } else  if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_KEY)) {
             set_wheel_emulation(manager, xinput, client);
         } else  if (!strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY) ||
-                  !strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY)) {
+                    !strcmp(key, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY)) {
             set_horizontal_and_vertical_scroll(manager, xinput, client);
         }
         break;
