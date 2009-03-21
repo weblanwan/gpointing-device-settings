@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.57)
 
-AC_INIT(gpointing-device-settings, 1.1.0)
+AC_INIT(gpointing-device-settings, 1.2.0)
 AM_INIT_AUTOMAKE([1.9 tar-pax])
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_MACRO_DIR([m4])
