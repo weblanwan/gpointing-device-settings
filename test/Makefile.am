@@ -10,6 +10,7 @@ noinst_LTLIBRARIES =	                \
 	test-xinput-utils.la	        \
 	test-module.la		        \
 	test-ui.la                      \
+	test-ui-widget.la               \
 	test-utils.la
 endif
 
@@ -44,6 +45,7 @@ test_xinput_pointer_info_la_SOURCES = test-xinput-pointer-info.c
 test_xinput_utils_la_SOURCES = test-xinput-utils.c
 test_module_la_SOURCES = test-module.c
 test_ui_la_SOURCES = test-ui.c
+test_ui_widget_la_SOURCES = test-ui-widget.c
 test_utils_la_SOURCES = test-utils.c
 
 echo-cutter:
