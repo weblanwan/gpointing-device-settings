@@ -40,7 +40,7 @@
           <property name="right_padding">0</property>
           <child>
             <object class="GtkAdjustment" id="middle_button_timeout_adjustment">
-              <property name="lower">100</property>
+              <property name="lower">50</property>
               <property name="upper">10000</property>
               <property name="step-increment">50</property>
             </object>
