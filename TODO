@@ -2,10 +2,10 @@
 * more touchpad settings.
  * General
   - move speed min, max, accel, trackstick. What is "trackstick"? 
-  - palm detection
+  - finger
+  - edges
   - palm dimensions
  * Tapping
-  - finger
   - move
   - durations
   - tap actions
