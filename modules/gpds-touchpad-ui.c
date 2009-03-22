@@ -193,6 +193,17 @@ set_edge_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 }
 
 static void
+cb_palm_detection_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
+    gboolean check;
+
+    set_toggle_property(ui->xinput, button, GPDS_TOUCHPAD_PALM_DETECTION);
+    check = gtk_toggle_button_get_active(button);
+    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_PALM_DETECTION_KEY, check);
+}
+
+static void
 set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
     GError *error = NULL;
@@ -540,6 +551,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
                      ui)
 
     CONNECT(touchpad_use_type, changed);
+    CONNECT(palm_detection, toggled);
     CONNECT(tapping_time_scale, value_changed);
     CONNECT(faster_tapping_check, toggled);
     CONNECT(circular_scrolling, toggled);
@@ -812,6 +824,11 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                          GPDS_TOUCHPAD_TAP_FAST_TAP_KEY,
                                          builder,
                                          "faster_tapping_check");
+    set_boolean_property_from_preference(touchpad_ui,
+                                         GPDS_TOUCHPAD_PALM_DETECTION, 
+                                         GPDS_TOUCHPAD_PALM_DETECTION_KEY,
+                                         builder,
+                                         "palm_detection");
     set_circular_scrolling_property_from_preference(touchpad_ui, builder);
     set_edge_scrolling_property_from_preference(touchpad_ui, builder);
     set_scroll_distance_property_from_preference(touchpad_ui, builder);

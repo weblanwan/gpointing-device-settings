@@ -33,9 +33,9 @@
 
 G_DEFINE_TYPE (GsdTouchpadManager, gsd_touchpad_manager, GSD_TYPE_POINTING_DEVICE_MANAGER)
 
-static gboolean start                (GsdPointingDeviceManager *manager,
+static gboolean _start               (GsdPointingDeviceManager *manager,
                                       GError **error);
-static void     stop                 (GsdPointingDeviceManager *manager);
+static void     _stop                (GsdPointingDeviceManager *manager);
 static void     _gconf_client_notify (GsdPointingDeviceManager *manager,
                                       GConfClient *client,
                                       guint cnxn_id,
@@ -51,11 +51,12 @@ gsd_touchpad_manager_class_init (GsdTouchpadManagerClass *klass)
 {
     GsdPointingDeviceManagerClass *manager_class = GSD_POINTING_DEVICE_MANAGER_CLASS(klass);
 
-    manager_class->start               = start;
-    manager_class->stop                = stop;
+    manager_class->start               = _start;
+    manager_class->stop                = _stop;
     manager_class->gconf_client_notify = _gconf_client_notify;
 }
 
+DEFINE_SET_BOOLEAN_FUNCTION (palm_detection, GPDS_TOUCHPAD_PALM_DETECTION)
 DEFINE_SET_BOOLEAN_FUNCTION (tap_fast_tap, GPDS_TOUCHPAD_TAP_FAST_TAP)
 DEFINE_SET_BOOLEAN_FUNCTION (circular_scrolling, GPDS_TOUCHPAD_CIRCULAR_SCROLLING)
 DEFINE_SET_INT_FUNCTION (touchpad_off, GPDS_TOUCHPAD_OFF)
@@ -180,6 +181,7 @@ start_manager (GsdPointingDeviceManager *manager)
     }
 
     set_touchpad_off(manager, xinput, gconf);
+    set_palm_detection(manager, xinput, gconf);
     set_tap_fast_tap(manager, xinput, gconf);
     set_tap_time(manager, xinput, gconf);
     set_edge_scrolling(manager, xinput, gconf);
@@ -195,7 +197,7 @@ start_manager (GsdPointingDeviceManager *manager)
 }
 
 static gboolean
-start (GsdPointingDeviceManager *manager, GError **error)
+_start (GsdPointingDeviceManager *manager, GError **error)
 {
     g_idle_add((GSourceFunc)start_manager, manager);
 
@@ -203,7 +205,7 @@ start (GsdPointingDeviceManager *manager, GError **error)
 }
 
 static void
-stop (GsdPointingDeviceManager *manager)
+_stop (GsdPointingDeviceManager *manager)
 {
 }
 
@@ -228,7 +230,9 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
 
     switch (value->type) {
     case GCONF_VALUE_BOOL:
-        if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
+        if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_KEY)) {
+            set_palm_detection(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
             set_tap_fast_tap(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
             set_circular_scrolling(manager, xinput, client);
