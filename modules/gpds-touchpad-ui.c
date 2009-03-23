@@ -290,6 +290,23 @@ cb_tapping_time_scale_value_changed (GtkRange *range, gpointer user_data)
 }
 
 static void
+cb_tapping_move_scale_value_changed (GtkRange *range, gpointer user_data)
+{
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
+    gdouble distance;
+    GpdsXInput *xinput;
+
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
+    if (!xinput)
+        return;
+
+    set_range_property(xinput, range, GPDS_TOUCHPAD_TAP_MOVE);
+
+    distance = gtk_range_get_value(range);
+    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_TOUCHPAD_TAP_MOVE_KEY, (gint)distance);
+}
+
+static void
 cb_vertical_scrolling_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
@@ -531,6 +548,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(touchpad_use_type, changed);
     CONNECT(palm_detection, toggled);
     CONNECT(tapping_time_scale, value_changed);
+    CONNECT(tapping_move_scale, value_changed);
     CONNECT(faster_tapping_check, toggled);
     CONNECT(circular_scrolling, toggled);
     CONNECT(vertical_scrolling, toggled);
@@ -713,6 +731,11 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                         GPDS_TOUCHPAD_TAP_TIME,
                                         GPDS_TOUCHPAD_TAP_TIME_KEY,
                                         "tapping_time_scale");
+    gpds_xinput_ui_set_widget_value_from_preference(
+                                        GPDS_XINPUT_UI(ui),
+                                        GPDS_TOUCHPAD_TAP_MOVE,
+                                        GPDS_TOUCHPAD_TAP_MOVE_KEY,
+                                        "tapping_move_scale");
     gpds_xinput_ui_set_toggle_button_state_from_preference(
                                         GPDS_XINPUT_UI(ui),
                                         GPDS_TOUCHPAD_TAP_FAST_TAP, 

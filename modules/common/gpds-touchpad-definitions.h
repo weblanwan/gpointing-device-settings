@@ -24,6 +24,7 @@
 #define GPDS_TOUCHPAD_FINGER_KEY                          "finger"
 #define GPDS_TOUCHPAD_OFF_KEY                             "off"
 #define GPDS_TOUCHPAD_TAP_TIME_KEY                        "tap_time"
+#define GPDS_TOUCHPAD_TAP_MOVE_KEY                        "tap_move"
 #define GPDS_TOUCHPAD_TAP_FAST_TAP_KEY                    "tap_fast_tap"
 #define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY   "horizontal_scrolling_distance"
 #define GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY            "horizontal_scrolling"
