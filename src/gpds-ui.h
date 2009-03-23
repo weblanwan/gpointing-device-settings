@@ -72,6 +72,7 @@ gboolean     gpds_ui_build                (GpdsUI *ui, GError **error);
 GtkWidget   *gpds_ui_get_content_widget   (GpdsUI *ui, GError **error);
 GdkPixbuf   *gpds_ui_get_icon_pixbuf      (GpdsUI *ui, GError **error);
 GtkBuilder  *gpds_ui_get_builder          (GpdsUI *ui);
+GObject     *gpds_ui_get_ui_object_by_name(GpdsUI *ui, const gchar *name);
 const gchar *gpds_ui_get_device_name      (GpdsUI *ui);
 void         gpds_ui_set_gconf_bool       (GpdsUI *ui,
                                            const gchar *key,

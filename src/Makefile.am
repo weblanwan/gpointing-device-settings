@@ -6,6 +6,7 @@ libgpds_public_headers = 		\
 	gpds-gconf.h			\
 	gpds-utils.h			\
 	gpds-ui.h			\
+	gpds-xinput-ui.h		\
 	gpds-xinput.h			\
 	gpds-xinput-pointer-info.h	\
 	gpds-xinput-utils.h
@@ -15,6 +16,7 @@ libgpds_la_SOURCES =			\
 	gpds-module.c			\
 	gpds-module.h			\
 	gpds-ui.c			\
+	gpds-xinput-ui.c		\
 	gpds-gconf.c			\
 	gpds-utils.c			\
 	gpds-xinput.c			\

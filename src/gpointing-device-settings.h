@@ -25,6 +25,7 @@
 #include <gpds-gconf.h>
 #include <gpds-utils.h>
 #include <gpds-gconf.h>
+#include <gpds-xinput-ui.h>
 
 #endif /* __GPOINTING_DEVICE_SETTINGS_H__ */
 /*
