@@ -4,6 +4,7 @@ GPointinDeviceSettings 1.?.?
 * Touchpad
  - Palm detection
  - Tap move
+ - Fix invalid values for scroll distance
 
 ============================
 GPointinDeviceSettings 1.2.0
