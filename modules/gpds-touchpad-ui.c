@@ -175,6 +175,11 @@ GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(circular_scrolling,
                                              GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
                                              "circular_scrolling_box")
 
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_time_scale,
+                                                   GPDS_TOUCHPAD_TAP_TIME)
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_move_scale,
+                                                   GPDS_TOUCHPAD_TAP_MOVE)
+
 static void
 set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
@@ -253,48 +258,24 @@ set_circular_scrolling_trigger_property (GpdsUI *ui, GpdsTouchpadCircularScrolli
     }
 }
 
-GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_time_scale, GPDS_TOUCHPAD_TAP_TIME)
-GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_move_scale, GPDS_TOUCHPAD_TAP_MOVE)
-
-static void
-cb_vertical_scrolling_scale_value_changed (GtkRange *range, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
-    gdouble distance;
-    GpdsXInput *xinput;
-
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
-    if (!xinput)
-        return;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_scrolling_distance_range_property(xinput, builder);
-
-    distance = gtk_range_get_value(range);
-    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY, (gint)distance);
+#define DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(type, TYPE)                                                   \
+static void                                                                                                         \
+cb_ ## type ## _scrolling_scale_value_changed (GtkRange *range, gpointer user_data)                                 \
+{                                                                                                                   \
+    GtkBuilder *builder;                                                                                            \
+    gdouble distance;                                                                                               \
+    GpdsXInput *xinput;                                                                                             \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                                                  \
+    if (!xinput)                                                                                                    \
+        return;                                                                                                     \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                              \
+    set_scrolling_distance_range_property(xinput, builder);                                                         \
+    distance = gtk_range_get_value(range);                                                                          \
+    gpds_ui_set_gconf_bool(GPDS_UI(user_data), GPDS_TOUCHPAD_ ## TYPE ## _SCROLLING_DISTANCE_KEY, (gint)distance);  \
 }
 
-static void
-cb_horizontal_scrolling_scale_value_changed (GtkRange *range, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    GtkBuilder *builder;
-    gdouble distance;
-    GpdsXInput *xinput;
-
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
-    if (!xinput)
-        return;
-
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));
-
-    set_scrolling_distance_range_property(xinput, builder);
-
-    distance = gtk_range_get_value(range);
-    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY, (gint)distance);
-}
+DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(vertical, VERTICAL)
+DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(horizontal, HORIZONTAL)
 
 #define DEFINE_EDGE_SCROLLING_CALLBACK(type, TYPE)                                          \
 static void                                                                                 \
