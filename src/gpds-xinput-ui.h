@@ -91,6 +91,32 @@ cb_ ## function_name ## _toggled (GtkToggleButton *button,                      
     gtk_widget_set_sensitive(GTK_WIDGET(depend_widget), enable);                                        \
 }
 
+#define GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(function_name, PROPERTY_NAME)    \
+static void                                                                                 \
+cb_ ## function_name ## _value_changed (GtkRange *range, gpointer user_data)                \
+{                                                                                           \
+    gdouble value;                                                                          \
+    GpdsXInput *xinput;                                                                     \
+    GError *error = NULL;                                                                   \
+    gint properties[1];                                                                     \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                          \
+    if (!xinput)                                                                            \
+        return;                                                                             \
+    value = gtk_range_get_value(range);                                                     \
+    properties[0] = (gint)value;                                                            \
+    if (!gpds_xinput_set_int_properties(xinput,                                             \
+                                        PROPERTY_NAME,                                      \
+                                        &error,                                             \
+                                        properties,                                         \
+                                        1)) {                                               \
+        if (error) {                                                                        \
+            show_error(error);                                                              \
+            g_error_free(error);                                                            \
+        }                                                                                   \
+    }                                                                                       \
+    gpds_ui_set_gconf_int(GPDS_UI(user_data), PROPERTY_NAME ## _KEY, (gint)value);          \
+}
+
 G_END_DECLS
 
 #endif /* __GPDS_XINPUT_UI_H__ */

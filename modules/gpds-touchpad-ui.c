@@ -204,25 +204,6 @@ set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builde
 }
 
 static void
-set_range_property (GpdsXInput *xinput, GtkRange *range, GpdsTouchpadProperty property)
-{
-    GError *error = NULL;
-    gint properties[1];
-
-    properties[0] = (gint)gtk_range_get_value(range);
-    if (!gpds_xinput_set_int_properties(xinput,
-                                        property,
-                                        &error,
-                                        properties,
-                                        1)) {
-        if (error) {
-            show_error(error);
-            g_error_free(error);
-        }
-    }
-}
-
-static void
 set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
     GError *error = NULL;
@@ -272,39 +253,8 @@ set_circular_scrolling_trigger_property (GpdsUI *ui, GpdsTouchpadCircularScrolli
     }
 }
 
-static void
-cb_tapping_time_scale_value_changed (GtkRange *range, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    gdouble time;
-    GpdsXInput *xinput;
-
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
-    if (!xinput)
-        return;
-
-    set_range_property(xinput, range, GPDS_TOUCHPAD_TAP_TIME);
-
-    time = gtk_range_get_value(range);
-    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_TOUCHPAD_TAP_TIME_KEY, (gint)time);
-}
-
-static void
-cb_tapping_move_scale_value_changed (GtkRange *range, gpointer user_data)
-{
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);
-    gdouble distance;
-    GpdsXInput *xinput;
-
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
-    if (!xinput)
-        return;
-
-    set_range_property(xinput, range, GPDS_TOUCHPAD_TAP_MOVE);
-
-    distance = gtk_range_get_value(range);
-    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_TOUCHPAD_TAP_MOVE_KEY, (gint)distance);
-}
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_time_scale, GPDS_TOUCHPAD_TAP_TIME)
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_move_scale, GPDS_TOUCHPAD_TAP_MOVE)
 
 static void
 cb_vertical_scrolling_scale_value_changed (GtkRange *range, gpointer user_data)
