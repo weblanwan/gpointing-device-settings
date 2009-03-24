@@ -3,55 +3,15 @@
   <object class="GtkVBox" id="main-widget">
     <property name="visible">True</property>
     <child>
-      <object class="GtkCheckButton" id="middle_button_emulation">
+      <object class="GtkFrame" id="middle_button_emulation_frame">
         <property name="visible">True</property>
-        <property name="label" translatable="yes">Use _middle button emulation</property>
-        <property name="use_underline">True</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkHBox" id="middle_button_emulation_box">
-        <property name="visible">True</property>
-        <property name="border-width">5</property>
-        <child>
-          <object class="GtkAdjustment" id="middle_button_timeout_scale_adjustment">
-            <property name="lower">50</property>
-            <property name="upper">1000</property>
-            <property name="step-increment">50</property>
-	    <property name="page_increment">50</property>
-	    <property name="page_size">0</property>
-          </object>
-          <object class="GtkLabel" id="middle_button_timeout_label">
+        <property name="label_xalign">0</property>
+        <property name="label_yalign">0.5</property>
+        <property name="shadow_type">GTK_SHADOW_NONE</property>
+        <child type="label">
+          <object class="GtkLabel" id="label19">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">_timeout:</property>
-            <property name="mnemonic-widget">middle_button_timeout_scale</property>
-            <property name="use_underline">True</property>
-            <property name="use_markup">False</property>
-            <property name="justify">GTK_JUSTIFY_LEFT</property>
-            <property name="wrap">False</property>
-            <property name="selectable">False</property>
-            <property name="xalign">0.5</property>
-            <property name="yalign">0.5</property>
-            <property name="xpad">0</property>
-            <property name="ypad">0</property>
-            <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-            <property name="width_chars">-1</property>
-            <property name="single_line_mode">False</property>
-            <property name="angle">0</property>
-          </object>
-          <packing>
-            <property name="padding">0</property>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="middle_button_timeout_left_label">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+            <property name="label" translatable="yes">&lt;b&gt;Middle Button Emulation&lt;/b&gt;</property>
             <property name="use_underline">False</property>
             <property name="use_markup">True</property>
             <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -66,33 +26,143 @@
             <property name="single_line_mode">False</property>
             <property name="angle">0</property>
           </object>
-          <packing>
-            <property name="padding">0</property>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
-          <object class="GtkHScale" id="middle_button_timeout_scale">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="draw_value">False</property>
-            <property name="value_pos">GTK_POS_TOP</property>
-            <property name="digits">0</property>
-            <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
-            <property name="inverted">False</property>
-            <property name="adjustment">middle_button_timeout_scale_adjustment</property>
+          <object class="GtkVBox" id="middle_button_emulation_frame_box">
+          <property name="visible">True</property>
+          <property name="border-width">5</property>
+          <child>
+            <object class="GtkCheckButton" id="middle_button_emulation">
+              <property name="visible">True</property>
+              <property name="label" translatable="yes">Use _middle button emulation</property>
+              <property name="use_underline">True</property>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+            </packing>
+          </child>
+          <child>
+            <object class="GtkHBox" id="middle_button_emulation_box">
+              <property name="visible">True</property>
+              <property name="border-width">5</property>
+              <child>
+                <object class="GtkAdjustment" id="middle_button_timeout_scale_adjustment">
+                  <property name="lower">50</property>
+                  <property name="upper">1000</property>
+                  <property name="step-increment">50</property>
+                  <property name="page_increment">50</property>
+                  <property name="page_size">0</property>
+                </object>
+                <object class="GtkLabel" id="middle_button_timeout_label">
+                  <property name="visible">True</property>
+                  <property name="label" translatable="yes">_timeout:</property>
+                  <property name="mnemonic-widget">middle_button_timeout_scale</property>
+                  <property name="use_underline">True</property>
+                  <property name="use_markup">False</property>
+                  <property name="justify">GTK_JUSTIFY_LEFT</property>
+                  <property name="wrap">False</property>
+                  <property name="selectable">False</property>
+                  <property name="xalign">0.5</property>
+                  <property name="yalign">0.5</property>
+                  <property name="xpad">0</property>
+                  <property name="ypad">0</property>
+                  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                  <property name="width_chars">-1</property>
+                  <property name="single_line_mode">False</property>
+                  <property name="angle">0</property>
+                </object>
+                <packing>
+                  <property name="padding">0</property>
+                  <property name="expand">False</property>
+                  <property name="fill">False</property>
+                </packing>
+              </child>
+              <child>
+                <object class="GtkLabel" id="middle_button_timeout_left_label">
+                  <property name="visible">True</property>
+                  <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+                  <property name="use_underline">False</property>
+                  <property name="use_markup">True</property>
+                  <property name="justify">GTK_JUSTIFY_LEFT</property>
+                  <property name="wrap">False</property>
+                  <property name="selectable">False</property>
+                  <property name="xalign">0.5</property>
+                  <property name="yalign">0.5</property>
+                  <property name="xpad">0</property>
+                  <property name="ypad">0</property>
+                  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                  <property name="width_chars">-1</property>
+                  <property name="single_line_mode">False</property>
+                  <property name="angle">0</property>
+                </object>
+                <packing>
+                  <property name="padding">0</property>
+                  <property name="expand">False</property>
+                  <property name="fill">False</property>
+                </packing>
+              </child>
+              <child>
+                <object class="GtkHScale" id="middle_button_timeout_scale">
+                  <property name="visible">True</property>
+                  <property name="can_focus">True</property>
+                  <property name="draw_value">False</property>
+                  <property name="value_pos">GTK_POS_TOP</property>
+                  <property name="digits">0</property>
+                  <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
+                  <property name="inverted">False</property>
+                  <property name="adjustment">middle_button_timeout_scale_adjustment</property>
+                </object>
+                <packing>
+                  <property name="padding">0</property>
+                  <property name="expand">True</property>
+                  <property name="fill">True</property>
+                </packing>
+              </child>
+              <child>
+                <object class="GtkLabel" id="middle_button_timouet_right_label">
+                  <property name="visible">True</property>
+                  <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+                  <property name="use_underline">False</property>
+                  <property name="use_markup">True</property>
+                  <property name="justify">GTK_JUSTIFY_LEFT</property>
+                  <property name="wrap">False</property>
+                  <property name="selectable">False</property>
+                  <property name="xalign">0.5</property>
+                  <property name="yalign">0.5</property>
+                  <property name="xpad">0</property>
+                  <property name="ypad">0</property>
+                  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                  <property name="width_chars">-1</property>
+                  <property name="single_line_mode">False</property>
+                  <property name="angle">0</property>
+                </object>
+                <packing>
+                  <property name="padding">0</property>
+                  <property name="expand">False</property>
+                  <property name="fill">False</property>
+                </packing>
+              </child>
+            </object>
+            <packing>
+              <property name="padding">0</property>
+              <property name="expand">False</property>
+              <property name="fill">True</property>
+            </packing>
+          </child>
           </object>
-          <packing>
-            <property name="padding">0</property>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
-        <child>
-          <object class="GtkLabel" id="middle_button_timouet_right_label">
+      </object>
+    </child>
+    <child>
+      <object class="GtkFrame" id="wheel_emulation_frame">
+        <property name="visible">True</property>
+        <property name="label_xalign">0</property>
+        <property name="label_yalign">0.5</property>
+        <property name="shadow_type">GTK_SHADOW_NONE</property>
+        <child type="label">
+          <object class="GtkLabel" id="label19">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+            <property name="label" translatable="yes">&lt;b&gt;Wheel Emulation&lt;/b&gt;</property>
             <property name="use_underline">False</property>
             <property name="use_markup">True</property>
             <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -107,316 +177,319 @@
             <property name="single_line_mode">False</property>
             <property name="angle">0</property>
           </object>
-          <packing>
-            <property name="padding">0</property>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
-        </child>
-      </object>
-      <packing>
-        <property name="padding">0</property>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="wheel_emulation">
-        <property name="visible">True</property>
-        <property name="label" translatable="yes">Use _wheel emulation</property>
-        <property name="use_underline">True</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkVBox" id="wheel_emulation_box">
-      <property name="visible">True</property>
-      <property name="border-width">5</property>
-      <child>
-        <object class="GtkHBox" id="hbox1">
-        <property name="visible">True</property>
-        <child>
-          <object class="GtkLabel" id="wheel_emulation_button_label">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">_button:</property>
-            <property name="use_underline">True</property>
-            <property name="mnemonic-widget">wheel_emulation_button</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-          </packing>
         </child>
         <child>
-          <object class="GtkAlignment" id="alignment2">
+          <object class="GtkVBox" id="wheel_emulation_frame_box">
+          <property name="visible">True</property>
+          <property name="border-width">5</property>
+          <child>
+            <object class="GtkHBox" id="wheel_emulation_hbox">
             <property name="visible">True</property>
-            <property name="xalign">1</property>
-            <property name="yalign">0.5</property>
-            <property name="xscale">0</property>
-            <property name="yscale">1</property>
-            <property name="top_padding">6</property>
-            <property name="bottom_padding">0</property>
-            <property name="left_padding">12</property>
-            <property name="right_padding">0</property>
+            <property name="border-width">5</property>
             <child>
-              <object class="GtkListStore" id="wheel_emulation_button_list_store">
-                <columns>
-                  <column type="gint"/>
-                </columns>
-              </object>
-              <object class="GtkComboBox" id="wheel_emulation_button">
+              <object class="GtkCheckButton" id="wheel_emulation">
                 <property name="visible">True</property>
-                <property name="model">wheel_emulation_button_list_store</property>
-                <property name="can_focus">True</property>
-                <property name="focus_on_click">True</property>
-                <property name="active">0</property>
+                <property name="label" translatable="yes">Use _wheel emulation</property>
+                <property name="use_underline">True</property>
+              </object>
+            </child>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+            </packing>
+          </child>
+          <child>
+            <object class="GtkVBox" id="wheel_emulation_box">
+            <property name="visible">True</property>
+            <property name="border-width">5</property>
+            <child>
+              <object class="GtkHBox" id="hbox1">
+              <property name="visible">True</property>
+              <property name="border-width">5</property>
+              <child>
+                <object class="GtkLabel" id="wheel_emulation_button_label">
+                  <property name="visible">True</property>
+                  <property name="label" translatable="yes">_button:</property>
+                  <property name="use_underline">True</property>
+                  <property name="mnemonic-widget">wheel_emulation_button</property>
+                </object>
+                <packing>
+                  <property name="expand">False</property>
+                </packing>
+              </child>
+              <child>
+                <object class="GtkAlignment" id="alignment2">
+                  <property name="visible">True</property>
+                  <property name="xalign">1</property>
+                  <property name="yalign">0.5</property>
+                  <property name="xscale">0</property>
+                  <property name="yscale">1</property>
+                  <property name="top_padding">6</property>
+                  <property name="bottom_padding">0</property>
+                  <property name="left_padding">12</property>
+                  <property name="right_padding">0</property>
+                  <child>
+                    <object class="GtkListStore" id="wheel_emulation_button_list_store">
+                      <columns>
+                        <column type="gint"/>
+                      </columns>
+                    </object>
+                    <object class="GtkComboBox" id="wheel_emulation_button">
+                      <property name="visible">True</property>
+                      <property name="model">wheel_emulation_button_list_store</property>
+                      <property name="can_focus">True</property>
+                      <property name="focus_on_click">True</property>
+                      <property name="active">0</property>
+                      <child>
+                        <object class="GtkCellRendererText" id="wheel_emulation_button_number"/>
+                        <attributes>
+                          <attribute name="text">0</attribute>
+                        </attributes>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkHBox" id="wheel_emulation_timeout_box">
+                <property name="visible">True</property>
+                <property name="border-width">5</property>
                 <child>
-                  <object class="GtkCellRendererText" id="wheel_emulation_button_number"/>
-                  <attributes>
-                    <attribute name="text">0</attribute>
-                  </attributes>
+                  <object class="GtkAdjustment" id="wheel_emulation_timeout_scale_adjustment">
+                    <property name="lower">100</property>
+                    <property name="upper">1000</property>
+                    <property name="step-increment">50</property>
+                    <property name="page_increment">50</property>
+                    <property name="page_size">0</property>
+                  </object>
+                  <object class="GtkLabel" id="wheel_emulation_timeout_label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">tim_eout:</property>
+                    <property name="mnemonic-widget">wheel_emulation_timeout_scale</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_markup">False</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
                 </child>
+                <child>
+                  <object class="GtkLabel" id="wheel_emulation_timeout_left_label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHScale" id="wheel_emulation_timeout_scale">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="draw_value">False</property>
+                    <property name="value_pos">GTK_POS_TOP</property>
+                    <property name="digits">0</property>
+                    <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
+                    <property name="inverted">False</property>
+                    <property name="adjustment">wheel_emulation_timeout_scale_adjustment</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="wheel_emulation_timeout_right_label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="wheel_emulation_inertia_box">
+                <property name="visible">True</property>
+                <property name="border-width">5</property>
+                <child>
+                  <object class="GtkAdjustment" id="wheel_emulation_inertia_scale_adjustment">
+                    <property name="lower">10</property>
+                    <property name="upper">500</property>
+                    <property name="step-increment">10</property>
+                    <property name="page_increment">10</property>
+                    <property name="page_size">0</property>
+                  </object>
+                  <object class="GtkLabel" id="wheel_emulation_inertia_label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">_inertia:</property>
+                    <property name="mnemonic-widget">wheel_emulation_inertia_scale</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_markup">False</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="wheel_emulation_inertia_left_label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHScale" id="wheel_emulation_inertia_scale">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="draw_value">False</property>
+                    <property name="value_pos">GTK_POS_TOP</property>
+                    <property name="digits">0</property>
+                    <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
+                    <property name="inverted">False</property>
+                    <property name="adjustment">wheel_emulation_inertia_scale_adjustment</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="wheel_emulation_inertia_right_label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="wheel_emulation_vertical">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Enable _vertical scroll</property>
+                <property name="use_underline">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="wheel_emulation_horizontal">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Enable _horizontal scroll</property>
+                <property name="use_underline">True</property>
               </object>
             </child>
           </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
+          </child>
+          </object>
         </child>
-        </object>
-      </child>
-      <child>
-        <object class="GtkHBox" id="wheel_emulation_timeout_box">
-          <property name="visible">True</property>
-          <property name="border-width">5</property>
-          <child>
-            <object class="GtkAdjustment" id="wheel_emulation_timeout_scale_adjustment">
-              <property name="lower">100</property>
-              <property name="upper">1000</property>
-              <property name="step-increment">50</property>
-	      <property name="page_increment">50</property>
-	      <property name="page_size">0</property>
-            </object>
-            <object class="GtkLabel" id="wheel_emulation_timeout_label">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">tim_eout:</property>
-              <property name="mnemonic-widget">wheel_emulation_timeout_scale</property>
-              <property name="use_underline">True</property>
-              <property name="use_markup">False</property>
-              <property name="justify">GTK_JUSTIFY_LEFT</property>
-              <property name="wrap">False</property>
-              <property name="selectable">False</property>
-              <property name="xalign">0.5</property>
-              <property name="yalign">0.5</property>
-              <property name="xpad">0</property>
-              <property name="ypad">0</property>
-              <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-              <property name="width_chars">-1</property>
-              <property name="single_line_mode">False</property>
-              <property name="angle">0</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">False</property>
-              <property name="fill">False</property>
-            </packing>
-          </child>
-          <child>
-            <object class="GtkLabel" id="wheel_emulation_timeout_left_label">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
-              <property name="use_underline">False</property>
-              <property name="use_markup">True</property>
-              <property name="justify">GTK_JUSTIFY_LEFT</property>
-              <property name="wrap">False</property>
-              <property name="selectable">False</property>
-              <property name="xalign">0.5</property>
-              <property name="yalign">0.5</property>
-              <property name="xpad">0</property>
-              <property name="ypad">0</property>
-              <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-              <property name="width_chars">-1</property>
-              <property name="single_line_mode">False</property>
-              <property name="angle">0</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">False</property>
-              <property name="fill">False</property>
-            </packing>
-          </child>
-          <child>
-            <object class="GtkHScale" id="wheel_emulation_timeout_scale">
-              <property name="visible">True</property>
-              <property name="can_focus">True</property>
-              <property name="draw_value">False</property>
-              <property name="value_pos">GTK_POS_TOP</property>
-              <property name="digits">0</property>
-              <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
-              <property name="inverted">False</property>
-              <property name="adjustment">wheel_emulation_timeout_scale_adjustment</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">True</property>
-              <property name="fill">True</property>
-            </packing>
-          </child>
-          <child>
-            <object class="GtkLabel" id="wheel_emulation_timeout_right_label">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
-              <property name="use_underline">False</property>
-              <property name="use_markup">True</property>
-              <property name="justify">GTK_JUSTIFY_LEFT</property>
-              <property name="wrap">False</property>
-              <property name="selectable">False</property>
-              <property name="xalign">0.5</property>
-              <property name="yalign">0.5</property>
-              <property name="xpad">0</property>
-              <property name="ypad">0</property>
-              <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-              <property name="width_chars">-1</property>
-              <property name="single_line_mode">False</property>
-              <property name="angle">0</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">False</property>
-              <property name="fill">False</property>
-            </packing>
-          </child>
-        </object>
-        <packing>
-          <property name="padding">0</property>
-          <property name="expand">False</property>
-          <property name="fill">True</property>
-        </packing>
-      </child>
-      <child>
-        <object class="GtkHBox" id="wheel_emulation_inertia_box">
-          <property name="visible">True</property>
-          <property name="border-width">5</property>
-          <child>
-            <object class="GtkAdjustment" id="wheel_emulation_inertia_scale_adjustment">
-              <property name="lower">10</property>
-              <property name="upper">500</property>
-              <property name="step-increment">10</property>
-	      <property name="page_increment">10</property>
-	      <property name="page_size">0</property>
-            </object>
-            <object class="GtkLabel" id="wheel_emulation_inertia_label">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">_inertia:</property>
-              <property name="mnemonic-widget">wheel_emulation_inertia_scale</property>
-              <property name="use_underline">True</property>
-              <property name="use_markup">False</property>
-              <property name="justify">GTK_JUSTIFY_LEFT</property>
-              <property name="wrap">False</property>
-              <property name="selectable">False</property>
-              <property name="xalign">0.5</property>
-              <property name="yalign">0.5</property>
-              <property name="xpad">0</property>
-              <property name="ypad">0</property>
-              <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-              <property name="width_chars">-1</property>
-              <property name="single_line_mode">False</property>
-              <property name="angle">0</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">False</property>
-              <property name="fill">False</property>
-            </packing>
-          </child>
-          <child>
-            <object class="GtkLabel" id="wheel_emulation_inertia_left_label">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
-              <property name="use_underline">False</property>
-              <property name="use_markup">True</property>
-              <property name="justify">GTK_JUSTIFY_LEFT</property>
-              <property name="wrap">False</property>
-              <property name="selectable">False</property>
-              <property name="xalign">0.5</property>
-              <property name="yalign">0.5</property>
-              <property name="xpad">0</property>
-              <property name="ypad">0</property>
-              <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-              <property name="width_chars">-1</property>
-              <property name="single_line_mode">False</property>
-              <property name="angle">0</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">False</property>
-              <property name="fill">False</property>
-            </packing>
-          </child>
-          <child>
-            <object class="GtkHScale" id="wheel_emulation_inertia_scale">
-              <property name="visible">True</property>
-              <property name="can_focus">True</property>
-              <property name="draw_value">False</property>
-              <property name="value_pos">GTK_POS_TOP</property>
-              <property name="digits">0</property>
-              <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
-              <property name="inverted">False</property>
-              <property name="adjustment">wheel_emulation_inertia_scale_adjustment</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">True</property>
-              <property name="fill">True</property>
-            </packing>
-          </child>
-          <child>
-            <object class="GtkLabel" id="wheel_emulation_inertia_right_label">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
-              <property name="use_underline">False</property>
-              <property name="use_markup">True</property>
-              <property name="justify">GTK_JUSTIFY_LEFT</property>
-              <property name="wrap">False</property>
-              <property name="selectable">False</property>
-              <property name="xalign">0.5</property>
-              <property name="yalign">0.5</property>
-              <property name="xpad">0</property>
-              <property name="ypad">0</property>
-              <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-              <property name="width_chars">-1</property>
-              <property name="single_line_mode">False</property>
-              <property name="angle">0</property>
-            </object>
-            <packing>
-              <property name="padding">0</property>
-              <property name="expand">False</property>
-              <property name="fill">False</property>
-            </packing>
-          </child>
-        </object>
-        <packing>
-          <property name="padding">0</property>
-          <property name="expand">False</property>
-          <property name="fill">True</property>
-        </packing>
-      </child>
-      <child>
-        <object class="GtkCheckButton" id="wheel_emulation_vertical">
-          <property name="visible">True</property>
-          <property name="label" translatable="yes">Enable _vertical scroll</property>
-          <property name="use_underline">True</property>
-        </object>
-      </child>
-      <child>
-        <object class="GtkCheckButton" id="wheel_emulation_horizontal">
-          <property name="visible">True</property>
-          <property name="label" translatable="yes">Enable _horizontal scroll</property>
-          <property name="use_underline">True</property>
-        </object>
-      </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-      </packing>
     </child>
   </object>
 </interface>
