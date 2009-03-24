@@ -302,13 +302,13 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static void
-set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
-                                          GtkBuilder *builder)
+set_scroll_axes_property_from_preference (GpdsUI *ui)
 {
     GObject *object;
     gint *values;
     gulong n_values;
     gboolean horizontal_enable = FALSE, vertical_enable = FALSE;
+    GtkBuilder *builder;
 
     if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),
                                                 GPDS_MOUSE_WHEEL_EMULATION_AXES,
@@ -316,13 +316,14 @@ set_scroll_axes_property_from_preference (GpdsMouseUI *ui,
         return;
     }
 
-    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, &horizontal_enable))
+    if (!gpds_ui_get_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY, &horizontal_enable))
         if (n_values >= 2)
             horizontal_enable = (values[0] != 0 && values[1] != 0);
-    if (!gpds_ui_get_gconf_bool(GPDS_UI(ui), GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, &vertical_enable))
+    if (!gpds_ui_get_gconf_bool(ui, GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY, &vertical_enable))
         if (n_values >= 4)
             vertical_enable = (values[2] != 0 && values[3] != 0);
 
+    builder = gpds_ui_get_builder(ui);
     object = gtk_builder_get_object(builder, "wheel_emulation_horizontal");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), horizontal_enable);
     object = gtk_builder_get_object(builder, "wheel_emulation_vertical");
@@ -385,14 +386,14 @@ each_tree_model_iter (GtkTreeModel *model,
 }
 
 static void
-set_wheel_emulation_button_combo_state (GpdsMouseUI *ui, gint button)
+set_wheel_emulation_button_combo_state (GpdsUI *ui, gint button)
 {
     GObject *list_store;
     GtkComboBox *combo;
     GtkBuilder *builder;
     gint list_index = button;
 
-    builder = gpds_ui_get_builder(GPDS_UI(ui));
+    builder = gpds_ui_get_builder(ui);
 
     list_store = gtk_builder_get_object(builder, "wheel_emulation_button_list_store");
     gtk_tree_model_foreach(GTK_TREE_MODEL(list_store),
@@ -403,7 +404,7 @@ set_wheel_emulation_button_combo_state (GpdsMouseUI *ui, gint button)
 }
 
 static void
-set_wheel_emulation_button_property_from_preference (GpdsMouseUI *ui)
+set_wheel_emulation_button_property_from_preference (GpdsUI *ui)
 {
     gint *values;
     gulong n_values;
@@ -423,41 +424,40 @@ set_wheel_emulation_button_property_from_preference (GpdsMouseUI *ui)
 }
 
 static void
-setup_current_values (GpdsUI *ui, GtkBuilder *builder)
+setup_current_values (GpdsUI *ui)
 {
-    GpdsMouseUI *mouse_ui = GPDS_MOUSE_UI(ui);
+    GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
 
     gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                         GPDS_XINPUT_UI(ui),
+                                         xinput_ui,
                                          GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
                                          GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY,
                                          "middle_button_emulation");
     gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                         GPDS_XINPUT_UI(ui),
+                                         xinput_ui,
                                          GPDS_MOUSE_WHEEL_EMULATION,
                                          GPDS_MOUSE_WHEEL_EMULATION_KEY,
                                          "wheel_emulation");
-    setup_num_buttons(ui);
-    set_wheel_emulation_button_property_from_preference(mouse_ui);
 
     gpds_xinput_ui_set_widget_value_from_preference(
-                                        GPDS_XINPUT_UI(ui),
+                                        xinput_ui,
                                         GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
                                         GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY,
                                         "middle_button_timeout");
     gpds_xinput_ui_set_widget_value_from_preference(
-                                        GPDS_XINPUT_UI(ui),
+                                        xinput_ui,
                                         GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT,
                                         GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY,
                                         "wheel_emulation_timeout");
     gpds_xinput_ui_set_widget_value_from_preference(
-                                        GPDS_XINPUT_UI(ui),
+                                        xinput_ui,
                                         GPDS_MOUSE_WHEEL_EMULATION_INERTIA,
                                         GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY,
                                         "wheel_emulation_inertia");
 
-    set_scroll_axes_property_from_preference(mouse_ui,
-                                             builder);
+    setup_num_buttons(ui);
+    set_wheel_emulation_button_property_from_preference(ui);
+    set_scroll_axes_property_from_preference(ui);
 }
 
 static gboolean
@@ -503,7 +503,7 @@ build (GpdsUI  *ui, GError **error)
     g_object_unref(xinput);
 
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "mouse");
-    setup_current_values(ui, builder);
+    setup_current_values(ui);
     setup_signals(ui, builder);
 
     return TRUE;
