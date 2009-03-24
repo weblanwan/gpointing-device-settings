@@ -126,33 +126,19 @@ show_error (GError *error)
     g_print("%s\n", error->message);
 }
 
-static void
-set_spin_property (GpdsXInput *xinput, GtkSpinButton *button, GpdsMouseProperty property)
-{
-    GError *error = NULL;
-    gdouble value;
-    gint properties[1];
-
-    value = gtk_spin_button_get_value(button);
-
-    properties[0] = (gint)value;
-    gpds_xinput_set_int_properties(xinput,
-                                   property,
-                                   &error,
-                                   properties,
-                                   1);
-    if (error) {
-        show_error(error);
-        g_error_free(error);
-    }
-}
-
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(middle_button_emulation,
                                              GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
                                              "middle_button_emulation_box")
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(wheel_emulation,
                                              GPDS_MOUSE_WHEEL_EMULATION,
                                              "wheel_emulation_box")
+
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(wheel_emulation_inertia_scale,
+                                                   GPDS_MOUSE_WHEEL_EMULATION_INERTIA)
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(wheel_emulation_timeout_scale,
+                                                   GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT)
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(middle_button_timeout_scale,
+                                                   GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT)
 
 static void
 cb_wheel_emulation_button_changed (GtkComboBox *combo, gpointer user_data)
@@ -258,26 +244,6 @@ cb_ ## name ## _toggled (GtkToggleButton *button,                               
 DEFINE_WHEEL_EMULATION_SCROLL_BUTTON_TOGGLED_CALLBACK(wheel_emulation_vertical, WHEEL_EMULATION_Y_AXIS)
 DEFINE_WHEEL_EMULATION_SCROLL_BUTTON_TOGGLED_CALLBACK(wheel_emulation_horizontal, WHEEL_EMULATION_X_AXIS)
 
-#define DEFINE_SPIN_BUTTON_VALUE_CHANGED_CALLBACK(name, NAME)                       \
-static void                                                                         \
-cb_ ## name ## _value_changed (GtkSpinButton *button,                               \
-                               gpointer user_data)                                  \
-{                                                                                   \
-    gdouble value;                                                                  \
-    GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);                                     \
-    GpdsXInput *xinput;                                                             \
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));                         \
-    if (!xinput)                                                                    \
-        return;                                                                     \
-    set_spin_property(xinput, button, GPDS_MOUSE_ ## NAME);                         \
-    value = gtk_spin_button_get_value(button);                                      \
-    gpds_ui_set_gconf_int(GPDS_UI(ui), GPDS_MOUSE_ ## NAME ## _KEY, (gint)value);   \
-}
-
-DEFINE_SPIN_BUTTON_VALUE_CHANGED_CALLBACK(wheel_emulation_timeout, WHEEL_EMULATION_TIMEOUT)
-DEFINE_SPIN_BUTTON_VALUE_CHANGED_CALLBACK(wheel_emulation_inertia, WHEEL_EMULATION_INERTIA)
-DEFINE_SPIN_BUTTON_VALUE_CHANGED_CALLBACK(middle_button_timeout, MIDDLE_BUTTON_TIMEOUT)
-
 static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
@@ -290,11 +256,11 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
                      ui)
 
     CONNECT(middle_button_emulation, toggled);
-    CONNECT(middle_button_timeout, value_changed);
+    CONNECT(middle_button_timeout_scale, value_changed);
     CONNECT(wheel_emulation, toggled);
-    CONNECT(wheel_emulation_timeout, value_changed);
+    CONNECT(wheel_emulation_timeout_scale, value_changed);
     CONNECT(wheel_emulation_button, changed);
-    CONNECT(wheel_emulation_inertia, value_changed);
+    CONNECT(wheel_emulation_inertia_scale, value_changed);
     CONNECT(wheel_emulation_vertical, toggled);
     CONNECT(wheel_emulation_horizontal, toggled);
 
@@ -443,17 +409,17 @@ setup_current_values (GpdsUI *ui)
                                         xinput_ui,
                                         GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
                                         GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY,
-                                        "middle_button_timeout");
+                                        "middle_button_timeout_scale");
     gpds_xinput_ui_set_widget_value_from_preference(
                                         xinput_ui,
                                         GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT,
                                         GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY,
-                                        "wheel_emulation_timeout");
+                                        "wheel_emulation_timeout_scale");
     gpds_xinput_ui_set_widget_value_from_preference(
                                         xinput_ui,
                                         GPDS_MOUSE_WHEEL_EMULATION_INERTIA,
                                         GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY,
-                                        "wheel_emulation_inertia");
+                                        "wheel_emulation_inertia_scale");
 
     setup_num_buttons(ui);
     set_wheel_emulation_button_property_from_preference(ui);
