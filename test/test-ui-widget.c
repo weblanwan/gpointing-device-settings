@@ -213,24 +213,28 @@ data_toggle_button (void)
     gcut_add_datum("wheel emulation",
                    "widget-name", G_TYPE_STRING, "wheel_emulation",
                    "xinput-name", G_TYPE_STRING, "Evdev Wheel Emulation",
+                   "dependent-widget-name", G_TYPE_STRING, "wheel_emulation_box",
                    NULL);
     gcut_add_datum("middle button emulation",
                    "widget-name", G_TYPE_STRING, "middle_button_emulation",
                    "xinput-name", G_TYPE_STRING, "Evdev Middle Button Emulation",
+                   "dependent-widget-name", G_TYPE_STRING, "middle_button_emulation_box",
                    NULL);
 }
 
 void
 test_toggle_button (gconstpointer data)
 {
-    GtkWidget *button;
+    GtkWidget *button, *dependent_widget;
     gboolean widget_value;
     gboolean xinput_value;
     const gchar *widget_name;
     const gchar *xinput_name;
+    const gchar *dependent_widget_name;
 
     widget_name = gcut_data_get_string(data, "widget-name");
     xinput_name = gcut_data_get_string(data, "xinput-name");
+    dependent_widget_name = gcut_data_get_string(data, "dependent-widget-name");
 
     button = get_widget(widget_name);
     cut_assert_true(GTK_IS_TOGGLE_BUTTON(button));
@@ -239,10 +243,16 @@ test_toggle_button (gconstpointer data)
     widget_value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
     cut_assert_equal_int(xinput_value, widget_value);
 
+    /* check widget sensitivity */
+    dependent_widget = get_widget(dependent_widget_name);
+    cut_assert_equal_int(widget_value, GTK_WIDGET_SENSITIVE(dependent_widget));
+
     gtk_test_widget_click(button, 1, 0);
     wait_action();
     xinput_value = get_boolean_property_of_xinput(xinput_name);
     cut_assert_equal_int(xinput_value, !widget_value);
+
+    cut_assert_equal_int(!widget_value, GTK_WIDGET_SENSITIVE(dependent_widget));
 }
 
 void

@@ -85,9 +85,9 @@ cb_ ## function_name ## _toggled (GtkToggleButton *button,                      
     enable = gtk_toggle_button_get_active(button);                                                      \
     gpds_ui_set_gconf_bool(GPDS_UI(user_data), PROPERTY_NAME ## _KEY, enable);                          \
     builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                  \
+    depend_widget = gtk_builder_get_object(builder, depend_widget_name);                                \
     if (!depend_widget)                                                                                 \
         return;                                                                                         \
-    depend_widget = gtk_builder_get_object(builder, depend_widget_name);                                \
     gtk_widget_set_sensitive(GTK_WIDGET(depend_widget), enable);                                        \
 }
 
