@@ -700,7 +700,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                         xinput_ui,
                                         GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,
                                         GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY,
-                                        "locked_drags_timeout");
+                                        "locked_drags_timeout_scale");
     gpds_xinput_ui_set_toggle_button_state_from_preference(
                                         xinput_ui,
                                         GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
