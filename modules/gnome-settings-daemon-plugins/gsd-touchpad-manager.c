@@ -57,9 +57,11 @@ gsd_touchpad_manager_class_init (GsdTouchpadManagerClass *klass)
 }
 
 DEFINE_SET_BOOLEAN_FUNCTION (palm_detection, GPDS_TOUCHPAD_PALM_DETECTION)
+DEFINE_SET_BOOLEAN_FUNCTION (locked_drags, GPDS_TOUCHPAD_LOCKED_DRAGS)
 DEFINE_SET_BOOLEAN_FUNCTION (tap_fast_tap, GPDS_TOUCHPAD_TAP_FAST_TAP)
 DEFINE_SET_BOOLEAN_FUNCTION (circular_scrolling, GPDS_TOUCHPAD_CIRCULAR_SCROLLING)
 DEFINE_SET_INT_FUNCTION (touchpad_off, GPDS_TOUCHPAD_OFF)
+DEFINE_SET_INT_FUNCTION (locked_drags_timeout, GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT)
 DEFINE_SET_INT_FUNCTION (tap_time, GPDS_TOUCHPAD_TAP_TIME)
 DEFINE_SET_INT_FUNCTION (tap_move, GPDS_TOUCHPAD_TAP_MOVE)
 DEFINE_SET_INT_FUNCTION (circular_scrolling_trigger, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER)
@@ -183,6 +185,8 @@ start_manager (GsdPointingDeviceManager *manager)
 
     set_touchpad_off(manager, xinput, gconf);
     set_palm_detection(manager, xinput, gconf);
+    set_locked_drags(manager, xinput, gconf);
+    set_locked_drags_timeout(manager, xinput, gconf);
     set_tap_fast_tap(manager, xinput, gconf);
     set_tap_time(manager, xinput, gconf);
     set_tap_move(manager, xinput, gconf);
@@ -234,6 +238,8 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_KEY)) {
             set_palm_detection(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_LOCKED_DRAGS_KEY)) {
+            set_locked_drags(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {
             set_tap_fast_tap(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY)) {
@@ -250,6 +256,8 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     case GCONF_VALUE_INT:
         if (!strcmp(key, GPDS_TOUCHPAD_OFF_KEY)) {
             set_touchpad_off(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY)) {
+            set_locked_drags_timeout(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_TAP_TIME_KEY)) {
             set_tap_time(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_TAP_MOVE_KEY)) {

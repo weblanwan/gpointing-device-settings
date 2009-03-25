@@ -37,6 +37,8 @@
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE_KEY     "circular_scrolling_distance"
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY      "circular_scrolling_trigger"
 #define GPDS_TOUCHPAD_PALM_DETECTION_KEY                  "palm_detection"
+#define GPDS_TOUCHPAD_LOCKED_DRAGS_KEY                    "locked_drags"
+#define GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY            "locked_drags_timeout"
 
 #endif /* __GPDS_TOUCHPAD_GCONF_H__ */
 /*

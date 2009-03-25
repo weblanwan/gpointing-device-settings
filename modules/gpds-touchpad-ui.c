@@ -168,6 +168,9 @@ set_edge_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(palm_detection,
                                              GPDS_TOUCHPAD_PALM_DETECTION,
                                              NULL)
+GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(locked_drags,
+                                             GPDS_TOUCHPAD_LOCKED_DRAGS,
+                                             "locked_drags_box")
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(faster_tapping_check,
                                              GPDS_TOUCHPAD_TAP_FAST_TAP,
                                              NULL)
@@ -175,6 +178,8 @@ GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(circular_scrolling,
                                              GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
                                              "circular_scrolling_box")
 
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(locked_drags_timeout_scale,
+                                                   GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT)
 GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_time_scale,
                                                    GPDS_TOUCHPAD_TAP_TIME)
 GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(tapping_move_scale,
@@ -477,6 +482,8 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 
     CONNECT(touchpad_use_type, changed);
     CONNECT(palm_detection, toggled);
+    CONNECT(locked_drags, toggled);
+    CONNECT(locked_drags_timeout_scale, value_changed);
     CONNECT(tapping_time_scale, value_changed);
     CONNECT(tapping_move_scale, value_changed);
     CONNECT(faster_tapping_check, toggled);
@@ -675,6 +682,16 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                         GPDS_TOUCHPAD_PALM_DETECTION, 
                                         GPDS_TOUCHPAD_PALM_DETECTION_KEY,
                                         "palm_detection");
+    gpds_xinput_ui_set_toggle_button_state_from_preference(
+                                        xinput_ui,
+                                        GPDS_TOUCHPAD_LOCKED_DRAGS,
+                                        GPDS_TOUCHPAD_LOCKED_DRAGS_KEY,
+                                        "locked_drags");
+    gpds_xinput_ui_set_widget_value_from_preference(
+                                        xinput_ui,
+                                        GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,
+                                        GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY,
+                                        "locked_drags_timeout");
     gpds_xinput_ui_set_toggle_button_state_from_preference(
                                         xinput_ui,
                                         GPDS_TOUCHPAD_CIRCULAR_SCROLLING,

@@ -4,7 +4,10 @@ GPointinDeviceSettings 1.?.?
 * Touchpad
  - Palm detection
  - Tap move
+ - Locked drags
  - Fix invalid values for scroll distance
+* Wheel type mouse
+ - Use GtkRange for numeric values
 
 ============================
 GPointinDeviceSettings 1.2.0
