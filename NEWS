@@ -5,6 +5,7 @@ GPointinDeviceSettings 1.?.?
  - Palm detection
  - Tap move
  - Locked drags
+ - Guest mouse off
  - Fix invalid values for scroll distance
 * Wheel type mouse
  - Use GtkRange for numeric values

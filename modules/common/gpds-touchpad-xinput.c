@@ -46,7 +46,7 @@ static const GpdsXInputPropertyEntry entries[] = {
     {GPDS_TOUCHPAD_BUTTON_SCROLLING_REPEAT,    "Synaptics Button Scrolling Repeat",     G_TYPE_INT,   8, 2},
     {GPDS_TOUCHPAD_SCROLLING_TIME,             "Synaptics Button Scrolling Time",       G_TYPE_INT,  32, 1},
     {GPDS_TOUCHPAD_OFF,                        "Synaptics Off",                         G_TYPE_INT,   8, 1},
-    {GPDS_TOUCHPAD_GUESTMOUSE_OFF,             "Synaptics Guestmouse Off",              G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_GUEST_MOUSE_OFF,            "Synaptics Guestmouse Off",              G_TYPE_INT,   8, 1},
     {GPDS_TOUCHPAD_LOCKED_DRAGS,               "Synaptics Locked Drags",                G_TYPE_INT,   8, 1},
     {GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,       "Synaptics Locked Drags Timeout",        G_TYPE_INT,  32, 1},
     {GPDS_TOUCHPAD_TAP_ACTION,                 "Synaptics Tap Action",                  G_TYPE_INT,   8, 1},

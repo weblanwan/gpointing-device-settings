@@ -165,6 +165,9 @@ set_edge_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builder)
     }
 }
 
+GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(guest_mouse_off,
+                                             GPDS_TOUCHPAD_GUEST_MOUSE_OFF,
+                                             NULL)
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(palm_detection,
                                              GPDS_TOUCHPAD_PALM_DETECTION,
                                              NULL)
@@ -481,6 +484,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
                      ui)
 
     CONNECT(touchpad_use_type, changed);
+    CONNECT(guest_mouse_off, toggled);
     CONNECT(palm_detection, toggled);
     CONNECT(locked_drags, toggled);
     CONNECT(locked_drags_timeout_scale, value_changed);
@@ -677,6 +681,11 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                         GPDS_TOUCHPAD_TAP_FAST_TAP, 
                                         GPDS_TOUCHPAD_TAP_FAST_TAP_KEY,
                                         "faster_tapping_check");
+    gpds_xinput_ui_set_toggle_button_state_from_preference(
+                                        xinput_ui,
+                                        GPDS_TOUCHPAD_GUEST_MOUSE_OFF, 
+                                        GPDS_TOUCHPAD_GUEST_MOUSE_OFF_KEY,
+                                        "guest_mouse_off");
     gpds_xinput_ui_set_toggle_button_state_from_preference(
                                         xinput_ui,
                                         GPDS_TOUCHPAD_PALM_DETECTION, 

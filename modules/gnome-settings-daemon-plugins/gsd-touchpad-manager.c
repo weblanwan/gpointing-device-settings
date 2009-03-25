@@ -57,6 +57,7 @@ gsd_touchpad_manager_class_init (GsdTouchpadManagerClass *klass)
 }
 
 DEFINE_SET_BOOLEAN_FUNCTION (palm_detection, GPDS_TOUCHPAD_PALM_DETECTION)
+DEFINE_SET_BOOLEAN_FUNCTION (guest_mouse_off, GPDS_TOUCHPAD_GUEST_MOUSE_OFF)
 DEFINE_SET_BOOLEAN_FUNCTION (locked_drags, GPDS_TOUCHPAD_LOCKED_DRAGS)
 DEFINE_SET_BOOLEAN_FUNCTION (tap_fast_tap, GPDS_TOUCHPAD_TAP_FAST_TAP)
 DEFINE_SET_BOOLEAN_FUNCTION (circular_scrolling, GPDS_TOUCHPAD_CIRCULAR_SCROLLING)
@@ -134,6 +135,7 @@ start_manager (GsdPointingDeviceManager *manager)
     }
 
     set_touchpad_off(manager, xinput, gconf);
+    set_guest_mouse_off(manager, xinput, gconf);
     set_palm_detection(manager, xinput, gconf);
     set_locked_drags(manager, xinput, gconf);
     set_locked_drags_timeout(manager, xinput, gconf);
@@ -188,6 +190,8 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
     case GCONF_VALUE_BOOL:
         if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_KEY)) {
             set_palm_detection(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_GUEST_MOUSE_OFF_KEY)) {
+            set_guest_mouse_off(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_LOCKED_DRAGS_KEY)) {
             set_locked_drags(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_TAP_FAST_TAP_KEY)) {

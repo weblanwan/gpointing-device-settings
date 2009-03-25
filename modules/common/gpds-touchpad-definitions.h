@@ -21,7 +21,7 @@
 #define __GPDS_TOUCHPAD_GCONF_H__
 
 #define GPDS_TOUCHPAD_OFF_KEY                             "off"
-#define GPDS_TOUCHPAD_GUEST_MOUSE_KEY                     "guest_mouse"
+#define GPDS_TOUCHPAD_GUEST_MOUSE_OFF_KEY                 "guest_mouse"
 #define GPDS_TOUCHPAD_TAP_TIME_KEY                        "tap_time"
 #define GPDS_TOUCHPAD_TAP_MOVE_KEY                        "tap_move"
 #define GPDS_TOUCHPAD_TAP_FAST_TAP_KEY                    "tap_fast_tap"
