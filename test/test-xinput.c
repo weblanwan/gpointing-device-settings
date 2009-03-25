@@ -14,10 +14,14 @@ void test_set_float_properties_fail (void);
 void test_get_float_properties_fail (void);
 
 static GpdsXInput *xinput;
+static GpdsXInput *tmp_xinput;
 static gint *values;
 static gulong n_values;
 static GError *error;
 static GError *expected_error;
+static gboolean middle_button_emulation;
+
+#define DEVICE_NAME "Macintosh mouse button emulation"
 
 typedef enum {
     GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
@@ -43,15 +47,55 @@ static const GpdsXInputPropertyEntry entries[] = {
 
 static const gint n_entries = G_N_ELEMENTS(entries);
 
+static gboolean
+get_boolean_property_of_xinput (const gchar *property_name)
+{
+    gulong n_values;
+    GError *local_error = NULL;
+
+    tmp_xinput = gpds_xinput_new(DEVICE_NAME);
+    gpds_xinput_get_int_properties_by_name(tmp_xinput,
+                                           property_name,
+                                           &local_error,
+                                           &values, &n_values);
+    gcut_assert_error(local_error);
+
+    g_object_unref(tmp_xinput);
+    tmp_xinput = NULL;
+
+    return values[0] != 0;
+}
+
+static void
+set_int_property_of_xinput (const gchar *property_name,
+                            gint format_type,
+                            gint *values,
+                            guint n_values)
+{
+    GError *local_error = NULL;
+    tmp_xinput = gpds_xinput_new(DEVICE_NAME);
+    gpds_xinput_set_int_properties_by_name_with_format_type(tmp_xinput,
+                                                            property_name,
+                                                            format_type,
+                                                            &local_error,
+                                                            values, n_values);
+    gcut_assert_error(local_error);
+    g_object_unref(tmp_xinput);
+    tmp_xinput = NULL;
+}
+
 void
 setup (void)
 {
     xinput = NULL;
+    tmp_xinput = NULL;
     values = NULL;
     n_values = 0;
 
     error = NULL;
     expected_error = NULL;
+    middle_button_emulation = 
+        get_boolean_property_of_xinput("Evdev Middle Button Emulation");
 }
 
 void
@@ -59,16 +103,20 @@ teardown (void)
 {
     if (xinput)
         g_object_unref(xinput);
+    if (tmp_xinput)
+        g_object_unref(tmp_xinput);
     g_free(values);
 
     if (expected_error)
         g_clear_error(&expected_error);
+    set_int_property_of_xinput("Evdev Middle Button Emulation", 8,
+                               &middle_button_emulation, 1);
 }
 
 void
 test_new (void)
 {
-    xinput = gpds_xinput_new("Macintosh mouse button emulation");
+    xinput = gpds_xinput_new(DEVICE_NAME);
     cut_assert(xinput);
 }
 
@@ -84,7 +132,7 @@ test_device_name (void)
 {
     cut_trace(test_new());
 
-    cut_assert_equal_string("Macintosh mouse button emulation",
+    cut_assert_equal_string(DEVICE_NAME,
                             gpds_xinput_get_device_name(xinput));
 }
 
