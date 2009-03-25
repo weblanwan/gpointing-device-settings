@@ -394,32 +394,30 @@ setup_current_values (GpdsUI *ui)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
 
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                         xinput_ui,
-                                         GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
-                                         GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY,
-                                         "middle_button_emulation");
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                         xinput_ui,
-                                         GPDS_MOUSE_WHEEL_EMULATION,
-                                         GPDS_MOUSE_WHEEL_EMULATION_KEY,
-                                         "wheel_emulation");
+#define SET_INT_VALUE(PROP_NAME, widget_name)                           \
+    gpds_xinput_ui_set_widget_value_from_preference(                    \
+                                        xinput_ui,                      \
+                                        PROP_NAME,                      \
+                                        PROP_NAME ## _KEY,              \
+                                        widget_name);
+#define SET_BOOLEAN_VALUE(PROP_NAME, widget_name)                       \
+    gpds_xinput_ui_set_toggle_button_state_from_preference(             \
+                                        xinput_ui,                      \
+                                        PROP_NAME,                      \
+                                        PROP_NAME ## _KEY,              \
+                                        widget_name);
 
-    gpds_xinput_ui_set_widget_value_from_preference(
-                                        xinput_ui,
-                                        GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
-                                        GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY,
-                                        "middle_button_timeout_scale");
-    gpds_xinput_ui_set_widget_value_from_preference(
-                                        xinput_ui,
-                                        GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT,
-                                        GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY,
-                                        "wheel_emulation_timeout_scale");
-    gpds_xinput_ui_set_widget_value_from_preference(
-                                        xinput_ui,
-                                        GPDS_MOUSE_WHEEL_EMULATION_INERTIA,
-                                        GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY,
-                                        "wheel_emulation_inertia_scale");
+    SET_BOOLEAN_VALUE(GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
+                      "middle_button_emulation");
+    SET_BOOLEAN_VALUE(GPDS_MOUSE_WHEEL_EMULATION,
+                      "wheel_emulation");
+
+    SET_INT_VALUE(GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT,
+                  "middle_button_timeout_scale");
+    SET_INT_VALUE(GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT,
+                  "wheel_emulation_timeout_scale");
+    SET_INT_VALUE(GPDS_MOUSE_WHEEL_EMULATION_INERTIA,
+                  "wheel_emulation_inertia_scale");
 
     setup_num_buttons(ui);
     set_wheel_emulation_button_property_from_preference(ui);

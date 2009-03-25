@@ -666,46 +666,28 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
 
-    gpds_xinput_ui_set_widget_value_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_TAP_TIME,
-                                        GPDS_TOUCHPAD_TAP_TIME_KEY,
-                                        "tapping_time_scale");
-    gpds_xinput_ui_set_widget_value_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_TAP_MOVE,
-                                        GPDS_TOUCHPAD_TAP_MOVE_KEY,
-                                        "tapping_move_scale");
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_TAP_FAST_TAP, 
-                                        GPDS_TOUCHPAD_TAP_FAST_TAP_KEY,
-                                        "faster_tapping_check");
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_GUEST_MOUSE_OFF, 
-                                        GPDS_TOUCHPAD_GUEST_MOUSE_OFF_KEY,
-                                        "guest_mouse_off");
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_PALM_DETECTION, 
-                                        GPDS_TOUCHPAD_PALM_DETECTION_KEY,
-                                        "palm_detection");
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_LOCKED_DRAGS,
-                                        GPDS_TOUCHPAD_LOCKED_DRAGS_KEY,
-                                        "locked_drags");
-    gpds_xinput_ui_set_widget_value_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,
-                                        GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY,
-                                        "locked_drags_timeout_scale");
-    gpds_xinput_ui_set_toggle_button_state_from_preference(
-                                        xinput_ui,
-                                        GPDS_TOUCHPAD_CIRCULAR_SCROLLING,
-                                        GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY,
-                                        "circular_scrolling");
+#define SET_INT_VALUE(PROP_NAME, widget_name)                           \
+    gpds_xinput_ui_set_widget_value_from_preference(                    \
+                                        xinput_ui,                      \
+                                        PROP_NAME,                      \
+                                        PROP_NAME ## _KEY,              \
+                                        widget_name);
+#define SET_BOOLEAN_VALUE(PROP_NAME, widget_name)                       \
+    gpds_xinput_ui_set_toggle_button_state_from_preference(             \
+                                        xinput_ui,                      \
+                                        PROP_NAME,                      \
+                                        PROP_NAME ## _KEY,              \
+                                        widget_name);
+
+    SET_INT_VALUE(GPDS_TOUCHPAD_TAP_TIME, "tapping_time_scale");
+    SET_INT_VALUE(GPDS_TOUCHPAD_TAP_MOVE, "tapping_move_scale");
+    SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_TAP_FAST_TAP, "faster_tapping_check");
+    SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_GUEST_MOUSE_OFF, "guest_mouse_off");
+    SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_PALM_DETECTION, "palm_detection");
+    SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS, "locked_drags");
+    SET_INT_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT, "locked_drags_timeout_scale");
+    SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_CIRCULAR_SCROLLING, "circular_scrolling");
+
     set_edge_scrolling_property_from_preference(ui, builder);
     set_scroll_distance_property_from_preference(ui, builder);
     set_circular_scrolling_trigger_property_from_preference(ui, builder);
