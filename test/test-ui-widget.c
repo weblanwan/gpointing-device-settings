@@ -6,8 +6,8 @@
 
 void data_toggle_button (void);
 void test_toggle_button (gconstpointer data);
-void data_spin_button (void);
-void test_spin_button (gconstpointer data);
+void data_scale (void);
+void test_scale (gconstpointer data);
 
 static GError *error;
 static GpdsUI *ui;
@@ -246,20 +246,20 @@ test_toggle_button (gconstpointer data)
 }
 
 void
-data_spin_button (void)
+data_scale (void)
 {
     gcut_add_datum("wheel emulation timeout",
-                   "widget-name", G_TYPE_STRING, "wheel_emulation_timeout",
+                   "widget-name", G_TYPE_STRING, "wheel_emulation_timeout_scale",
                    "xinput-name", G_TYPE_STRING, "Evdev Wheel Emulation Timeout",
                    "box-name", G_TYPE_STRING, "wheel_emulation_box",
                    NULL);
     gcut_add_datum("wheel emulation inertia",
-                   "widget-name", G_TYPE_STRING, "wheel_emulation_inertia",
+                   "widget-name", G_TYPE_STRING, "wheel_emulation_inertia_scale",
                    "xinput-name", G_TYPE_STRING, "Evdev Wheel Emulation Inertia",
                    "box-name", G_TYPE_STRING, "wheel_emulation_box",
                    NULL);
     gcut_add_datum("middle button timeout",
-                   "widget-name", G_TYPE_STRING, "middle_button_timeout",
+                   "widget-name", G_TYPE_STRING, "middle_button_timeout_scale",
                    "xinput-name", G_TYPE_STRING, "Evdev Middle Button Timeout",
                    "box-name", G_TYPE_STRING, "middle_button_emulation_box",
                    NULL);
@@ -277,12 +277,11 @@ enable_widget (const gchar *widget_name)
 }
 
 void
-test_spin_button (gconstpointer data)
+test_scale (gconstpointer data)
 {
-    GtkWidget *button;
+    GtkWidget *scale;
     gint widget_value;
     gint xinput_value;
-    gdouble increment_step, increment_page;
     const gchar *widget_name;
     const gchar *xinput_name;
     const gchar *box_name;
@@ -293,20 +292,17 @@ test_spin_button (gconstpointer data)
 
     enable_widget(box_name);
 
-    button = get_widget(widget_name);
-    cut_assert_true(GTK_IS_SPIN_BUTTON(button));
+    scale = get_widget(widget_name);
+    cut_assert_true(GTK_IS_RANGE(scale));
 
-    gtk_spin_button_get_increments(GTK_SPIN_BUTTON(button),
-                                   &increment_step,
-                                   &increment_page);
     xinput_value = get_int_property_of_xinput(xinput_name);
-    widget_value = gtk_spin_button_get_value(GTK_SPIN_BUTTON(button));
+    widget_value = gtk_test_slider_get_value(scale);
     cut_assert_equal_int(xinput_value, widget_value);
 
-    gtk_test_spin_button_click(GTK_SPIN_BUTTON(button), 1, TRUE);
+    gtk_test_slider_set_perc(scale, 50.0);
     wait_action();
     xinput_value = get_int_property_of_xinput(xinput_name);
-    widget_value += increment_step;
+    widget_value = gtk_test_slider_get_value(scale);
     cut_assert_equal_int(xinput_value, widget_value);
 }
 
