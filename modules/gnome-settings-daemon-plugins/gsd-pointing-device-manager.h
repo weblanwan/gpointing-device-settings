@@ -106,6 +106,39 @@ set_ ## function_name (GsdPointingDeviceManager *manager,                       
 #define DEFINE_SET_INT_FUNCTION(function_name, key_name)                        \
     DEFINE_SET_VALUE_FUNCTION(function_name, key_name, int)
 
+#define DEFINE_SET_VALUE_PAIR_FUNCTION(function_name, value_type, prop_name, key_name1, key_name2)  \
+static void                                                                                         \
+set_ ## function_name (GsdPointingDeviceManager *manager,                                           \
+                       GpdsXInput *xinput,                                                          \
+                       GConfClient *gconf)                                                          \
+{                                                                                                   \
+    g ## value_type value;                                                                          \
+    gint properties[2];                                                                             \
+    if (!gsd_pointing_device_manager_get_gconf_ ## value_type (manager,                             \
+                                                               gconf,                               \
+                                                               key_name1,                           \
+                                                               &value))                             \
+        return;                                                                                     \
+    properties[0] = value;                                                                          \
+    if (!gsd_pointing_device_manager_get_gconf_ ## value_type (manager,                             \
+                                                               gconf,                               \
+                                                               key_name2,                           \
+                                                               &value))                             \
+        return;                                                                                     \
+    properties[1] = value;                                                                          \
+    gpds_xinput_set_int_properties(xinput,                                                          \
+                                   prop_name,                                                       \
+                                   NULL,                                                            \
+                                   properties,                                                      \
+                                   2);                                                              \
+}
+
+#define DEFINE_SET_BOOLEAN_PAIR_FUNCTION(function_name, prop_name, key_name1, key_name2)    \
+    DEFINE_SET_VALUE_PAIR_FUNCTION(function_name, boolean, prop_name, key_name1, key_name2)
+
+#define DEFINE_SET_INT_PAIR_FUNCTION(function_name, prop_name, key_name1, key_name2)    \
+    DEFINE_SET_VALUE_PAIR_FUNCTION(function_name, int, prop_name, key_name1, key_name2)
+
 G_END_DECLS
 
 #endif /* __GSD_POINTING_DEVICE_MANAGER_H__ */

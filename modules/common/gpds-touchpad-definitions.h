@@ -20,9 +20,8 @@
 #ifndef __GPDS_TOUCHPAD_GCONF_H__
 #define __GPDS_TOUCHPAD_GCONF_H__
 
-#define GPDS_TOUCHPAD_EDGES_KEY                           "edges"
-#define GPDS_TOUCHPAD_FINGER_KEY                          "finger"
 #define GPDS_TOUCHPAD_OFF_KEY                             "off"
+#define GPDS_TOUCHPAD_GUEST_MOUSE_KEY                     "guest_mouse"
 #define GPDS_TOUCHPAD_TAP_TIME_KEY                        "tap_time"
 #define GPDS_TOUCHPAD_TAP_MOVE_KEY                        "tap_move"
 #define GPDS_TOUCHPAD_TAP_FAST_TAP_KEY                    "tap_fast_tap"
@@ -37,6 +36,8 @@
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE_KEY     "circular_scrolling_distance"
 #define GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY      "circular_scrolling_trigger"
 #define GPDS_TOUCHPAD_PALM_DETECTION_KEY                  "palm_detection"
+#define GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY            "palm_detection_width"
+#define GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY            "palm_detection_depth"
 #define GPDS_TOUCHPAD_LOCKED_DRAGS_KEY                    "locked_drags"
 #define GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY            "locked_drags_timeout"
 

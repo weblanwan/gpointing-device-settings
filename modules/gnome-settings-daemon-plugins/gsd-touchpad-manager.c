@@ -65,6 +65,18 @@ DEFINE_SET_INT_FUNCTION (locked_drags_timeout, GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOU
 DEFINE_SET_INT_FUNCTION (tap_time, GPDS_TOUCHPAD_TAP_TIME)
 DEFINE_SET_INT_FUNCTION (tap_move, GPDS_TOUCHPAD_TAP_MOVE)
 DEFINE_SET_INT_FUNCTION (circular_scrolling_trigger, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER)
+DEFINE_SET_BOOLEAN_PAIR_FUNCTION (two_finger_scrolling,
+                                  GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,
+                                  GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY,
+                                  GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY);
+DEFINE_SET_INT_PAIR_FUNCTION (scrolling_distance,
+                              GPDS_TOUCHPAD_SCROLLING_DISTANCE,
+                              GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY,
+                              GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY);
+DEFINE_SET_INT_PAIR_FUNCTION (palm_dimensions,
+                              GPDS_TOUCHPAD_PALM_DIMENSIONS,
+                              GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY,
+                              GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY)
 
 static void
 set_edge_scrolling (GsdPointingDeviceManager *manager,
@@ -103,68 +115,6 @@ set_edge_scrolling (GsdPointingDeviceManager *manager,
                                    3);
 }
 
-static void
-set_two_finger_scrolling (GsdPointingDeviceManager *manager,
-                          GpdsXInput *xinput,
-                          GConfClient *gconf)
-{
-    gboolean h_enable, v_enable;
-    gint properties[2];
-
-    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
-                                                       gconf,
-                                                       GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY,
-                                                       &v_enable)) {
-        return;
-    }
-    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
-                                                       gconf,
-                                                       GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY,
-                                                       &h_enable)) {
-        return;
-    }
-
-    properties[0] = v_enable ? 1 : 0;
-    properties[1] = h_enable ? 1 : 0;
-
-    gpds_xinput_set_int_properties(xinput,
-                                   GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,
-                                   NULL,
-                                   properties,
-                                   2);
-}
-
-static void
-set_horizontal_and_vertical_scrolling_distance (GsdPointingDeviceManager *manager,
-                                                GpdsXInput *xinput,
-                                                GConfClient *gconf)
-{
-    gint h_distance, v_distance;
-    gint properties[2];
-
-    if (!gsd_pointing_device_manager_get_gconf_int(manager,
-                                                   gconf,
-                                                   GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY,
-                                                   &v_distance)) {
-        return;
-    }
-    if (!gsd_pointing_device_manager_get_gconf_int(manager,
-                                                   gconf,
-                                                   GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY,
-                                                   &h_distance)) {
-        return;
-    }
-
-    properties[0] = v_distance;
-    properties[1] = h_distance;
-
-    gpds_xinput_set_int_properties(xinput,
-                                   GPDS_TOUCHPAD_SCROLLING_DISTANCE,
-                                   NULL,
-                                   properties,
-                                   2);
-}
-
 static gboolean
 start_manager (GsdPointingDeviceManager *manager)
 {
@@ -191,7 +141,7 @@ start_manager (GsdPointingDeviceManager *manager)
     set_tap_time(manager, xinput, gconf);
     set_tap_move(manager, xinput, gconf);
     set_edge_scrolling(manager, xinput, gconf);
-    set_horizontal_and_vertical_scrolling_distance(manager, xinput, gconf);
+    set_scrolling_distance(manager, xinput, gconf);
     set_circular_scrolling(manager, xinput, gconf);
     set_circular_scrolling_trigger(manager, xinput, gconf);
     set_two_finger_scrolling(manager, xinput, gconf);
@@ -264,7 +214,10 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
             set_tap_move(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY) ||
                    !strcmp(key, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY)) {
-            set_horizontal_and_vertical_scrolling_distance(manager, xinput, client);
+            set_scrolling_distance(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY) ||
+                   !strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY)) {
+            set_palm_dimensions(manager, xinput, client);
         }
         break;
     default:
