@@ -18,6 +18,8 @@ static gint *values;
 
 static gboolean wheel_emulation;
 static gboolean middle_button_emulation;
+static gboolean wheel_emulation_box_sensitivity;
+static gboolean middle_button_emulation_box_sensitivity;
 static gint wheel_emulation_button;
 static gint wheel_emulation_timeout;
 static gint wheel_emulation_inertia;
@@ -134,6 +136,34 @@ restore_initial_values (void)
                                &wheel_emulation_inertia, 1);
 }
 
+static GtkWidget *
+get_widget (const gchar *id)
+{
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+    return GTK_WIDGET(gtk_builder_get_object(builder, id));
+}
+
+static void
+preserve_widget_sensitivities (void)
+{
+    wheel_emulation_box_sensitivity = 
+        GTK_WIDGET_SENSITIVE(get_widget("wheel_emulation_box"));
+    middle_button_emulation_box_sensitivity = 
+        GTK_WIDGET_SENSITIVE(get_widget("middle_button_emulation_box"));
+}
+
+static void
+restore_widget_sensitivities (void)
+{
+    gtk_widget_set_sensitive(get_widget("wheel_emulation_box"),
+                             wheel_emulation_box_sensitivity);
+    gtk_widget_set_sensitive(get_widget("middle_button_emulation_box"),
+                             middle_button_emulation_box_sensitivity);
+}
+
 static void
 unset_all_gconf_keys (void)
 {
@@ -160,6 +190,7 @@ setup (void)
 {
     error = NULL;
     preserve_initial_values();
+    preserve_widget_sensitivities();
 
     unset_all_gconf_keys();
 }
@@ -169,6 +200,7 @@ teardown (void)
 {
     unset_all_gconf_keys();
     restore_initial_values();
+    restore_widget_sensitivities();
 
     if (error)
         g_clear_error(&error);
@@ -195,16 +227,6 @@ wait_action (void)
                               &idle_received, NULL);
     while (!idle_received)
         g_main_context_iteration(NULL, FALSE);
-}
-
-static GtkWidget *
-get_widget (const gchar *id)
-{
-    GtkBuilder *builder;
-
-    builder = gpds_ui_get_builder(GPDS_UI(ui));
-
-    return GTK_WIDGET(gtk_builder_get_object(builder, id));
 }
 
 void
