@@ -216,55 +216,37 @@ set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builde
     }
 }
 
-static void
-set_palm_dimensions_property (GpdsXInput *xinput, GtkBuilder *builder)
-{
-    GError *error = NULL;
-    GObject *object;
-    gint properties[2];
-
-    object = gtk_builder_get_object(builder, "palm_detection_width_scale");
-    properties[0] = (gint)gtk_range_get_value(GTK_RANGE(object));
-
-    object = gtk_builder_get_object(builder, "palm_detection_depth_scale");
-    properties[1] = (gint)gtk_range_get_value(GTK_RANGE(object));
-
-    if (!gpds_xinput_set_int_properties(xinput,
-                                        GPDS_TOUCHPAD_PALM_DIMENSIONS,
-                                        &error,
-                                        properties,
-                                        2)) {
-        if (error) {
-            show_error(error);
-            g_error_free(error);
-        }
-    }
+#define DEFINE_SET_PAIR_SCALE_VALUE(function_name, widget_name1, widget_name2, PROPERTY_NAME)   \
+static void                                                                                     \
+set_ ## function_name ## _property (GpdsXInput *xinput, GtkBuilder *builder)                    \
+{                                                                                               \
+    GError *error = NULL;                                                                       \
+    GObject *object;                                                                            \
+    gint properties[2];                                                                         \
+    object = gtk_builder_get_object(builder, widget_name1);                                     \
+    properties[0] = (gint)gtk_range_get_value(GTK_RANGE(object));                               \
+    object = gtk_builder_get_object(builder, widget_name2);                                     \
+    properties[1] = (gint)gtk_range_get_value(GTK_RANGE(object));                               \
+    if (!gpds_xinput_set_int_properties(xinput,                                                 \
+                                        PROPERTY_NAME,                                          \
+                                        &error,                                                 \
+                                        properties,                                             \
+                                        2)) {                                                   \
+        if (error) {                                                                            \
+            show_error(error);                                                                  \
+            g_error_free(error);                                                                \
+        }                                                                                       \
+    }                                                                                           \
 }
 
-static void
-set_scrolling_distance_range_property (GpdsXInput *xinput, GtkBuilder *builder)
-{
-    GError *error = NULL;
-    GObject *object;
-    gint properties[2];
-
-    object = gtk_builder_get_object(builder, "horizontal_scrolling_scale");
-    properties[0] = (gint)gtk_range_get_value(GTK_RANGE(object));
-
-    object = gtk_builder_get_object(builder, "vertical_scrolling_scale");
-    properties[1] = (gint)gtk_range_get_value(GTK_RANGE(object));
-
-    if (!gpds_xinput_set_int_properties(xinput,
-                                        GPDS_TOUCHPAD_SCROLLING_DISTANCE,
-                                        &error,
-                                        properties,
-                                        2)) {
-        if (error) {
-            show_error(error);
-            g_error_free(error);
-        }
-    }
-}
+DEFINE_SET_PAIR_SCALE_VALUE(palm_dimensions,
+                            "palm_detection_width_scale",
+                            "palm_detection_depth_scale",
+                            GPDS_TOUCHPAD_PALM_DIMENSIONS)
+DEFINE_SET_PAIR_SCALE_VALUE(scrolling_distance,
+                            "horizontal_scrolling_scale",
+                            "vertical_scrolling_scale",
+                            GPDS_TOUCHPAD_SCROLLING_DISTANCE)
 
 static void
 set_circular_scrolling_trigger_property (GpdsUI *ui, GpdsTouchpadCircularScrollingTrigger trigger)
@@ -321,7 +303,7 @@ cb_ ## type ## _scrolling_scale_value_changed (GtkRange *range, gpointer user_da
     if (!xinput)                                                                                                    \
         return;                                                                                                     \
     builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                              \
-    set_scrolling_distance_range_property(xinput, builder);                                                         \
+    set_scrolling_distance_property(xinput, builder);                                                               \
     distance = gtk_range_get_value(range);                                                                          \
     gpds_ui_set_gconf_bool(GPDS_UI(user_data), GPDS_TOUCHPAD_ ## TYPE ## _SCROLLING_DISTANCE_KEY, (gint)distance);  \
 }
@@ -633,72 +615,47 @@ set_two_finger_scrolling_property_from_preference (GpdsUI *ui,
     g_free(values);
 }
 
-static void
-set_palm_dimensions_property_from_preference (GpdsUI *ui,
-                                              GtkBuilder *builder)
-{
-    GObject *object;
-    gint *values;
-    gulong n_values;
-    gint distance;
-
-    if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),
-                                                GPDS_TOUCHPAD_PALM_DIMENSIONS,
-                                                &values, &n_values)) {
-        return;
-    }
-
-    if (n_values != 2) {
-        g_free(values);
-        return;
-    }
-
-    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY, &distance))
-        distance = values[0];
-    object = gtk_builder_get_object(builder, "palm_detection_width_scale");
-    gtk_range_set_value(GTK_RANGE(object), distance);
-
-    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY, &distance))
-        distance = values[1];
-    object = gtk_builder_get_object(builder, "palm_detection_depth_scale");
-    gtk_range_set_value(GTK_RANGE(object), distance);
-
-    g_free(values);
+#define DEFINE_SET_INT_PAIR_PROPERTY_FROM_PREFERENCE(function_name, PROPERTY_NAME,                      \
+                                                     KEY_NAME1, KEY_NAME2, widget_name1, widget_name2)  \
+static void                                                                                             \
+set_ ## function_name ## _property_from_preference (GpdsUI *ui, GtkBuilder *builder)                    \
+{                                                                                                       \
+    GObject *object;                                                                                    \
+    gint *values;                                                                                       \
+    gulong n_values;                                                                                    \
+    gint distance;                                                                                      \
+    if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),                                     \
+                                                PROPERTY_NAME,                                          \
+                                                &values, &n_values)) {                                  \
+        return;                                                                                         \
+    }                                                                                                   \
+    if (n_values != 2) {                                                                                \
+        g_free(values);                                                                                 \
+        return;                                                                                         \
+    }                                                                                                   \
+    if (!gpds_ui_get_gconf_int(ui, KEY_NAME1, &distance))                                               \
+        distance = values[0];                                                                           \
+    object = gtk_builder_get_object(builder, widget_name1);                                             \
+    gtk_range_set_value(GTK_RANGE(object), distance);                                                   \
+    if (!gpds_ui_get_gconf_int(ui, KEY_NAME2, &distance))                                               \
+        distance = values[1];                                                                           \
+    object = gtk_builder_get_object(builder, widget_name2);                                             \
+    gtk_range_set_value(GTK_RANGE(object), distance);                                                   \
+    g_free(values);                                                                                     \
 }
 
-static void
-set_scroll_distance_property_from_preference (GpdsUI *ui,
-                                              GtkBuilder *builder)
-{
-    GObject *object;
-    gint *values;
-    gulong n_values;
-    gint distance;
-
-    if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),
-                                                GPDS_TOUCHPAD_SCROLLING_DISTANCE,
-                                                &values, &n_values)) {
-        return;
-    }
-
-    if (n_values != 2) {
-        g_free(values);
-        return;
-    }
-
-    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY, &distance))
-        distance = values[0];
-    object = gtk_builder_get_object(builder, "vertical_scrolling_scale");
-    gtk_range_set_value(GTK_RANGE(object), distance);
-
-    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY, &distance))
-        distance = values[1];
-    object = gtk_builder_get_object(builder, "horizontal_scrolling_scale");
-    gtk_range_set_value(GTK_RANGE(object), distance);
-
-    g_free(values);
-}
-
+DEFINE_SET_INT_PAIR_PROPERTY_FROM_PREFERENCE(palm_dimensions,
+                                             GPDS_TOUCHPAD_PALM_DIMENSIONS,
+                                             GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY,
+                                             GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY,
+                                             "palm_detection_width_scale",
+                                             "palm_detection_depth_scale");
+DEFINE_SET_INT_PAIR_PROPERTY_FROM_PREFERENCE(scrolling_distance,
+                                             GPDS_TOUCHPAD_SCROLLING_DISTANCE,
+                                             GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY,
+                                             GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY,
+                                             "vertical_scrolling_scale",
+                                             "horizontal_scrolling_scale");
 static void
 set_circular_scrolling_trigger_property_from_preference (GpdsUI *ui,
                                                          GtkBuilder *builder)
@@ -769,7 +726,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 
     set_edge_scrolling_property_from_preference(ui, builder);
     set_palm_dimensions_property_from_preference(ui, builder);
-    set_scroll_distance_property_from_preference(ui, builder);
+    set_scrolling_distance_property_from_preference(ui, builder);
     set_circular_scrolling_trigger_property_from_preference(ui, builder);
     set_two_finger_scrolling_property_from_preference(ui, builder);
     set_touchpad_use_type_property_from_preference(ui);
