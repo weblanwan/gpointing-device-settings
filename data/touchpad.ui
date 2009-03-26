@@ -47,13 +47,12 @@
     <property name="step_increment">50</property>
     <property name="page_size">0</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment6">
-    <property name="upper">200</property>
-    <property name="lower">0</property>
-    <property name="page_increment">1</property>
-    <property name="step_increment">1</property>
+  <object class="GtkAdjustment" id="palm_detection_depth_scale_adjustment">
+    <property name="upper">550</property>
+    <property name="lower">10</property>
+    <property name="page_increment">50</property>
+    <property name="step_increment">50</property>
     <property name="page_size">0</property>
-    <property name="value">40</property>
   </object>
   <object class="GtkAdjustment" id="adjustment7">
     <property name="upper">1000</property>
