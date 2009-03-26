@@ -170,7 +170,7 @@ GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(guest_mouse_off,
                                              NULL)
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(palm_detection,
                                              GPDS_TOUCHPAD_PALM_DETECTION,
-                                             NULL)
+                                             "palm_detection_box")
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(locked_drags,
                                              GPDS_TOUCHPAD_LOCKED_DRAGS,
                                              "locked_drags_box")
@@ -206,6 +206,31 @@ set_two_finger_scrolling_toggle_property (GpdsXInput *xinput, GtkBuilder *builde
 
     if (!gpds_xinput_set_int_properties(xinput,
                                         GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,
+                                        &error,
+                                        properties,
+                                        2)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+}
+
+static void
+set_palm_dimensions_property (GpdsXInput *xinput, GtkBuilder *builder)
+{
+    GError *error = NULL;
+    GObject *object;
+    gint properties[2];
+
+    object = gtk_builder_get_object(builder, "palm_detection_width_scale");
+    properties[0] = (gint)gtk_range_get_value(GTK_RANGE(object));
+
+    object = gtk_builder_get_object(builder, "palm_detection_depth_scale");
+    properties[1] = (gint)gtk_range_get_value(GTK_RANGE(object));
+
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        GPDS_TOUCHPAD_PALM_DIMENSIONS,
                                         &error,
                                         properties,
                                         2)) {
@@ -265,6 +290,25 @@ set_circular_scrolling_trigger_property (GpdsUI *ui, GpdsTouchpadCircularScrolli
         }
     }
 }
+
+#define DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(type, TYPE)                                             \
+static void                                                                                                         \
+cb_palm_detection_ ## type ## _scale_value_changed (GtkRange *range, gpointer user_data)                            \
+{                                                                                                                   \
+    GtkBuilder *builder;                                                                                            \
+    gdouble distance;                                                                                               \
+    GpdsXInput *xinput;                                                                                             \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                                                  \
+    if (!xinput)                                                                                                    \
+        return;                                                                                                     \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                              \
+    set_palm_dimensions_property(xinput, builder);                                                                  \
+    distance = gtk_range_get_value(range);                                                                          \
+    gpds_ui_set_gconf_bool(GPDS_UI(user_data), GPDS_TOUCHPAD_PALM_DETECTION_ ## TYPE ## _KEY, (gint)distance);      \
+}
+
+DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(width, WIDTH)
+DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(depth, DEPTH)
 
 #define DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(type, TYPE)                                                   \
 static void                                                                                                         \
@@ -486,6 +530,8 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(touchpad_use_type, changed);
     CONNECT(guest_mouse_off, toggled);
     CONNECT(palm_detection, toggled);
+    CONNECT(palm_detection_width_scale, value_changed);
+    CONNECT(palm_detection_depth_scale, value_changed);
     CONNECT(locked_drags, toggled);
     CONNECT(locked_drags_timeout_scale, value_changed);
     CONNECT(tapping_time_scale, value_changed);
@@ -583,6 +629,39 @@ set_two_finger_scrolling_property_from_preference (GpdsUI *ui,
         enable = (values[0] == 1);
     object = gtk_builder_get_object(builder, "two_finger_horizontal_scrolling");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), enable);
+
+    g_free(values);
+}
+
+static void
+set_palm_dimensions_property_from_preference (GpdsUI *ui,
+                                              GtkBuilder *builder)
+{
+    GObject *object;
+    gint *values;
+    gulong n_values;
+    gint distance;
+
+    if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),
+                                                GPDS_TOUCHPAD_PALM_DIMENSIONS,
+                                                &values, &n_values)) {
+        return;
+    }
+
+    if (n_values != 2) {
+        g_free(values);
+        return;
+    }
+
+    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY, &distance))
+        distance = values[0];
+    object = gtk_builder_get_object(builder, "palm_detection_width_scale");
+    gtk_range_set_value(GTK_RANGE(object), distance);
+
+    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY, &distance))
+        distance = values[1];
+    object = gtk_builder_get_object(builder, "palm_detection_depth_scale");
+    gtk_range_set_value(GTK_RANGE(object), distance);
 
     g_free(values);
 }
@@ -689,6 +768,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_CIRCULAR_SCROLLING, "circular_scrolling");
 
     set_edge_scrolling_property_from_preference(ui, builder);
+    set_palm_dimensions_property_from_preference(ui, builder);
     set_scroll_distance_property_from_preference(ui, builder);
     set_circular_scrolling_trigger_property_from_preference(ui, builder);
     set_two_finger_scrolling_property_from_preference(ui, builder);
