@@ -199,7 +199,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="palm_detection_box">
+                          <object class="GtkVBox" id="palm_detection_box">
                             <property name="border-width">5</property>
                             <child>
                               <object class="GtkHBox" id="palm_detection_width_box">
