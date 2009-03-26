@@ -9,7 +9,7 @@
         <property name="label_yalign">0.5</property>
         <property name="shadow_type">GTK_SHADOW_NONE</property>
         <child type="label">
-          <object class="GtkLabel" id="label19">
+          <object class="GtkLabel" id="middle_button_emulation_label">
             <property name="visible">True</property>
             <property name="label" translatable="yes">&lt;b&gt;Middle Button Emulation&lt;/b&gt;</property>
             <property name="use_underline">False</property>
@@ -160,7 +160,7 @@
         <property name="label_yalign">0.5</property>
         <property name="shadow_type">GTK_SHADOW_NONE</property>
         <child type="label">
-          <object class="GtkLabel" id="label19">
+          <object class="GtkLabel" id="wheel_emulation_label">
             <property name="visible">True</property>
             <property name="label" translatable="yes">&lt;b&gt;Wheel Emulation&lt;/b&gt;</property>
             <property name="use_underline">False</property>
@@ -183,7 +183,7 @@
           <property name="visible">True</property>
           <property name="border-width">5</property>
           <child>
-            <object class="GtkHBox" id="wheel_emulation_hbox">
+            <object class="GtkHBox" id="wheel_emulation_check_hbox">
             <property name="visible">True</property>
             <property name="border-width">5</property>
             <child>
@@ -203,7 +203,7 @@
             <property name="visible">True</property>
             <property name="border-width">5</property>
             <child>
-              <object class="GtkHBox" id="hbox1">
+              <object class="GtkHBox" id="wheel_emulation_hbox">
               <property name="visible">True</property>
               <property name="border-width">5</property>
               <child>
