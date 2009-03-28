@@ -34,8 +34,8 @@
 #define GPDS_TYPE_MOUSE_UI            (gpds_mouse_ui_get_type())
 #define GPDS_MOUSE_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_MOUSE_UI, GpdsMouseUI))
 #define GPDS_MOUSE_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_MOUSE_UI, GpdsMouseUIClass))
-#define G_IS_MOUSE_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_MOUSE_UI))
-#define G_IS_MOUSE_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_MOUSE_UI))
+#define G_IS_MOUSE_UI(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_MOUSE_UI))
+#define G_IS_MOUSE_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_MOUSE_UI))
 #define GPDS_MOUSE_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_MOUSE_UI, GpdsMouseUIClass))
 
 typedef struct _GpdsMouseUI GpdsMouseUI;

@@ -50,7 +50,7 @@ static const GpdsXInputPropertyEntry entries[] = {
     {GPDS_TOUCHPAD_LOCKED_DRAGS,               "Synaptics Locked Drags",                G_TYPE_INT,   8, 1},
     {GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT,       "Synaptics Locked Drags Timeout",        G_TYPE_INT,  32, 1},
     {GPDS_TOUCHPAD_TAP_ACTION,                 "Synaptics Tap Action",                  G_TYPE_INT,   8, 1},
-    {GPDS_TOUCHPAD_CLICK_ACTION,               "Synaptics Click Action",                G_TYPE_INT,   8, 1},
+    {GPDS_TOUCHPAD_CLICK_ACTION,               "Synaptics Click Action",                G_TYPE_INT,   8, 3},
     {GPDS_TOUCHPAD_CIRCULAR_SCROLLING,         "Synaptics Circular Scrolling",          G_TYPE_INT,   8, 1},
     {GPDS_TOUCHPAD_CIRCULAR_SCROLLING_DISTANCE,"Synaptics Circular Scrolling Distance", G_TYPE_FLOAT, 0, 1},
     {GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER, "Synaptics Circular Scrolling Trigger",  G_TYPE_INT,   8, 1},

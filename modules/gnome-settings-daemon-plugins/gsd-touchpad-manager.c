@@ -116,6 +116,35 @@ set_edge_scrolling (GsdPointingDeviceManager *manager,
                                    3);
 }
 
+static void
+set_click_action (GsdPointingDeviceManager *manager,
+                  GpdsXInput *xinput,
+                  GConfClient *gconf)
+{
+    gint properties[3];
+
+    gsd_pointing_device_manager_get_gconf_int(manager,
+                                              gconf,
+                                              GPDS_TOUCHPAD_CLICK_ACTION_FINGER1_KEY,
+                                              &properties[0]);
+
+    gsd_pointing_device_manager_get_gconf_int(manager,
+                                              gconf,
+                                              GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY,
+                                              &properties[1]);
+
+    gsd_pointing_device_manager_get_gconf_int(manager,
+                                              gconf,
+                                              GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY,
+                                              &properties[2]);
+
+    gpds_xinput_set_int_properties(xinput,
+                                   GPDS_TOUCHPAD_CLICK_ACTION,
+                                   NULL,
+                                   properties,
+                                   3);
+}
+
 static gboolean
 start_manager (GsdPointingDeviceManager *manager)
 {
@@ -147,6 +176,7 @@ start_manager (GsdPointingDeviceManager *manager)
     set_circular_scrolling(manager, xinput, gconf);
     set_circular_scrolling_trigger(manager, xinput, gconf);
     set_two_finger_scrolling(manager, xinput, gconf);
+    set_click_action(manager, xinput, gconf);
 
     g_object_unref(gconf);
     g_object_unref(xinput);
@@ -222,6 +252,10 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
         } else if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY) ||
                    !strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY)) {
             set_palm_dimensions(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_CLICK_ACTION_FINGER1_KEY) ||
+                   !strcmp(key, GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY) ||
+                   !strcmp(key, GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY)) {
+            set_click_action(manager, xinput, client);
         }
         break;
     default:

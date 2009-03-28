@@ -40,6 +40,9 @@
 #define GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY            "palm_detection_depth"
 #define GPDS_TOUCHPAD_LOCKED_DRAGS_KEY                    "locked_drags"
 #define GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY            "locked_drags_timeout"
+#define GPDS_TOUCHPAD_CLICK_ACTION_FINGER1_KEY            "click_action_finger1"
+#define GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY            "click_action_finger2"
+#define GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY            "click_action_finger3"
 
 #endif /* __GPDS_TOUCHPAD_GCONF_H__ */
 /*
