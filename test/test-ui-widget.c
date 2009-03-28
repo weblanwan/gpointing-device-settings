@@ -8,6 +8,7 @@ void data_toggle_button (void);
 void test_toggle_button (gconstpointer data);
 void data_scale (void);
 void test_scale (gconstpointer data);
+void test_wheel_emulation_button (void);
 
 static GError *error;
 static GpdsUI *ui;
@@ -136,14 +137,20 @@ restore_initial_values (void)
                                &wheel_emulation_inertia, 1);
 }
 
-static GtkWidget *
-get_widget (const gchar *id)
+static GObject *
+get_object (const gchar *id)
 {
     GtkBuilder *builder;
 
     builder = gpds_ui_get_builder(GPDS_UI(ui));
 
-    return GTK_WIDGET(gtk_builder_get_object(builder, id));
+    return gtk_builder_get_object(builder, id);
+}
+
+static GtkWidget *
+get_widget (const gchar *id)
+{
+    return GTK_WIDGET(get_object(id));
 }
 
 static void
@@ -335,6 +342,45 @@ test_scale (gconstpointer data)
     wait_action();
     xinput_value = get_int_property_of_xinput(xinput_name);
     widget_value = gtk_test_slider_get_value(scale);
+    cut_assert_equal_int(xinput_value, widget_value);
+}
+
+void
+test_wheel_emulation_button (void)
+{
+    GtkWidget *combo;
+    GObject *list_store;
+    GtkTreeIter iter;
+    GValue value = {0};
+    gint widget_value;
+    gint xinput_value;
+
+    enable_widget("wheel_emulation_box");
+
+    combo = get_widget("wheel_emulation_button");
+    cut_assert_true(GTK_IS_COMBO_BOX(combo));
+
+    xinput_value = get_int_property_of_xinput("Evdev Wheel Emulation Button");
+    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(combo), &iter);
+    list_store = get_object("wheel_emulation_button_list_store");
+    gtk_tree_model_get_value(GTK_TREE_MODEL(list_store),
+                             &iter,
+                             0,
+                             &value);
+    widget_value = g_value_get_int(&value);
+    g_value_unset(&value);
+    cut_assert_equal_int(xinput_value, widget_value);
+
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 9);
+    wait_action();
+    xinput_value = get_int_property_of_xinput("Evdev Wheel Emulation Button");
+    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(combo), &iter);
+    gtk_tree_model_get_value(GTK_TREE_MODEL(list_store),
+                             &iter,
+                             0,
+                             &value);
+    widget_value = g_value_get_int(&value);
+    g_value_unset(&value);
     cut_assert_equal_int(xinput_value, widget_value);
 }
 
