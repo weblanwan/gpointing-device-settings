@@ -9,6 +9,8 @@ void test_toggle_button (gconstpointer data);
 void data_scale (void);
 void test_scale (gconstpointer data);
 void test_wheel_emulation_button (void);
+void data_wheel_axes (void);
+void test_wheel_axes (gconstpointer data);
 
 static GError *error;
 static GpdsUI *ui;
@@ -24,6 +26,7 @@ static gboolean middle_button_emulation_box_sensitivity;
 static gint wheel_emulation_button;
 static gint wheel_emulation_timeout;
 static gint wheel_emulation_inertia;
+static gint wheel_emulation_axes[4];
 
 #define DEVICE_NAME "Macintosh mouse button emulation"
 
@@ -107,9 +110,29 @@ get_int_property_of_xinput (const gchar *property_name)
     return values[0];
 }
 
+static gint
+get_scroll_axes_property_of_xinput (void)
+{
+    gulong n_values;
+
+    xinput = gpds_xinput_new(DEVICE_NAME);
+    gpds_xinput_get_int_properties_by_name(xinput,
+                                           "Evdev Wheel Emulation Axes",
+                                           &error,
+                                           &values, &n_values);
+    gcut_assert_error(error);
+
+    g_object_unref(xinput);
+    xinput = NULL;
+
+    return (gint)n_values;
+}
+
 static void
 preserve_initial_values (void)
 {
+    gint i;
+
     wheel_emulation = 
         get_boolean_property_of_xinput("Evdev Wheel Emulation");
     middle_button_emulation = 
@@ -120,6 +143,10 @@ preserve_initial_values (void)
         get_int_property_of_xinput("Evdev Wheel Emulation Button");
     wheel_emulation_inertia = 
         get_int_property_of_xinput("Evdev Wheel Emulation Inertia");
+
+    get_scroll_axes_property_of_xinput();
+    for (i = 0; i < 4; i++)
+        wheel_emulation_axes[i] = values[i];
 }
 
 static void
@@ -135,6 +162,8 @@ restore_initial_values (void)
                                &wheel_emulation_button, 1);
     set_int_property_of_xinput("Evdev Wheel Emulation Inertia", 16,
                                &wheel_emulation_inertia, 1);
+    set_int_property_of_xinput("Evdev Wheel Emulation Axes", 8,
+                               wheel_emulation_axes, 4);
 }
 
 static GObject *
@@ -382,6 +411,66 @@ test_wheel_emulation_button (void)
     widget_value = g_value_get_int(&value);
     g_value_unset(&value);
     cut_assert_equal_int(xinput_value, widget_value);
+}
+
+static void
+_assert_equal_wheel_vertical_axis (gboolean enable)
+{
+    if (enable) {
+        cut_assert_equal_int(6, values[0]);
+        cut_assert_equal_int(7, values[1]);
+    }
+}
+
+static void
+_assert_equal_wheel_horizontal_axis (gboolean enable)
+{
+    if (enable) {
+        cut_assert_equal_int(4, values[2]);
+        cut_assert_equal_int(5, values[3]);
+    }
+}
+
+void
+data_wheel_axes (void)
+{
+    gcut_add_datum("vertial",
+                   "widget-name", G_TYPE_STRING, "wheel_emulation_vertical",
+                   "assert-function", G_TYPE_POINTER, _assert_equal_wheel_vertical_axis, NULL,
+                   NULL);
+    gcut_add_datum("horizontal",
+                   "widget-name", G_TYPE_STRING, "wheel_emulation_horizontal",
+                   "assert-function", G_TYPE_POINTER, _assert_equal_wheel_horizontal_axis, NULL,
+                   NULL);
+}
+
+typedef void (*WheelAxisAssertFunction) (gboolean enable);
+
+void
+test_wheel_axes (gconstpointer data)
+{
+    GtkWidget *button;
+    gint widget_value;
+    const gchar *widget_name;
+    WheelAxisAssertFunction assert_function;
+
+    widget_name = gcut_data_get_string(data, "widget-name");
+    assert_function = gcut_data_get_pointer(data, "assert-function");
+
+    enable_widget("wheel_emulation_box");
+
+    button = get_widget(widget_name);
+    cut_assert_true(GTK_IS_CHECK_BUTTON(button));
+
+    cut_assert_equal_int(4, get_scroll_axes_property_of_xinput());
+    widget_value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    assert_function(widget_value);
+
+    gtk_test_widget_click(button, 1, 0);
+    wait_action();
+    cut_assert_equal_int(4, get_scroll_axes_property_of_xinput());
+    widget_value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    assert_function(widget_value);
 }
 
 /*
