@@ -206,7 +206,7 @@
                                 <property name="border-width">5</property>
                                 <child>
                                   <object class="GtkLabel" id="palm_detection_width_label">
-                                    <property name="label" translatable="yes">_width:</property>
+                                    <property name="label" translatable="yes">&lt;i&gt;Range&lt;/i&gt;</property>
                                     <property name="mnemonic-widget">palm_detection_width_scale</property>
                                     <property name="use_underline">True</property>
                                     <property name="use_markup">False</property>
@@ -297,7 +297,7 @@
                                 <property name="border-width">5</property>
                                 <child>
                                   <object class="GtkLabel" id="palm_detection_depth_label">
-                                    <property name="label" translatable="yes">_depth:</property>
+                                    <property name="label" translatable="yes">&lt;i&gt;High&lt;/i&gt;</property>
                                     <property name="mnemonic-widget">palm_detection_depth_scale</property>
                                     <property name="use_underline">True</property>
                                     <property name="use_markup">False</property>
@@ -321,7 +321,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel" id="palm_detection_depth_left_label">
-                                    <property name="label" translatable="yes">&lt;i&gt;Light&lt;/i&gt;</property>
+                                    <property name="label" translatable="yes">&lt;i&gt;Low&lt;/i&gt;</property>
                                     <property name="use_underline">False</property>
                                     <property name="use_markup">True</property>
                                     <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -360,7 +360,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel" id="palm_detection_depth_right_label">
-                                    <property name="label" translatable="yes">&lt;i&gt;Heavy&lt;/i&gt;</property>
+                                    <property name="label" translatable="yes">&lt;i&gt;High&lt;/i&gt;</property>
                                     <property name="use_underline">False</property>
                                     <property name="use_markup">True</property>
                                     <property name="justify">GTK_JUSTIFY_LEFT</property>
