@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 13:10+0900\n"
+"POT-Creation-Date: 2009-03-29 16:52+0900\n"
 "PO-Revision-Date: 2009-03-03 18:18+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/gpds-ui.c:213 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
 #, fuzzy, c-format
 msgid "No %s found."
 msgstr "Ingen enhet hittades."
@@ -47,12 +47,12 @@ msgstr "Kunde inte öppna %s-enhet."
 msgid "No float atom in XServer"
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:831 ../modules/gpds-mouse-ui.c:584
+#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%s hittades inte."
 
-#: ../modules/gpds-touchpad-ui.c:874 ../modules/gpds-mouse-ui.c:627
+#: ../modules/gpds-touchpad-ui.c:820 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Det finns ingen widget(%s)."
@@ -61,117 +61,177 @@ msgstr "Det finns ingen widget(%s)."
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
 #: ../data/mouse.ui.h:1
-msgid "(ms)"
-msgstr "(ms)"
+#, fuzzy
+msgid "<b>Middle Button Emulation</b>"
+msgstr "Använd hjulemulering"
 
 #: ../data/mouse.ui.h:2
+#, fuzzy
+msgid "<b>Wheel Emulation</b>"
+msgstr "Använd hjulemulering"
+
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+msgid "<i>Long</i>"
+msgstr "<i>Lång</i>"
+
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:11
+msgid "<i>Short</i>"
+msgstr "<i>Kort</i>"
+
+#: ../data/mouse.ui.h:5
 #, fuzzy
 msgid "Enable _horizontal scroll"
 msgstr "Aktivera horisontell rullning"
 
-#: ../data/mouse.ui.h:3
+#: ../data/mouse.ui.h:6
 #, fuzzy
 msgid "Enable _vertical scroll"
 msgstr "Aktivera vertikal rullning"
 
-#: ../data/mouse.ui.h:4
-#, fuzzy
-msgid "Middle button _timeout:"
-msgstr "Använd hjulemulering"
-
-#: ../data/mouse.ui.h:5
+#: ../data/mouse.ui.h:7
 #, fuzzy
 msgid "Use _middle button emulation"
 msgstr "Använd hjulemulering"
 
-#: ../data/mouse.ui.h:6
+#: ../data/mouse.ui.h:8
 #, fuzzy
 msgid "Use _wheel emulation"
 msgstr "Använd hjulemulering"
 
-#: ../data/mouse.ui.h:7
-#, fuzzy
-msgid "Wheel _emulation timeout:"
-msgstr "Använd hjulemulering"
-
-#: ../data/mouse.ui.h:8
-#, fuzzy
-msgid "Wheel emulation _button:"
-msgstr "Använd hjulemulering"
-
 #: ../data/mouse.ui.h:9
-#, fuzzy
-msgid "Wheel emulation _inertia:"
-msgstr "Använd hjulemulering"
+msgid "_button:"
+msgstr ""
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr ""
+
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+msgid "_timeout:"
+msgstr ""
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr ""
 
 #: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr ""
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr ""
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr ""
+
+#: ../data/touchpad.ui.h:4
 msgid "<b>Scrolling</b>"
 msgstr "<b>Rullning</b>"
 
-#: ../data/touchpad.ui.h:2
+#: ../data/touchpad.ui.h:5
 msgid "<i>Fast</i>"
 msgstr "<i>Snabb</i>"
 
-#: ../data/touchpad.ui.h:3
-msgid "<i>Long</i>"
+#: ../data/touchpad.ui.h:6
+#, fuzzy
+msgid "<i>High</i>"
 msgstr "<i>Lång</i>"
 
-#: ../data/touchpad.ui.h:4
-msgid "<i>Short</i>"
-msgstr "<i>Kort</i>"
+#: ../data/touchpad.ui.h:8
+#, fuzzy
+msgid "<i>Low</i>"
+msgstr "<i>Lång</i>"
 
-#: ../data/touchpad.ui.h:5
+#: ../data/touchpad.ui.h:9
+#, fuzzy
+msgid "<i>Narrow</i>"
+msgstr "<i>Långsam</i>"
+
+#: ../data/touchpad.ui.h:10
+#, fuzzy
+msgid "<i>Range</i>"
+msgstr "<i>Lång</i>"
+
+#: ../data/touchpad.ui.h:12
 msgid "<i>Slow</i>"
 msgstr "<i>Långsam</i>"
 
-#: ../data/touchpad.ui.h:6
+#: ../data/touchpad.ui.h:13
+#, fuzzy
+msgid "<i>Wide</i>"
+msgstr "<i>Snabb</i>"
+
+#: ../data/touchpad.ui.h:14
 msgid "Enable Ci_rcular scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:7
+#: ../data/touchpad.ui.h:15
 msgid "Enable _faster tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:8
+#: ../data/touchpad.ui.h:16
 msgid "Enable _horizontal scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:9
+#: ../data/touchpad.ui.h:17
+msgid "Enable _locked drags"
+msgstr ""
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _palm detection"
+msgstr ""
+
+#: ../data/touchpad.ui.h:19
 msgid "Enable _vertical scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:10
+#: ../data/touchpad.ui.h:20
 #, fuzzy
 msgid "Enable continuous edge scrolling"
 msgstr "Aktivera horisontell rullning"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:21
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr ""
 
-#: ../data/touchpad.ui.h:12
+#: ../data/touchpad.ui.h:22
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr ""
 
-#: ../data/touchpad.ui.h:13
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "Allmänt"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr "Rullning"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:25
+msgid "Set _guest mouse off"
+msgstr ""
+
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr ""
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:28
+msgid "Tapping move: "
+msgstr ""
+
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr ""
+
+#: ../data/main-window.ui.h:1
+#, fuzzy
+msgid "GPointing Device Settings"
+msgstr "Inställningar för pekenhet"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
@@ -182,8 +242,24 @@ msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
 
-#~ msgid "Pointing Device Settings"
-#~ msgstr "Inställningar för pekenhet"
+#, fuzzy
+#~ msgid "<i>Heavy</i>"
+#~ msgstr "<i>Snabb</i>"
+
+#~ msgid "(ms)"
+#~ msgstr "(ms)"
+
+#, fuzzy
+#~ msgid "Middle button _timeout:"
+#~ msgstr "Använd hjulemulering"
+
+#, fuzzy
+#~ msgid "Wheel _emulation timeout:"
+#~ msgstr "Använd hjulemulering"
+
+#, fuzzy
+#~ msgid "Wheel emulation _inertia:"
+#~ msgstr "Använd hjulemulering"
 
 #~ msgid "Touchpad"
 #~ msgstr "Pekplatta"

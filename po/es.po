@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-19 09:55+0000\n"
+"POT-Creation-Date: 2009-03-29 16:52+0900\n"
 "PO-Revision-Date: 2009-03-19 13:42+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../src/gpds-ui.c:213 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
 msgstr "No se encontró %s."
@@ -49,12 +49,12 @@ msgstr "No se pudo abrir el dispositivo %s."
 msgid "No float atom in XServer"
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:831 ../modules/gpds-mouse-ui.c:584
+#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:874 ../modules/gpds-mouse-ui.c:627
+#: ../modules/gpds-touchpad-ui.c:820 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "No existe el widget (%s)."
@@ -63,106 +63,165 @@ msgstr "No existe el widget (%s)."
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
 #: ../data/mouse.ui.h:1
-msgid "(ms)"
-msgstr "(ms)"
-
-#: ../data/mouse.ui.h:2
-msgid "Enable _horizontal scroll"
-msgstr "Activar desplazamiento _horizontal"
-
-#: ../data/mouse.ui.h:3
-msgid "Enable _vertical scroll"
-msgstr "Activar desplazamiento _vertical"
-
-#: ../data/mouse.ui.h:4
-msgid "Middle button _timeout:"
-msgstr "_Tiempo de expiración del botón del medio"
-
-#: ../data/mouse.ui.h:5
-msgid "Use _middle button emulation"
+#, fuzzy
+msgid "<b>Middle Button Emulation</b>"
 msgstr "Usar emulación del botón del _medio"
 
-#: ../data/mouse.ui.h:6
-msgid "Use _wheel emulation"
-msgstr "Usar emulación de la _rueda"
-
-#: ../data/mouse.ui.h:7
-msgid "Wheel _emulation timeout:"
-msgstr "Tiempo de expiración de la _emulación de la rueda"
-
-#: ../data/mouse.ui.h:8
-msgid "Wheel emulation _button:"
+#: ../data/mouse.ui.h:2
+#, fuzzy
+msgid "<b>Wheel Emulation</b>"
 msgstr "_Botón de emulación de la rueda:"
 
-#: ../data/mouse.ui.h:9
-msgid "Wheel emulation _inertia:"
-msgstr "_Inercia de la emulación de la rueda:"
-
-#: ../data/touchpad.ui.h:1
-msgid "<b>Scrolling</b>"
-msgstr "<b>Desplazamiento</b>"
-
-#: ../data/touchpad.ui.h:2
-msgid "<i>Fast</i>"
-msgstr "<i>Rápido</i>"
-
-#: ../data/touchpad.ui.h:3
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
 msgid "<i>Long</i>"
 msgstr "<i>Largo</i>"
 
-#: ../data/touchpad.ui.h:4
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:11
 msgid "<i>Short</i>"
 msgstr "<i>Corto</i>"
 
+#: ../data/mouse.ui.h:5
+msgid "Enable _horizontal scroll"
+msgstr "Activar desplazamiento _horizontal"
+
+#: ../data/mouse.ui.h:6
+msgid "Enable _vertical scroll"
+msgstr "Activar desplazamiento _vertical"
+
+#: ../data/mouse.ui.h:7
+msgid "Use _middle button emulation"
+msgstr "Usar emulación del botón del _medio"
+
+#: ../data/mouse.ui.h:8
+msgid "Use _wheel emulation"
+msgstr "Usar emulación de la _rueda"
+
+#: ../data/mouse.ui.h:9
+msgid "_button:"
+msgstr ""
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr ""
+
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+msgid "_timeout:"
+msgstr ""
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr ""
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr ""
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr ""
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr ""
+
+#: ../data/touchpad.ui.h:4
+msgid "<b>Scrolling</b>"
+msgstr "<b>Desplazamiento</b>"
+
 #: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>Rápido</i>"
+
+#: ../data/touchpad.ui.h:6
+#, fuzzy
+msgid "<i>High</i>"
+msgstr "<i>Largo</i>"
+
+#: ../data/touchpad.ui.h:8
+#, fuzzy
+msgid "<i>Low</i>"
+msgstr "<i>Largo</i>"
+
+#: ../data/touchpad.ui.h:9
+#, fuzzy
+msgid "<i>Narrow</i>"
+msgstr "<i>Lento</i>"
+
+#: ../data/touchpad.ui.h:10
+#, fuzzy
+msgid "<i>Range</i>"
+msgstr "<i>Largo</i>"
+
+#: ../data/touchpad.ui.h:12
 msgid "<i>Slow</i>"
 msgstr "<i>Lento</i>"
 
-#: ../data/touchpad.ui.h:6
+#: ../data/touchpad.ui.h:13
+#, fuzzy
+msgid "<i>Wide</i>"
+msgstr "<i>Rápido</i>"
+
+#: ../data/touchpad.ui.h:14
 msgid "Enable Ci_rcular scrolling"
 msgstr "Activar desplazamiento c_ircular"
 
-#: ../data/touchpad.ui.h:7
+#: ../data/touchpad.ui.h:15
 msgid "Enable _faster tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:8
+#: ../data/touchpad.ui.h:16
 msgid "Enable _horizontal scrolling"
 msgstr "Activar desplazamiento _horizontal"
 
-#: ../data/touchpad.ui.h:9
+#: ../data/touchpad.ui.h:17
+msgid "Enable _locked drags"
+msgstr ""
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _palm detection"
+msgstr ""
+
+#: ../data/touchpad.ui.h:19
 msgid "Enable _vertical scrolling"
 msgstr "Activar desplazamiento _vertical"
 
-#: ../data/touchpad.ui.h:10
+#: ../data/touchpad.ui.h:20
 msgid "Enable continuous edge scrolling"
 msgstr "Activar desplazamiento continuo del borde"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:21
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "Activar desplazamiento horizontal al arrastrar con dos dedos"
 
-#: ../data/touchpad.ui.h:12
+#: ../data/touchpad.ui.h:22
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "Activar desplazamiento vertical al arrastrar con dos dedos"
 
-#: ../data/touchpad.ui.h:13
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "General"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr "Desplazamiento"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:25
+msgid "Set _guest mouse off"
+msgstr ""
+
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr ""
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:28
+msgid "Tapping move: "
+msgstr ""
+
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr ""
 
@@ -178,3 +237,19 @@ msgstr ""
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
+
+#, fuzzy
+#~ msgid "<i>Heavy</i>"
+#~ msgstr "<i>Rápido</i>"
+
+#~ msgid "(ms)"
+#~ msgstr "(ms)"
+
+#~ msgid "Middle button _timeout:"
+#~ msgstr "_Tiempo de expiración del botón del medio"
+
+#~ msgid "Wheel _emulation timeout:"
+#~ msgstr "Tiempo de expiración de la _emulación de la rueda"
+
+#~ msgid "Wheel emulation _inertia:"
+#~ msgstr "_Inercia de la emulación de la rueda:"

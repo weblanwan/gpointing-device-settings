@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 13:10+0900\n"
+"POT-Creation-Date: 2009-03-29 16:52+0900\n"
 "PO-Revision-Date: 2009-02-27 18:59+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/gpds-ui.c:213 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
 msgstr "%sが見つかりません。"
@@ -42,12 +42,12 @@ msgstr "%sが開けません。"
 msgid "No float atom in XServer"
 msgstr "float atomがXServerにありません"
 
-#: ../modules/gpds-touchpad-ui.c:831 ../modules/gpds-mouse-ui.c:584
+#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%sが見つかりません。"
 
-#: ../modules/gpds-touchpad-ui.c:874 ../modules/gpds-mouse-ui.c:627
+#: ../modules/gpds-touchpad-ui.c:820 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "ウィジェット(%s)がありません。"
@@ -56,108 +56,164 @@ msgstr "ウィジェット(%s)がありません。"
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
 #: ../data/mouse.ui.h:1
-msgid "(ms)"
-msgstr "(ミリ秒)"
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>中ボタンエミュレーション</b>"
 
 #: ../data/mouse.ui.h:2
-msgid "Enable _horizontal scroll"
-msgstr "横スクロールを有効にする"
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>ホイールエミュレーション</b>"
 
-#: ../data/mouse.ui.h:3
-msgid "Enable _vertical scroll"
-msgstr "縦スクロールを有効にする"
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+msgid "<i>Long</i>"
+msgstr "<i>長い</i>"
 
-#: ../data/mouse.ui.h:4
-msgid "Middle button _timeout:"
-msgstr "中ボタンタイムアウト:"
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:11
+msgid "<i>Short</i>"
+msgstr "<i>短い</i>"
 
 #: ../data/mouse.ui.h:5
-msgid "Use _middle button emulation"
-msgstr "中ボタンエミュレーションを使用する"
+msgid "Enable _horizontal scroll"
+msgstr "横スクロールを有効にする(_H)"
 
 #: ../data/mouse.ui.h:6
-msgid "Use _wheel emulation"
-msgstr "ホイールエミュレーションを使用する"
+msgid "Enable _vertical scroll"
+msgstr "縦スクロールを有効にする(_V)"
 
 #: ../data/mouse.ui.h:7
-msgid "Wheel _emulation timeout:"
-msgstr "ホイールエミュレーションタイムアウト:"
+msgid "Use _middle button emulation"
+msgstr "中ボタンエミュレーションを使用する(_M)"
 
 #: ../data/mouse.ui.h:8
-msgid "Wheel emulation _button:"
-msgstr "ホイールエミュレーションタイムアウト:"
+msgid "Use _wheel emulation"
+msgstr "ホイールエミュレーションを使用する(_W)"
 
 #: ../data/mouse.ui.h:9
-msgid "Wheel emulation _inertia:"
-msgstr "ホイールエミュレーションの惰性:"
+msgid "_button:"
+msgstr "ボタン(B):"
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr "惰性(_I):"
+
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+msgid "_timeout:"
+msgstr "タイムアウト(_T):"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "タイムアウト(_E):"
 
 #: ../data/touchpad.ui.h:1
-msgid "<b>Scrolling</b>"
-msgstr "スクロール"
+msgid "<b>Guest Mouse</b>"
+msgstr "</b>ゲストマウス</b>"
 
 #: ../data/touchpad.ui.h:2
-msgid "<i>Fast</i>"
-msgstr "速い"
+msgid "<b>Locked Drags</b>"
+msgstr "<b>ドラッグロック</b>"
 
 #: ../data/touchpad.ui.h:3
-msgid "<i>Long</i>"
-msgstr "長い"
+msgid "<b>Palm Detection</b>"
+msgstr "<b>手のひら検知</b>"
 
 #: ../data/touchpad.ui.h:4
-msgid "<i>Short</i>"
-msgstr "短い"
+msgid "<b>Scrolling</b>"
+msgstr "<b>スクロール</b>"
 
 #: ../data/touchpad.ui.h:5
-msgid "<i>Slow</i>"
-msgstr "遅い"
+msgid "<i>Fast</i>"
+msgstr "<i>速い</i>"
 
 #: ../data/touchpad.ui.h:6
-msgid "Enable Ci_rcular scrolling"
-msgstr "回転スクロールを有効にする"
-
-#: ../data/touchpad.ui.h:7
-msgid "Enable _faster tapping"
-msgstr "ファストタッピングを有効にする"
+msgid "<i>High</i>"
+msgstr "<i>強い</i>"
 
 #: ../data/touchpad.ui.h:8
-msgid "Enable _horizontal scrolling"
-msgstr "横スクロールを有効にする"
+msgid "<i>Low</i>"
+msgstr "<i>弱い</i>"
 
 #: ../data/touchpad.ui.h:9
-msgid "Enable _vertical scrolling"
-msgstr "縦スクロールを有効にする"
+msgid "<i>Narrow</i>"
+msgstr "<i>狭い</i>"
 
 #: ../data/touchpad.ui.h:10
+msgid "<i>Range</i>"
+msgstr "<i>範囲</i>"
+
+#: ../data/touchpad.ui.h:12
+msgid "<i>Slow</i>"
+msgstr "<i>遅い</i>"
+
+#: ../data/touchpad.ui.h:13
+msgid "<i>Wide</i>"
+msgstr "<i>広い</i>"
+
+#: ../data/touchpad.ui.h:14
+msgid "Enable Ci_rcular scrolling"
+msgstr "回転スクロールを有効にする(_R)"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable _faster tapping"
+msgstr "ファストタッピングを有効にする(_F)"
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _horizontal scrolling"
+msgstr "横スクロールを有効にする(_H)"
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _locked drags"
+msgstr "ドラッグロックを有効にする(_L)"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _palm detection"
+msgstr "手のひら検知を有効にする(_P)"
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable _vertical scrolling"
+msgstr "縦スクロールを有効にする(_V)"
+
+#: ../data/touchpad.ui.h:20
 msgid "Enable continuous edge scrolling"
 msgstr "横スクロールを有効にする"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:21
 msgid "Enable horizontal scrolling when dragging with two fingers"
-msgstr "横スクロールを有効にする"
+msgstr "二本指でドラッグした時の横スクロールを有効にする"
 
-#: ../data/touchpad.ui.h:12
+#: ../data/touchpad.ui.h:22
 msgid "Enable vertical scrolling when dragging with two fingers"
-msgstr "縦スクロールを有効にする"
+msgstr "二本指でドラッグした時の縦スクロールを有効にする"
 
-#: ../data/touchpad.ui.h:13
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "一般"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr "スクロール"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:25
+msgid "Set _guest mouse off"
+msgstr "ゲストマウスをオフにする(_G)"
+
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr "回転スクロールの開始ポイント"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr "タッピング"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:28
+msgid "Tapping move: "
+msgstr "タッピング移動距離"
+
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr "タッピング間隔"
+
+#: ../data/main-window.ui.h:1
+msgid "GPointing Device Settings"
+msgstr "ポインティングデバイスの設定"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
@@ -168,5 +224,5 @@ msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr "ポインティングデバイスの設定を管理するにはTrueに設定します"
 
-#~ msgid "Pointing Device Settings"
-#~ msgstr "ポインティングデバイスの設定"
+#~ msgid "<i>Heavy</i>"
+#~ msgstr "<i>速い</i>"
