@@ -827,8 +827,15 @@ get_content_widget (GpdsUI *ui, GError **error)
 static GdkPixbuf *
 get_icon_pixbuf (GpdsUI *ui, GError **error)
 {
-    return gdk_pixbuf_new_from_file(GPDS_ICONDIR "/touchpad.png",
-                                    error);
+    gchar *path;
+    GdkPixbuf *pixbuf;
+
+    path = g_build_filename(gpds_get_icon_file_directory(),
+                            "touchpad", NULL);
+    pixbuf = gdk_pixbuf_new_from_file(path, error);
+    g_free(path);
+
+    return pixbuf;
 }
 
 /*
