@@ -657,8 +657,7 @@ DEFINE_SET_INT_PAIR_PROPERTY_FROM_PREFERENCE(scrolling_distance,
                                              "vertical_scrolling_scale",
                                              "horizontal_scrolling_scale");
 static void
-set_circular_scrolling_trigger_property_from_preference (GpdsUI *ui,
-                                                         GtkBuilder *builder)
+set_circular_scrolling_trigger_property_from_preference (GpdsUI *ui)
 {
     gint *values;
     gulong n_values;
@@ -750,9 +749,9 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     set_edge_scrolling_property_from_preference(ui, builder);
     set_palm_dimensions_property_from_preference(ui, builder);
     set_scrolling_distance_property_from_preference(ui, builder);
-    set_circular_scrolling_trigger_property_from_preference(ui, builder);
     set_two_finger_scrolling_property_from_preference(ui, builder);
     set_touchpad_use_type_property_from_preference(ui);
+    set_circular_scrolling_trigger_property_from_preference(ui);
     set_click_action(ui);
 }
 
