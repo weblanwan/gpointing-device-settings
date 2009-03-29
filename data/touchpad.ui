@@ -206,7 +206,7 @@
                                 <property name="border-width">5</property>
                                 <child>
                                   <object class="GtkLabel" id="palm_detection_width_label">
-                                    <property name="label" translatable="yes">&lt;i&gt;Range&lt;/i&gt;</property>
+                                    <property name="label" translatable="yes">_range:</property>
                                     <property name="mnemonic-widget">palm_detection_width_scale</property>
                                     <property name="use_underline">True</property>
                                     <property name="use_markup">False</property>
@@ -297,10 +297,10 @@
                                 <property name="border-width">5</property>
                                 <child>
                                   <object class="GtkLabel" id="palm_detection_depth_label">
-                                    <property name="label" translatable="yes">&lt;i&gt;High&lt;/i&gt;</property>
+                                    <property name="label" translatable="yes">pre_ssure:</property>
                                     <property name="mnemonic-widget">palm_detection_depth_scale</property>
                                     <property name="use_underline">True</property>
-                                    <property name="use_markup">False</property>
+                                    <property name="use_markup">True</property>
                                     <property name="justify">GTK_JUSTIFY_LEFT</property>
                                     <property name="wrap">False</property>
                                     <property name="selectable">False</property>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 16:52+0900\n"
+"POT-Creation-Date: 2009-03-29 18:14+0900\n"
 "PO-Revision-Date: 2009-03-19 13:42+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -49,12 +49,12 @@ msgstr "No se pudo abrir el dispositivo %s."
 msgid "No float atom in XServer"
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:771 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:820 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "No existe el widget (%s)."
@@ -76,7 +76,7 @@ msgstr "_Botón de emulación de la rueda:"
 msgid "<i>Long</i>"
 msgstr "<i>Largo</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:11
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
 msgid "<i>Short</i>"
 msgstr "<i>Corto</i>"
 
@@ -147,82 +147,85 @@ msgstr "<i>Largo</i>"
 msgid "<i>Narrow</i>"
 msgstr "<i>Lento</i>"
 
-#: ../data/touchpad.ui.h:10
-#, fuzzy
-msgid "<i>Range</i>"
-msgstr "<i>Largo</i>"
-
-#: ../data/touchpad.ui.h:12
+#: ../data/touchpad.ui.h:11
 msgid "<i>Slow</i>"
 msgstr "<i>Lento</i>"
 
-#: ../data/touchpad.ui.h:13
+#: ../data/touchpad.ui.h:12
 #, fuzzy
 msgid "<i>Wide</i>"
 msgstr "<i>Rápido</i>"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:13
 msgid "Enable Ci_rcular scrolling"
 msgstr "Activar desplazamiento c_ircular"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:14
 msgid "Enable _faster tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:15
 msgid "Enable _horizontal scrolling"
 msgstr "Activar desplazamiento _horizontal"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:16
 msgid "Enable _locked drags"
 msgstr ""
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:17
 msgid "Enable _palm detection"
 msgstr ""
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:18
 msgid "Enable _vertical scrolling"
 msgstr "Activar desplazamiento _vertical"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:19
 msgid "Enable continuous edge scrolling"
 msgstr "Activar desplazamiento continuo del borde"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:20
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "Activar desplazamiento horizontal al arrastrar con dos dedos"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:21
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "Activar desplazamiento vertical al arrastrar con dos dedos"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:22
 msgid "General"
 msgstr "General"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:23
 msgid "Scrolling"
 msgstr "Desplazamiento"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:24
 msgid "Set _guest mouse off"
 msgstr ""
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:25
 msgid "Start point of circular scrolling:"
 msgstr ""
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:26
 msgid "Tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:27
 msgid "Tapping move: "
 msgstr ""
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:28
 msgid "Tapping time: "
+msgstr ""
+
+#: ../data/touchpad.ui.h:29
+msgid "_range:"
+msgstr ""
+
+#: ../data/touchpad.ui.h:31
+msgid "pre_ssure:"
 msgstr ""
 
 #: ../data/main-window.ui.h:1
@@ -237,6 +240,10 @@ msgstr ""
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
+
+#, fuzzy
+#~ msgid "<i>Range</i>"
+#~ msgstr "<i>Largo</i>"
 
 #, fuzzy
 #~ msgid "<i>Heavy</i>"
