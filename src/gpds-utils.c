@@ -32,6 +32,15 @@ gpds_get_ui_file_directory (void)
     return dir ? dir : GPDS_UIDIR;
 }
 
+const gchar *
+gpds_get_icon_file_directory (void)
+{
+    const gchar *dir;
+
+    dir = g_getenv("GPDS_ICON_DIR");
+    return dir ? dir : GPDS_ICONDIR;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

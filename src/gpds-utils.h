@@ -25,6 +25,7 @@
 G_BEGIN_DECLS
 
 const gchar *gpds_get_ui_file_directory (void);
+const gchar *gpds_get_icon_file_directory (void);
 
 G_END_DECLS
 
