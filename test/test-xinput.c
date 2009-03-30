@@ -10,6 +10,7 @@ void test_set_float_properties (void);
 void test_register_property_entries (void);
 void test_set_int_properties_by_name_invalid_format_type (void);
 void test_set_int_properties_invalid_n_values (void);
+void test_set_int_properties_invalid_property_enum (void);
 void test_set_float_properties_fail (void);
 void test_get_float_properties_fail (void);
 
@@ -240,6 +241,24 @@ test_get_float_properties_fail (void)
                                      &error,
                                      &double_value,
                                      &n_values);
+    gcut_assert_equal_error(expected_error, error);
+}
+
+void
+test_set_int_properties_invalid_property_enum (void)
+{
+    gint invalid_values[2];
+    expected_error = g_error_new(GPDS_XINPUT_ERROR,
+                                 GPDS_XINPUT_ERROR_NO_REGISTERED_PROPERTY,
+                                 "There is no registered property for %d.",
+                                 GPDS_MOUSE_MIDDLE_BUTTON_EMULATION);
+
+    cut_trace(test_new());
+    gpds_xinput_set_int_properties(xinput,
+                                   GPDS_MOUSE_MIDDLE_BUTTON_EMULATION,
+                                   &error,
+                                   invalid_values,
+                                   2);
     gcut_assert_equal_error(expected_error, error);
 }
 
