@@ -417,8 +417,8 @@ static void
 _assert_equal_wheel_vertical_axis (gboolean enable)
 {
     if (enable) {
-        cut_assert_equal_int(6, values[0]);
-        cut_assert_equal_int(7, values[1]);
+        cut_assert_equal_int(4, values[2]);
+        cut_assert_equal_int(5, values[3]);
     }
 }
 
@@ -426,8 +426,8 @@ static void
 _assert_equal_wheel_horizontal_axis (gboolean enable)
 {
     if (enable) {
-        cut_assert_equal_int(4, values[2]);
-        cut_assert_equal_int(5, values[3]);
+        cut_assert_equal_int(6, values[0]);
+        cut_assert_equal_int(7, values[1]);
     }
 }
 
