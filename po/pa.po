@@ -1,0 +1,237 @@
+# Punjabi translation of gpointing-device-settings.
+# Copyright (C) 2009 gpointing-device-settings's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gpointing-device-settings package.
+#
+# A S Alam <aalam@users.sf.net>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-06 19:22+0000\n"
+"PO-Revision-Date: 2009-06-15 06:58+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjab-l10n@list.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "%s ਨਹੀਂ ਲੱਭਿਆ।"
+
+#: ../src/gpds-xinput.c:221
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "ਇੱਕ X ਗਲਤੀ ਆਈ ਹੈ। ਗਲਤੀ ਸੀ %s।"
+
+#: ../src/gpds-xinput.c:307 ../src/gpds-xinput.c:325 ../src/gpds-xinput.c:343
+#, c-format
+msgid "There is no registered property for %d."
+msgstr ""
+
+#: ../src/gpds-xinput.c:445 ../src/gpds-xinput.c:612
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+
+#: ../src/gpds-xinput-utils.c:107
+#, c-format
+msgid "Could not open %s device."
+msgstr "%s ਜੰਤਰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।"
+
+#: ../src/gpds-xinput-utils.c:124
+#, c-format
+msgid "No float atom in XServer"
+msgstr ""
+
+#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
+#, c-format
+msgid "%s did not find."
+msgstr "%s ਨਹੀਂ ਲੱਭਿਆ"
+
+#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "ਕੋਈ (%s)ਵਿਦਜੈੱਟ ਨਹੀਂ।"
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>ਮੱਧ ਬਟਨ ਈਮੂਲੇਸ਼ਨ</b>"
+
+#: ../data/mouse.ui.h:2
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>ਵ੍ਹੀਲ ਈਮੂਲੇਸ਼ਨ</b>"
+
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+msgid "<i>Long</i>"
+msgstr "<i>ਲੰਮਾ</i>"
+
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
+msgid "<i>Short</i>"
+msgstr "<i>ਛੋਟਾ</i>"
+
+#: ../data/mouse.ui.h:5
+msgid "Enable _horizontal scroll"
+msgstr "ਹਰੀਜੱਟਲ ਸਕਰੋਲ ਚਾਲੂ(_h)"
+
+#: ../data/mouse.ui.h:6
+msgid "Enable _vertical scroll"
+msgstr "ਵਰਟੀਕਲ ਸਕਰੋਲ(_v)"
+
+#: ../data/mouse.ui.h:7
+msgid "Use _middle button emulation"
+msgstr "ਮੱਧ ਬਟਨ ਈਮੂਲੇਸ਼ਣ ਵਰਤੋਂ(_m)"
+
+#: ../data/mouse.ui.h:8
+msgid "Use _wheel emulation"
+msgstr "ਵ੍ਹੀਲ ਈਮੂਲੇਸ਼ਨ ਵਰਤੋਂ(_w)"
+
+#: ../data/mouse.ui.h:9
+msgid "_button:"
+msgstr "ਬਟਨ(_b):"
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr ""
+
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+msgid "_timeout:"
+msgstr "ਟਾਈਮ-ਆਉਟ(_t):"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "ਟਾਈਮ-ਆਉਟ(_e):"
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>ਗੈੱਸਟ ਮਾਊਸ</b>"
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr "<b>ਲਾਕ ਕੀਤਾ ਡਰੈੱਗ</b>"
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr "<b>ਹਥੇਲੀ ਖੋਜ</b>"
+
+#: ../data/touchpad.ui.h:4
+msgid "<b>Scrolling</b>"
+msgstr "<b>ਸਕਰੋਲ ਕਰਨਾ</b>"
+
+#: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>ਤੇਜ਼</i>"
+
+#: ../data/touchpad.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>ਉੱਚ</i>"
+
+#: ../data/touchpad.ui.h:8
+msgid "<i>Low</i>"
+msgstr "<i>ਘੱਟ</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Narrow</i>"
+msgstr "<i>ਤੰਗ</i>"
+
+#: ../data/touchpad.ui.h:11
+msgid "<i>Slow</i>"
+msgstr "<i>ਹੌਲੀ</i>"
+
+#: ../data/touchpad.ui.h:12
+msgid "<i>Wide</i>"
+msgstr "<i>ਚੌੜਾ</i>"
+
+#: ../data/touchpad.ui.h:13
+msgid "Enable Ci_rcular scrolling"
+msgstr "ਗੋਲਾਕਾਰ ਸਕਰੋਲ ਕਰਨਾ ਯੋਗ(_r)"
+
+#: ../data/touchpad.ui.h:14
+msgid "Enable _faster tapping"
+msgstr ""
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable _horizontal scrolling"
+msgstr ""
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _locked drags"
+msgstr ""
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _palm detection"
+msgstr ""
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _vertical scrolling"
+msgstr ""
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable continuous edge scrolling"
+msgstr ""
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr ""
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr ""
+
+#: ../data/touchpad.ui.h:22
+msgid "General"
+msgstr "ਆਮ"
+
+#: ../data/touchpad.ui.h:23
+msgid "Scrolling"
+msgstr "ਸਕਰੋਲਿੰਗ"
+
+#: ../data/touchpad.ui.h:24
+msgid "Set _guest mouse off"
+msgstr "ਗੈੱਸਟ ਮਾਊਂਸ ਬੰਦ ਸੈੱਟ ਕਰੋ(_g)"
+
+#: ../data/touchpad.ui.h:25
+msgid "Start point of circular scrolling:"
+msgstr "ਗੋਲਾਕਾਰ ਸਕਰੋਲਿੰਗ ਦਾ ਸ਼ੁਰੂਆਤੀ ਪੁਆਇੰਟ:"
+
+#: ../data/touchpad.ui.h:26
+msgid "Tapping"
+msgstr "ਟੈਪ ਕਰਨਾ"
+
+#: ../data/touchpad.ui.h:27
+msgid "Tapping move: "
+msgstr "ਟੈਪਿੰਗ ਮੂਵ:"
+
+#: ../data/touchpad.ui.h:28
+msgid "Tapping time: "
+msgstr "ਟੈਪਿੰਗ ਟਾਈਮ:"
+
+#: ../data/touchpad.ui.h:29
+msgid "_range:"
+msgstr "ਰੇਜ਼(_r):"
+
+#: ../data/touchpad.ui.h:31
+msgid "pre_ssure:"
+msgstr "ਦਬਾਅ(_s):"
+
+#: ../data/main-window.ui.h:1
+msgid "GPointing Device Settings"
+msgstr "ਜੀ-ਪੁਆਇੰਟਿੰਗ ਜੰਤਰ ਸੈਟਿੰਘ"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "ਪੁਆਇੰਟਿੰਗ-ਜੰਤਰ ਪਲੱਗਇਨ ਯੋਗ"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+
