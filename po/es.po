@@ -1,20 +1,20 @@
 # translation of gpointing-device-settings.HEAD.po to Español
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
+# Jorge González <jorgegonz@svn.gnome.org>, 2009.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 18:14+0900\n"
-"PO-Revision-Date: 2009-03-19 13:42+0100\n"
+"POT-Creation-Date: 2009-06-06 19:22+0000\n"
+"PO-Revision-Date: 2009-06-21 17:02+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
@@ -38,6 +38,8 @@ msgid ""
 "Format type is mismatched.\n"
 "%s is specified but %s returns."
 msgstr ""
+"El tipo de formato no coincide.\n"
+"%s está especificado, pero devuelve %s."
 
 #: ../src/gpds-xinput-utils.c:107
 #, c-format
@@ -47,12 +49,12 @@ msgstr "No se pudo abrir el dispositivo %s."
 #: ../src/gpds-xinput-utils.c:124
 #, c-format
 msgid "No float atom in XServer"
-msgstr ""
+msgstr "No hay átomo flotante en el servidor X"
 
 #: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
-msgstr ""
+msgstr "No se encontró %s."
 
 #: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
 #, c-format
@@ -63,14 +65,12 @@ msgstr "No existe el widget (%s)."
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
 #: ../data/mouse.ui.h:1
-#, fuzzy
 msgid "<b>Middle Button Emulation</b>"
-msgstr "Usar emulación del botón del _medio"
+msgstr "<b>Emulación del botón del medio</b>"
 
 #: ../data/mouse.ui.h:2
-#, fuzzy
 msgid "<b>Wheel Emulation</b>"
-msgstr "_Botón de emulación de la rueda:"
+msgstr "<b>Emulación de la rueda</b>"
 
 #: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
 msgid "<i>Long</i>"
@@ -98,31 +98,31 @@ msgstr "Usar emulación de la _rueda"
 
 #: ../data/mouse.ui.h:9
 msgid "_button:"
-msgstr ""
+msgstr "_botón:"
 
 #: ../data/mouse.ui.h:10
 msgid "_inertia:"
-msgstr ""
+msgstr "_inercia:"
 
 #: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
 msgid "_timeout:"
-msgstr ""
+msgstr "_tiempo de expiración:"
 
 #: ../data/mouse.ui.h:12
 msgid "tim_eout:"
-msgstr ""
+msgstr "ti_empo de expiración:"
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
-msgstr ""
+msgstr "<b>Ratón externo</b>"
 
 #: ../data/touchpad.ui.h:2
 msgid "<b>Locked Drags</b>"
-msgstr ""
+msgstr "<b>Arrastres bloqueados</b>"
 
 #: ../data/touchpad.ui.h:3
 msgid "<b>Palm Detection</b>"
-msgstr ""
+msgstr "<b>Detección de Palm</b>"
 
 #: ../data/touchpad.ui.h:4
 msgid "<b>Scrolling</b>"
@@ -133,28 +133,24 @@ msgid "<i>Fast</i>"
 msgstr "<i>Rápido</i>"
 
 #: ../data/touchpad.ui.h:6
-#, fuzzy
 msgid "<i>High</i>"
-msgstr "<i>Largo</i>"
+msgstr "<i>Alto</i>"
 
 #: ../data/touchpad.ui.h:8
-#, fuzzy
 msgid "<i>Low</i>"
-msgstr "<i>Largo</i>"
+msgstr "<i>Bajo</i>"
 
 #: ../data/touchpad.ui.h:9
-#, fuzzy
 msgid "<i>Narrow</i>"
-msgstr "<i>Lento</i>"
+msgstr "<i>Estrecho</i>"
 
 #: ../data/touchpad.ui.h:11
 msgid "<i>Slow</i>"
 msgstr "<i>Lento</i>"
 
 #: ../data/touchpad.ui.h:12
-#, fuzzy
 msgid "<i>Wide</i>"
-msgstr "<i>Rápido</i>"
+msgstr "<i>Ancho</i>"
 
 #: ../data/touchpad.ui.h:13
 msgid "Enable Ci_rcular scrolling"
@@ -162,7 +158,7 @@ msgstr "Activar desplazamiento c_ircular"
 
 #: ../data/touchpad.ui.h:14
 msgid "Enable _faster tapping"
-msgstr ""
+msgstr "Activar toques rápidos"
 
 #: ../data/touchpad.ui.h:15
 msgid "Enable _horizontal scrolling"
@@ -170,11 +166,11 @@ msgstr "Activar desplazamiento _horizontal"
 
 #: ../data/touchpad.ui.h:16
 msgid "Enable _locked drags"
-msgstr ""
+msgstr "Activar arrastrar _bloqueado"
 
 #: ../data/touchpad.ui.h:17
 msgid "Enable _palm detection"
-msgstr ""
+msgstr "Activar detección de pal_m"
 
 #: ../data/touchpad.ui.h:18
 msgid "Enable _vertical scrolling"
@@ -202,15 +198,15 @@ msgstr "Desplazamiento"
 
 #: ../data/touchpad.ui.h:24
 msgid "Set _guest mouse off"
-msgstr ""
+msgstr "Ratón _externo apagado"
 
 #: ../data/touchpad.ui.h:25
 msgid "Start point of circular scrolling:"
-msgstr ""
+msgstr "Punto de inicio del desplazamiento circular"
 
 #: ../data/touchpad.ui.h:26
 msgid "Tapping"
-msgstr ""
+msgstr "Toque"
 
 #: ../data/touchpad.ui.h:27
 msgid "Tapping move: "
@@ -222,24 +218,26 @@ msgstr ""
 
 #: ../data/touchpad.ui.h:29
 msgid "_range:"
-msgstr ""
+msgstr "_rango:"
 
 #: ../data/touchpad.ui.h:31
 msgid "pre_ssure:"
-msgstr ""
+msgstr "pre_sión:"
 
 #: ../data/main-window.ui.h:1
 msgid "GPointing Device Settings"
-msgstr ""
+msgstr "Ajustes del dispositivo apuntador"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
-msgstr ""
+msgstr "Activar el complemento del dispositivo apuntador"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
+"Establecer como verdadero para permitir que el complemento gestione la "
+"configuración de los ajustes del dispositivo apuntador"
 
 #, fuzzy
 #~ msgid "<i>Range</i>"
