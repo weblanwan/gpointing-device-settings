@@ -448,7 +448,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="locked_drags_timeout_left_label">
-                                <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+                                <property name="label" translatable="yes" context="timeout">&lt;i&gt;Short&lt;/i&gt;</property>
                                 <property name="use_underline">False</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -487,7 +487,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="locked_drags_timeout_right_label">
-                                <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+                                <property name="label" translatable="yes" context="timeout">&lt;i&gt;Long&lt;/i&gt;</property>
                                 <property name="use_underline">False</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -603,7 +603,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="label25">
-                                <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+                                <property name="label" translatable="yes" context="time">&lt;i&gt;Short&lt;/i&gt;</property>
                                 <property name="use_underline">False</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -642,7 +642,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="label26">
-                                <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+                                <property name="label" translatable="yes" context="time">&lt;i&gt;Long&lt;/i&gt;</property>
                                 <property name="use_underline">False</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -699,7 +699,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="tapping_move_scale_short_label">
-                                <property name="label" translatable="yes">&lt;i&gt;Short&lt;/i&gt;</property>
+                                <property name="label" translatable="yes" context="distance">&lt;i&gt;Short&lt;/i&gt;</property>
                                 <property name="use_underline">False</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -738,7 +738,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="tapping_move_scale_long_labe">
-                                <property name="label" translatable="yes">&lt;i&gt;Long&lt;/i&gt;</property>
+                                <property name="label" translatable="yes" context="distance">&lt;i&gt;Long&lt;/i&gt;</property>
                                 <property name="use_underline">False</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">GTK_JUSTIFY_LEFT</property>
