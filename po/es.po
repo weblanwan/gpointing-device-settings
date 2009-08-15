@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
-# Jorge González <jorgegonz@svn.gnome.org>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-06 19:22+0000\n"
-"PO-Revision-Date: 2009-06-21 17:02+0200\n"
+"POT-Creation-Date: 2009-06-22 04:31+0000\n"
+"PO-Revision-Date: 2009-08-15 13:29+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,11 +209,11 @@ msgstr "Toque"
 
 #: ../data/touchpad.ui.h:27
 msgid "Tapping move: "
-msgstr ""
+msgstr "Movimiento al toque: "
 
 #: ../data/touchpad.ui.h:28
 msgid "Tapping time: "
-msgstr ""
+msgstr "Tiempo del toque: "
 
 #: ../data/touchpad.ui.h:29
 msgid "_range:"
