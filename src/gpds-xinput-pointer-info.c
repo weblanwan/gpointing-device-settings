@@ -41,6 +41,8 @@ gpds_xinput_pointer_info_new (const gchar *name, const gchar *type_name)
 void
 gpds_xinput_pointer_info_free (GpdsXInputPointerInfo *info)
 {
+    if (!info)
+        return;
     g_free(info->name);
     g_free(info->type_name);
     g_free(info);
