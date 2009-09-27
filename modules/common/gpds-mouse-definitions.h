@@ -22,9 +22,9 @@
 
 #define GPDS_MOUSE_GCONF_DIR                   "/desktop/gnome/peripherals"
 #define GPDS_MOUSE_MIDDLE_BUTTON_EMULATION_KEY "middle_button_emulation"
-#define GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY   "middle_button_timeoue"
+#define GPDS_MOUSE_MIDDLE_BUTTON_TIMEOUT_KEY   "middle_button_timeout"
 #define GPDS_MOUSE_WHEEL_EMULATION_KEY         "wheel_emulation"
-#define GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY "wheel_emulation_inetia"
+#define GPDS_MOUSE_WHEEL_EMULATION_INERTIA_KEY "wheel_emulation_inertia"
 #define GPDS_MOUSE_WHEEL_EMULATION_X_AXIS_KEY  "wheel_emulation_x_axis"
 #define GPDS_MOUSE_WHEEL_EMULATION_Y_AXIS_KEY  "wheel_emulation_y_axis"
 #define GPDS_MOUSE_WHEEL_EMULATION_TIMEOUT_KEY "wheel_emulation_timeout"
