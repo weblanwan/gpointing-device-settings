@@ -494,7 +494,7 @@ cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
             g_error_free(error);
         }
     }
-    gpds_ui_set_gconf_bool(ui, GPDS_TOUCHPAD_OFF_KEY, properties[0]);
+    gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, properties[0]);
     set_sensitivity_depends_on_use_type(ui, properties[0]);
 }
 
