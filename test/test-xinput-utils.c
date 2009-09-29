@@ -84,7 +84,7 @@ test_get_device_num_buttons (void)
     n_buttons = gpds_xinput_utils_get_device_num_buttons(DEVICE_NAME, &error);
     gcut_assert_error(error);
 
-    cut_assert_equal_int(32, n_buttons);
+    cut_assert_equal_int(5, n_buttons);
 }
 
 /*
