@@ -1,0 +1,240 @@
+# Czech translations for PACKAGE package.
+# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Michal Čihař <michal@cihar.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings 1.3.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-20 10:42+0000\n"
+"PO-Revision-Date: 2009-10-20 09:340200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "Zařízení %s nebylo nalezeno."
+
+#: ../src/gpds-xinput.c:221
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "Nastala chyba X server. Chyba byla %s."
+
+#: ../src/gpds-xinput.c:307 ../src/gpds-xinput.c:325 ../src/gpds-xinput.c:343
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "Vlastnost %d není registrována."
+
+#: ../src/gpds-xinput.c:445 ../src/gpds-xinput.c:612
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Neshoda formátového typu.\n"
+"Bylo určeno %s, ale návratová hodnota je %s."
+
+#: ../src/gpds-xinput-utils.c:107
+#, c-format
+msgid "Could not open %s device."
+msgstr "Nepodařilo se otevřít zařízení %s."
+
+#: ../src/gpds-xinput-utils.c:124
+#, c-format
+msgid "No float atom in XServer"
+msgstr "XServer nemá float atom"
+
+#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
+#, c-format
+msgid "%s did not find."
+msgstr "Nepodařilo se otevřít soubor %s."
+
+#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Widget (%s) neexistuje."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Emulace prostředního tlačítka</b>"
+
+#: ../data/mouse.ui.h:2
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Emulace kolečka</b>"
+
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+msgid "<i>Long</i>"
+msgstr "<i>Dlouhý</i>"
+
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
+msgid "<i>Short</i>"
+msgstr "<i>Krátký</i>"
+
+#: ../data/mouse.ui.h:5
+msgid "Enable _horizontal scroll"
+msgstr "Povolit _vodorovné posouvání"
+
+#: ../data/mouse.ui.h:6
+msgid "Enable _vertical scroll"
+msgstr "Povolit _svislé posouvání"
+
+#: ../data/mouse.ui.h:7
+msgid "Use _middle button emulation"
+msgstr "Použít emulaci _prostředního tlačítka"
+
+#: ../data/mouse.ui.h:8
+msgid "Use _wheel emulation"
+msgstr "Použít emulaci _kolečka"
+
+#: ../data/mouse.ui.h:9
+msgid "_button:"
+msgstr "_tlačítko:"
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr "_setrvačnost:"
+
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+msgid "_timeout:"
+msgstr "_interval:"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "int_erval:"
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>Připojená myš</b>"
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr "<b>Zamknuté tahání</b>"
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr "<b>Detekce dlaně</b>"
+
+#: ../data/touchpad.ui.h:4
+msgid "<b>Scrolling</b>"
+msgstr "<b>Posouvání</b>"
+
+#: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>Rychlé</i>"
+
+#: ../data/touchpad.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>Vysoké</i>"
+
+#: ../data/touchpad.ui.h:8
+msgid "<i>Low</i>"
+msgstr "<i>Nízké</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Narrow</i>"
+msgstr "<i>Uzké</i>"
+
+#: ../data/touchpad.ui.h:11
+msgid "<i>Slow</i>"
+msgstr "<i>Pomalé</i>"
+
+#: ../data/touchpad.ui.h:12
+msgid "<i>Wide</i>"
+msgstr "<i>Široké</i>"
+
+#: ../data/touchpad.ui.h:13
+msgid "Enable Ci_rcular scrolling"
+msgstr "Povolit _kruhové posouvání"
+
+#: ../data/touchpad.ui.h:14
+msgid "Enable _faster tapping"
+msgstr "Povolit _rychlejší klepání"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable _horizontal scrolling"
+msgstr "Povolit _vodorovné posouvání"
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _locked drags"
+msgstr "Povolit _zamknuté tahání"
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _palm detection"
+msgstr "Povolit _detekci dlaně"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _vertical scrolling"
+msgstr "Povolit _svislé posouvání"
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable continuous edge scrolling"
+msgstr "Povolit trvalé posouvání na krajích"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Povolit vodorovné posouvání dvěma prsty"
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Povolit svislé posouvání dvěma prsty"
+
+#: ../data/touchpad.ui.h:22
+msgid "General"
+msgstr "Obecné"
+
+#: ../data/touchpad.ui.h:23
+msgid "Scrolling"
+msgstr "Posouvání"
+
+#: ../data/touchpad.ui.h:24
+msgid "Set _guest mouse off"
+msgstr "Vypnout _připojenou myš"
+
+#: ../data/touchpad.ui.h:25
+msgid "Start point of circular scrolling:"
+msgstr "Počáteční bod kruhového posouvání:"
+
+#: ../data/touchpad.ui.h:26
+msgid "Tapping"
+msgstr "Klepání"
+
+#: ../data/touchpad.ui.h:27
+msgid "Tapping move: "
+msgstr "Pohyb při klepání: "
+
+#: ../data/touchpad.ui.h:28
+msgid "Tapping time: "
+msgstr "Doba klepání: "
+
+#: ../data/touchpad.ui.h:29
+msgid "_range:"
+msgstr "_rozsah:"
+
+#: ../data/touchpad.ui.h:31
+msgid "pre_ssure:"
+msgstr "_tlak:"
+
+#: ../data/main-window.ui.h:1
+msgid "GPointing Device Settings"
+msgstr "GPointing Device Settings"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Povolit zásuvný modul pro ukazovací zařízení"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Nastavením na Pravda (true) povolíte zásuvný modul pro správu nastavení "
+"programu GPointingDeviceSettings."
+
