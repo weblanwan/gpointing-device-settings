@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-30 03:05+0000\n"
-"PO-Revision-Date: 2009-06-06 21:19+0200\n"
+"PO-Revision-Date: 2009-12-05 12:24+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -187,7 +187,7 @@ msgstr "Activer le défilement horizontal lorsque l'on glisse avec deux doigts"
 
 #: ../data/touchpad.ui.h:21
 msgid "Enable vertical scrolling when dragging with two fingers"
-msgstr "Activer le défilement horizontal lorsque l'on glisse avec deux doigts"
+msgstr "Activer le défilement vertical lorsque l'on glisse avec deux doigts"
 
 #: ../data/touchpad.ui.h:22
 msgid "General"
