@@ -12,5 +12,5 @@ Name: LibGPointingDeviceSettings
 Description: Library to create dynamic module of UI for pointing device settings
 Version: @VERSION@
 Requires: gtk+-2.0 >= @GTK_REQUIRED@ gconf-2.0 >= @GCONF_REQUIRED@
-Libs: -L${libdir} -lgpointing-device-settings
+Libs: -L${libdir} -lgpds
 Cflags: -I${includedir}/gpointing-device-settings
