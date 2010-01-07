@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 18:14+0900\n"
+"POT-Creation-Date: 2010-01-07 15:55+0900\n"
 "PO-Revision-Date: 2009-02-27 18:59+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,3 +227,11 @@ msgstr "ポインティングデバイスプラグインを有効にする"
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr "ポインティングデバイスの設定を管理するにはTrueに設定します"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "ポインティングデバイス"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "ポインティングの設定をします"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-20 10:42+0000\n"
+"POT-Creation-Date: 2010-01-07 15:55+0900\n"
 "PO-Revision-Date: 2009-10-20 09:340200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
@@ -238,3 +238,11 @@ msgstr ""
 "Nastavením na Pravda (true) povolíte zásuvný modul pro správu nastavení "
 "programu GPointingDeviceSettings."
 
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+#, fuzzy
+msgid "Pointing devices"
+msgstr "GPointing Device Settings"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr ""

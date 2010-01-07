@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-29 04:00+0000\n"
+"POT-Creation-Date: 2010-01-07 15:55+0900\n"
 "PO-Revision-Date: 2009-10-06 17:49+0800\n"
 "Last-Translator: 苏运强 <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
@@ -236,3 +236,12 @@ msgstr "启用触摸设备插件"
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr "设为真时，允许插件管理触摸设备管理器的设置。"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+#, fuzzy
+msgid "Pointing devices"
+msgstr "触摸设备管理器"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr ""

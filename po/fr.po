@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-30 03:05+0000\n"
+"POT-Creation-Date: 2010-01-07 15:55+0900\n"
 "PO-Revision-Date: 2009-12-05 12:24+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -239,3 +239,12 @@ msgid ""
 msgstr ""
 "Définir à vrai pour activer le greffon de gestion des paramètres de "
 "GPointingDeviceSettings."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+#, fuzzy
+msgid "Pointing devices"
+msgstr "Configuration de périphérique GPointing"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr ""

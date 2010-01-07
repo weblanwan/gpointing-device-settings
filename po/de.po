@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointin-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 18:11+0200\n"
+"POT-Creation-Date: 2010-01-07 15:55+0900\n"
 "PO-Revision-Date: 2009-05-04 18:23+0200\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -232,5 +232,14 @@ msgstr "Pointing-Device-Plugin aktivieren"
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
-"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings verwendet "
-"wird."
+"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings "
+"verwendet wird."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+#, fuzzy
+msgid "Pointing devices"
+msgstr "GPointing Zeigegerät-Einstellungen"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-19 19:46+0200\n"
+"POT-Creation-Date: 2010-01-07 15:55+0900\n"
 "PO-Revision-Date: 2009-08-18 21:33+0100\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@glug.es>\n"
 "Language-Team: Galician <gnome@mancomun.org>\n"
@@ -236,3 +236,12 @@ msgid ""
 msgstr ""
 "Estableza a Verdadeiro para activar o complemento para xestionar as "
 "configuracións de GPointingDeviceSettings."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+#, fuzzy
+msgid "Pointing devices"
+msgstr "Configuracións de dispositivo GPointing"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr ""
