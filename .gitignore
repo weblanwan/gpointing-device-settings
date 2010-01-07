@@ -32,6 +32,8 @@ coverage.info
 *.gcno
 *.gcda
 data/gpointing-device-settings_gnome_settings_daemon.schemas
+data/gpointing-device-settings.desktop
+data/gpointing-device-settings.desktop.in
 po/Makefile.in.in
 po/POTFILES
 po/gpointing-device-settings.pot

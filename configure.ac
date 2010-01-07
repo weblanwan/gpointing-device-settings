@@ -166,6 +166,7 @@ modules/Makefile
 modules/common/Makefile
 modules/gnome-settings-daemon-plugins/Makefile
 data/Makefile
+data/gpointing-device-settings.desktop.in
 test/Makefile
 doc/Makefile
 po/Makefile.in

@@ -1,0 +1,10 @@
+[Desktop Entry]
+_Name=Pointing devices
+_Comment=Set your pointing devices preferences
+Exec=gpointing-device-settings
+Icon=preferences-desktop-peripherals
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Settings;HardwareSettings;
+OnlyShowIn=GNOME;

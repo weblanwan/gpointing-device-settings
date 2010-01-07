@@ -16,6 +16,11 @@ schemas_in_files = 				\
 
 schemas_DATA = $(schemas_in_files:.schemas.in=.schemas)
 
+@INTLTOOL_DESKTOP_RULE@
+desktopdir = $(datadir)/applications
+desktop_in_files = gpointing-device-settings.desktop.in.in
+desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
+
 EXTRA_DIST = 			\
 	$(gpds_ui_DATA)		\
 	$(gpds_icon_DATA)	\
@@ -27,8 +32,10 @@ install-data-local:
 endif
 
 CLEANFILES = 			\
-	$(schemas_DATA)
+	$(schemas_DATA)		\
+	$(desktop_DATA)
 
 DISTCLEANFILES =		\
-	$(schemas_DATA)
+	$(schemas_DATA)		\
+	$(desktop_DATA)
 

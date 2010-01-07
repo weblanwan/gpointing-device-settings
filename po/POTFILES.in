@@ -9,3 +9,4 @@ modules/gpds-mouse-ui.c
 [type: gettext/glade]data/touchpad.ui
 [type: gettext/glade]data/main-window.ui
 data/gpointing-device-settings_gnome_settings_daemon.schemas.in
+data/gpointing-device-settings.desktop.in.in
