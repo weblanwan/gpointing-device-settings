@@ -2,13 +2,13 @@
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Jorge González <jorgegonz@svn.gnome.org>, 2009.
+# Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-07 15:55+0900\n"
-"PO-Revision-Date: 2009-08-15 13:29+0200\n"
+"POT-Creation-Date: 2010-01-07 10:47+0000\n"
+"PO-Revision-Date: 2010-01-09 09:14+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -239,13 +239,12 @@ msgstr ""
 "configuración de los ajustes del dispositivo apuntador"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
-#, fuzzy
 msgid "Pointing devices"
-msgstr "Ajustes del dispositivo apuntador"
+msgstr "Dispositivos apuntadores"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
-msgstr ""
+msgstr "Establezca sus preferencias del dispositivo apuntador"
 
 #, fuzzy
 #~ msgid "<i>Range</i>"
