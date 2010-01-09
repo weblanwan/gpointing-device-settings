@@ -13,11 +13,15 @@ void test_set_int_properties_invalid_n_values (void);
 void test_set_int_properties_invalid_property_enum (void);
 void test_set_float_properties_fail (void);
 void test_get_float_properties_fail (void);
+void test_set_button_map (void);
+void test_get_button_map (void);
 
 static GpdsXInput *xinput;
 static GpdsXInput *tmp_xinput;
 static gint *values;
 static gulong n_values;
+static guchar *actual_map;
+static gshort actual_n_buttons;
 static GError *error;
 static GError *expected_error;
 static gboolean middle_button_emulation;
@@ -92,6 +96,7 @@ setup (void)
     tmp_xinput = NULL;
     values = NULL;
     n_values = 0;
+    actual_map = NULL;
 
     error = NULL;
     expected_error = NULL;
@@ -107,6 +112,7 @@ teardown (void)
     if (tmp_xinput)
         g_object_unref(tmp_xinput);
     g_free(values);
+    g_free(actual_map);
 
     if (expected_error)
         g_clear_error(&expected_error);
@@ -279,6 +285,30 @@ test_set_int_properties_invalid_n_values (void)
                                    invalid_values,
                                    2);
     gcut_assert_equal_error(expected_error, error);
+}
+
+void
+test_get_button_map (void)
+{
+    const guchar expected_map[5] = { 1, 2, 3, 4, 5 };
+    cut_trace(test_new());
+
+    gpds_xinput_get_button_map (xinput, &error, &actual_map, &actual_n_buttons);
+    gcut_assert_error(error);
+
+    cut_assert_equal_int(5, actual_n_buttons);
+    cut_assert_equal_memory(expected_map, sizeof(expected_map),
+                            actual_map, actual_n_buttons);
+}
+
+void
+test_set_button_map (void)
+{
+    test_get_button_map();
+
+    gpds_xinput_set_button_map (xinput, &error, actual_map, actual_n_buttons);
+    gcut_assert_error(error);
+
 }
 
 /*

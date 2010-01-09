@@ -118,7 +118,14 @@ gboolean     gpds_xinput_get_float_properties_by_name
                                                GError **error,
                                                gdouble **properties,
                                                gulong *n_properties);
-
+gboolean     gpds_xinput_get_button_map       (GpdsXInput *xinput,
+                                               GError **error,
+                                               guchar **map,
+                                               gshort *n_buttons);
+gboolean     gpds_xinput_set_button_map       (GpdsXInput *xinput,
+                                               GError **error,
+                                               guchar *map,
+                                               gshort n_buttons);
 
 G_END_DECLS
 

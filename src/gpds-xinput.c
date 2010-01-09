@@ -652,6 +652,72 @@ gpds_xinput_get_float_properties (GpdsXInput *xinput,
                                                     n_values);
 }
 
+gboolean
+gpds_xinput_get_button_map (GpdsXInput *xinput,
+                            GError **error,
+                            guchar **map,
+                            gshort *n_buttons)
+{
+    XDevice *device;
+    gint x_error_code;
+    Status status;
+    GpdsXInputPriv *priv;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    device = get_device(xinput, error);
+    if (!device)
+        return FALSE;
+
+    priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+    *n_buttons = gpds_xinput_utils_get_device_num_buttons (priv->device_name, error);
+    if (*n_buttons < 0)
+        return FALSE;
+
+    *map = g_new0(guchar, *n_buttons);
+
+    gdk_error_trap_push();
+    status =  XGetDeviceButtonMapping(GDK_DISPLAY(), device, *map, *n_buttons);
+    gdk_flush();
+
+    x_error_code = gdk_error_trap_pop();
+    if (status != Success || x_error_code != 0) {
+        set_x_error(error, x_error_code);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+gboolean
+gpds_xinput_set_button_map (GpdsXInput *xinput,
+                            GError **error,
+                            guchar *map,
+                            gshort n_buttons)
+{
+    XDevice *device;
+    gint x_error_code;
+    Status status;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT(xinput), FALSE);
+
+    device = get_device(xinput, error);
+    if (!device)
+        return FALSE;
+
+    gdk_error_trap_push();
+    status =  XSetDeviceButtonMapping(GDK_DISPLAY(), device, map, n_buttons);
+    gdk_flush();
+
+    x_error_code = gdk_error_trap_pop();
+    if (status != Success || x_error_code != 0) {
+        set_x_error(error, x_error_code);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 void
 gpds_xinput_register_property_entries (GpdsXInput *xinput,
                                        const GpdsXInputPropertyEntry *entries,
