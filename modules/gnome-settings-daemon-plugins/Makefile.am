@@ -27,6 +27,7 @@ gsd_plugin_LTLIBRARIES =		\
 
 gsd_plugin_CFLAGS =					\
 	$(AM_CFLAGS)					\
+	-DG_LOG_DOMAIN=\"GPDS-Plugins\"			\
 	$(GNOME_SETTINGS_DAEMON_CFLAGS)			\
 	-DGNOME_SETTINGS_LOCALEDIR=\""$(localedir)"\"
 

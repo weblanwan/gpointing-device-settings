@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-07 15:55+0900\n"
+"POT-Creation-Date: 2010-01-13 09:56+0900\n"
 "PO-Revision-Date: 2009-10-20 13:40+0300\n"
 "Last-Translator: Simos Xenitellis <simos.lists@googlemail.com>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
@@ -49,12 +49,12 @@ msgstr "Αδύνατο το άνοιγμα της συσκευής %s."
 msgid "No float atom in XServer"
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%s δε βρέθηκε."
 
-#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr ""
@@ -102,7 +102,7 @@ msgstr ""
 msgid "_inertia:"
 msgstr ""
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
 msgid "_timeout:"
 msgstr ""
 
@@ -151,74 +151,78 @@ msgid "<i>Wide</i>"
 msgstr ""
 
 #: ../data/touchpad.ui.h:13
-msgid "Enable Ci_rcular scrolling"
+msgid "Disable while _other device is connected"
 msgstr ""
 
 #: ../data/touchpad.ui.h:14
-msgid "Enable _faster tapping"
+msgid "Enable Ci_rcular scrolling"
 msgstr ""
 
 #: ../data/touchpad.ui.h:15
-msgid "Enable _horizontal scrolling"
+msgid "Enable _faster tapping"
 msgstr ""
 
 #: ../data/touchpad.ui.h:16
-msgid "Enable _locked drags"
+msgid "Enable _horizontal scrolling"
 msgstr ""
 
 #: ../data/touchpad.ui.h:17
-msgid "Enable _palm detection"
+msgid "Enable _locked drags"
 msgstr ""
 
 #: ../data/touchpad.ui.h:18
-msgid "Enable _vertical scrolling"
+msgid "Enable _palm detection"
 msgstr ""
 
 #: ../data/touchpad.ui.h:19
-msgid "Enable continuous edge scrolling"
+msgid "Enable _vertical scrolling"
 msgstr ""
 
 #: ../data/touchpad.ui.h:20
-msgid "Enable horizontal scrolling when dragging with two fingers"
+msgid "Enable continuous edge scrolling"
 msgstr ""
 
 #: ../data/touchpad.ui.h:21
-msgid "Enable vertical scrolling when dragging with two fingers"
+msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr ""
 
 #: ../data/touchpad.ui.h:22
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr ""
+
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "Γενικά"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:25
 msgid "Set _guest mouse off"
 msgstr ""
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr ""
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:28
 msgid "Tapping move: "
 msgstr ""
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr ""
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:30
 msgid "_range:"
 msgstr ""
 
-#: ../data/touchpad.ui.h:31
+#: ../data/touchpad.ui.h:32
 msgid "pre_ssure:"
 msgstr ""
 

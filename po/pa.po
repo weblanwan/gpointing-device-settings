@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-07 15:55+0900\n"
+"POT-Creation-Date: 2010-01-13 09:56+0900\n"
 "PO-Revision-Date: 2009-06-15 06:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjab-l10n@list.sf.net>\n"
@@ -49,12 +49,12 @@ msgstr "%s ਜੰਤਰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ�
 msgid "No float atom in XServer"
 msgstr ""
 
-#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%s ਨਹੀਂ ਲੱਭਿਆ"
 
-#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "ਕੋਈ (%s)ਵਿਦਜੈੱਟ ਨਹੀਂ।"
@@ -102,7 +102,7 @@ msgstr "ਬਟਨ(_b):"
 msgid "_inertia:"
 msgstr ""
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
 msgid "_timeout:"
 msgstr "ਟਾਈਮ-ਆਉਟ(_t):"
 
@@ -151,74 +151,78 @@ msgid "<i>Wide</i>"
 msgstr "<i>ਚੌੜਾ</i>"
 
 #: ../data/touchpad.ui.h:13
+msgid "Disable while _other device is connected"
+msgstr ""
+
+#: ../data/touchpad.ui.h:14
 msgid "Enable Ci_rcular scrolling"
 msgstr "ਗੋਲਾਕਾਰ ਸਕਰੋਲ ਕਰਨਾ ਯੋਗ(_r)"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:15
 msgid "Enable _faster tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:16
 msgid "Enable _horizontal scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:17
 msgid "Enable _locked drags"
 msgstr ""
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:18
 msgid "Enable _palm detection"
 msgstr ""
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:19
 msgid "Enable _vertical scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:20
 msgid "Enable continuous edge scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:21
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr ""
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:22
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr ""
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "ਆਮ"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr "ਸਕਰੋਲਿੰਗ"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:25
 msgid "Set _guest mouse off"
 msgstr "ਗੈੱਸਟ ਮਾਊਂਸ ਬੰਦ ਸੈੱਟ ਕਰੋ(_g)"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr "ਗੋਲਾਕਾਰ ਸਕਰੋਲਿੰਗ ਦਾ ਸ਼ੁਰੂਆਤੀ ਪੁਆਇੰਟ:"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr "ਟੈਪ ਕਰਨਾ"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:28
 msgid "Tapping move: "
 msgstr "ਟੈਪਿੰਗ ਮੂਵ:"
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr "ਟੈਪਿੰਗ ਟਾਈਮ:"
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:30
 msgid "_range:"
 msgstr "ਰੇਜ਼(_r):"
 
-#: ../data/touchpad.ui.h:31
+#: ../data/touchpad.ui.h:32
 msgid "pre_ssure:"
 msgstr "ਦਬਾਅ(_s):"
 

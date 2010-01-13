@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-07 15:55+0900\n"
+"POT-Creation-Date: 2010-01-13 09:56+0900\n"
 "PO-Revision-Date: 2009-02-27 18:59+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,12 +42,12 @@ msgstr "%sが開けません。"
 msgid "No float atom in XServer"
 msgstr "float atomがXServerにありません"
 
-#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%sが見つかりません。"
 
-#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "ウィジェット(%s)がありません。"
@@ -95,7 +95,7 @@ msgstr "ボタン(B):"
 msgid "_inertia:"
 msgstr "惰性(_I):"
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
 msgid "_timeout:"
 msgstr "タイムアウト(_T):"
 
@@ -144,74 +144,78 @@ msgid "<i>Wide</i>"
 msgstr "<i>広い</i>"
 
 #: ../data/touchpad.ui.h:13
+msgid "Disable while _other device is connected"
+msgstr "他のデバイスが接続されている時はこのデバイスを無効にする(_O)"
+
+#: ../data/touchpad.ui.h:14
 msgid "Enable Ci_rcular scrolling"
 msgstr "回転スクロールを有効にする(_R)"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:15
 msgid "Enable _faster tapping"
 msgstr "ファストタッピングを有効にする(_F)"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:16
 msgid "Enable _horizontal scrolling"
 msgstr "横スクロールを有効にする(_H)"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:17
 msgid "Enable _locked drags"
 msgstr "ドラッグロックを有効にする(_L)"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:18
 msgid "Enable _palm detection"
 msgstr "手のひら検知を有効にする(_P)"
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:19
 msgid "Enable _vertical scrolling"
 msgstr "縦スクロールを有効にする(_V)"
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:20
 msgid "Enable continuous edge scrolling"
 msgstr "横スクロールを有効にする"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:21
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "二本指でドラッグした時の横スクロールを有効にする"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:22
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "二本指でドラッグした時の縦スクロールを有効にする"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "一般"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr "スクロール"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:25
 msgid "Set _guest mouse off"
 msgstr "ゲストマウスをオフにする(_G)"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr "回転スクロールの開始ポイント"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr "タッピング"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:28
 msgid "Tapping move: "
 msgstr "タッピング移動距離"
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr "タッピング間隔"
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:30
 msgid "_range:"
 msgstr "範囲:"
 
-#: ../data/touchpad.ui.h:31
+#: ../data/touchpad.ui.h:32
 msgid "pre_ssure:"
 msgstr "強さ:"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-07 15:55+0900\n"
+"POT-Creation-Date: 2010-01-13 09:56+0900\n"
 "PO-Revision-Date: 2009-12-05 12:24+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -52,12 +52,12 @@ msgstr "Impossible d'ouvrir le périphérique %s."
 msgid "No float atom in XServer"
 msgstr "Pas de « float atom » dans XServer"
 
-#: ../modules/gpds-touchpad-ui.c:770 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%s n'a pas été trouvé."
 
-#: ../modules/gpds-touchpad-ui.c:819 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Il n'y a pas d'élément graphique (%s)."
@@ -105,7 +105,7 @@ msgstr "_bouton :"
 msgid "_inertia:"
 msgstr "_inertie :"
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:30
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
 msgid "_timeout:"
 msgstr "_délai :"
 
@@ -154,74 +154,78 @@ msgid "<i>Wide</i>"
 msgstr "<i>Large</i>"
 
 #: ../data/touchpad.ui.h:13
+msgid "Disable while _other device is connected"
+msgstr ""
+
+#: ../data/touchpad.ui.h:14
 msgid "Enable Ci_rcular scrolling"
 msgstr "Activer le défilement ci_rculaire"
 
-#: ../data/touchpad.ui.h:14
+#: ../data/touchpad.ui.h:15
 msgid "Enable _faster tapping"
 msgstr "Activer le tapotement ra_pide"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:16
 msgid "Enable _horizontal scrolling"
 msgstr "Activer le défilement _horizontal"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:17
 msgid "Enable _locked drags"
 msgstr "Activer les _glisser-déposer bloqués"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:18
 msgid "Enable _palm detection"
 msgstr "Activer la _détection de la paume"
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:19
 msgid "Enable _vertical scrolling"
 msgstr "Activer le défilement _vertical"
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:20
 msgid "Enable continuous edge scrolling"
 msgstr "Activer le défilement continu en bordure"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:21
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "Activer le défilement horizontal lorsque l'on glisse avec deux doigts"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:22
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "Activer le défilement vertical lorsque l'on glisse avec deux doigts"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:23
 msgid "General"
 msgstr "Général"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:24
 msgid "Scrolling"
 msgstr "Défilement"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:25
 msgid "Set _guest mouse off"
 msgstr "Désactiver la _souris annexe"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:26
 msgid "Start point of circular scrolling:"
 msgstr "Point de départ du défilement circulaire :"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:27
 msgid "Tapping"
 msgstr "Tapotement"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:28
 msgid "Tapping move: "
 msgstr "Déplacement du tapotement : "
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:29
 msgid "Tapping time: "
 msgstr "Durée du tapotement : "
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:30
 msgid "_range:"
 msgstr "su_rface :"
 
-#: ../data/touchpad.ui.h:31
+#: ../data/touchpad.ui.h:32
 msgid "pre_ssure:"
 msgstr "pre_ssion :"
 

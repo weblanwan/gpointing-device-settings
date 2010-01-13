@@ -499,6 +499,16 @@ cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
 }
 
 static void
+cb_disable_while_other_device_exists_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsUI *ui = GPDS_UI(user_data);
+
+    gpds_ui_set_gconf_bool(ui,
+                           GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
+                           gtk_toggle_button_get_active(button));
+}
+
+static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
     GObject *object;
@@ -510,6 +520,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
                      ui)
 
     CONNECT(touchpad_use_type, changed);
+    CONNECT(disable_while_other_device_exists, toggled);
     CONNECT(guest_mouse_off, toggled);
     CONNECT(palm_detection, toggled);
     CONNECT(palm_detection_width_scale, value_changed);

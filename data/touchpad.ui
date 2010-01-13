@@ -141,6 +141,17 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkCheckButton" id="disable_while_other_device_exists">
+                            <property name="label" translatable="yes">Disable while _other device is connected</property>
+                            <property name="use_underline">True</property>
+                          </object>
+                          <packing>
+                            <property name="padding">0</property>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkLabel" id="guest_mouse_label">
                             <property name="label" translatable="yes">&lt;b&gt;Guest Mouse&lt;/b&gt;</property>
                             <property name="use_underline">False</property>

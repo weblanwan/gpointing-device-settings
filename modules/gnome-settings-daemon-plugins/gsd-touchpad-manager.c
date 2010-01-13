@@ -23,9 +23,12 @@
 
 #include "gsd-touchpad-manager.h"
 #include <glib/gi18n.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 #include <gconf/gconf-client.h>
 #include <gpds-xinput.h>
 #include <gpds-xinput-utils.h>
+#include <gpds-xinput-pointer-info.h>
 #include <gpds-gconf.h>
 
 #include "gpds-touchpad-definitions.h"
@@ -145,6 +148,122 @@ set_click_action (GsdPointingDeviceManager *manager,
                                    3);
 }
 
+static void
+set_disable_while_other_device_exists (GsdPointingDeviceManager *manager,
+                                       GpdsXInput *xinput,
+                                       GConfClient *gconf)
+{
+    gint properties[1];
+    gboolean disable = FALSE;
+    GList *node, *pointer_infos;;
+    gboolean exists_other_device = FALSE;
+    gint use_type;
+
+    gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                  gconf,
+                                                  GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
+                                                  &disable);
+
+    pointer_infos = gpds_xinput_utils_collect_pointer_infos();
+    for (node = pointer_infos; node; node = g_list_next(node)) {
+        GpdsXInputPointerInfo *info = node->data;
+
+        if (!g_ascii_strcasecmp(gpds_xinput_pointer_info_get_type_name(info),
+                                XI_TOUCHPAD)) {
+            continue;
+        }
+        if (!strcmp(gpds_xinput_pointer_info_get_name(info),
+                    "Macintosh mouse button emulation")) {
+            continue;
+        }
+        exists_other_device = TRUE;
+        break;
+    }
+    g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
+    g_list_free(pointer_infos);
+
+    gsd_pointing_device_manager_get_gconf_int(manager,
+                                              gconf,
+                                              GPDS_TOUCHPAD_OFF_KEY,
+                                              &use_type);
+    if (disable && exists_other_device)
+        properties[0] = GPDS_TOUCHPAD_USE_TYPE_OFF;
+    else
+        properties[0] = use_type;
+
+    gpds_xinput_set_int_properties(xinput,
+                                   GPDS_TOUCHPAD_OFF,
+                                   NULL,
+                                   properties,
+                                   1);
+}
+
+static GdkFilterReturn
+device_presence_filter (GdkXEvent *xevent,
+                        GdkEvent  *event,
+                        gpointer   data)
+{
+    XEvent *xev = (XEvent *)xevent;
+    XEventClass class_presence;
+    int xi_presence;
+    GpdsXInput *xinput;
+    GsdPointingDeviceManager *manager = GSD_POINTING_DEVICE_MANAGER(data);
+
+    xinput = gsd_pointing_device_manager_get_xinput(manager);
+    if (!xinput)
+        return GDK_FILTER_CONTINUE;
+
+    DevicePresence(gdk_x11_get_default_xdisplay(), xi_presence, class_presence);
+
+    if (xev->type == xi_presence) {
+        XDevicePresenceNotifyEvent *notify_event = (XDevicePresenceNotifyEvent *)xev;
+        if (notify_event->devchange == DeviceEnabled) {
+            set_disable_while_other_device_exists(manager,
+                                                  xinput,
+                                                  gconf_client_get_default());
+        }
+    }
+    g_object_unref(xinput);
+
+    return GDK_FILTER_CONTINUE;
+}
+
+
+static void
+add_device_presence_filter (GsdPointingDeviceManager *manager)
+{
+    Display *display;
+    XEventClass class_presence;
+    gint xi_presence;
+
+    gint op_code, event, error;
+
+    if (!XQueryExtension(GDK_DISPLAY(),
+                         "XInputExtension",
+                         &op_code,
+                         &event,
+                         &error)) {
+        return;
+    }
+
+    display = gdk_x11_get_default_xdisplay();
+
+    gdk_error_trap_push();
+    DevicePresence(display, xi_presence, class_presence);
+    XSelectExtensionEvent(display,
+                          RootWindow(display, DefaultScreen(display)),
+                          &class_presence, 1);
+    gdk_flush();
+    if (!gdk_error_trap_pop())
+        gdk_window_add_filter(NULL, device_presence_filter, manager);
+}
+
+static void
+remove_device_presence_filter (GsdPointingDeviceManager *manager)
+{
+    gdk_window_remove_filter(NULL, device_presence_filter, manager);
+}
+
 static gboolean
 start_manager (GsdPointingDeviceManager *manager)
 {
@@ -178,6 +297,9 @@ start_manager (GsdPointingDeviceManager *manager)
     set_two_finger_scrolling(manager, xinput, gconf);
     set_click_action(manager, xinput, gconf);
 
+    set_disable_while_other_device_exists(manager, xinput, gconf);
+    add_device_presence_filter(manager);
+
     g_object_unref(gconf);
     g_object_unref(xinput);
 
@@ -195,6 +317,7 @@ _start (GsdPointingDeviceManager *manager, GError **error)
 static void
 _stop (GsdPointingDeviceManager *manager)
 {
+    remove_device_presence_filter(manager);
 }
 
 static void
@@ -218,7 +341,9 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
 
     switch (value->type) {
     case GCONF_VALUE_BOOL:
-        if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_KEY)) {
+        if (!strcmp(key, GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY)) {
+            set_disable_while_other_device_exists(manager, xinput, client);
+        } else if (!strcmp(key, GPDS_TOUCHPAD_PALM_DETECTION_KEY)) {
             set_palm_detection(manager, xinput, client);
         } else if (!strcmp(key, GPDS_TOUCHPAD_GUEST_MOUSE_OFF_KEY)) {
             set_guest_mouse_off(manager, xinput, client);
