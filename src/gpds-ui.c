@@ -352,6 +352,37 @@ gpds_ui_get_gconf_int (GpdsUI *ui, const gchar *key, gint *value)
 }
 
 void
+gpds_ui_set_gconf_float (GpdsUI *ui, const gchar *key, gdouble value)
+{
+    gchar *gconf_key;
+    GpdsUIPriv *priv;
+
+    g_return_if_fail(GPDS_IS_UI(ui));
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    gconf_client_set_float(priv->gconf, gconf_key, value, NULL);
+    g_free(gconf_key);
+}
+
+gboolean
+gpds_ui_get_gconf_float (GpdsUI *ui, const gchar *key, gdouble *value)
+{
+    gchar *gconf_key;
+    gboolean exist_value = FALSE;
+    GpdsUIPriv *priv;
+
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    priv = GPDS_UI_GET_PRIVATE(ui);
+    gconf_key = build_gconf_key(ui, key);
+    exist_value =gpds_gconf_get_float(priv->gconf, gconf_key, value);
+    g_free(gconf_key);
+
+    return exist_value;
+}
+
+void
 gpds_ui_set_gconf_string (GpdsUI *ui, const gchar *key, const gchar *value)
 {
     gchar *gconf_key;
