@@ -509,6 +509,78 @@ cb_disable_while_other_device_exists_toggled (GtkToggleButton *button, gpointer 
 }
 
 static void
+set_move_speed_property (GpdsXInput *xinput, GtkBuilder *builder)
+{
+    GError *error = NULL;
+    GObject *object;
+    gdouble properties[4];
+
+    object = gtk_builder_get_object(builder, "minimum_speed_scale");
+    properties[0] = gtk_range_get_value(GTK_RANGE(object));
+
+    object = gtk_builder_get_object(builder, "maximum_speed_scale");
+    properties[1] = gtk_range_get_value(GTK_RANGE(object));
+
+    object = gtk_builder_get_object(builder, "acceleration_factor_scale");
+    properties[2] = gtk_range_get_value(GTK_RANGE(object));
+
+    if (!gpds_xinput_set_float_properties(xinput,
+                                          GPDS_TOUCHPAD_MOVE_SPEED,
+                                          &error,
+                                          properties,
+                                          4)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+}
+
+static void
+cb_move_speed_scale_value_changed (GtkRange *range, gpointer user_data)
+{
+    GtkBuilder *builder;
+    GpdsXInput *xinput;
+
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));
+    if (!xinput)
+        return;
+
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));
+    set_move_speed_property(xinput, builder);
+}
+
+static void
+cb_minimum_speed_scale_value_changed (GtkRange *range, gpointer user_data)
+{
+    gdouble value;
+    cb_move_speed_scale_value_changed(range, user_data);
+
+    value = gtk_range_get_value(range);
+    gpds_ui_set_gconf_float(GPDS_UI(user_data), GPDS_TOUCHPAD_MINIMUM_SPEED_KEY, value);
+}
+
+static void
+cb_maximum_speed_scale_value_changed (GtkRange *range, gpointer user_data)
+{
+    gdouble value;
+    cb_move_speed_scale_value_changed(range, user_data);
+
+    value = gtk_range_get_value(range);
+    gpds_ui_set_gconf_float(GPDS_UI(user_data), GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY, value);
+}
+
+static void
+cb_acceleration_factor_scale_value_changed (GtkRange *range, gpointer user_data)
+{
+    gdouble value;
+    cb_move_speed_scale_value_changed(range, user_data);
+
+    value = gtk_range_get_value(range);
+    gpds_ui_set_gconf_float(GPDS_UI(user_data), GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY, value);
+}
+
+static void
 setup_signals (GpdsUI *ui, GtkBuilder *builder)
 {
     GObject *object;
@@ -538,6 +610,10 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(horizontal_scrolling_scale, value_changed);
     CONNECT(two_finger_vertical_scrolling, toggled);
     CONNECT(two_finger_horizontal_scrolling, toggled);
+
+    CONNECT(minimum_speed_scale, value_changed);
+    CONNECT(maximum_speed_scale, value_changed);
+    CONNECT(acceleration_factor_scale, value_changed);
 
     /* cirlular scrolling trigger */
     CONNECT(trigger_top_toggle, button_press_event);
@@ -731,6 +807,36 @@ set_click_action (GpdsUI *ui)
 }
 
 static void
+set_move_speed_properties_from_preference (GpdsUI *ui, GtkBuilder *builder)
+{
+    GObject *object;
+    gdouble *values;
+    gulong n_values;
+    gdouble value;
+
+    if (!gpds_xinput_ui_get_xinput_float_property(GPDS_XINPUT_UI(ui),
+                                                  GPDS_TOUCHPAD_MOVE_SPEED,
+                                                  &values, &n_values)) {
+        return;
+    }
+
+    if (!gpds_ui_get_gconf_float(ui, GPDS_TOUCHPAD_MINIMUM_SPEED_KEY, &value))
+        value = values[0];
+    object = gtk_builder_get_object(builder, "minimum_speed_scale");
+    gtk_range_set_value(GTK_RANGE(object), value);
+    if (!gpds_ui_get_gconf_float(ui, GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY, &value))
+        value = values[1];
+    object = gtk_builder_get_object(builder, "maximum_speed_scale");
+    gtk_range_set_value(GTK_RANGE(object), value);
+    if (!gpds_ui_get_gconf_float(ui, GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY, &value))
+        value = values[2];
+    object = gtk_builder_get_object(builder, "acceleration_factor_scale");
+    gtk_range_set_value(GTK_RANGE(object), value);
+
+    g_free(values);
+}
+
+static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
@@ -763,6 +869,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     set_two_finger_scrolling_property_from_preference(ui, builder);
     set_touchpad_use_type_property_from_preference(ui);
     set_circular_scrolling_trigger_property_from_preference(ui);
+    set_move_speed_properties_from_preference(ui, builder);
     set_click_action(ui);
 }
 

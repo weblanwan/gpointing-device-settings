@@ -78,6 +78,11 @@ gboolean                  gsd_pointing_device_manager_get_gconf_int
                                                              GConfClient *gconf,
                                                              const gchar *key,
                                                              gint *value);
+gboolean                  gsd_pointing_device_manager_get_gconf_float
+                                                            (GsdPointingDeviceManager *manager,
+                                                             GConfClient *gconf,
+                                                             const gchar *key,
+                                                             gdouble *value);
 
 #define DEFINE_SET_VALUE_FUNCTION(function_name, key_name, value_type)              \
 static void                                                                         \

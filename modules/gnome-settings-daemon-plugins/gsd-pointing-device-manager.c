@@ -314,6 +314,22 @@ gsd_pointing_device_manager_get_gconf_int (GsdPointingDeviceManager *manager,
     return value_exist;
 }
 
+gboolean
+gsd_pointing_device_manager_get_gconf_float (GsdPointingDeviceManager *manager,
+                                             GConfClient *gconf,
+                                             const gchar *key,
+                                             gdouble *value)
+{
+    gboolean value_exist;
+    gchar *gconf_key;
+
+    gconf_key = gsd_pointing_device_manager_build_gconf_key(manager, key);
+    value_exist = gpds_gconf_get_float(gconf, gconf_key, value);
+    g_free(gconf_key);
+
+    return value_exist;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

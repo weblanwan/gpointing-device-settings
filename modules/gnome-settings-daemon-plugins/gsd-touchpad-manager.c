@@ -149,6 +149,37 @@ set_click_action (GsdPointingDeviceManager *manager,
 }
 
 static void
+set_move_speed (GsdPointingDeviceManager *manager,
+                GpdsXInput *xinput,
+                GConfClient *gconf)
+{
+    gdouble properties[4];
+
+    gsd_pointing_device_manager_get_gconf_float(manager,
+                                                gconf,
+                                                GPDS_TOUCHPAD_MINIMUM_SPEED_KEY,
+                                                &properties[0]);
+    gsd_pointing_device_manager_get_gconf_float(manager,
+                                                gconf,
+                                                GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY,
+                                                &properties[1]);
+    gsd_pointing_device_manager_get_gconf_float(manager,
+                                                gconf,
+                                                GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY,
+                                                &properties[2]);
+    gsd_pointing_device_manager_get_gconf_float(manager,
+                                                gconf,
+                                                GPDS_TOUCHPAD_TRACKSTICK_SPEED_KEY,
+                                                &properties[3]);
+
+    gpds_xinput_set_float_properties(xinput,
+                                     GPDS_TOUCHPAD_MOVE_SPEED,
+                                     NULL,
+                                     properties,
+                                     4);
+}
+
+static void
 set_disable_while_other_device_exists (GsdPointingDeviceManager *manager,
                                        GpdsXInput *xinput,
                                        GConfClient *gconf)
@@ -296,6 +327,7 @@ start_manager (GsdPointingDeviceManager *manager)
     set_circular_scrolling_trigger(manager, xinput, gconf);
     set_two_finger_scrolling(manager, xinput, gconf);
     set_click_action(manager, xinput, gconf);
+    set_move_speed(manager, xinput, gconf);
 
     set_disable_while_other_device_exists(manager, xinput, gconf);
     add_device_presence_filter(manager);
@@ -381,6 +413,14 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
                    !strcmp(key, GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY) ||
                    !strcmp(key, GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY)) {
             set_click_action(manager, xinput, client);
+        }
+        break;
+    case GCONF_VALUE_FLOAT:
+        if (!strcmp(key, GPDS_TOUCHPAD_MINIMUM_SPEED_KEY) ||
+            !strcmp(key, GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY) ||
+            !strcmp(key, GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY) ||
+            !strcmp(key, GPDS_TOUCHPAD_TRACKSTICK_SPEED_KEY)) {
+            set_move_speed(manager, xinput, client);
         }
         break;
     default:

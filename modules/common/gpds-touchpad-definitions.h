@@ -45,6 +45,10 @@
 #define GPDS_TOUCHPAD_CLICK_ACTION_FINGER1_KEY            "click_action_finger1"
 #define GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY            "click_action_finger2"
 #define GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY            "click_action_finger3"
+#define GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY             "acceleration_factor"
+#define GPDS_TOUCHPAD_MINIMUM_SPEED_KEY                   "minimum_speed"
+#define GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY                   "maximum_speed"
+#define GPDS_TOUCHPAD_TRACKSTICK_SPEED_KEY                "trackstick_speed"
 
 #endif /* __GPDS_TOUCHPAD_GCONF_H__ */
 /*
