@@ -244,8 +244,8 @@ DEFINE_SET_PAIR_SCALE_VALUE(palm_dimensions,
                             "palm_detection_depth_scale",
                             GPDS_TOUCHPAD_PALM_DIMENSIONS)
 DEFINE_SET_PAIR_SCALE_VALUE(scrolling_distance,
-                            "horizontal_scrolling_scale",
                             "vertical_scrolling_scale",
+                            "horizontal_scrolling_scale",
                             GPDS_TOUCHPAD_SCROLLING_DISTANCE)
 
 static void
