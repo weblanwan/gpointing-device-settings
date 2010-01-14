@@ -446,11 +446,17 @@ set_sensitivity_depends_on_use_type (GpdsUI *ui,
 
     switch (use_type) {
     case GPDS_TOUCHPAD_USE_TYPE_OFF:
+        set_widget_sensitivity(builder, "general_box", FALSE);
+        set_widget_sensitivity(builder, "scrolling_vbox", FALSE);
+        set_widget_sensitivity(builder, "tapping_vbox", FALSE);
+        break;
     case GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF:
+        set_widget_sensitivity(builder, "general_box", TRUE);
         set_widget_sensitivity(builder, "scrolling_vbox", FALSE);
         set_widget_sensitivity(builder, "tapping_vbox", FALSE);
         break;
     case GPDS_TOUCHPAD_USE_TYPE_NORMAL:
+        set_widget_sensitivity(builder, "general_box", TRUE);
         set_widget_sensitivity(builder, "scrolling_vbox", TRUE);
         set_widget_sensitivity(builder, "tapping_vbox", TRUE);
     default:
@@ -459,31 +465,61 @@ set_sensitivity_depends_on_use_type (GpdsUI *ui,
 }
 
 static void
-set_touchpad_use_type_combo_state (GpdsUI *ui, GpdsTouchpadUseType use_type)
+set_touchpad_use_type (GpdsUI *ui, GpdsTouchpadUseType use_type)
 {
-    GtkComboBox *combo;
+    GtkToggleButton *button;
     GtkBuilder *builder;
+    gboolean disable_touchpad, disable_tapping_and_scrolling;
+
+    disable_touchpad = (use_type == GPDS_TOUCHPAD_USE_TYPE_OFF);
+    disable_tapping_and_scrolling = (use_type == GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF);
 
     builder = gpds_ui_get_builder(ui);
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "disable_touchpad"));
+    gtk_toggle_button_set_active(button, disable_touchpad);
 
-    combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, "touchpad_use_type"));
-    gtk_combo_box_set_active(combo, (gint)use_type);
+    button = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "disable_tapping_and_scrolling"));
+    gtk_toggle_button_set_active(button, disable_tapping_and_scrolling);
+
     set_sensitivity_depends_on_use_type(ui, use_type);
 }
 
 static void
-cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
+cb_touchpad_use_type_toggled (GtkToggleButton *button, gpointer user_data)
 {
     GpdsUI *ui = GPDS_UI(user_data);
+    GpdsTouchpadUseType use_type;
     gint properties[1];
     GError *error = NULL;
+    GtkToggleButton *disable_touchpad_button;
+    GtkToggleButton *disable_tapping_and_scrolling_button;
+    GtkBuilder *builder;
+    gboolean disable_touchpad, disable_tapping_and_scrolling;
     GpdsXInput *xinput;
 
     xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
     if (!xinput)
         return;
 
-    properties[0] = gtk_combo_box_get_active(combo);
+    builder = gpds_ui_get_builder(ui);
+    disable_touchpad_button =
+        GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "disable_touchpad"));
+    disable_tapping_and_scrolling_button =
+        GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "disable_tapping_and_scrolling"));
+
+    disable_touchpad = gtk_toggle_button_get_active(disable_touchpad_button);
+    disable_tapping_and_scrolling =
+        gtk_toggle_button_get_active(disable_tapping_and_scrolling_button);
+
+    if (disable_touchpad)
+        use_type = GPDS_TOUCHPAD_USE_TYPE_OFF;
+    else {
+        use_type = disable_tapping_and_scrolling ?
+            GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF :
+            GPDS_TOUCHPAD_USE_TYPE_NORMAL;
+    }
+
+    properties[0] = use_type;
     if (!gpds_xinput_set_int_properties(xinput,
                                         GPDS_TOUCHPAD_OFF,
                                         &error,
@@ -494,8 +530,21 @@ cb_touchpad_use_type_changed (GtkComboBox *combo, gpointer user_data)
             g_error_free(error);
         }
     }
-    gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, properties[0]);
-    set_sensitivity_depends_on_use_type(ui, properties[0]);
+
+    gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, (gint)use_type);
+    set_sensitivity_depends_on_use_type(ui, use_type);
+}
+
+static void
+cb_disable_touchpad_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    cb_touchpad_use_type_toggled(button, user_data);
+}
+
+static void
+cb_disable_tapping_and_scrolling_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    cb_touchpad_use_type_toggled(button, user_data);
 }
 
 static void
@@ -591,7 +640,8 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
                      G_CALLBACK(cb_ ## object_name ## _ ## signal_name),\
                      ui)
 
-    CONNECT(touchpad_use_type, changed);
+    CONNECT(disable_touchpad, toggled);
+    CONNECT(disable_tapping_and_scrolling, toggled);
     CONNECT(disable_while_other_device_exists, toggled);
     CONNECT(guest_mouse_off, toggled);
     CONNECT(palm_detection, toggled);
@@ -778,7 +828,7 @@ set_touchpad_use_type_property_from_preference (GpdsUI *ui)
 
     if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, (gint*)&type))
         type = values[0];
-    set_touchpad_use_type_combo_state(ui, type);
+    set_touchpad_use_type(ui, type);
 
     g_free(values);
 }
