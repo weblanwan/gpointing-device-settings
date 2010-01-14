@@ -6,11 +6,13 @@ void test_get_key_from_path (void);
 void test_get_non_existent (void);
 void test_boolean (void);
 void test_int (void);
+void test_float (void);
 void test_string (void);
 
 static gchar *gconf_key;
 static gboolean boolean_value;
 static gint int_value;
+static gdouble float_value;
 static gchar *string_value;
 static GConfClient *gconf;
 static GError *error;
@@ -83,6 +85,17 @@ test_int (void)
 
     cut_assert_true(gpds_gconf_get_int(gconf, gconf_key, &int_value));
     cut_assert_equal_int(99, int_value);
+}
+
+void
+test_float (void)
+{
+    gconf_key = make_unique_key();
+    gconf_client_set_float(gconf, gconf_key, 0.99, &error);
+    gcut_assert_error(error);
+
+    cut_assert_true(gpds_gconf_get_float(gconf, gconf_key, &float_value));
+    cut_assert_equal_double(0.99, 0.0001, float_value);
 }
 
 void

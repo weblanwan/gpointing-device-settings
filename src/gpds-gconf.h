@@ -36,6 +36,9 @@ gboolean     gpds_gconf_get_boolean       (GConfClient *gconf,
 gboolean     gpds_gconf_get_int           (GConfClient *gconf,
                                            const gchar *key,
                                            gboolean *value);
+gboolean     gpds_gconf_get_float         (GConfClient *gconf,
+                                           const gchar *key,
+                                           gdouble *value);
 gboolean     gpds_gconf_get_string        (GConfClient *gconf,
                                            const gchar *key,
                                            gchar **value);

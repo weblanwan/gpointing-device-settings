@@ -71,6 +71,24 @@ gpds_gconf_get_int (GConfClient *gconf, const gchar *key, gint *value)
 }
 
 gboolean
+gpds_gconf_get_float (GConfClient *gconf, const gchar *key, gdouble *value)
+{
+    GConfValue *gconf_value;
+    gboolean exist_value = FALSE;
+
+    gconf_value = gconf_client_get(gconf, key, NULL);
+    if (gconf_value) {
+        if (gconf_value->type == GCONF_VALUE_FLOAT) {
+            *value = gconf_value_get_float(gconf_value);
+            exist_value = TRUE;
+        }
+        gconf_value_free(gconf_value);
+    }
+
+    return exist_value;
+}
+
+gboolean
 gpds_gconf_get_string (GConfClient *gconf, const gchar *key, gchar **value)
 {
     GConfValue *gconf_value;
