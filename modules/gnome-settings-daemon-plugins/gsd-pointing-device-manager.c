@@ -304,7 +304,7 @@ gsd_pointing_device_manager_get_gconf_int (GsdPointingDeviceManager *manager,
                                                const gchar *key,
                                                gint *value)
 {
-    gint value_exist;
+    gboolean value_exist;
     gchar *gconf_key;
 
     gconf_key = gsd_pointing_device_manager_build_gconf_key(manager, key);
