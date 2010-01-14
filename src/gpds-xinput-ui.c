@@ -152,6 +152,33 @@ gpds_xinput_ui_get_xinput_int_property (GpdsXInputUI *ui,
     return TRUE;
 }
 
+gboolean
+gpds_xinput_ui_get_xinput_float_property (GpdsXInputUI *ui,
+                                          gint property,
+                                          gdouble **values,
+                                          gulong *n_values)
+{
+    GError *error = NULL;
+    GpdsXInputUIPriv *priv;
+
+    g_return_val_if_fail(GPDS_IS_XINPUT_UI(ui), FALSE);
+
+    priv = GPDS_XINPUT_UI_GET_PRIVATE(ui);
+    g_return_val_if_fail(priv->xinput, FALSE);
+
+    if (!gpds_xinput_get_float_properties(priv->xinput,
+                                          property,
+                                          &error,
+                                          values, n_values)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+        return FALSE;
+    }
+    return TRUE;
+}
+
 void
 gpds_xinput_ui_set_xinput_property_from_toggle_button_state (GpdsXInputUI *ui,
                                                              gint property,

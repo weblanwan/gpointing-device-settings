@@ -56,6 +56,11 @@ gboolean    gpds_xinput_ui_get_xinput_int_property
                                              gint property,
                                              gint **values,
                                              gulong *n_values);
+gboolean    gpds_xinput_ui_get_xinput_float_property
+                                            (GpdsXInputUI *ui,
+                                             gint property,
+                                             gdouble **values,
+                                             gulong *n_values);
 void        gpds_xinput_ui_set_xinput_property_from_toggle_button_state
                                             (GpdsXInputUI *ui,
                                              gint property,
