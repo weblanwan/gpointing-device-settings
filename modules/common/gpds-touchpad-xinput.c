@@ -39,7 +39,7 @@ static const GpdsXInputPropertyEntry entries[] = {
     {GPDS_TOUCHPAD_SCROLLING_DISTANCE,         "Synaptics Scrolling Distance",          G_TYPE_INT,  32, 2},
     {GPDS_TOUCHPAD_EDGE_SCROLLING,             "Synaptics Edge Scrolling",              G_TYPE_INT,   8, 3},
     {GPDS_TOUCHPAD_TWO_FINGER_SCROLLING,       "Synaptics Two-Finger Scrolling",        G_TYPE_INT,   8, 2},
-    {GPDS_TOUCHPAD_SYNAPTICS_PROP_SPEED,       "Synaptics Move Speed",                  G_TYPE_FLOAT, 0, 4},
+    {GPDS_TOUCHPAD_MOVE_SPEED,                 "Synaptics Move Speed",                  G_TYPE_FLOAT, 0, 4},
     {GPDS_TOUCHPAD_EDGE_MOTION_PRESSURE,       "Synaptics Edge Motion Pressure",        G_TYPE_INT,  32, 2},
     {GPDS_TOUCHPAD_EDGE_MOTION_SPEED,          "Synaptics Edge Motion Speed",           G_TYPE_INT,  32, 2},
     {GPDS_TOUCHPAD_BUTTON_SCROLLING,           "Synaptics Button Scrolling",            G_TYPE_INT,   8, 2},
