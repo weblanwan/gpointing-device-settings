@@ -245,7 +245,8 @@ device_presence_filter (GdkXEvent *xevent,
 
     if (xev->type == xi_presence) {
         XDevicePresenceNotifyEvent *notify_event = (XDevicePresenceNotifyEvent *)xev;
-        if (notify_event->devchange == DeviceEnabled) {
+        if (notify_event->devchange == DeviceEnabled ||
+            notify_event->devchange == DeviceRemoved) {
             set_disable_while_other_device_exists(manager,
                                                   xinput,
                                                   gconf_client_get_default());
