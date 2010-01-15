@@ -189,26 +189,23 @@ set_disable_while_other_device_exists (GsdPointingDeviceManager *manager,
     GList *node, *pointer_infos;;
     gboolean exists_other_device = FALSE;
     gint use_type;
+    const gchar *device_name;
 
     gsd_pointing_device_manager_get_gconf_boolean(manager,
                                                   gconf,
                                                   GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
                                                   &disable);
 
+    device_name = gpds_xinput_get_device_name(xinput);
     pointer_infos = gpds_xinput_utils_collect_pointer_infos();
     for (node = pointer_infos; node; node = g_list_next(node)) {
         GpdsXInputPointerInfo *info = node->data;
-
-        if (!g_ascii_strcasecmp(gpds_xinput_pointer_info_get_type_name(info),
-                                XI_TOUCHPAD)) {
-            continue;
+        const gchar *name = gpds_xinput_pointer_info_get_name(info);
+        if (g_ascii_strcasecmp(device_name, name) &&
+            strcmp(name, "Macintosh mouse button emulation")) {
+            exists_other_device = TRUE;
+            break;
         }
-        if (!strcmp(gpds_xinput_pointer_info_get_name(info),
-                    "Macintosh mouse button emulation")) {
-            continue;
-        }
-        exists_other_device = TRUE;
-        break;
     }
     g_list_foreach(pointer_infos, (GFunc)gpds_xinput_pointer_info_free, NULL);
     g_list_free(pointer_infos);
