@@ -449,16 +449,19 @@ set_sensitivity_depends_on_use_type (GpdsUI *ui,
         set_widget_sensitivity(builder, "general_box", FALSE);
         set_widget_sensitivity(builder, "scrolling_vbox", FALSE);
         set_widget_sensitivity(builder, "tapping_vbox", FALSE);
+        set_widget_sensitivity(builder, "speed_vbox", FALSE);
         break;
     case GPDS_TOUCHPAD_USE_TYPE_TAPPING_AND_SCROLLING_OFF:
         set_widget_sensitivity(builder, "general_box", TRUE);
         set_widget_sensitivity(builder, "scrolling_vbox", FALSE);
         set_widget_sensitivity(builder, "tapping_vbox", FALSE);
+        set_widget_sensitivity(builder, "speed_vbox", TRUE);
         break;
     case GPDS_TOUCHPAD_USE_TYPE_NORMAL:
         set_widget_sensitivity(builder, "general_box", TRUE);
         set_widget_sensitivity(builder, "scrolling_vbox", TRUE);
         set_widget_sensitivity(builder, "tapping_vbox", TRUE);
+        set_widget_sensitivity(builder, "speed_vbox", TRUE);
     default:
         break;
     }
