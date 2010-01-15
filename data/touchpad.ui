@@ -145,7 +145,7 @@
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="disable_while_other_device_exists">
-                            <property name="label" translatable="yes">Disable while _other device is connected</property>
+                            <property name="label" translatable="yes">Disable while any _other devices are connected</property>
                             <property name="use_underline">True</property>
                           </object>
                           <packing>
