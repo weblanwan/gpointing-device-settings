@@ -243,6 +243,7 @@ main (int argc, char *argv[])
     gpds_init();
 
     dialog = GTK_WIDGET(gtk_builder_get_object(builder, "main-window"));
+    gtk_window_set_default_icon_name("preferences-desktop-peripherals");
     g_signal_connect(dialog, "response",
                      G_CALLBACK(cb_response), NULL);
 
