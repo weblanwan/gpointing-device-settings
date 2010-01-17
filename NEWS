@@ -1,5 +1,18 @@
 ============================
-GPointinDeviceSettings 1.?.?
+GPointinDeviceSettings 1.3.2
+============================
+* Overall
+ - Fix typos in mouse gconf keys. Bug 596015
+ - Fix that touchpad state is not restored. Bug 596328
+
+============================
+GPointinDeviceSettings 1.3.1
+============================
+* Overall
+ - Fix touchpad icon path.
+
+============================
+GPointinDeviceSettings 1.3.0
 ============================
 * Touchpad
  - Palm detection
