@@ -77,6 +77,8 @@ create_ui_from_pointer_info (GpdsXInputPointerInfo *info)
                      "device-name", device_name,
                      NULL);
     g_free(type_name);
+    if (!ui)
+        return NULL;
 
     if (!gpds_ui_is_available(ui, &error)) {
         if (error) {

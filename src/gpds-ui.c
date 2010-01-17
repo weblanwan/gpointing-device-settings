@@ -184,10 +184,10 @@ gpds_ui_new (const gchar *name, const gchar *first_property, ...)
     va_list var_args;
 
     module = gpds_module_find(uis, name);
-    if (!module)
-    {
+    if (!module) {
         module = gpds_module_load_module(gpds_module_directory(), name);
-        g_return_val_if_fail(module != NULL, NULL);
+        if (!module)
+            return NULL;
 
         uis = g_list_prepend(uis, module);
     }
