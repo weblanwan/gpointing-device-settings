@@ -1,4 +1,27 @@
 ============================
+GPointinDeviceSettings 1.4.0
+============================
+* Overall
+ - Fix bug 603459 -  libgpds should link with x11
+ - Add man page. bug 599013
+ - Fix library name in pkg-config file. bug 596835
+ - Register menu item in GNOME preferences. bug 588706.
+* Touchpad
+ - Fix broken vertical and horizontal scroll distance. bug 599011
+ - Miminum/Maxmum speed
+ - Accelaration
+ - New option that diisabling touchpad while any other devices are connected.
+ - Separate options "disable touchpad" and "disable tapping and scrolling"
+* Update translation
+ - French
+ - Spanish
+* New translation
+ - Czech
+ - Greek
+ - Simplified Chinese
+ - Slovenian
+
+============================
 GPointinDeviceSettings 1.3.2
 ============================
 * Overall
