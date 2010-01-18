@@ -1,14 +1,17 @@
 # Czech translations for PACKAGE package.
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+#
 # Michal Čihař <michal@cihar.com>, 2009.
+# Marek Černocký <marek@manet.cz>, 2009, 2010.
+# Lucas Lommer <llommer@svn.gnome.org>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-13 09:56+0900\n"
-"PO-Revision-Date: 2009-10-20 09:340200\n"
+"POT-Creation-Date: 2010-01-17 15:07+0000\n"
+"PO-Revision-Date: 2010-01-09 11:34+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,12 +53,12 @@ msgstr "Nepodařilo se otevřít zařízení %s."
 msgid "No float atom in XServer"
 msgstr "XServer nemá float atom"
 
-#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:941 ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "Nepodařilo se otevřít soubor %s."
 
-#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:990 ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Widget (%s) neexistuje."
@@ -103,7 +106,7 @@ msgstr "_tlačítko:"
 msgid "_inertia:"
 msgstr "_setrvačnost:"
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:37
 msgid "_timeout:"
 msgstr "_interval:"
 
@@ -152,78 +155,104 @@ msgid "<i>Wide</i>"
 msgstr "<i>Široké</i>"
 
 #: ../data/touchpad.ui.h:13
-msgid "Disable while _other device is connected"
-msgstr ""
+msgid "Acceleration"
+msgstr "Akcelerace"
 
 #: ../data/touchpad.ui.h:14
+#, fuzzy
+#| msgid "Enable _vertical scrolling"
+msgid "Disable _tapping and scrolling"
+msgstr "Povolit _svislé posouvání"
+
+#: ../data/touchpad.ui.h:15
+msgid "Disable while any _other devices are connected"
+msgstr "Zakázat, p_okud jsou připojena jiná zařízení"
+
+#: ../data/touchpad.ui.h:16
 msgid "Enable Ci_rcular scrolling"
 msgstr "Povolit _kruhové posouvání"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:17
 msgid "Enable _faster tapping"
 msgstr "Povolit _rychlejší klepání"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:18
 msgid "Enable _horizontal scrolling"
 msgstr "Povolit _vodorovné posouvání"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:19
 msgid "Enable _locked drags"
 msgstr "Povolit _zamknuté tahání"
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:20
 msgid "Enable _palm detection"
 msgstr "Povolit _detekci dlaně"
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:21
 msgid "Enable _vertical scrolling"
 msgstr "Povolit _svislé posouvání"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:22
 msgid "Enable continuous edge scrolling"
 msgstr "Povolit trvalé posouvání na krajích"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:23
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "Povolit vodorovné posouvání dvěma prsty"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:24
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "Povolit svislé posouvání dvěma prsty"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:25
 msgid "General"
 msgstr "Obecné"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:26
+msgid "Maximum speed"
+msgstr "Maximální rychlost"
+
+#: ../data/touchpad.ui.h:27
+msgid "Mimimum speed"
+msgstr "Minimální rychlost"
+
+#: ../data/touchpad.ui.h:28
 msgid "Scrolling"
 msgstr "Posouvání"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:29
 msgid "Set _guest mouse off"
 msgstr "Vypnout _připojenou myš"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:30
+msgid "Speed"
+msgstr "Rychlost"
+
+#: ../data/touchpad.ui.h:31
 msgid "Start point of circular scrolling:"
 msgstr "Počáteční bod kruhového posouvání:"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:32
 msgid "Tapping"
 msgstr "Klepání"
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:33
 msgid "Tapping move: "
 msgstr "Pohyb při klepání: "
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:34
 msgid "Tapping time: "
 msgstr "Doba klepání: "
 
-#: ../data/touchpad.ui.h:30
+#: ../data/touchpad.ui.h:35
+msgid "_Disable touchpad"
+msgstr "_Zakázat touchpad"
+
+#: ../data/touchpad.ui.h:36
 msgid "_range:"
 msgstr "_rozsah:"
 
-#: ../data/touchpad.ui.h:32
+#: ../data/touchpad.ui.h:38
 msgid "pre_ssure:"
 msgstr "_tlak:"
 
@@ -233,7 +262,7 @@ msgstr "GPointing Device Settings"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
-msgstr "Povolit zásuvný modul pro ukazovací zařízení"
+msgstr "Povolit zásuvný modul pro polohovací zařízení"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
 msgid ""
@@ -243,10 +272,10 @@ msgstr ""
 "programu GPointingDeviceSettings."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
-#, fuzzy
 msgid "Pointing devices"
-msgstr "GPointing Device Settings"
+msgstr "Polohovací zařízení"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
-msgstr ""
+msgstr "Nastavení předvoleb vašeho polohovacího zařízení"
+
