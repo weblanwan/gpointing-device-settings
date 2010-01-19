@@ -35,7 +35,6 @@ typedef struct _GpdsXInputPriv GpdsXInputPriv;
 struct _GpdsXInputPriv
 {
     gchar *device_name;
-    XDeviceInfo *device_info_list;
     XDevice *device;
     GpdsXInputPropertyEntry *property_entries;
     guint n_property_entries;
@@ -88,7 +87,6 @@ gpds_xinput_init (GpdsXInput *xinput)
     GpdsXInputPriv *priv = GPDS_XINPUT_GET_PRIVATE(xinput);
 
     priv->device_name = NULL;
-    priv->device_info_list = NULL;
     priv->device = NULL;
     priv->property_entries = NULL;
 }
@@ -100,11 +98,6 @@ dispose (GObject *object)
 
     g_free(priv->device_name);
 
-    if (priv->device_info_list) {
-        XFreeDeviceList(priv->device_info_list);
-        priv->device_info_list = NULL;
-    }
-    
     if (priv->device) {
         XCloseDevice(GDK_DISPLAY(), priv->device);
         priv->device = NULL;
