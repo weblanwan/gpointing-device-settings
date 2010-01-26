@@ -1,0 +1,419 @@
+<?xml version="1.0" standalone="no"?>
+<interface>
+  <object class="GtkVBox" id="main-widget">
+    <property name="homogeneous">False</property>
+    <property name="spacing">0</property>
+    <child>
+      <object class="GtkLabel" id="sensitivity_label">
+        <property name="label" translatable="yes">&lt;b&gt;Sensitivity&lt;/b&gt;</property>
+        <property name="use_underline">False</property>
+        <property name="use_markup">True</property>
+        <property name="justify">GTK_JUSTIFY_LEFT</property>
+        <property name="wrap">False</property>
+        <property name="selectable">False</property>
+        <property name="xalign">0</property>
+        <property name="yalign">0</property>
+        <property name="xpad">0</property>
+        <property name="ypad">0</property>
+        <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+        <property name="width_chars">-1</property>
+        <property name="single_line_mode">False</property>
+        <property name="angle">0</property>
+      </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkHBox" id="sensitivity_box">
+        <property name="border-width">5</property>
+        <child>
+          <object class="GtkAdjustment" id="sensitivity_scale_adjustment">
+            <property name="lower">1</property>
+            <property name="upper">255</property>
+            <property name="step-increment">5</property>
+            <property name="page_increment">5</property>
+            <property name="page_size">0</property>
+          </object>
+          <object class="GtkLabel" id="sensitivity_scale_label">
+            <property name="label" translatable="yes">_Sensitivity:</property>
+            <property name="mnemonic-widget">sensitivity_scale</property>
+            <property name="use_underline">True</property>
+            <property name="use_markup">False</property>
+            <property name="justify">GTK_JUSTIFY_LEFT</property>
+            <property name="wrap">False</property>
+            <property name="selectable">False</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xpad">0</property>
+            <property name="ypad">0</property>
+            <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+            <property name="width_chars">-1</property>
+            <property name="single_line_mode">False</property>
+            <property name="angle">0</property>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sensitivity_left_label">
+            <property name="label" translatable="yes" context="sensitivity">&lt;i&gt;Low&lt;/i&gt;</property>
+            <property name="use_underline">False</property>
+            <property name="use_markup">True</property>
+            <property name="justify">GTK_JUSTIFY_LEFT</property>
+            <property name="wrap">False</property>
+            <property name="selectable">False</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xpad">0</property>
+            <property name="ypad">0</property>
+            <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+            <property name="width_chars">-1</property>
+            <property name="single_line_mode">False</property>
+            <property name="angle">0</property>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHScale" id="sensitivity_scale">
+            <property name="can_focus">True</property>
+            <property name="draw_value">False</property>
+            <property name="value_pos">GTK_POS_TOP</property>
+            <property name="digits">0</property>
+            <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
+            <property name="inverted">False</property>
+            <property name="adjustment">sensitivity_scale_adjustment</property>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sensitivity_right_label">
+            <property name="label" translatable="yes" context="sensitivity">&lt;i&gt;High&lt;/i&gt;</property>
+            <property name="use_underline">False</property>
+            <property name="use_markup">True</property>
+            <property name="justify">GTK_JUSTIFY_LEFT</property>
+            <property name="wrap">False</property>
+            <property name="selectable">False</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xpad">0</property>
+            <property name="ypad">0</property>
+            <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+            <property name="width_chars">-1</property>
+            <property name="single_line_mode">False</property>
+            <property name="angle">0</property>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="scrolling_label">
+        <property name="label" translatable="yes">&lt;b&gt;Scrolling&lt;/b&gt;</property>
+        <property name="use_underline">False</property>
+        <property name="use_markup">True</property>
+        <property name="justify">GTK_JUSTIFY_LEFT</property>
+        <property name="wrap">False</property>
+        <property name="selectable">False</property>
+        <property name="xalign">0</property>
+        <property name="yalign">0</property>
+        <property name="xpad">0</property>
+        <property name="ypad">0</property>
+        <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+        <property name="width_chars">-1</property>
+        <property name="single_line_mode">False</property>
+        <property name="angle">0</property>
+      </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="scrolling">
+        <property name="label" translatable="yes">Enable sc_rolling</property>
+        <property name="use_underline">True</property>
+      </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkVBox" id="scrolling_box">
+        <property name="border-width">5</property>
+        <property name="homogeneous">False</property>
+        <child>
+          <object class="GtkHBox" id="middle_button_timeout_box">
+            <property name="border-width">5</property>
+            <child>
+              <object class="GtkAdjustment" id="middle_button_timeout_scale_adjustment">
+                <property name="lower">50</property>
+                <property name="upper">1000</property>
+                <property name="step-increment">50</property>
+                <property name="page_increment">50</property>
+                <property name="page_size">0</property>
+              </object>
+              <object class="GtkLabel" id="middle_button_timeout_label">
+                <property name="label" translatable="yes">Middle button _timeout:</property>
+                <property name="mnemonic-widget">middle_button_timeout_scale</property>
+                <property name="use_underline">True</property>
+                <property name="use_markup">False</property>
+                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                <property name="wrap">False</property>
+                <property name="selectable">False</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+                <property name="xpad">0</property>
+                <property name="ypad">0</property>
+                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                <property name="width_chars">-1</property>
+                <property name="single_line_mode">False</property>
+                <property name="angle">0</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="middle_button_timeout_left_label">
+                <property name="label" translatable="yes" context="timeout">&lt;i&gt;Short&lt;/i&gt;</property>
+                <property name="use_underline">False</property>
+                <property name="use_markup">True</property>
+                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                <property name="wrap">False</property>
+                <property name="selectable">False</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+                <property name="xpad">0</property>
+                <property name="ypad">0</property>
+                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                <property name="width_chars">-1</property>
+                <property name="single_line_mode">False</property>
+                <property name="angle">0</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHScale" id="middle_button_timeout_scale">
+                <property name="can_focus">True</property>
+                <property name="draw_value">False</property>
+                <property name="value_pos">GTK_POS_TOP</property>
+                <property name="digits">0</property>
+                <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
+                <property name="inverted">False</property>
+                <property name="adjustment">middle_button_timeout_scale_adjustment</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="middle_button_timeout_right_label">
+                <property name="label" translatable="yes" context="timeout">&lt;i&gt;Long&lt;/i&gt;</property>
+                <property name="use_underline">False</property>
+                <property name="use_markup">True</property>
+                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                <property name="wrap">False</property>
+                <property name="selectable">False</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+                <property name="xpad">0</property>
+                <property name="ypad">0</property>
+                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                <property name="width_chars">-1</property>
+                <property name="single_line_mode">False</property>
+                <property name="angle">0</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="press_to_select_label">
+        <property name="label" translatable="yes">&lt;b&gt;Press to Select&lt;/b&gt;</property>
+        <property name="use_underline">False</property>
+        <property name="use_markup">True</property>
+        <property name="justify">GTK_JUSTIFY_LEFT</property>
+        <property name="wrap">False</property>
+        <property name="selectable">False</property>
+        <property name="xalign">0</property>
+        <property name="yalign">0</property>
+        <property name="xpad">0</property>
+        <property name="ypad">0</property>
+        <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+        <property name="width_chars">-1</property>
+        <property name="single_line_mode">False</property>
+        <property name="angle">0</property>
+      </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+     <object class="GtkCheckButton" id="press_to_select">
+       <property name="label" translatable="yes">Enable _Press to Select</property>
+       <property name="use_underline">True</property>
+     </object>
+      <packing>
+        <property name="padding">0</property>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkVBox" id="press_to_select_box">
+        <property name="border-width">5</property>
+        <property name="homogeneous">False</property>
+        <child>
+          <object class="GtkHBox" id="press_to_select_threshold_hbox">
+            <property name="border-width">5</property>
+            <child>
+              <object class="GtkAdjustment" id="press_to_select_threshold_scale_adjustment">
+                <property name="lower">8</property>
+                <property name="upper">200</property>
+                <property name="step-increment">5</property>
+                <property name="page_increment">5</property>
+                <property name="page_size">0</property>
+              </object>
+              <object class="GtkLabel" id="press_to_select_threshold_label">
+                <property name="label" translatable="yes">_Threshold:</property>
+                <property name="mnemonic-widget">press_to_select_threshold_scale</property>
+                <property name="use_underline">True</property>
+                <property name="use_markup">False</property>
+                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                <property name="wrap">False</property>
+                <property name="selectable">False</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+                <property name="xpad">0</property>
+                <property name="ypad">0</property>
+                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                <property name="width_chars">-1</property>
+                <property name="single_line_mode">False</property>
+                <property name="angle">0</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="press_to_select_threshold_left_label">
+                <property name="label" translatable="yes" context="threshold">&lt;i&gt;Low&lt;/i&gt;</property>
+                <property name="use_underline">False</property>
+                <property name="use_markup">True</property>
+                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                <property name="wrap">False</property>
+                <property name="selectable">False</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+                <property name="xpad">0</property>
+                <property name="ypad">0</property>
+                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                <property name="width_chars">-1</property>
+                <property name="single_line_mode">False</property>
+                <property name="angle">0</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHScale" id="press_to_select_threshold_scale">
+                <property name="can_focus">True</property>
+                <property name="draw_value">False</property>
+                <property name="value_pos">GTK_POS_TOP</property>
+                <property name="digits">0</property>
+                <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
+                <property name="inverted">False</property>
+                <property name="adjustment">press_to_select_threshold_scale_adjustment</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="press_to_select_threshold_right_label">
+                <property name="label" translatable="yes" context="threshold">&lt;i&gt;High&lt;/i&gt;</property>
+                <property name="use_underline">False</property>
+                <property name="use_markup">True</property>
+                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                <property name="wrap">False</property>
+                <property name="selectable">False</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+                <property name="xpad">0</property>
+                <property name="ypad">0</property>
+                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                <property name="width_chars">-1</property>
+                <property name="single_line_mode">False</property>
+                <property name="angle">0</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

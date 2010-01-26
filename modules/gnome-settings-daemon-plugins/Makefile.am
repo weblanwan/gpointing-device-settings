@@ -36,14 +36,17 @@ libpointing_device_la_SOURCES = 	\
 	gsd-pointing-device-plugin.c	\
 	gsd-pointing-device-manager.h	\
 	gsd-pointing-device-manager.c	\
+	gsd-pointingstick-manager.h	\
+	gsd-pointingstick-manager.c	\
 	gsd-mouse-extension-manager.h	\
 	gsd-mouse-extension-manager.c	\
 	gsd-touchpad-manager.h		\
 	gsd-touchpad-manager.c
 
-libpointing_device_la_LIBADD =					\
-        $(top_builddir)/modules/common/libmouse_common.la	\
-        $(top_builddir)/modules/common/libtouchpad_common.la
+libpointing_device_la_LIBADD =						\
+        $(top_builddir)/modules/common/libpointingstick_common.la	\
+        $(top_builddir)/modules/common/libtouchpad_common.la		\
+        $(top_builddir)/modules/common/libmouse_common.la
 
 gsd_plugin_in_files =					\
 	pointing-device.gnome-settings-plugin.in

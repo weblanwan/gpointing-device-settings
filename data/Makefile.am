@@ -1,7 +1,8 @@
-gpds_ui_DATA = 		\
-	main-window.ui	\
-	mouse.ui	\
-	touchpad.ui
+gpds_ui_DATA = 			\
+	main-window.ui		\
+	pointingstick.ui	\
+	touchpad.ui		\
+	mouse.ui
 
 gpds_icon_DATA = 	\
 	mouse.png	\

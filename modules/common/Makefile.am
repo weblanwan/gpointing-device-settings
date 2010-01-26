@@ -8,9 +8,10 @@ AM_CFLAGS =			\
 	$(GCONF2_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
-noinst_LTLIBRARIES =            \
-        libmouse_common.la \
-        libtouchpad_common.la
+noinst_LTLIBRARIES =            	\
+        libpointingstick_common.la	\
+        libtouchpad_common.la		\
+        libmouse_common.la
 
 LIBADD =				\
 	$(top_builddir)/src/libgpds.la	\
@@ -28,3 +29,8 @@ libtouchpad_common_la_SOURCES =         \
         gpds-touchpad-xinput.h          \
 	gpds-touchpad-definitions.h
         
+libpointingstick_common_la_SOURCES =       \
+        gpds-pointingstick-xinput.c        \
+        gpds-pointingstick-xinput.h        \
+	gpds-pointingstick-definitions.h
+

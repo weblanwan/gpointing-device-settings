@@ -17,8 +17,9 @@ AM_LDFLAGS =			\
   	-export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 gpds_module_LTLIBRARIES = 	\
-	mouse.la		\
-	touchpad.la
+	pointingstick.la	\
+	touchpad.la		\
+	mouse.la
 
 LIBS =					\
 	$(top_builddir)/src/libgpds.la	\
@@ -35,3 +36,9 @@ touchpad_la_SOURCES = 			\
 	gpds-touchpad-ui.c
 
 touchpad_la_LIBADD = $(top_builddir)/modules/common/libtouchpad_common.la
+
+pointingstick_la_SOURCES = 		\
+	gpds-pointingstick-ui.c
+
+pointingstick_la_LIBADD = $(top_builddir)/modules/common/libpointingstick_common.la
+
