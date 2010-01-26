@@ -66,7 +66,6 @@ DEFINE_SET_BOOLEAN_FUNCTION (tap_fast_tap, GPDS_TOUCHPAD_TAP_FAST_TAP)
 DEFINE_SET_BOOLEAN_FUNCTION (circular_scrolling, GPDS_TOUCHPAD_CIRCULAR_SCROLLING)
 DEFINE_SET_INT_FUNCTION (touchpad_off, GPDS_TOUCHPAD_OFF)
 DEFINE_SET_INT_FUNCTION (locked_drags_timeout, GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT)
-DEFINE_SET_INT_FUNCTION (tap_time, GPDS_TOUCHPAD_TAP_TIME)
 DEFINE_SET_INT_FUNCTION (tap_move, GPDS_TOUCHPAD_TAP_MOVE)
 DEFINE_SET_INT_FUNCTION (circular_scrolling_trigger, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER)
 DEFINE_SET_BOOLEAN_PAIR_FUNCTION (two_finger_scrolling,
@@ -81,6 +80,69 @@ DEFINE_SET_INT_PAIR_FUNCTION (palm_dimensions,
                               GPDS_TOUCHPAD_PALM_DIMENSIONS,
                               GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY,
                               GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY)
+
+static void
+set_tap_time (GsdPointingDeviceManager *manager,
+              GpdsXInput *xinput,
+              GConfClient *gconf)
+{
+    gboolean disable_tapping = FALSE;
+    gint tap_time;
+    gint properties[1];
+
+    if (!gsd_pointing_device_manager_get_gconf_int(manager,
+                                                   gconf,
+                                                   GPDS_TOUCHPAD_TAP_TIME_KEY,
+                                                   &tap_time)) {
+        return;
+    }
+
+    gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                  gconf,
+                                                  GPDS_TOUCHPAD_DISABLE_TAPPING_KEY,
+                                                  &disable_tapping);
+    /*
+     * If disable tapping is TRUE, do not change tapping time here
+     * since tap_time is already zero (i.e. disable tapping).
+     */
+    if (disable_tapping)
+        return;
+
+    properties[0] = tap_time;
+    gpds_xinput_set_int_properties(xinput,
+                                   GPDS_TOUCHPAD_TAP_TIME,
+                                   NULL,
+                                   properties,
+                                   1);
+}
+
+static void
+set_disable_tapping (GsdPointingDeviceManager *manager,
+                     GpdsXInput *xinput,
+                     GConfClient *gconf)
+{
+    gboolean disable_tapping;
+    gint tap_time = 50;
+    gint properties[1];
+
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_TOUCHPAD_DISABLE_TAPPING_KEY,
+                                                       &disable_tapping)) {
+        return;
+    }
+
+    gsd_pointing_device_manager_get_gconf_int(manager,
+                                              gconf,
+                                              GPDS_TOUCHPAD_DISABLE_TAPPING_KEY,
+                                              &tap_time);
+    properties[0] = disable_tapping ? 0 : tap_time;
+    gpds_xinput_set_int_properties(xinput,
+                                   GPDS_TOUCHPAD_TAP_TIME,
+                                   NULL,
+                                   properties,
+                                   1);
+}
 
 static void
 set_edge_scrolling (GsdPointingDeviceManager *manager,
@@ -317,6 +379,7 @@ start_manager (GsdPointingDeviceManager *manager)
     set_locked_drags(manager, xinput, gconf);
     set_locked_drags_timeout(manager, xinput, gconf);
     set_tap_fast_tap(manager, xinput, gconf);
+    set_disable_tapping(manager, xinput, gconf);
     set_tap_time(manager, xinput, gconf);
     set_tap_move(manager, xinput, gconf);
     set_edge_scrolling(manager, xinput, gconf);

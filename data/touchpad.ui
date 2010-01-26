@@ -570,6 +570,17 @@
             <property name="homogeneous">False</property>
             <property name="spacing">12</property>
             <child>
+              <object class="GtkCheckButton" id="disable_tapping">
+                <property name="label" translatable="yes">Disable _tapping</property>
+                <property name="use_underline">True</property>
+              </object>
+              <packing>
+                <property name="padding">0</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkFrame" id="tapping_frame">
                 <property name="label_xalign">0</property>
                 <property name="label_yalign">0.5</property>

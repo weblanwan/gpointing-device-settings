@@ -561,6 +561,46 @@ cb_disable_while_other_device_exists_toggled (GtkToggleButton *button, gpointer 
 }
 
 static void
+cb_disable_tapping_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GtkBuilder *builder;
+    GObject *object;
+    GpdsUI *ui = GPDS_UI(user_data);
+    GpdsXInput *xinput;
+    gint properties[1];
+    gboolean disable_tapping;
+    gint tap_time;
+    GError *error = NULL;
+
+    disable_tapping = gtk_toggle_button_get_active(button);
+
+    gpds_ui_set_gconf_bool(ui,
+                           GPDS_TOUCHPAD_DISABLE_TAPPING_KEY,
+                           disable_tapping);
+
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
+    if (!xinput)
+        return;
+
+    builder = gpds_ui_get_builder(ui);
+    object = gtk_builder_get_object(builder, "tapping_time_scale");
+    tap_time = gtk_range_get_value(GTK_RANGE(object));
+    properties[0] = disable_tapping ? 0 : tap_time;
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        GPDS_TOUCHPAD_TAP_TIME,
+                                        &error,
+                                        properties,
+                                        1)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+
+    set_widget_sensitivity(builder, "tapping_frame", !disable_tapping);
+}
+
+static void
 set_move_speed_property (GpdsXInput *xinput, GtkBuilder *builder)
 {
     GError *error = NULL;
@@ -652,6 +692,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(palm_detection_depth_scale, value_changed);
     CONNECT(locked_drags, toggled);
     CONNECT(locked_drags_timeout_scale, value_changed);
+    CONNECT(disable_tapping, toggled);
     CONNECT(tapping_time_scale, value_changed);
     CONNECT(tapping_move_scale, value_changed);
     CONNECT(faster_tapping_check, toggled);
@@ -860,6 +901,20 @@ set_click_action (GpdsUI *ui)
 }
 
 static void
+set_disable_tapping_from_preference (GpdsUI *ui, GtkBuilder *builder)
+{
+    gboolean disable_tapping = FALSE;
+    GObject *button;
+
+    gpds_ui_get_gconf_bool(ui, GPDS_TOUCHPAD_DISABLE_TAPPING_KEY, &disable_tapping);
+
+    button = gpds_ui_get_ui_object_by_name(ui, "disable_tapping");
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), disable_tapping);
+    set_widget_sensitivity(builder, "tapping_frame", !disable_tapping);
+}
+
+static void
 set_move_speed_properties_from_preference (GpdsUI *ui, GtkBuilder *builder)
 {
     GObject *object;
@@ -890,6 +945,38 @@ set_move_speed_properties_from_preference (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static void
+set_tapping_time_from_preference (GpdsUI *ui, GtkBuilder *builder)
+{
+    GObject *object;
+    gint *values = NULL;
+    gulong n_values;
+    gint value;
+    gdouble double_value;
+    gboolean disable_tapping;
+
+    g_return_if_fail(GPDS_IS_XINPUT_UI(ui));
+
+    if (!gpds_ui_get_gconf_bool(ui, GPDS_TOUCHPAD_DISABLE_TAPPING_KEY, &disable_tapping) ||
+        !disable_tapping) {
+        if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),
+                                                    GPDS_TOUCHPAD_TAP_TIME,
+                                                    &values, &n_values)) {
+            return;
+        }
+    }
+
+    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_TAP_TIME_KEY, &value))
+        value = values[0];
+
+    double_value = value;
+    object = gpds_ui_get_ui_object_by_name(GPDS_UI(ui), "tapping_time_scale");
+    if (GTK_IS_RANGE(object))
+        object = G_OBJECT(gtk_range_get_adjustment(GTK_RANGE(object)));
+    g_object_set(object, "value", double_value, NULL);
+    g_free(values);
+}
+
+static void
 setup_current_values (GpdsUI *ui, GtkBuilder *builder)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
@@ -907,7 +994,6 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
                                         PROP_NAME ## _KEY,              \
                                         widget_name);
 
-    SET_INT_VALUE(GPDS_TOUCHPAD_TAP_TIME, "tapping_time_scale");
     SET_INT_VALUE(GPDS_TOUCHPAD_TAP_MOVE, "tapping_move_scale");
     SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_TAP_FAST_TAP, "faster_tapping_check");
     SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_GUEST_MOUSE_OFF, "guest_mouse_off");
@@ -916,6 +1002,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     SET_INT_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT, "locked_drags_timeout_scale");
     SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_CIRCULAR_SCROLLING, "circular_scrolling");
 
+    set_tapping_time_from_preference(ui, builder);
     set_edge_scrolling_property_from_preference(ui, builder);
     set_palm_dimensions_property_from_preference(ui, builder);
     set_scrolling_distance_property_from_preference(ui, builder);
@@ -923,6 +1010,7 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     set_touchpad_use_type_property_from_preference(ui);
     set_circular_scrolling_trigger_property_from_preference(ui);
     set_move_speed_properties_from_preference(ui, builder);
+    set_disable_tapping_from_preference(ui, builder);
     set_click_action(ui);
 }
 
