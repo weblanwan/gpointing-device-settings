@@ -110,7 +110,7 @@
                 </packing>
               </child>
               <child>
-                <object class="GtkLabel" id="middle_button_timout_right_label">
+                <object class="GtkLabel" id="middle_button_timeout_right_label">
                   <property name="label" translatable="yes" context="timeout">&lt;i&gt;Long&lt;/i&gt;</property>
                   <property name="use_underline">False</property>
                   <property name="use_markup">True</property>
