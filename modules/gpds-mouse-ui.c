@@ -497,17 +497,11 @@ get_content_widget (GpdsUI *ui, GError **error)
 static GdkPixbuf *
 get_icon_pixbuf (GpdsUI *ui, GError **error)
 {
-    const gchar *pixbuf_name;
     gchar *path;
     GdkPixbuf *pixbuf;
 
-    if (strstr(gpds_ui_get_device_name(ui), "TrackPoint"))
-        pixbuf_name = "trackpoint.png";
-    else 
-        pixbuf_name = "mouse.png";
-
     path = g_build_filename(gpds_get_icon_file_directory(),
-                            pixbuf_name, NULL);
+                            "mouse.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, error);
     g_free(path);
 
