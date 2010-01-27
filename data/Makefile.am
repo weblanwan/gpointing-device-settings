@@ -4,9 +4,9 @@ gpds_ui_DATA = 			\
 	touchpad.ui		\
 	mouse.ui
 
-gpds_icon_DATA = 	\
-	mouse.png	\
-	trackpoint.png	\
+gpds_icon_DATA = 		\
+	mouse.png		\
+	pointingstick.png	\
 	touchpad.png
 
 @INTLTOOL_SCHEMAS_RULE@

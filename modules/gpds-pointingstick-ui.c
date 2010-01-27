@@ -268,7 +268,7 @@ get_icon_pixbuf (GpdsUI *ui, GError **error)
     GdkPixbuf *pixbuf;
 
     path = g_build_filename(gpds_get_icon_file_directory(),
-                            "trackpoint.png", NULL);
+                            "pointingstick.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, error);
     g_free(path);
 
