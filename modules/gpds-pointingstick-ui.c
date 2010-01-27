@@ -32,22 +32,22 @@
 #include "gpds-pointingstick-xinput.h"
 
 #define GPDS_TYPE_POINTINGSTICK_UI            (gpds_pointingstick_ui_get_type())
-#define GPDS_POINTINGSTICK_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_POINTINGSTICK_UI, GpdsMouseUI))
-#define GPDS_POINTINGSTICK_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_POINTINGSTICK_UI, GpdsMouseUIClass))
+#define GPDS_POINTINGSTICK_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GPDS_TYPE_POINTINGSTICK_UI, GpdsPointingStickUI))
+#define GPDS_POINTINGSTICK_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GPDS_TYPE_POINTINGSTICK_UI, GpdsPointingStickUIClass))
 #define G_IS_POINTINGSTICK_UI(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GPDS_TYPE_POINTINGSTICK_UI))
 #define G_IS_POINTINGSTICK_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), GPDS_TYPE_POINTINGSTICK_UI))
-#define GPDS_POINTINGSTICK_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_POINTINGSTICK_UI, GpdsMouseUIClass))
+#define GPDS_POINTINGSTICK_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GPDS_TYPE_POINTINGSTICK_UI, GpdsPointingStickUIClass))
 
-typedef struct _GpdsMouseUI GpdsMouseUI;
-typedef struct _GpdsMouseUIClass GpdsMouseUIClass;
+typedef struct _GpdsPointingStickUI GpdsPointingStickUI;
+typedef struct _GpdsPointingStickUIClass GpdsPointingStickUIClass;
 
-struct _GpdsMouseUI
+struct _GpdsPointingStickUI
 {
     GpdsXInputUI parent;
     gchar *ui_file_path;
 };
 
-struct _GpdsMouseUIClass
+struct _GpdsPointingStickUIClass
 {
     GpdsXInputUIClass parent_class;
 };
@@ -60,10 +60,10 @@ static gboolean   build              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
 
-G_DEFINE_DYNAMIC_TYPE(GpdsMouseUI, gpds_pointingstick_ui, GPDS_TYPE_XINPUT_UI)
+G_DEFINE_DYNAMIC_TYPE(GpdsPointingStickUI, gpds_pointingstick_ui, GPDS_TYPE_XINPUT_UI)
 
 static void
-gpds_pointingstick_ui_class_init (GpdsMouseUIClass *klass)
+gpds_pointingstick_ui_class_init (GpdsPointingStickUIClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GpdsUIClass *ui_class = GPDS_UI_CLASS(klass);
@@ -77,12 +77,12 @@ gpds_pointingstick_ui_class_init (GpdsMouseUIClass *klass)
 }
 
 static void
-gpds_pointingstick_ui_class_finalize (GpdsMouseUIClass *klass)
+gpds_pointingstick_ui_class_finalize (GpdsPointingStickUIClass *klass)
 {
 }
 
 static void
-gpds_pointingstick_ui_init (GpdsMouseUI *ui)
+gpds_pointingstick_ui_init (GpdsPointingStickUI *ui)
 {
     ui->ui_file_path = g_build_filename(gpds_get_ui_file_directory(),
                                         "pointingstick.ui",
@@ -109,7 +109,7 @@ GPDS_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 static void
 dispose (GObject *object)
 {
-    GpdsMouseUI *ui = GPDS_POINTINGSTICK_UI(object);
+    GpdsPointingStickUI *ui = GPDS_POINTINGSTICK_UI(object);
 
     g_free(ui->ui_file_path);
 
