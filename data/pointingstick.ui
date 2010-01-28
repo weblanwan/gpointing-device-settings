@@ -322,7 +322,7 @@
                 <property name="page_size">0</property>
               </object>
               <object class="GtkLabel" id="press_to_select_threshold_label">
-                <property name="label" translatable="yes">_Threshold:</property>
+                <property name="label" translatable="yes">T_hreshold:</property>
                 <property name="mnemonic-widget">press_to_select_threshold_scale</property>
                 <property name="use_underline">True</property>
                 <property name="use_markup">False</property>
