@@ -54,8 +54,7 @@ gsd_plugin_in_files =					\
 gsd_plugin_DATA = $(gsd_plugin_in_files:.gnome-settings-plugin.in=.gnome-settings-plugin)
 
 EXTRA_DIST = 			\
-	$(gsd_plugin_in_files)	\
-	gnome-settings-plugin.h
+	$(gsd_plugin_in_files)
 
 CLEANFILES = 			\
 	$(gsd_plugin_DATA)
