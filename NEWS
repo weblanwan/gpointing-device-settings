@@ -1,4 +1,17 @@
 ============================
+GPointinDeviceSettings 1.5.0
+============================
+* Overall
+ - pointingstick driver support
+   http://wiki.github.com/hiikezoe/xf86-input-pointing-stick/
+* Touchpad
+ - Added a checkbox to disable/enable tapping.
+* Update translation
+ - Czech (Marek Černock)
+ - Spanish (Jorge González)
+ - Slovenian (Andrej Žnidaršič)
+
+============================
 GPointinDeviceSettings 1.4.0
 ============================
 * Overall
