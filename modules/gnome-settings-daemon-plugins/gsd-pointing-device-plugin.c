@@ -21,8 +21,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-/* #include <gnome-settings-daemon/gnome-settings-plugin.h> */
-#include "gnome-settings-plugin.h"
+#include <gnome-settings-daemon/gnome-settings-plugin.h>
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 
