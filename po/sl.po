@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-17 15:07+0000\n"
-"PO-Revision-Date: 2010-01-18 14:05+0100\n"
+"POT-Creation-Date: 2010-01-29 11:02+0000\n"
+"PO-Revision-Date: 2010-01-31 11:16+0100\n"
 "Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -25,20 +25,20 @@ msgstr ""
 msgid "No %s found."
 msgstr "%s ni mogoče najti."
 
-#: ../src/gpds-xinput.c:221
+#: ../src/gpds-xinput.c:214
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "Prišlo je do napake strežnika X. Napaka je bila %s."
 
-#: ../src/gpds-xinput.c:307
-#: ../src/gpds-xinput.c:325
-#: ../src/gpds-xinput.c:343
+#: ../src/gpds-xinput.c:300
+#: ../src/gpds-xinput.c:318
+#: ../src/gpds-xinput.c:336
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "Ni vpisane lastnosti za %d."
 
-#: ../src/gpds-xinput.c:445
-#: ../src/gpds-xinput.c:612
+#: ../src/gpds-xinput.c:438
+#: ../src/gpds-xinput.c:605
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -57,13 +57,13 @@ msgstr "Naprave %s ni mogoče odpreti."
 msgid "No float atom in XServer"
 msgstr "Ni plavajočega atoma v XServer"
 
-#: ../modules/gpds-touchpad-ui.c:941
+#: ../modules/gpds-touchpad-ui.c:1029
 #: ../modules/gpds-mouse-ui.c:440
 #, c-format
 msgid "%s did not find."
 msgstr "%s ni mogoče najti."
 
-#: ../modules/gpds-touchpad-ui.c:990
+#: ../modules/gpds-touchpad-ui.c:1078
 #: ../modules/gpds-mouse-ui.c:489
 #, c-format
 msgid "There is no widget(%s)."
@@ -115,7 +115,7 @@ msgid "_inertia:"
 msgstr "_vztrajnost:"
 
 #: ../data/mouse.ui.h:11
-#: ../data/touchpad.ui.h:37
+#: ../data/touchpad.ui.h:38
 msgid "_timeout:"
 msgstr "z_akasnitev:"
 
@@ -168,98 +168,102 @@ msgid "Acceleration"
 msgstr "Pospešek"
 
 #: ../data/touchpad.ui.h:14
+msgid "Disable _tapping"
+msgstr "Onemogoči _udarjanje"
+
+#: ../data/touchpad.ui.h:15
 msgid "Disable _tapping and scrolling"
 msgstr "Onemogoči _udarjanje in drsanje"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:16
 msgid "Disable while any _other devices are connected"
 msgstr "Onemogoči, ko so povezane katerekoli _druge naprave"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:17
 msgid "Enable Ci_rcular scrolling"
 msgstr "Omogoči k_rožno drsenje"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:18
 msgid "Enable _faster tapping"
 msgstr "Omogoči _hitrejše udarjanje"
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:19
 msgid "Enable _horizontal scrolling"
 msgstr "Omogoči _vodoravno drsenje"
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:20
 msgid "Enable _locked drags"
 msgstr "Omogoči _zaklenjen poteg"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:21
 msgid "Enable _palm detection"
 msgstr "Omogoči zaznavanje _dlani"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:22
 msgid "Enable _vertical scrolling"
 msgstr "Omogoči _navpično drsenje"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:23
 msgid "Enable continuous edge scrolling"
 msgstr "Omogoči zvezno drsenje ob robovih"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:24
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "Omogoči vodoravno drsenje ob potegu z dvema prstoma"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:25
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "Omogoči navpično drsenje ob potegu z dvema prstoma"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:26
 msgid "General"
 msgstr "Splošno"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:27
 msgid "Maximum speed"
 msgstr "Največja hitrost"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:28
 msgid "Mimimum speed"
 msgstr "Najmanjša hitrost"
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:29
 msgid "Scrolling"
 msgstr "Drsenje"
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:30
 msgid "Set _guest mouse off"
 msgstr "Onemogoči zunanjo _miško"
 
-#: ../data/touchpad.ui.h:30
+#: ../data/touchpad.ui.h:31
 msgid "Speed"
 msgstr "Hitrost"
 
-#: ../data/touchpad.ui.h:31
+#: ../data/touchpad.ui.h:32
 msgid "Start point of circular scrolling:"
 msgstr "Začetna točka krožnega drsenja:"
 
-#: ../data/touchpad.ui.h:32
+#: ../data/touchpad.ui.h:33
 msgid "Tapping"
 msgstr "Udarjanje"
 
-#: ../data/touchpad.ui.h:33
+#: ../data/touchpad.ui.h:34
 msgid "Tapping move: "
 msgstr "Premik udarjanja: "
 
-#: ../data/touchpad.ui.h:34
+#: ../data/touchpad.ui.h:35
 msgid "Tapping time: "
 msgstr "Čas udarjanja: "
 
-#: ../data/touchpad.ui.h:35
+#: ../data/touchpad.ui.h:36
 msgid "_Disable touchpad"
 msgstr "_Onemogoči sledilno ploščico"
 
-#: ../data/touchpad.ui.h:36
+#: ../data/touchpad.ui.h:37
 msgid "_range:"
 msgstr "_območje:"
 
-#: ../data/touchpad.ui.h:38
+#: ../data/touchpad.ui.h:39
 msgid "pre_ssure:"
 msgstr "p_ritisk:"
 
