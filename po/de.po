@@ -1,12 +1,12 @@
 # German translation of gpointing-device-settings.
-# Mario Blättermann <mariobl@gnome.org>, 2009.
+# Mario Blättermann <mariobl@gnome.org>, 2009, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gpointin-device-settings\n"
+"Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-13 09:56+0900\n"
-"PO-Revision-Date: 2009-05-04 18:23+0200\n"
+"POT-Creation-Date: 2010-02-04 11:23+0000\n"
+"PO-Revision-Date: 2010-02-04 20:14+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,22 +20,24 @@ msgstr ""
 msgid "No %s found."
 msgstr "Kein %s gefunden."
 
-#: ../src/gpds-xinput.c:221
+#: ../src/gpds-xinput.c:214
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "Ein Fehler des X-Window-Systems ist aufgetreten. Fehlermeldung war %s."
 
-#: ../src/gpds-xinput.c:307 ../src/gpds-xinput.c:325 ../src/gpds-xinput.c:343
+#: ../src/gpds-xinput.c:300 ../src/gpds-xinput.c:318 ../src/gpds-xinput.c:336
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "Keine Eigenschaft für %d registriert."
 
-#: ../src/gpds-xinput.c:445 ../src/gpds-xinput.c:612
+#: ../src/gpds-xinput.c:438 ../src/gpds-xinput.c:605
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
 "%s is specified but %s returns."
 msgstr ""
+"Formattypen stimmen nicht überein.\n"
+"%s ist angegeben, aber %s wurde zurückgegeben."
 
 #: ../src/gpds-xinput-utils.c:107
 #, c-format
@@ -45,14 +47,16 @@ msgstr "Gerät %s konnte nicht geöffnet werden."
 #: ../src/gpds-xinput-utils.c:124
 #, c-format
 msgid "No float atom in XServer"
-msgstr ""
+msgstr "Kein Float-Atom im X-Server"
 
-#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-pointingstick-ui.c:207
 #, c-format
 msgid "%s did not find."
 msgstr "%s wurde nicht gefunden."
 
-#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-pointingstick-ui.c:256
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Es gibt kein Widget(%s)."
@@ -68,11 +72,11 @@ msgstr "<b>Emulation der mittleren Taste</b>"
 msgid "<b>Wheel Emulation</b>"
 msgstr "<b>Mausrad-Emulation</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:5
 msgid "<i>Long</i>"
 msgstr "<i>Lang</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:7
 msgid "<i>Short</i>"
 msgstr "<i>Kurz</i>"
 
@@ -100,7 +104,7 @@ msgstr "_Taste:"
 msgid "_inertia:"
 msgstr ""
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:38
 msgid "_timeout:"
 msgstr ""
 
@@ -110,17 +114,17 @@ msgstr ""
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
-msgstr ""
+msgstr "<b>Gastmaus</b>"
 
 #: ../data/touchpad.ui.h:2
 msgid "<b>Locked Drags</b>"
-msgstr ""
+msgstr "<b>Gesperrte Ziehvorgänge</b>"
 
 #: ../data/touchpad.ui.h:3
 msgid "<b>Palm Detection</b>"
-msgstr ""
+msgstr "<b>Handflächenerkennung</b>"
 
-#: ../data/touchpad.ui.h:4
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
 msgstr "<b>Scrollen</b>"
 
@@ -128,11 +132,11 @@ msgstr "<b>Scrollen</b>"
 msgid "<i>Fast</i>"
 msgstr "<i>Schnell</i>"
 
-#: ../data/touchpad.ui.h:6
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:4
 msgid "<i>High</i>"
 msgstr "<i>Hoch</i>"
 
-#: ../data/touchpad.ui.h:8
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:6
 msgid "<i>Low</i>"
 msgstr "<i>Niedrig</i>"
 
@@ -149,84 +153,143 @@ msgid "<i>Wide</i>"
 msgstr "<i>Weit</i>"
 
 #: ../data/touchpad.ui.h:13
-msgid "Disable while _other device is connected"
-msgstr ""
+msgid "Acceleration"
+msgstr "Beschleunigung"
 
 #: ../data/touchpad.ui.h:14
-msgid "Enable Ci_rcular scrolling"
-msgstr "Zi_rkulares Scrollen aktivieren"
+msgid "Disable _tapping"
+msgstr ""
 
 #: ../data/touchpad.ui.h:15
-msgid "Enable _faster tapping"
+#| msgid "Enable _vertical scrolling"
+msgid "Disable _tapping and scrolling"
 msgstr ""
 
 #: ../data/touchpad.ui.h:16
-msgid "Enable _horizontal scrolling"
-msgstr "_Horizontales Scrollen aktivieren"
+msgid "Disable while any _other devices are connected"
+msgstr "Deaktivieren, wenn _andere Geräte angeschlossen sind"
 
 #: ../data/touchpad.ui.h:17
-msgid "Enable _locked drags"
-msgstr ""
+msgid "Enable Ci_rcular scrolling"
+msgstr "Zi_rkulares Scrollen aktivieren"
 
 #: ../data/touchpad.ui.h:18
-msgid "Enable _palm detection"
+msgid "Enable _faster tapping"
 msgstr ""
 
 #: ../data/touchpad.ui.h:19
+msgid "Enable _horizontal scrolling"
+msgstr "_Horizontales Scrollen aktivieren"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable _locked drags"
+msgstr "Ges_perrte Ziehvorgänge aktivieren"
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable _palm detection"
+msgstr "_Handflächenerkennung aktivieren"
+
+#: ../data/touchpad.ui.h:22
 msgid "Enable _vertical scrolling"
 msgstr "_Vertikales Scrollen aktivieren"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:23
 msgid "Enable continuous edge scrolling"
 msgstr ""
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:24
 msgid "Enable horizontal scrolling when dragging with two fingers"
-msgstr ""
+msgstr "Horizontales Scrollen beim Ziehen mit zwei Fingern aktivieren"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:25
 msgid "Enable vertical scrolling when dragging with two fingers"
-msgstr ""
+msgstr "Vertikales Scrollen beim Ziehen mit zwei Fingern aktivieren"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:26
 msgid "General"
 msgstr "Allgemein"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:27
+msgid "Maximum speed"
+msgstr "Maximalgeschwindigkeit"
+
+#: ../data/touchpad.ui.h:28
+msgid "Mimimum speed"
+msgstr "Minimalgeschwindigkeit"
+
+#: ../data/touchpad.ui.h:29
 msgid "Scrolling"
 msgstr "Scrollen"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:30
 msgid "Set _guest mouse off"
-msgstr ""
+msgstr "_Gastmaus abschalten"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:31
+msgid "Speed"
+msgstr "Geschwindigkeit"
+
+#: ../data/touchpad.ui.h:32
 msgid "Start point of circular scrolling:"
 msgstr "Startpunkt des zirkularen Scrollens:"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:33
 msgid "Tapping"
 msgstr ""
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:34
 msgid "Tapping move: "
 msgstr ""
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:35
 msgid "Tapping time: "
 msgstr ""
 
-#: ../data/touchpad.ui.h:30
+#: ../data/touchpad.ui.h:36
+msgid "_Disable touchpad"
+msgstr "Touchpad _deaktivieren"
+
+#: ../data/touchpad.ui.h:37
 msgid "_range:"
 msgstr "Be_reich:"
 
-#: ../data/touchpad.ui.h:32
+#: ../data/touchpad.ui.h:39
 msgid "pre_ssure:"
 msgstr "Dru_ck:"
 
 #: ../data/main-window.ui.h:1
 msgid "GPointing Device Settings"
 msgstr "GPointing Zeigegerät-Einstellungen"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<b>Drücken zum Auswählen</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Empfindlichkeit</b>"
+
+#: ../data/pointingstick.ui.h:8
+msgid "Enable _Press to Select"
+msgstr "Auswählen durch Dr_ücken aktivieren"
+
+#: ../data/pointingstick.ui.h:9
+#| msgid "Enable Ci_rcular scrolling"
+msgid "Enable sc_rolling"
+msgstr "Sc_rollen aktivieren"
+
+#: ../data/pointingstick.ui.h:10
+#| msgid "Use _middle button emulation"
+msgid "Middle button _timeout:"
+msgstr ""
+
+#: ../data/pointingstick.ui.h:11
+msgid "T_hreshold:"
+msgstr "Ansprec_hschwelle:"
+
+#: ../data/pointingstick.ui.h:12
+msgid "_Sensitivity:"
+msgstr "Em_pfindlichkeit:"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
@@ -236,14 +299,13 @@ msgstr "Pointing-Device-Plugin aktivieren"
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
-"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings "
-"verwendet wird."
+"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings verwendet "
+"wird."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
-#, fuzzy
 msgid "Pointing devices"
-msgstr "GPointing Zeigegerät-Einstellungen"
+msgstr "Zeigegeräte"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
-msgstr ""
+msgstr "Richten Sie Ihre Zeigegeräte ein"
