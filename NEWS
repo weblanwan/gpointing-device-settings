@@ -1,4 +1,17 @@
 ============================
+GPointinDeviceSettings 1.5.1
+============================
+* Overall
+ - Fix missing files for translation (Michal Čihař)
+* Touchpad
+ - Fix unavailable touchpad issue
+* Update translation
+ - Czech (Marek Černock)
+ - German (Mario Blättermann)
+ - Spanish (Jorge González)
+ - Slovenian (Andrej Žnidaršič)
+
+============================
 GPointinDeviceSettings 1.5.0
 ============================
 * Overall
