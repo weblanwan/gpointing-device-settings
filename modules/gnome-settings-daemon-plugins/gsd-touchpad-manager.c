@@ -188,20 +188,26 @@ set_click_action (GsdPointingDeviceManager *manager,
 {
     gint properties[3];
 
-    gsd_pointing_device_manager_get_gconf_int(manager,
-                                              gconf,
-                                              GPDS_TOUCHPAD_CLICK_ACTION_FINGER1_KEY,
-                                              &properties[0]);
+    if (!gsd_pointing_device_manager_get_gconf_int(manager,
+                                                   gconf,
+                                                   GPDS_TOUCHPAD_CLICK_ACTION_FINGER1_KEY,
+                                                   &properties[0])) {
+        return;
+    }
 
-    gsd_pointing_device_manager_get_gconf_int(manager,
-                                              gconf,
-                                              GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY,
-                                              &properties[1]);
+    if (!gsd_pointing_device_manager_get_gconf_int(manager,
+                                                   gconf,
+                                                   GPDS_TOUCHPAD_CLICK_ACTION_FINGER2_KEY,
+                                                   &properties[1])) {
+        return;
+    }
 
-    gsd_pointing_device_manager_get_gconf_int(manager,
-                                              gconf,
-                                              GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY,
-                                              &properties[2]);
+    if (!gsd_pointing_device_manager_get_gconf_int(manager,
+                                                   gconf,
+                                                   GPDS_TOUCHPAD_CLICK_ACTION_FINGER3_KEY,
+                                                   &properties[2])) {
+        return;
+    }
 
     gpds_xinput_set_int_properties(xinput,
                                    GPDS_TOUCHPAD_CLICK_ACTION,
@@ -217,22 +223,33 @@ set_move_speed (GsdPointingDeviceManager *manager,
 {
     gdouble properties[4];
 
-    gsd_pointing_device_manager_get_gconf_float(manager,
-                                                gconf,
-                                                GPDS_TOUCHPAD_MINIMUM_SPEED_KEY,
-                                                &properties[0]);
-    gsd_pointing_device_manager_get_gconf_float(manager,
-                                                gconf,
-                                                GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY,
-                                                &properties[1]);
-    gsd_pointing_device_manager_get_gconf_float(manager,
-                                                gconf,
-                                                GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY,
-                                                &properties[2]);
-    gsd_pointing_device_manager_get_gconf_float(manager,
-                                                gconf,
-                                                GPDS_TOUCHPAD_TRACKSTICK_SPEED_KEY,
-                                                &properties[3]);
+    if (!gsd_pointing_device_manager_get_gconf_float(manager,
+                                                     gconf,
+                                                     GPDS_TOUCHPAD_MINIMUM_SPEED_KEY,
+                                                     &properties[0])) {
+        return;
+    }
+
+    if (!gsd_pointing_device_manager_get_gconf_float(manager,
+                                                     gconf,
+                                                     GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY,
+                                                     &properties[1])) {
+        return;
+    }
+
+    if (!gsd_pointing_device_manager_get_gconf_float(manager,
+                                                     gconf,
+                                                     GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY,
+                                                     &properties[2])) {
+        return;
+    }
+
+    if (!gsd_pointing_device_manager_get_gconf_float(manager,
+                                                     gconf,
+                                                     GPDS_TOUCHPAD_TRACKSTICK_SPEED_KEY,
+                                                     &properties[3])) {
+        return;
+    }
 
     gpds_xinput_set_float_properties(xinput,
                                      GPDS_TOUCHPAD_MOVE_SPEED,
@@ -253,10 +270,12 @@ set_disable_while_other_device_exists (GsdPointingDeviceManager *manager,
     gint use_type;
     const gchar *device_name;
 
-    gsd_pointing_device_manager_get_gconf_boolean(manager,
-                                                  gconf,
-                                                  GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
-                                                  &disable);
+    if (!gsd_pointing_device_manager_get_gconf_boolean(manager,
+                                                       gconf,
+                                                       GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
+                                                       &disable)) {
+        return;
+    }
 
     device_name = gpds_xinput_get_device_name(xinput);
     pointer_infos = gpds_xinput_utils_collect_pointer_infos();
