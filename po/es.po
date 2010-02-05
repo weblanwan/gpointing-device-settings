@@ -1,14 +1,13 @@
 # translation of gpointing-device-settings.HEAD.po to Español
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
-# Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010, 2010.
+# Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-26 19:14+0000\n"
-"PO-Revision-Date: 2010-01-31 17:45+0100\n"
+"POT-Creation-Date: 2010-02-04 11:23+0000\n"
+"PO-Revision-Date: 2010-02-05 08:17+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,11 +50,13 @@ msgid "No float atom in XServer"
 msgstr "No hay átomo flotante en el servidor X"
 
 #: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-pointingstick-ui.c:207
 #, c-format
 msgid "%s did not find."
 msgstr "No se encontró %s."
 
 #: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-pointingstick-ui.c:256
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "No existe el widget (%s)."
@@ -71,11 +72,11 @@ msgstr "<b>Emulación del botón del medio</b>"
 msgid "<b>Wheel Emulation</b>"
 msgstr "<b>Emulación de la rueda</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:5
 msgid "<i>Long</i>"
 msgstr "<i>Largo</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:7
 msgid "<i>Short</i>"
 msgstr "<i>Corto</i>"
 
@@ -123,7 +124,7 @@ msgstr "<b>Arrastres bloqueados</b>"
 msgid "<b>Palm Detection</b>"
 msgstr "<b>Detección de Palm</b>"
 
-#: ../data/touchpad.ui.h:4
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
 msgstr "<b>Desplazamiento</b>"
 
@@ -131,11 +132,11 @@ msgstr "<b>Desplazamiento</b>"
 msgid "<i>Fast</i>"
 msgstr "<i>Rápido</i>"
 
-#: ../data/touchpad.ui.h:6
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:4
 msgid "<i>High</i>"
 msgstr "<i>Alto</i>"
 
-#: ../data/touchpad.ui.h:8
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:6
 msgid "<i>Low</i>"
 msgstr "<i>Bajo</i>"
 
@@ -156,7 +157,6 @@ msgid "Acceleration"
 msgstr "Aceleración"
 
 #: ../data/touchpad.ui.h:14
-#| msgid "Disable _tapping and scrolling"
 msgid "Disable _tapping"
 msgstr "Desactivar _toque"
 
@@ -260,6 +260,36 @@ msgstr "pre_sión:"
 msgid "GPointing Device Settings"
 msgstr "Ajustes del dispositivo apuntador"
 
+#: ../data/pointingstick.ui.h:1
+#| msgid "<b>Palm Detection</b>"
+msgid "<b>Press to Select</b>"
+msgstr "<b>Pulsar para seleccionar</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Sensibilidad</b>"
+
+#: ../data/pointingstick.ui.h:8
+msgid "Enable _Press to Select"
+msgstr "Activar p_ulsar para seleccionar"
+
+#: ../data/pointingstick.ui.h:9
+#| msgid "Enable Ci_rcular scrolling"
+msgid "Enable sc_rolling"
+msgstr "Activar de_splazamiento"
+
+#: ../data/pointingstick.ui.h:10
+msgid "Middle button _timeout:"
+msgstr "_Tiempo de expiración del botón del medio"
+
+#: ../data/pointingstick.ui.h:11
+msgid "T_hreshold:"
+msgstr "_Umbral:"
+
+#: ../data/pointingstick.ui.h:12
+msgid "_Sensitivity:"
+msgstr "_Sensibilidad:"
+
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
 msgstr "Activar el complemento del dispositivo apuntador"
@@ -289,9 +319,6 @@ msgstr "Establezca sus preferencias del dispositivo apuntador"
 
 #~ msgid "(ms)"
 #~ msgstr "(ms)"
-
-#~ msgid "Middle button _timeout:"
-#~ msgstr "_Tiempo de expiración del botón del medio"
 
 #~ msgid "Wheel _emulation timeout:"
 #~ msgstr "Tiempo de expiración de la _emulación de la rueda"
