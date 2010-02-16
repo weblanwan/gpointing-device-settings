@@ -1,15 +1,15 @@
 # Chinese (China) translation for gpointing-device-settings.
 # Copyright (C) 2009 gpointing-device-settings's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gpointing-device-settings package.
-# 苏运强 <wzssyqa@gmail.com>, 2009.
+# YunQiang Su <wzssyqa@gmail.com>, 2009,2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-13 09:56+0900\n"
-"PO-Revision-Date: 2009-10-06 17:49+0800\n"
-"Last-Translator: 苏运强 <wzssyqa@gmail.com>\n"
+"POT-Creation-Date: 2010-02-09 18:35+0000\n"
+"PO-Revision-Date: 2010-02-11 23:20+0800\n"
+"Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,17 +20,17 @@ msgstr ""
 msgid "No %s found."
 msgstr "没有发现 %s"
 
-#: ../src/gpds-xinput.c:221
+#: ../src/gpds-xinput.c:214
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "X 发生了错误。这个错误是 %s 。"
 
-#: ../src/gpds-xinput.c:307 ../src/gpds-xinput.c:325 ../src/gpds-xinput.c:343
+#: ../src/gpds-xinput.c:300 ../src/gpds-xinput.c:318 ../src/gpds-xinput.c:336
 #, c-format
 msgid "There is no registered property for %d."
-msgstr ""
+msgstr "没有为 %d 注册属性。"
 
-#: ../src/gpds-xinput.c:445 ../src/gpds-xinput.c:612
+#: ../src/gpds-xinput.c:438 ../src/gpds-xinput.c:605
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -47,14 +47,16 @@ msgstr "不能打开设备 %s。"
 #: ../src/gpds-xinput-utils.c:124
 #, c-format
 msgid "No float atom in XServer"
-msgstr ""
+msgstr "XServer 无浮动原子"
 
-#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-pointingstick-ui.c:207
 #, c-format
 msgid "%s did not find."
 msgstr "没有发现 %s 。"
 
-#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-pointingstick-ui.c:256
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "没有部件 (%s)"
@@ -70,11 +72,11 @@ msgstr "<b>模拟中键</b>"
 msgid "<b>Wheel Emulation</b>"
 msgstr "<b>模拟滚轮</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:5
 msgid "<i>Long</i>"
 msgstr "<i>长</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:7
 msgid "<i>Short</i>"
 msgstr "<i>短</i>"
 
@@ -102,28 +104,28 @@ msgstr "键(_B)"
 msgid "_inertia:"
 msgstr "惯性(_I)"
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:38
 msgid "_timeout:"
 msgstr "计时(_T)"
 
 #: ../data/mouse.ui.h:12
 msgid "tim_eout:"
-msgstr "时间到(_E)"
+msgstr "时间到(_E)："
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
-msgstr ""
+msgstr "<b>外来鼠标</b>"
 
 #: ../data/touchpad.ui.h:2
+#, fuzzy
 msgid "<b>Locked Drags</b>"
-msgstr ""
+msgstr "<b>锁定的拖动</b>"
 
 #: ../data/touchpad.ui.h:3
-#, fuzzy
 msgid "<b>Palm Detection</b>"
 msgstr "<b>手掌探测</b>"
 
-#: ../data/touchpad.ui.h:4
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
 msgstr "<b>滚动</b>"
 
@@ -131,11 +133,11 @@ msgstr "<b>滚动</b>"
 msgid "<i>Fast</i>"
 msgstr "<i>快</i>"
 
-#: ../data/touchpad.ui.h:6
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:4
 msgid "<i>High</i>"
 msgstr "<i>高</i>"
 
-#: ../data/touchpad.ui.h:8
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:6
 msgid "<i>Low</i>"
 msgstr "<i>低</i>"
 
@@ -152,85 +154,142 @@ msgid "<i>Wide</i>"
 msgstr "<i>宽</i>"
 
 #: ../data/touchpad.ui.h:13
-msgid "Disable while _other device is connected"
-msgstr ""
+msgid "Acceleration"
+msgstr "加速"
 
 #: ../data/touchpad.ui.h:14
-#, fuzzy
+msgid "Disable _tapping"
+msgstr "禁用点击(_T)"
+
+#: ../data/touchpad.ui.h:15
+msgid "Disable _tapping and scrolling"
+msgstr "禁用点击和滚动(_T)"
+
+#: ../data/touchpad.ui.h:16
+msgid "Disable while any _other devices are connected"
+msgstr "连接上任何其它设备时禁用(_O)"
+
+#: ../data/touchpad.ui.h:17
 msgid "Enable Ci_rcular scrolling"
 msgstr "启用循环滚动(_R)"
 
-#: ../data/touchpad.ui.h:15
+#: ../data/touchpad.ui.h:18
 msgid "Enable _faster tapping"
 msgstr "启用快速点击(_F)"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:19
 msgid "Enable _horizontal scrolling"
 msgstr "启用水平滚动(_H)"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:20
+#, fuzzy
 msgid "Enable _locked drags"
-msgstr ""
+msgstr "启用锁定的拖动(_L)"
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:21
 msgid "Enable _palm detection"
-msgstr ""
+msgstr "启用手掌探测(_P)"
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:22
 msgid "Enable _vertical scrolling"
 msgstr "启用竖直滚动(_V)"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:23
 msgid "Enable continuous edge scrolling"
-msgstr ""
+msgstr "启用连续边缘滚动"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:24
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "当两个手指拖动时启用水平滚动"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:25
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "当两个手指拖动时启用竖直滚动"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:26
 msgid "General"
 msgstr "通用"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:27
+msgid "Maximum speed"
+msgstr "最大速度"
+
+#: ../data/touchpad.ui.h:28
+msgid "Mimimum speed"
+msgstr "最小速度"
+
+#: ../data/touchpad.ui.h:29
 msgid "Scrolling"
 msgstr "滚动"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:30
 msgid "Set _guest mouse off"
-msgstr ""
+msgstr "关闭外来鼠标(_G)"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:31
+msgid "Speed"
+msgstr "速度"
+
+#: ../data/touchpad.ui.h:32
 msgid "Start point of circular scrolling:"
-msgstr ""
+msgstr "循环滚动的起始点："
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:33
 msgid "Tapping"
 msgstr "点击"
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:34
+#, fuzzy
 msgid "Tapping move: "
-msgstr ""
+msgstr "点击移动："
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:35
 msgid "Tapping time: "
 msgstr "点击时间"
 
-#: ../data/touchpad.ui.h:30
+#: ../data/touchpad.ui.h:36
+msgid "_Disable touchpad"
+msgstr "禁用触摸板(_D)"
+
+#: ../data/touchpad.ui.h:37
 msgid "_range:"
 msgstr "区域(_R):"
 
-#: ../data/touchpad.ui.h:32
+#: ../data/touchpad.ui.h:39
 msgid "pre_ssure:"
 msgstr "压力(_P)："
 
 #: ../data/main-window.ui.h:1
 msgid "GPointing Device Settings"
 msgstr "触摸设备管理器"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<b>按下以选择</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>敏感性</b>"
+
+#: ../data/pointingstick.ui.h:8
+msgid "Enable _Press to Select"
+msgstr "启用按压选择(_P)"
+
+#: ../data/pointingstick.ui.h:9
+msgid "Enable sc_rolling"
+msgstr "启用滚动(_R)"
+
+#: ../data/pointingstick.ui.h:10
+msgid "Middle button _timeout:"
+msgstr "中键超时(_T)"
+
+#: ../data/pointingstick.ui.h:11
+msgid "T_hreshold:"
+msgstr "灵敏度(_H)："
+
+#: ../data/pointingstick.ui.h:12
+msgid "_Sensitivity:"
+msgstr "敏感性(_S)："
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
@@ -242,10 +301,9 @@ msgid ""
 msgstr "设为真时，允许插件管理触摸设备管理器的设置。"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
-#, fuzzy
 msgid "Pointing devices"
-msgstr "触摸设备管理器"
+msgstr "指点设备"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
-msgstr ""
+msgstr "设置指点设备首选项"
