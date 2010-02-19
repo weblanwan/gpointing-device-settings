@@ -1,0 +1,241 @@
+# gpointing-device-settings'i eesti keele tõlge.
+# Estonian translation for gpointing-device-settings.
+#
+# Copyright (C) 2010, The Gnome Project.
+# This file is distributed under the same license as the gpointing-device-settings package.
+# Mattias Põldaru <mahfiaz gmail com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-16 03:42+0000\n"
+"PO-Revision-Date: 2010-02-18 20:27+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"Language-Team: Estonian <et@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Estonian\n"
+"X-Poedit-Country: ESTONIA\n"
+
+#, c-format
+msgid "No %s found."
+msgstr "Ühtegi %s ei leitud."
+
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "Esines X-i viga. Veateade oli %s."
+
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "%d jaoks ei ole registreeritud väärtust."
+
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Vormingu liik ei kattu.\n"
+"%s oli määratud, aga tagastati %s."
+
+#, c-format
+msgid "Could not open %s device."
+msgstr "Seadet %s ei suudetud avada."
+
+#, fuzzy, c-format
+msgid "No float atom in XServer"
+msgstr "XServeris puudub ujukoma aatom"
+
+#, c-format
+msgid "%s did not find."
+msgstr "%s ei leitud."
+
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Sellist vidinat pole (%s)."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Keskmise klahvi emuleerimine</b>"
+
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Kerimisratta emuleerimine</b>"
+
+msgid "<i>Long</i>"
+msgstr "<i>Pikk</i>"
+
+msgid "<i>Short</i>"
+msgstr "<i>Lühike</i>"
+
+msgid "Enable _horizontal scroll"
+msgstr "_Horisontaalsuunaline kerimine"
+
+msgid "Enable _vertical scroll"
+msgstr "_Vertikaalsuunaline kerimine"
+
+msgid "Use _middle button emulation"
+msgstr "_Keskmise nupu emuleerimine"
+
+msgid "Use _wheel emulation"
+msgstr "_Kerimisratta emuleerimine"
+
+msgid "_button:"
+msgstr "_Nupp:"
+
+msgid "_inertia:"
+msgstr "_Inertsus:"
+
+msgid "_timeout:"
+msgstr "_Ajapiirang:"
+
+msgid "tim_eout:"
+msgstr "_Ajapiirang:"
+
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>Väline hiir</b>"
+
+msgid "<b>Locked Drags</b>"
+msgstr "<b>Lohistamise lukk</b>"
+
+msgid "<b>Palm Detection</b>"
+msgstr "<b>Peopesa tuvastus</b>"
+
+msgid "<b>Scrolling</b>"
+msgstr "<b>Kerimine</b>"
+
+msgid "<i>Fast</i>"
+msgstr "<i>Kiire</i>"
+
+msgid "<i>High</i>"
+msgstr "<i>Kõrge</i>"
+
+msgid "<i>Low</i>"
+msgstr "<i>Madal</i>"
+
+msgid "<i>Narrow</i>"
+msgstr "<i>Kitsas</i>"
+
+msgid "<i>Slow</i>"
+msgstr "<i>Aeglane</i>"
+
+msgid "<i>Wide</i>"
+msgstr "<i>Lai</i>"
+
+msgid "Acceleration"
+msgstr "Kiirendus"
+
+msgid "Disable _tapping"
+msgstr "_Koputamine keelatud"
+
+msgid "Disable _tapping and scrolling"
+msgstr "_Koputamine ja kerimine keelatud"
+
+msgid "Disable while any _other devices are connected"
+msgstr "Keelatud, kui mõni _teine seade on ühendatud"
+
+msgid "Enable Ci_rcular scrolling"
+msgstr "_Ringkerimine lubatud"
+
+msgid "Enable _faster tapping"
+msgstr "_Kiire koputamine lubatud"
+
+msgid "Enable _horizontal scrolling"
+msgstr "_Horisontaalne kerimine lubatud"
+
+msgid "Enable _locked drags"
+msgstr "_Lohistamislukk lubatud"
+
+msgid "Enable _palm detection"
+msgstr "_Peopesa tuvastus lubatud"
+
+msgid "Enable _vertical scrolling"
+msgstr "_Vertikaalne kerimine lubatud"
+
+msgid "Enable continuous edge scrolling"
+msgstr "Serva jõudes kerimine ei peatu"
+
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Kahe sõrmega lohistamisel keritakse horisontaalsuunas"
+
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Kahe sõrmega lohistamisel keritakse vertikaalsuunas"
+
+msgid "General"
+msgstr "Üldine"
+
+msgid "Maximum speed"
+msgstr "Suurim kiirus"
+
+msgid "Mimimum speed"
+msgstr "Väikseim kiirus"
+
+msgid "Scrolling"
+msgstr "Kerimine"
+
+msgid "Set _guest mouse off"
+msgstr "_Külalishiir välja lülitatud"
+
+msgid "Speed"
+msgstr "Kiirus"
+
+msgid "Start point of circular scrolling:"
+msgstr "Ringkerimise alguspunkt:"
+
+msgid "Tapping"
+msgstr "Koputus"
+
+msgid "Tapping move: "
+msgstr "Koputuse nihe:"
+
+msgid "Tapping time: "
+msgstr "Koputuse kestus:"
+
+msgid "_Disable touchpad"
+msgstr "_Puuteplaat on keelatud"
+
+msgid "_range:"
+msgstr "_Ulatus:"
+
+msgid "pre_ssure:"
+msgstr "_Surve:"
+
+msgid "GPointing Device Settings"
+msgstr "GPointing seadme sätted"
+
+msgid "<b>Press to Select</b>"
+msgstr "<b>Valimiseks klõpsa</b>"
+
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Tundlikkus</b>"
+
+msgid "Enable _Press to Select"
+msgstr "_Surumisel tehakse hiireklõps"
+
+msgid "Enable sc_rolling"
+msgstr "_Kerimine lubatud"
+
+msgid "Middle button _timeout:"
+msgstr "Kesknupu _ajapiir:"
+
+msgid "T_hreshold:"
+msgstr "_Lävi:"
+
+msgid "_Sensitivity:"
+msgstr "_Tundlikkus:"
+
+msgid "Enable pointing-device plugin"
+msgstr "Osutamisseadme plugina lubamine"
+
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr "Märgi see, et plugin haldaks GPointingDeviceSettings sätteid."
+
+msgid "Pointing devices"
+msgstr "Osutamisseadmed"
+
+msgid "Set your pointing devices preferences"
+msgstr "Osutamisseadmete eelistused"
