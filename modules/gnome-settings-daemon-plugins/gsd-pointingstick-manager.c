@@ -60,6 +60,7 @@ DEFINE_SET_BOOLEAN_FUNCTION (scrolling, GPDS_POINTINGSTICK_SCROLLING)
 DEFINE_SET_BOOLEAN_FUNCTION (press_to_select, GPDS_POINTINGSTICK_PRESS_TO_SELECT)
 DEFINE_SET_INT_FUNCTION (middle_button_timeout, GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT)
 DEFINE_SET_INT_FUNCTION (sensitivity, GPDS_POINTINGSTICK_SENSITIVITY)
+DEFINE_SET_INT_FUNCTION (speed, GPDS_POINTINGSTICK_SPEED)
 DEFINE_SET_INT_FUNCTION (press_to_select_threshold, GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD)
 
 static gboolean
@@ -80,6 +81,7 @@ start_manager (GsdPointingDeviceManager *manager)
 
     gpds_pointingstick_xinput_setup_property_entries(xinput);
     set_sensitivity(manager, xinput, gconf);
+    set_speed(manager, xinput, gconf);
     set_scrolling(manager, xinput, gconf);
     set_middle_button_timeout(manager, xinput, gconf);
     set_press_to_select(manager, xinput, gconf);
@@ -135,6 +137,8 @@ _gconf_client_notify (GsdPointingDeviceManager *manager,
             set_middle_button_timeout(manager, xinput, client);
         else if (!strcmp(key, GPDS_POINTINGSTICK_SENSITIVITY_KEY))
             set_sensitivity(manager, xinput, client);
+        else if (!strcmp(key, GPDS_POINTINGSTICK_SPEED_KEY))
+            set_speed(manager, xinput, client);
         else if (!strcmp(key, GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD_KEY))
             set_press_to_select_threshold(manager, xinput, client);
         break;

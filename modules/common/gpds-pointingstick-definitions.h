@@ -21,6 +21,7 @@
 #define __GPDS_POINTINGSTICK_GCONF_H__
 
 #define GPDS_POINTINGSTICK_SENSITIVITY_KEY               "sensitivity"
+#define GPDS_POINTINGSTICK_SPEED_KEY                     "speed"
 #define GPDS_POINTINGSTICK_SCROLLING_KEY                 "scrolling"
 #define GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT_KEY     "middle_button_timeout"
 #define GPDS_POINTINGSTICK_PRESS_TO_SELECT_KEY           "press_to_select"

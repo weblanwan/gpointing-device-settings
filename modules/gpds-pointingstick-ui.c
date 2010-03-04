@@ -135,6 +135,8 @@ GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(press_to_select,
 
 GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(sensitivity_scale,
                                                    GPDS_POINTINGSTICK_SENSITIVITY)
+GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(speed_scale,
+                                                   GPDS_POINTINGSTICK_SPEED)
 GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(middle_button_timeout_scale,
                                                    GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT)
 GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(press_to_select_threshold_scale,
@@ -155,6 +157,7 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(press_to_select, toggled);
     CONNECT(middle_button_timeout_scale, value_changed);
     CONNECT(sensitivity_scale, value_changed);
+    CONNECT(speed_scale, value_changed);
     CONNECT(press_to_select_threshold_scale, value_changed);
 
 #undef CONNECT
@@ -187,6 +190,8 @@ setup_current_values (GpdsUI *ui)
                   "middle_button_timeout_scale");
     SET_INT_VALUE(GPDS_POINTINGSTICK_SENSITIVITY,
                   "sensitivity_scale");
+    SET_INT_VALUE(GPDS_POINTINGSTICK_SPEED,
+                  "speed_scale");
     SET_INT_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD,
                   "press_to_select_threshold_scale");
 }

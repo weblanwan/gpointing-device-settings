@@ -29,6 +29,7 @@
 
 static const GpdsXInputPropertyEntry entries[] = {
     {GPDS_POINTINGSTICK_SENSITIVITY,               "PointingStick Sensitivity",               G_TYPE_INT,  8, 1},
+    {GPDS_POINTINGSTICK_SPEED,                     "PointingStick Speed",                     G_TYPE_INT,  8, 1},
     {GPDS_POINTINGSTICK_SCROLLING,                 "PointingStick Scrolling",                 G_TYPE_INT,  8, 1},
     {GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT,     "PointingStick Middle Button Timeout",     G_TYPE_INT, 16, 1},
     {GPDS_POINTINGSTICK_PRESS_TO_SELECT,           "PointingStick Press to Select",           G_TYPE_INT,  8, 1},
