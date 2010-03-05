@@ -50,6 +50,7 @@ void
 test_collect_names (void)
 {
     expected_names = g_list_append(expected_names, "mouse");
+    expected_names = g_list_append(expected_names, "pointingstick");
     expected_names = g_list_append(expected_names, "touchpad");
 
     names = gpds_module_collect_names(modules);
@@ -62,6 +63,7 @@ test_find (void)
 {
     cut_assert(gpds_module_find(modules, "mouse"));
     cut_assert(gpds_module_find(modules, "touchpad"));
+    cut_assert(gpds_module_find(modules, "pointingstick"));
 }
 
 /*
