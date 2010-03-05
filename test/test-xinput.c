@@ -15,6 +15,7 @@ void test_set_float_properties_fail (void);
 void test_get_float_properties_fail (void);
 void test_set_button_map (void);
 void test_get_button_map (void);
+void test_backup_and_restore (void);
 
 static GpdsXInput *xinput;
 static GpdsXInput *tmp_xinput;
@@ -308,7 +309,33 @@ test_set_button_map (void)
 
     gpds_xinput_set_button_map (xinput, &error, actual_map, actual_n_buttons);
     gcut_assert_error(error);
+}
 
+void
+test_backup_and_restore (void)
+{
+    gboolean modifying_values;
+
+    cut_trace(test_register_property_entries());
+
+    gpds_xinput_get_int_properties_by_name (xinput,
+                                            "Evdev Middle Button Emulation",
+                                            &error,
+                                            &values, &n_values);
+    gcut_assert_error(error);
+    gpds_xinput_backup_all_properties(xinput);
+    modifying_values = !values[0];
+    set_int_property_of_xinput("Evdev Middle Button Emulation", 8,
+                               &modifying_values, 1);
+    gpds_xinput_restore_all_properties(xinput);
+
+    g_free(values);
+    gpds_xinput_get_int_properties_by_name (xinput,
+                                            "Evdev Middle Button Emulation",
+                                            &error,
+                                            &values, &n_values);
+    gcut_assert_error(error);
+    cut_assert_equal_boolean(!modifying_values, values[0]);
 }
 
 /*
