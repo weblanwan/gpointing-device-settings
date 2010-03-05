@@ -28,6 +28,7 @@
 
 #include "gsd-mouse-extension-manager.h"
 #include "gsd-touchpad-manager.h"
+#include "gsd-pointingstick-manager.h"
 #include "gpds-gconf.h"
 
 enum
@@ -174,15 +175,17 @@ get_property (GObject    *object,
 GsdPointingDeviceManager *
 gsd_pointing_device_manager_new (const gchar *device_type, const gchar *device_name)
 {
-    if (!strcmp(device_type, "mouse")) {
-        return g_object_new(GSD_TYPE_MOUSE_EXTENSION_MANAGER,
-                            "device-name", device_name,
-                            NULL);
-    } else if (!strcmp(device_type, "touchpad")) {
-        return g_object_new(GSD_TYPE_TOUCHPAD_MANAGER,
-                            "device-name", device_name,
-                            NULL);
-    }
+    GType type = 0;
+
+    if (!strcmp(device_type, "mouse"))
+        type = GSD_TYPE_MOUSE_EXTENSION_MANAGER;
+    else if (!strcmp(device_type, "touchpad"))
+        type = GSD_TYPE_TOUCHPAD_MANAGER;
+    else if (!strcmp(device_type, "pointingstick"))
+        type = GSD_TYPE_POINTINGSTICK_MANAGER;
+
+    if (type)
+        return g_object_new(type, "device-name", device_name, NULL);
 
     return NULL;
 }
