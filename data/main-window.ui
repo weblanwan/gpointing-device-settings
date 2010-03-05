@@ -41,8 +41,8 @@
         <child internal-child="action_area">
           <object class="GtkHButtonBox" id="button-box">
             <child>
-              <object class="GtkButton" id="button-ok">
-                <property name="label">gtk-ok</property>
+              <object class="GtkButton" id="button-close">
+                <property name="label">gtk-close</property>
                 <property name="use-stock">True</property>
               </object>
             </child>
@@ -51,7 +51,7 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="GTK_RESPONSE_OK">button-ok</action-widget>
+      <action-widget response="GTK_RESPONSE_CLOSE">button-close</action-widget>
     </action-widgets>
   </object>
 </interface>
