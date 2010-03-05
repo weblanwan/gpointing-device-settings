@@ -255,10 +255,11 @@ main (int argc, char *argv[])
                      G_CALLBACK(cb_selection_changed), notebook);
 
     append_uis(GTK_ICON_VIEW(icon_view), GTK_NOTEBOOK(notebook));
+    g_object_unref(builder);
+
     gtk_widget_show_all(dialog);
     gtk_main();
 
-    g_object_unref(builder);
     gpds_quit();
 
     return 0;
