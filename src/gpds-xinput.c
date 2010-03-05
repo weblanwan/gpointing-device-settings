@@ -38,6 +38,7 @@ struct _GpdsXInputPriv
     XDevice *device;
     GpdsXInputPropertyEntry *property_entries;
     guint n_property_entries;
+    GPtrArray *properties;
 };
 
 enum
@@ -109,6 +110,11 @@ dispose (GObject *object)
             g_free((gchar *)priv->property_entries[i].name);
         }
         g_free(priv->property_entries);
+    }
+
+    if (priv->properties) {
+        g_ptr_array_unref(priv->properties);
+        priv->properties = NULL;
     }
 
     if (G_OBJECT_CLASS(gpds_xinput_parent_class)->dispose)
@@ -731,6 +737,186 @@ gpds_xinput_register_property_entries (GpdsXInput *xinput,
         priv->property_entries[i].property_type = entries[i].property_type;
         priv->property_entries[i].format_type = entries[i].format_type;
         priv->property_entries[i].max_value_count = entries[i].max_value_count;
+    }
+}
+
+static GValueArray *
+get_int_properties (GpdsXInput *xinput, const gchar *name)
+{
+    gulong n_values, i;
+    gint *int_values = NULL;
+    GValue value = { 0 };
+    GValueArray *array;
+
+    gpds_xinput_get_int_properties_by_name(xinput,
+                                           name,
+                                           NULL,
+                                           &int_values,
+                                           &n_values);
+    array = g_value_array_new(n_values);
+    g_value_init(&value, G_TYPE_INT);
+
+    for (i = 0; i < n_values; i++) {
+        g_value_set_int(&value, int_values[i]);
+        g_value_array_append(array, &value);
+        g_value_reset(&value);
+    }
+    g_free(int_values);
+
+    return array;
+}
+
+static GValueArray *
+get_float_properties (GpdsXInput *xinput, const gchar *name)
+{
+    gulong n_values, i;
+    gdouble *float_values = NULL;
+    GValue value = { 0 };
+    GValueArray *array;
+
+    gpds_xinput_get_float_properties_by_name(xinput,
+                                             name,
+                                             NULL,
+                                             &float_values,
+                                             &n_values);
+    array = g_value_array_new(n_values);
+    g_value_init(&value, G_TYPE_DOUBLE);
+
+    for (i = 0; i < n_values; i++) {
+        g_value_set_float(&value, float_values[i]);
+        g_value_array_append(array, &value);
+        g_value_reset(&value);
+    }
+    g_free(float_values);
+
+    return array;
+}
+
+static GPtrArray *
+property_array_new (guint size)
+{
+    GPtrArray *properties;
+
+    properties = g_ptr_array_sized_new(size);
+    g_ptr_array_set_free_func(properties, (GDestroyNotify)g_value_array_free);
+
+    return properties;
+}
+
+void
+gpds_xinput_backup_all_properties (GpdsXInput *xinput)
+{
+    guint i;
+    GpdsXInputPriv *priv;
+    GPtrArray *properties;
+
+    g_return_if_fail(GPDS_IS_XINPUT(xinput));
+
+    priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+
+    if (!priv->n_property_entries)
+        return;
+
+    properties = property_array_new(priv->n_property_entries);
+
+    for (i = 0; i< priv->n_property_entries; i ++) {
+        GpdsXInputPropertyEntry *entry;
+        GValueArray *values = NULL;
+
+        entry = &priv->property_entries[i];
+        switch (entry->property_type) {
+        case G_TYPE_INT:
+            values = get_int_properties(xinput, entry->name);
+            break;
+        case G_TYPE_FLOAT:
+            values = get_float_properties(xinput, entry->name);
+            break;
+        default:
+            break;
+        }
+
+        if (values)
+            g_ptr_array_add(properties, values);
+    }
+
+    if (priv->properties)
+        g_ptr_array_unref(priv->properties);
+    priv->properties = properties;
+}
+
+static void
+set_int_properties (GpdsXInput *xinput, gint property_enum, GValueArray *values)
+{
+    guint i;
+    gint *int_values;
+
+    int_values = g_new0(gint, values->n_values);
+    for (i = 0; i < values->n_values; i++) {
+        GValue *value;
+        value = g_value_array_get_nth(values, i);
+
+        int_values[i] = g_value_get_int(value);
+    }
+    gpds_xinput_set_int_properties(xinput,
+                                   property_enum,
+                                   NULL,
+                                   int_values,
+                                   values->n_values);
+}
+
+static void
+set_float_properties (GpdsXInput *xinput, gint property_enum, GValueArray *values)
+{
+    guint i;
+    gdouble *float_values;
+
+    float_values = g_new0(gdouble, values->n_values);
+    for (i = 0; i < values->n_values; i++) {
+        GValue *value;
+        value = g_value_array_get_nth(values, i);
+
+        float_values[i] = g_value_get_double(value);
+    }
+    gpds_xinput_set_float_properties(xinput,
+                                     property_enum,
+                                     NULL,
+                                     float_values,
+                                     values->n_values);
+}
+
+void
+gpds_xinput_restore_all_properties (GpdsXInput *xinput)
+{
+    guint i;
+    GpdsXInputPriv *priv;
+
+    g_return_if_fail(GPDS_IS_XINPUT(xinput));
+
+    priv = GPDS_XINPUT_GET_PRIVATE(xinput);
+
+    if (!priv->n_property_entries)
+        return;
+
+    if (!priv->properties)
+        return;
+
+    for (i = 0; i< priv->properties->len; i ++) {
+        GpdsXInputPropertyEntry *entry;
+        GValueArray *values = NULL;
+
+        values = g_ptr_array_index(priv->properties, i);
+        entry = &priv->property_entries[i];
+
+        switch (entry->property_type) {
+        case G_TYPE_INT:
+            set_int_properties(xinput, entry->property_enum, values);
+            break;
+        case G_TYPE_FLOAT:
+            set_float_properties(xinput, entry->property_enum, values);
+            break;
+        default:
+            break;
+        }
     }
 }
 

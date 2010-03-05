@@ -126,6 +126,10 @@ gboolean     gpds_xinput_set_button_map       (GpdsXInput *xinput,
                                                GError **error,
                                                guchar *map,
                                                gshort n_buttons);
+void         gpds_xinput_backup_all_properties
+                                              (GpdsXInput *xinput);
+void         gpds_xinput_restore_all_properties
+                                              (GpdsXInput *xinput);
 
 G_END_DECLS
 
