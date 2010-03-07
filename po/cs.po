@@ -1,17 +1,17 @@
-# Czech translations for PACKAGE package.
+# Czech translations for gpointing-device-settings package.
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the gpointing-device-settings package.
 #
 # Michal Čihař <michal@cihar.com>, 2009.
-# Marek Černocký <marek@manet.cz>, 2009, 2010.
 # Lucas Lommer <llommer@svn.gnome.org>, 2010.
+# Marek Černocký <marek@manet.cz>, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-05 07:18+0000\n"
-"PO-Revision-Date: 2010-02-04 16:43+0100\n"
+"POT-Creation-Date: 2010-03-05 11:36+0000\n"
+"PO-Revision-Date: 2010-03-04 12:06+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,17 +24,17 @@ msgstr ""
 msgid "No %s found."
 msgstr "Zařízení %s nebylo nalezeno."
 
-#: ../src/gpds-xinput.c:214
+#: ../src/gpds-xinput.c:220
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "Nastala chyba X server. Chyba byla %s."
 
-#: ../src/gpds-xinput.c:300 ../src/gpds-xinput.c:318 ../src/gpds-xinput.c:336
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "Vlastnost %d není registrována."
 
-#: ../src/gpds-xinput.c:438 ../src/gpds-xinput.c:605
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -54,13 +54,13 @@ msgid "No float atom in XServer"
 msgstr "XServer nemá float atom"
 
 #: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
-#: ../modules/gpds-pointingstick-ui.c:207
+#: ../modules/gpds-pointingstick-ui.c:212
 #, c-format
 msgid "%s did not find."
 msgstr "Nepodařilo se otevřít soubor %s."
 
 #: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
-#: ../modules/gpds-pointingstick-ui.c:256
+#: ../modules/gpds-pointingstick-ui.c:261
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Widget (%s) neexistuje."
@@ -76,11 +76,11 @@ msgstr "<b>Emulace prostředního tlačítka</b>"
 msgid "<b>Wheel Emulation</b>"
 msgstr "<b>Emulace kolečka</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:5
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:7
 msgid "<i>Long</i>"
 msgstr "<i>Dlouhý</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:7
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:9
 msgid "<i>Short</i>"
 msgstr "<i>Krátký</i>"
 
@@ -132,15 +132,15 @@ msgstr "<b>Detekce dlaně</b>"
 msgid "<b>Scrolling</b>"
 msgstr "<b>Posouvání</b>"
 
-#: ../data/touchpad.ui.h:5
+#: ../data/touchpad.ui.h:5 ../data/pointingstick.ui.h:5
 msgid "<i>Fast</i>"
 msgstr "<i>Rychlé</i>"
 
-#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:4
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:6
 msgid "<i>High</i>"
 msgstr "<i>Vysoké</i>"
 
-#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:6
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:8
 msgid "<i>Low</i>"
 msgstr "<i>Nízké</i>"
 
@@ -148,7 +148,7 @@ msgstr "<i>Nízké</i>"
 msgid "<i>Narrow</i>"
 msgstr "<i>Uzké</i>"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:11 ../data/pointingstick.ui.h:10
 msgid "<i>Slow</i>"
 msgstr "<i>Pomalé</i>"
 
@@ -272,25 +272,33 @@ msgstr "<b>Výběr zmáčknutím</b>"
 msgid "<b>Sensitivity</b>"
 msgstr "<b>Citlivost</b>"
 
-#: ../data/pointingstick.ui.h:8
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Rychlost</b>"
+
+#: ../data/pointingstick.ui.h:11
 msgid "Enable _Press to Select"
 msgstr "Povolit výběr z_máčknutím"
 
-#: ../data/pointingstick.ui.h:9
+#: ../data/pointingstick.ui.h:12
 msgid "Enable sc_rolling"
 msgstr "Povolit _posouvání"
 
-#: ../data/pointingstick.ui.h:10
+#: ../data/pointingstick.ui.h:13
 msgid "Middle button _timeout:"
 msgstr "In_terval prostředního tlačítka:"
 
-#: ../data/pointingstick.ui.h:11
+#: ../data/pointingstick.ui.h:14
 msgid "T_hreshold:"
 msgstr "Prá_h:"
 
-#: ../data/pointingstick.ui.h:12
+#: ../data/pointingstick.ui.h:15
 msgid "_Sensitivity:"
 msgstr "_Citlivost:"
+
+#: ../data/pointingstick.ui.h:16
+msgid "_Speed:"
+msgstr "Rychlo_st:"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
