@@ -783,7 +783,7 @@ get_float_properties (GpdsXInput *xinput, const gchar *name)
     g_value_init(&value, G_TYPE_DOUBLE);
 
     for (i = 0; i < n_values; i++) {
-        g_value_set_float(&value, float_values[i]);
+        g_value_set_double(&value, float_values[i]);
         g_value_array_append(array, &value);
         g_value_reset(&value);
     }
