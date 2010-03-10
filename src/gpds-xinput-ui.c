@@ -38,8 +38,10 @@ struct _GpdsXInputUIPriv
 
 G_DEFINE_ABSTRACT_TYPE(GpdsXInputUI, gpds_xinput_ui, GPDS_TYPE_UI)
 
-static void     dispose      (GObject      *object);
-static gboolean is_available (GpdsUI  *ui, GError **error);
+static void     dispose        (GObject *object);
+static gboolean is_available   (GpdsUI  *ui, GError **error);
+static gboolean dry_run        (GpdsUI  *ui, GError **error);
+static void     finish_dry_run (GpdsUI  *ui, GError **error);
 
 static void
 gpds_xinput_ui_class_init (GpdsXInputUIClass *klass)
@@ -49,7 +51,9 @@ gpds_xinput_ui_class_init (GpdsXInputUIClass *klass)
 
     gobject_class->dispose = dispose;
 
-    ui_class->is_available = is_available;
+    ui_class->is_available   = is_available;
+    ui_class->dry_run        = dry_run;
+    ui_class->finish_dry_run = finish_dry_run;
 
     g_type_class_add_private(gobject_class, sizeof(GpdsXInputUIPriv));
 }
@@ -94,6 +98,38 @@ is_available (GpdsUI *ui, GError **error)
     }
 
     return TRUE;
+}
+
+static gboolean
+dry_run (GpdsUI *ui, GError **error)
+{
+    GpdsXInputUIPriv *priv;
+
+    priv = GPDS_XINPUT_UI_GET_PRIVATE(ui);
+    if (!priv->xinput)
+        return FALSE;
+
+    gpds_xinput_backup_all_properties(priv->xinput);
+
+    if (GPDS_UI_CLASS(gpds_xinput_ui_parent_class)->dry_run)
+        return GPDS_UI_CLASS(gpds_xinput_ui_parent_class)->dry_run(ui, error);
+
+    return TRUE;
+}
+
+static void
+finish_dry_run (GpdsUI *ui, GError **error)
+{
+    GpdsXInputUIPriv *priv;
+
+    priv = GPDS_XINPUT_UI_GET_PRIVATE(ui);
+    if (!priv->xinput)
+        return;
+
+    gpds_xinput_restore_all_properties(priv->xinput);
+
+    if (GPDS_UI_CLASS(gpds_xinput_ui_parent_class)->finish_dry_run)
+        GPDS_UI_CLASS(gpds_xinput_ui_parent_class)->finish_dry_run(ui, error);
 }
 
 void

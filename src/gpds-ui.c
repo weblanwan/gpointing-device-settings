@@ -221,6 +221,40 @@ gpds_ui_build (GpdsUI *ui, GError **error)
     return (klass->build) ? klass->build(ui, error) : FALSE;
 }
 
+gboolean
+gpds_ui_dry_run (GpdsUI *ui, GError **error)
+{
+    GpdsUIClass *klass;
+
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    klass = GPDS_UI_GET_CLASS(ui);
+    return (klass->dry_run) ? klass->dry_run(ui, error) : FALSE;
+}
+
+void
+gpds_ui_finish_dry_run (GpdsUI *ui, GError **error)
+{
+    GpdsUIClass *klass;
+
+    g_return_if_fail(GPDS_IS_UI(ui));
+
+    klass = GPDS_UI_GET_CLASS(ui);
+    if (klass->finish_dry_run)
+        klass->finish_dry_run(ui, error);
+}
+
+gboolean
+gpds_ui_apply (GpdsUI *ui, GError **error)
+{
+    GpdsUIClass *klass;
+
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    klass = GPDS_UI_GET_CLASS(ui);
+    return (klass->apply) ? klass->apply(ui, error) : FALSE;
+}
+
 GtkWidget *
 gpds_ui_get_content_widget (GpdsUI *ui, GError **error)
 {
