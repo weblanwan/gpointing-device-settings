@@ -246,6 +246,38 @@ gpds_xinput_ui_set_xinput_property_from_toggle_button_state (GpdsXInputUI *ui,
 }
 
 void
+gpds_xinput_ui_set_xinput_property_from_range_value (GpdsXInputUI *ui,
+                                                     gint property,
+                                                     GtkRange *range)
+{
+    GError *error = NULL;
+    gdouble value;
+    gint properties[1];
+    GpdsXInputUIPriv *priv;
+
+    g_return_if_fail(GPDS_IS_XINPUT_UI(ui));
+    g_return_if_fail(GTK_IS_RANGE(range));
+
+    priv = GPDS_XINPUT_UI_GET_PRIVATE(ui);
+    if (!priv->xinput)
+        return;
+
+    value = gtk_range_get_value(range);
+    properties[0] = (gint)value;
+
+    if (!gpds_xinput_set_int_properties(priv->xinput,
+                                        property,
+                                        &error,
+                                        properties,
+                                        1)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+}
+
+void
 gpds_xinput_ui_set_toggle_button_state_from_preference (GpdsXInputUI *ui,
                                                         gint property,
                                                         const gchar *gconf_key_name,
