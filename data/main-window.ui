@@ -51,7 +51,7 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="GTK_RESPONSE_CLOSE">button-close</action-widget>
+      <action-widget response="-7">button-close</action-widget>
     </action-widgets>
   </object>
 </interface>
