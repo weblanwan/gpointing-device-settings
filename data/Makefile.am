@@ -1,5 +1,4 @@
 gpds_ui_DATA = 			\
-	main-window.ui		\
 	pointingstick.ui	\
 	touchpad.ui		\
 	mouse.ui
