@@ -29,10 +29,12 @@
 #include "gpds-xinput-pointer-info.h"
 #include "gpds-ui.h"
 #include "gpds-utils.h"
+#include "gpds-grayed-desktop.h"
 
 enum {
     DEVICE_NAME_COLUMN,
     ICON_COLUMN,
+    ORIGINAL_ICON_COLUMN,
     N_COLUMNS
 };
 
@@ -40,6 +42,14 @@ typedef struct _GpdsMainWindowPriv GpdsMainWindowPriv;
 struct _GpdsMainWindowPriv
 {
     GList *uis;
+    GtkWidget *background;
+    GtkWidget *dry_run_button;
+    GtkIconView *icon_view;
+    GdkColor *original_text_color;
+    GdkColor *original_base_color;
+    guint timeout_id;
+    gboolean heartbeat;
+    gboolean dry_run;
 };
 
 #define GPDS_MAIN_WINDOW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GPDS_TYPE_MAIN_WINDOW, GpdsMainWindowPriv))
@@ -49,15 +59,29 @@ G_DEFINE_TYPE(GpdsMainWindow, gpds_main_window, GTK_TYPE_DIALOG)
 static void     dispose        (GObject          *object);
 static void     response       (GtkDialog        *dialog,
                                 gint              response);
+static gboolean button_press   (GtkWidget        *widget,
+                                GdkEventButton   *event);
+static gboolean button_release (GtkWidget        *widget,
+                                GdkEventButton   *event);
+static gboolean motion_notify  (GtkWidget        *widget,
+                                GdkEventMotion   *event);
+static gboolean scroll         (GtkWidget        *widget,
+                                GdkEventScroll   *event);
 
 static void
 gpds_main_window_class_init (GpdsMainWindowClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GtkDialogClass *dialog_class = GTK_DIALOG_CLASS(klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     dialog_class->response      = response;
+
+    widget_class->motion_notify_event  = motion_notify;
+    widget_class->button_press_event   = button_press;
+    widget_class->button_release_event = button_release;
+    widget_class->scroll_event         = scroll;
 
     g_type_class_add_private(gobject_class, sizeof(GpdsMainWindowPriv));
 }
@@ -99,6 +123,7 @@ append_ui (GtkIconView *icon_view, GtkNotebook *notebook,
     gtk_list_store_set(list_store, &iter,
                        DEVICE_NAME_COLUMN, device_name,
                        ICON_COLUMN, pixbuf,
+                       ORIGINAL_ICON_COLUMN, pixbuf,
                        -1);
     gtk_notebook_append_page(notebook, widget, NULL);
     gtk_widget_show_all(widget);
@@ -166,9 +191,9 @@ append_uis (GpdsMainWindow *window, GtkIconView *icon_view, GtkNotebook *noteboo
 
         ui = create_ui_from_pointer_info(info);
         if (ui) {
-            priv->uis = g_list_prepend(priv->uis, ui);
-            loaded_ui_names = g_list_prepend(loaded_ui_names,
-                                             g_strdup(gpds_xinput_pointer_info_get_type_name(info)));
+            priv->uis = g_list_append(priv->uis, ui);
+            loaded_ui_names = g_list_append(loaded_ui_names,
+                                            g_strdup(gpds_xinput_pointer_info_get_type_name(info)));
             append_ui(icon_view, notebook, ui);
         }
     }
@@ -190,7 +215,7 @@ append_uis (GpdsMainWindow *window, GtkIconView *icon_view, GtkNotebook *noteboo
             g_object_unref(ui);
             continue;
         }
-        priv->uis = g_list_prepend(priv->uis, ui);
+        priv->uis = g_list_append(priv->uis, ui);
         append_ui(icon_view, notebook, ui);
     }
     g_list_free(ui_names);
@@ -204,16 +229,13 @@ static void
 cb_selection_changed (GtkIconView *icon_view, gpointer data)
 {
     GtkTreePath *path = NULL;
-    GtkCellRenderer *cell = NULL;
-    GtkTreeModel *model;
     GtkNotebook *notebook = GTK_NOTEBOOK(data);
     gint *indices;
 
-    gtk_icon_view_get_cursor(icon_view, &path, &cell);
+    gtk_icon_view_get_cursor(icon_view, &path, NULL);
 
     if (!path)
         return;
-    model = gtk_icon_view_get_model(icon_view);
     indices = gtk_tree_path_get_indices(path);
     gtk_notebook_set_current_page(notebook, indices[0]);
 
@@ -225,12 +247,20 @@ gpds_main_window_init (GpdsMainWindow *window)
 {
     GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
     GtkWidget *hbox, *vbox;
-    GtkWidget *notebook, *icon_view;
+    GtkWidget *notebook;
     GtkListStore *device_store;
 
     priv->uis = NULL;
+    priv->timeout_id = 0;
+    priv->heartbeat = FALSE;
+    priv->dry_run = FALSE;
+    priv->background = NULL;
+    priv->original_text_color = NULL;
+    priv->original_base_color = NULL;
+
     device_store = gtk_list_store_new(N_COLUMNS,
                                       G_TYPE_STRING,
+                                      GDK_TYPE_PIXBUF,
                                       GDK_TYPE_PIXBUF);
 
     vbox = gtk_dialog_get_content_area(GTK_DIALOG(window));
@@ -239,32 +269,35 @@ gpds_main_window_init (GpdsMainWindow *window)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
     gtk_widget_show(hbox);
 
-    icon_view = gtk_icon_view_new_with_model(GTK_TREE_MODEL(device_store));
+    priv->icon_view = GTK_ICON_VIEW(gtk_icon_view_new_with_model(GTK_TREE_MODEL(device_store)));
     g_object_unref(device_store);
-    gtk_icon_view_set_text_column(GTK_ICON_VIEW(icon_view), DEVICE_NAME_COLUMN);
-    gtk_icon_view_set_pixbuf_column(GTK_ICON_VIEW(icon_view), ICON_COLUMN);
-    gtk_icon_view_set_columns(GTK_ICON_VIEW(icon_view), 1);
-    gtk_icon_view_set_item_width(GTK_ICON_VIEW(icon_view), 128);
-    gtk_icon_view_set_margin(GTK_ICON_VIEW(icon_view), 0);
-    gtk_icon_view_set_column_spacing(GTK_ICON_VIEW(icon_view), 0);
-    gtk_icon_view_set_row_spacing(GTK_ICON_VIEW(icon_view), 0);
-    gtk_icon_view_set_selection_mode(GTK_ICON_VIEW(icon_view), GTK_SELECTION_BROWSE);
-    gtk_box_pack_start(GTK_BOX(hbox), icon_view, TRUE, TRUE, 0);
-    gtk_widget_show(icon_view);
+    gtk_icon_view_set_text_column(priv->icon_view, DEVICE_NAME_COLUMN);
+    gtk_icon_view_set_pixbuf_column(priv->icon_view, ICON_COLUMN);
+    gtk_icon_view_set_columns(priv->icon_view, 1);
+    gtk_icon_view_set_item_width(priv->icon_view, 128);
+    gtk_icon_view_set_margin(priv->icon_view, 0);
+    gtk_icon_view_set_column_spacing(priv->icon_view, 0);
+    gtk_icon_view_set_row_spacing(priv->icon_view, 0);
+    gtk_icon_view_set_selection_mode(priv->icon_view, GTK_SELECTION_BROWSE);
+    gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->icon_view), TRUE, TRUE, 0);
+    gtk_widget_show(GTK_WIDGET(priv->icon_view));
 
     notebook = gtk_notebook_new();
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
     gtk_box_pack_start(GTK_BOX(hbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show(notebook);
 
-    g_signal_connect(icon_view, "selection-changed",
+    g_signal_connect(priv->icon_view, "selection-changed",
                      G_CALLBACK(cb_selection_changed), notebook);
 
-    append_uis(window, GTK_ICON_VIEW(icon_view), GTK_NOTEBOOK(notebook));
+    append_uis(window, priv->icon_view, GTK_NOTEBOOK(notebook));
 
-    gtk_dialog_add_buttons(GTK_DIALOG(window),
-                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                           NULL);
+    gtk_dialog_add_button(GTK_DIALOG(window),
+                          GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
+    priv->dry_run_button = gtk_dialog_add_button(GTK_DIALOG(window),
+                                                 _("Dry _run"),   1);
+    gtk_dialog_add_button(GTK_DIALOG(window),
+                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
     gtk_window_set_default_icon_name("preferences-desktop-peripherals");
 }
@@ -280,14 +313,296 @@ dispose (GObject *object)
         priv->uis = NULL;
     }
 
+    if (priv->original_text_color) {
+        gdk_color_free(priv->original_text_color);
+        priv->original_text_color = NULL;
+    }
+
+    if (priv->original_base_color) {
+        gdk_color_free(priv->original_base_color);
+        priv->original_base_color = NULL;
+    }
+
     if (G_OBJECT_CLASS(gpds_main_window_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_main_window_parent_class)->dispose(object);
 }
 
 static void
+heartbeat (GtkWidget *widget)
+{
+    GPDS_MAIN_WINDOW_GET_PRIVATE(widget)->heartbeat = TRUE;
+}
+
+static gboolean
+button_press (GtkWidget *widget, GdkEventButton *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+button_release (GtkWidget *widget, GdkEventButton *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+motion_notify (GtkWidget *widget, GdkEventMotion *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+scroll (GtkWidget *widget, GdkEventScroll *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+restore_original_pixbuf (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(data);
+    GdkPixbuf *pixbuf = NULL;
+
+    if (gtk_icon_view_path_is_selected(priv->icon_view, path))
+        return FALSE;
+
+    gtk_tree_model_get(model, iter,
+                       ORIGINAL_ICON_COLUMN, &pixbuf,
+                       -1);
+    gtk_list_store_set(GTK_LIST_STORE(model), iter,
+                       ICON_COLUMN, pixbuf,
+                       -1);
+    g_object_unref(pixbuf);
+
+    return FALSE;
+}
+
+static GpdsUI *
+get_current_ui (GpdsMainWindow *window)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+    GtkTreePath *path = NULL;
+    GList *selected;
+    gint *indices, index;
+
+    selected = gtk_icon_view_get_selected_items(priv->icon_view);
+
+    path = (GtkTreePath*)g_list_first(selected)->data;
+    indices = gtk_tree_path_get_indices(path);
+    index = indices[0];
+    g_list_foreach(selected, (GFunc)gtk_tree_path_free, NULL);
+    g_list_free(selected);
+
+    return GPDS_UI(g_list_nth_data(priv->uis, index));
+}
+
+static void
+finish_dry_run (GpdsMainWindow *window)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+    GtkTreeModel *model;
+    GtkStyle *style;
+    GpdsUI *ui;
+
+    ui = get_current_ui(window);
+    if (!ui)
+        return;
+
+    priv->dry_run = FALSE;
+    gtk_button_set_label(GTK_BUTTON(priv->dry_run_button),
+                         _("Dry _run"));
+
+    gpds_ui_finish_dry_run(ui, NULL);
+
+    gdk_pointer_ungrab(GDK_CURRENT_TIME);
+    if (priv->background) {
+        gtk_widget_destroy(priv->background);
+        priv->background = NULL;
+    }
+    gtk_icon_view_set_selection_mode(priv->icon_view, GTK_SELECTION_BROWSE);
+    model = gtk_icon_view_get_model(priv->icon_view);
+    gtk_tree_model_foreach(model, restore_original_pixbuf, window);
+
+    style = gtk_widget_get_style(GTK_WIDGET(priv->icon_view));
+    gtk_widget_modify_text(GTK_WIDGET(priv->icon_view),
+                           GTK_STATE_NORMAL, priv->original_text_color);
+    gtk_widget_modify_base(GTK_WIDGET(priv->icon_view),
+                           GTK_STATE_NORMAL, priv->original_base_color);
+    gtk_widget_queue_draw(GTK_WIDGET(priv->icon_view));
+
+}
+
+static gboolean
+cb_timeout (gpointer data)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(data);
+
+    if (!priv->heartbeat) {
+        finish_dry_run(GPDS_MAIN_WINDOW(data));
+        return FALSE;
+    }
+
+    priv->heartbeat = FALSE;
+
+    return TRUE;
+}
+
+static gboolean
+grab_pointer (GpdsMainWindow *window)
+{
+    GdkGrabStatus status;
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+
+    status = gdk_pointer_grab(gtk_widget_get_window(GTK_WIDGET(window)),
+                              TRUE,
+                              GDK_POINTER_MOTION_MASK |
+                              GDK_BUTTON_PRESS_MASK |
+                              GDK_BUTTON_RELEASE_MASK |
+                              GDK_SCROLL_MASK,
+                              NULL,
+                              NULL,
+                              GDK_CURRENT_TIME);
+    if (status != GDK_GRAB_SUCCESS)
+        return FALSE;
+
+    priv->timeout_id = g_timeout_add_seconds(3, cb_timeout, window);
+
+    return TRUE;
+}
+
+static GdkPixbuf *
+convert_to_grayscaled_pixbuf (GdkPixbuf *src)
+{
+    GdkPixbuf *dest;
+    gint width, height;
+    guchar *pixels;
+    int rowstride, n_channels;
+    int x, y;
+
+    dest = gdk_pixbuf_copy(src);
+    width = gdk_pixbuf_get_width(dest);
+    height = gdk_pixbuf_get_height(dest);
+    rowstride = gdk_pixbuf_get_rowstride(dest);
+    n_channels = gdk_pixbuf_get_n_channels(dest);
+    pixels = gdk_pixbuf_get_pixels(dest);
+
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width * n_channels; x += n_channels) {
+            guchar grayscale;
+            guchar *p;
+
+            p = pixels + y * rowstride + x;
+            grayscale = (p[0] * 11 + p[1] * 16 + p[2] * 5) / 32;
+            p[0] = grayscale;
+            p[1] = grayscale;
+            p[2] = grayscale;
+        }
+    }
+
+    return dest;
+}
+
+static gboolean
+set_grayscaled_pixbuf (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(data);
+    GdkPixbuf *pixbuf = NULL;
+    GdkPixbuf *gray;
+
+    if (gtk_icon_view_path_is_selected(priv->icon_view, path))
+        return FALSE;
+
+    gtk_tree_model_get(model, iter,
+                       ORIGINAL_ICON_COLUMN, &pixbuf,
+                       -1);
+    gray = convert_to_grayscaled_pixbuf(pixbuf);
+
+    gtk_list_store_set(GTK_LIST_STORE(model), iter,
+                       ICON_COLUMN, gray,
+                       -1);
+    g_object_unref(pixbuf);
+
+    return FALSE;
+}
+
+static void
+start_dry_run (GpdsMainWindow *window)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+    GtkTreeModel *model;
+    GtkStyle *style;
+    GpdsUI *ui;
+
+    ui = get_current_ui(window);
+    if (!ui)
+        return;
+    priv->dry_run = TRUE;
+    gpds_ui_dry_run(ui, NULL);
+
+    gtk_button_set_label(GTK_BUTTON(priv->dry_run_button),
+                         _("_Finish dry run"));
+
+    priv->background = gpds_grayed_desktop_new(GTK_WINDOW(window));
+    gtk_widget_show(priv->background);
+
+    model = gtk_icon_view_get_model(priv->icon_view);
+    gtk_tree_model_foreach(model, set_grayscaled_pixbuf, window);
+    gtk_icon_view_set_selection_mode(priv->icon_view, GTK_SELECTION_NONE);
+
+    style = gtk_widget_get_style(GTK_WIDGET(priv->icon_view));
+
+    if (priv->original_text_color)
+        gdk_color_free(priv->original_text_color);
+    priv->original_text_color = gdk_color_copy(&style->text[GTK_STATE_NORMAL]);
+    if (priv->original_base_color)
+        gdk_color_free(priv->original_base_color);
+    priv->original_base_color = gdk_color_copy(&style->base[GTK_STATE_NORMAL]);
+
+    gtk_widget_modify_text(GTK_WIDGET(priv->icon_view),
+                           GTK_STATE_NORMAL, &style->text[GTK_STATE_INSENSITIVE]);
+    gtk_widget_modify_base(GTK_WIDGET(priv->icon_view),
+                           GTK_STATE_NORMAL, &style->base[GTK_STATE_INSENSITIVE]);
+    gtk_widget_queue_draw(GTK_WIDGET(priv->icon_view));
+
+    grab_pointer(window);
+}
+
+static void
+apply (GpdsUI *ui, gpointer user_data)
+{
+    gpds_ui_apply(ui, NULL);
+}
+
+static void
+apply_all (GpdsMainWindow *window)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+
+    g_list_foreach(priv->uis, (GFunc)apply, NULL);
+}
+
+static void
 response (GtkDialog *dialog, gint response_id)
 {
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(dialog);
     switch (response_id) {
+    case 1:
+        if (!priv->dry_run)
+            start_dry_run(GPDS_MAIN_WINDOW(dialog));
+        else
+            finish_dry_run(GPDS_MAIN_WINDOW(dialog));
+        break;
+    case GTK_RESPONSE_APPLY:
+        apply_all(GPDS_MAIN_WINDOW(dialog));
+        break;
     case GTK_RESPONSE_DELETE_EVENT:
     case GTK_RESPONSE_CLOSE:
     default:

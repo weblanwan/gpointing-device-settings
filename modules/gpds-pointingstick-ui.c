@@ -57,6 +57,9 @@ GType gpds_pointingstick_ui_get_type (void) G_GNUC_CONST;
 static void       dispose            (GObject *object);
 static gboolean   is_available       (GpdsUI  *ui, GError **error);
 static gboolean   build              (GpdsUI  *ui, GError **error);
+static gboolean   dry_run            (GpdsUI  *ui, GError **error);
+static void       finish_dry_run     (GpdsUI  *ui, GError **error);
+static gboolean   apply              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
 
@@ -72,6 +75,9 @@ gpds_pointingstick_ui_class_init (GpdsPointingStickUIClass *klass)
 
     ui_class->is_available       = is_available;
     ui_class->build              = build;
+    ui_class->dry_run            = dry_run;
+    ui_class->finish_dry_run     = finish_dry_run;
+    ui_class->apply              = apply;
     ui_class->get_content_widget = get_content_widget;
     ui_class->get_icon_pixbuf    = get_icon_pixbuf;
 }
@@ -117,15 +123,6 @@ dispose (GObject *object)
         G_OBJECT_CLASS(gpds_pointingstick_ui_parent_class)->dispose(object);
 }
 
-static void
-show_error (GError *error)
-{
-    if (!error)
-        return;
-
-    g_print("%s\n", error->message);
-}
-
 GPDS_XINPUT_UI_DEFINE_TOGGLE_BUTTON_CALLBACK(scrolling,
                                              GPDS_POINTINGSTICK_SCROLLING,
                                              "scrolling_box")
@@ -143,16 +140,18 @@ GPDS_XINPUT_UI_DEFINE_SCALE_VALUE_CHANGED_CALLBACK(press_to_select_threshold_sca
                                                    GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD)
 
 static void
-setup_signals (GpdsUI *ui, GtkBuilder *builder)
+connect_signals (GpdsUI *ui)
 {
     GObject *object;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(ui);
 
 #define CONNECT(object_name, signal_name)                               \
     object = gtk_builder_get_object(builder, #object_name);             \
     g_signal_connect(object, #signal_name,                              \
                      G_CALLBACK(cb_ ## object_name ## _ ## signal_name),\
                      ui)
-
     CONNECT(scrolling, toggled);
     CONNECT(press_to_select, toggled);
     CONNECT(middle_button_timeout_scale, value_changed);
@@ -164,7 +163,32 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static void
-setup_current_values (GpdsUI *ui)
+disconnect_signals (GpdsUI *ui)
+{
+    GObject *object;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(ui);
+
+#define DISCONNECT(object_name, signal_name)                            \
+    object = gtk_builder_get_object(builder, #object_name);             \
+    g_signal_handlers_disconnect_by_func(                               \
+        object,                                                         \
+        G_CALLBACK(cb_ ## object_name ## _ ## signal_name),             \
+        ui)
+
+    DISCONNECT(scrolling, toggled);
+    DISCONNECT(press_to_select, toggled);
+    DISCONNECT(middle_button_timeout_scale, value_changed);
+    DISCONNECT(sensitivity_scale, value_changed);
+    DISCONNECT(speed_scale, value_changed);
+    DISCONNECT(press_to_select_threshold_scale, value_changed);
+
+#undef DISCONNECT
+}
+
+static void
+set_gconf_values_to_widget (GpdsUI *ui)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
 
@@ -239,8 +263,103 @@ build (GpdsUI  *ui, GError **error)
     g_object_unref(xinput);
 
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "pointingstick");
-    setup_current_values(ui);
-    setup_signals(ui, builder);
+    set_gconf_values_to_widget(ui);
+
+    return TRUE;
+}
+
+static void
+set_widget_values_to_xinput (GpdsUI *ui)
+{
+    GObject *object;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(ui);
+
+#define SET_TOGGLE_VALUE(property_name, widget_name)                                       \
+    object = gtk_builder_get_object(builder, widget_name);                                 \
+    gpds_xinput_ui_set_xinput_property_from_toggle_button_state(GPDS_XINPUT_UI(ui),        \
+                                                                property_name,             \
+                                                                GTK_TOGGLE_BUTTON(object));
+#define SET_RANGE_VALUE(property_name, widget_name)                                \
+    object = gtk_builder_get_object(builder, widget_name);                         \
+    gpds_xinput_ui_set_xinput_property_from_range_value(GPDS_XINPUT_UI(ui),        \
+                                                        property_name,             \
+                                                        GTK_RANGE(object));
+
+    SET_TOGGLE_VALUE(GPDS_POINTINGSTICK_SCROLLING,
+                     "scrolling");
+    SET_TOGGLE_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT,
+                     "press_to_select");
+
+    SET_RANGE_VALUE(GPDS_POINTINGSTICK_SENSITIVITY,
+                    "sensitivity_scale");
+    SET_RANGE_VALUE(GPDS_POINTINGSTICK_SPEED,
+                    "speed_scale");
+    SET_RANGE_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD,
+                    "press_to_select_threshold_scale");
+    SET_RANGE_VALUE(GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT,
+                    "middle_button_timeout_scale");
+
+#undef SET_TOGGLE_VALUE
+#undef SET_RANGE_VALUE
+}
+
+static void
+set_widget_values_to_gconf (GpdsUI *ui)
+{
+#define SET_GCONF_VALUE(gconf_key_name, widget_name)                \
+    gpds_xinput_ui_set_gconf_value_from_widget(GPDS_XINPUT_UI(ui),  \
+                                               gconf_key_name,      \
+                                               widget_name);
+
+    SET_GCONF_VALUE(GPDS_POINTINGSTICK_SCROLLING_KEY,
+                    "scrolling");
+    SET_GCONF_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_KEY,
+                     "press_to_select");
+    SET_GCONF_VALUE(GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT_KEY,
+                    "middle_button_timeout_scale");
+    SET_GCONF_VALUE(GPDS_POINTINGSTICK_SENSITIVITY_KEY,
+                    "sensitivity_scale");
+    SET_GCONF_VALUE(GPDS_POINTINGSTICK_SPEED_KEY,
+                    "speed_scale");
+    SET_GCONF_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD_KEY,
+                    "press_to_select_threshold_scale");
+
+#undef SET_TOGGLE_VALUE
+#undef SET_RANGE_VALUE
+}
+
+static gboolean
+dry_run (GpdsUI *ui, GError **error)
+{
+    gboolean ret;
+
+    if (GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->dry_run)
+        ret = GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->dry_run(ui, error);
+
+    connect_signals(ui);
+
+    set_widget_values_to_xinput(ui);
+
+    return TRUE;
+}
+
+static void
+finish_dry_run(GpdsUI *ui, GError **error)
+{
+    disconnect_signals(ui);
+    set_gconf_values_to_widget(ui);
+
+    if (GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->finish_dry_run)
+        GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->finish_dry_run(ui, error);
+}
+
+static gboolean
+apply (GpdsUI *ui, GError **error)
+{
+    set_widget_values_to_xinput(ui);
+    set_widget_values_to_gconf(ui);
 
     return TRUE;
 }

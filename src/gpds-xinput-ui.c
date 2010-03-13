@@ -278,6 +278,31 @@ gpds_xinput_ui_set_xinput_property_from_range_value (GpdsXInputUI *ui,
 }
 
 void
+gpds_xinput_ui_set_gconf_value_from_widget (GpdsXInputUI *ui,
+                                            const gchar *gconf_key_name,
+                                            const gchar *widget_name)
+{
+    GObject *widget;
+
+    widget = gpds_ui_get_ui_object_by_name(GPDS_UI(ui), widget_name);
+
+    if (!widget)
+        return;
+
+    if (GTK_IS_RANGE(widget)) {
+        gdouble value;
+        value = gtk_range_get_value(GTK_RANGE(widget));
+
+        gpds_ui_set_gconf_int(GPDS_UI(ui), gconf_key_name, (gint)value);
+    } else if (GTK_IS_TOGGLE_BUTTON(widget)) {
+        gboolean value;
+        value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+
+        gpds_ui_set_gconf_bool(GPDS_UI(ui), gconf_key_name, value);
+    }
+}
+
+void
 gpds_xinput_ui_set_toggle_button_state_from_preference (GpdsXInputUI *ui,
                                                         gint property,
                                                         const gchar *gconf_key_name,

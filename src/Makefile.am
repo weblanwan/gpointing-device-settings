@@ -15,6 +15,8 @@ libgpds_la_SOURCES =			\
 	$(libgpds_public_headers)	\
 	gpds-module.c			\
 	gpds-module.h			\
+	gpds-grayed-desktop.c		\
+	gpds-grayed-desktop.h		\
 	gpds-main-window.c		\
 	gpds-main-window.h		\
 	gpds-ui.c			\

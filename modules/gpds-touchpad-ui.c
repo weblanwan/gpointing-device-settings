@@ -56,6 +56,9 @@ GType gpds_touchpad_ui_get_type (void) G_GNUC_CONST;
 static void       dispose            (GObject *object);
 static gboolean   is_available       (GpdsUI  *ui, GError **error);
 static gboolean   build              (GpdsUI  *ui, GError **error);
+static gboolean   dry_run            (GpdsUI  *ui, GError **error);
+static void       finish_dry_run     (GpdsUI  *ui, GError **error);
+static gboolean   apply              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
 
@@ -71,6 +74,9 @@ gpds_touchpad_ui_class_init (GpdsTouchpadUIClass *klass)
 
     ui_class->is_available       = is_available;
     ui_class->build              = build;
+    ui_class->dry_run            = dry_run;
+    ui_class->finish_dry_run     = finish_dry_run;
+    ui_class->apply              = apply;
     ui_class->get_content_widget = get_content_widget;
     ui_class->get_icon_pixbuf    = get_icon_pixbuf;
 }
@@ -273,86 +279,104 @@ set_circular_scrolling_trigger_property (GpdsUI *ui, GpdsTouchpadCircularScrolli
     }
 }
 
-#define DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(type, TYPE)                                             \
-static void                                                                                                         \
-cb_palm_detection_ ## type ## _scale_value_changed (GtkRange *range, gpointer user_data)                            \
-{                                                                                                                   \
-    GtkBuilder *builder;                                                                                            \
-    gdouble distance;                                                                                               \
-    GpdsXInput *xinput;                                                                                             \
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                                                  \
-    if (!xinput)                                                                                                    \
-        return;                                                                                                     \
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                              \
-    set_palm_dimensions_property(xinput, builder);                                                                  \
-    distance = gtk_range_get_value(range);                                                                          \
-    gpds_ui_set_gconf_bool(GPDS_UI(user_data), GPDS_TOUCHPAD_PALM_DETECTION_ ## TYPE ## _KEY, (gint)distance);      \
+#define DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(type)                        \
+static void                                                                              \
+cb_palm_detection_ ## type ## _scale_value_changed (GtkRange *range, gpointer user_data) \
+{                                                                                        \
+    GtkBuilder *builder;                                                                 \
+    GpdsXInput *xinput;                                                                  \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                       \
+    if (!xinput)                                                                         \
+        return;                                                                          \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                   \
+    set_palm_dimensions_property(xinput, builder);                                       \
 }
 
-DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(width, WIDTH)
-DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(depth, DEPTH)
+DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(width)
+DEFINE_PALM_DIMENSIONS_SCALE_VALUE_CHANGED_CALLBACK(depth)
 
-#define DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(type, TYPE)                                                   \
-static void                                                                                                         \
-cb_ ## type ## _scrolling_scale_value_changed (GtkRange *range, gpointer user_data)                                 \
-{                                                                                                                   \
-    GtkBuilder *builder;                                                                                            \
-    gdouble distance;                                                                                               \
-    GpdsXInput *xinput;                                                                                             \
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                                                  \
-    if (!xinput)                                                                                                    \
-        return;                                                                                                     \
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                              \
-    set_scrolling_distance_property(xinput, builder);                                                               \
-    distance = gtk_range_get_value(range);                                                                          \
-    gpds_ui_set_gconf_bool(GPDS_UI(user_data), GPDS_TOUCHPAD_ ## TYPE ## _SCROLLING_DISTANCE_KEY, (gint)distance);  \
+#define DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(type)                         \
+static void                                                                         \
+cb_ ## type ## _scrolling_scale_value_changed (GtkRange *range, gpointer user_data) \
+{                                                                                   \
+    GtkBuilder *builder;                                                            \
+    GpdsXInput *xinput;                                                             \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));                  \
+    if (!xinput)                                                                    \
+        return;                                                                     \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                              \
+    set_scrolling_distance_property(xinput, builder);                               \
 }
 
-DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(vertical, VERTICAL)
-DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(horizontal, HORIZONTAL)
+DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(vertical)
+DEFINE_SCROLLING_SCALE_VALUE_CHANGED_CALLBACK(horizontal)
 
-#define DEFINE_EDGE_SCROLLING_CALLBACK(type, TYPE)                                          \
-static void                                                                                 \
-cb_ ## type ## _scrolling_toggled (GtkToggleButton *button,                                 \
-                                   gpointer user_data)                                      \
-{                                                                                           \
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);                                       \
-    GtkBuilder *builder;                                                                    \
-    gboolean check;                                                                         \
-    GpdsXInput *xinput;                                                                     \
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));                                 \
-    if (!xinput)                                                                            \
-        return;                                                                             \
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                      \
-    set_edge_scrolling_toggle_property(xinput, builder);                                    \
-    check = gtk_toggle_button_get_active(button);                                           \
-    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_ ## TYPE ## _SCROLLING_KEY, check);   \
+#define DEFINE_EDGE_SCROLLING_CALLBACK(type)                \
+static void                                                 \
+cb_ ## type ## _scrolling_toggled (GtkToggleButton *button, \
+                                   gpointer user_data)      \
+{                                                           \
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);       \
+    GtkBuilder *builder;                                    \
+    GpdsXInput *xinput;                                     \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui)); \
+    if (!xinput)                                            \
+        return;                                             \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));      \
+    set_edge_scrolling_toggle_property(xinput, builder);    \
 }
 
-DEFINE_EDGE_SCROLLING_CALLBACK(vertical, VERTICAL)
-DEFINE_EDGE_SCROLLING_CALLBACK(horizontal, HORIZONTAL)
-DEFINE_EDGE_SCROLLING_CALLBACK(continuous_edge, CONTINUOUS_EDGE)
+DEFINE_EDGE_SCROLLING_CALLBACK(vertical)
+DEFINE_EDGE_SCROLLING_CALLBACK(horizontal)
+DEFINE_EDGE_SCROLLING_CALLBACK(continuous_edge)
 
-#define DEFINE_TWO_FINGER_SCROLLING_CALLBACK(direction, DIRECTION)                                          \
-static void                                                                                                 \
-cb_two_finger_ ## direction ## _scrolling_toggled (GtkToggleButton *button,                                 \
-                                                   gpointer user_data)                                      \
-{                                                                                                           \
-    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);                                                       \
-    GtkBuilder *builder;                                                                                    \
-    gboolean check;                                                                                         \
-    GpdsXInput *xinput;                                                                                     \
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));                                                 \
-    if (!xinput)                                                                                            \
-        return;                                                                                             \
-    builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                      \
-    set_two_finger_scrolling_toggle_property(xinput, builder);                                              \
-    check = gtk_toggle_button_get_active(button);                                                           \
-    gpds_ui_set_gconf_bool(GPDS_UI(ui), GPDS_TOUCHPAD_TWO_FINGER_ ## DIRECTION ## _SCROLLING_KEY, check);   \
+#define DEFINE_TWO_FINGER_SCROLLING_CALLBACK(direction)                     \
+static void                                                                 \
+cb_two_finger_ ## direction ## _scrolling_toggled (GtkToggleButton *button, \
+                                                   gpointer user_data)      \
+{                                                                           \
+    GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(user_data);                       \
+    GtkBuilder *builder;                                                    \
+    GpdsXInput *xinput;                                                     \
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));                 \
+    if (!xinput)                                                            \
+        return;                                                             \
+    builder = gpds_ui_get_builder(GPDS_UI(user_data));                      \
+    set_two_finger_scrolling_toggle_property(xinput, builder);              \
 }
 
-DEFINE_TWO_FINGER_SCROLLING_CALLBACK(vertical, VERTICAL)
-DEFINE_TWO_FINGER_SCROLLING_CALLBACK(horizontal, HORIZONTAL)
+DEFINE_TWO_FINGER_SCROLLING_CALLBACK(vertical)
+DEFINE_TWO_FINGER_SCROLLING_CALLBACK(horizontal)
+
+static GpdsTouchpadCircularScrollingTrigger
+get_circular_scrolling_trigger_button_state (GpdsUI *ui)
+{
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(GPDS_UI(ui));
+
+#define GET_TOGGLE_BUTTON_STATE(name)                                  \
+    gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, name)))
+
+    if (GET_TOGGLE_BUTTON_STATE("trigger_top_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_TOP;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_top_right_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_TOP_RIGHT;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_right_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_RIGHT;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_right_bottom_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_RIGHT_BOTTOM;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_bottom_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_BOTTOM;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_bottom_left_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_BOTTOM_LEFT;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_left_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_LEFT;
+    else if (GET_TOGGLE_BUTTON_STATE("trigger_left_top_toggle"))
+        return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_LEFT_TOP;
+    return GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_ANY;
+#undef GET_TOGGLE_BUTTON_STATE
+}
 
 static void
 set_circular_scrolling_trigger_button_state (GpdsUI *ui, 
@@ -468,6 +492,30 @@ set_sensitivity_depends_on_use_type (GpdsUI *ui,
 }
 
 static void
+set_touchpad_use_type_property (GpdsUI *ui, GpdsTouchpadUseType use_type)
+{
+    gint properties[1];
+    GError *error = NULL;
+    GpdsXInput *xinput;
+
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
+    if (!xinput)
+        return;
+
+    properties[0] = use_type;
+    if (!gpds_xinput_set_int_properties(xinput,
+                                        GPDS_TOUCHPAD_OFF,
+                                        &error,
+                                        properties,
+                                        1)) {
+        if (error) {
+            show_error(error);
+            g_error_free(error);
+        }
+    }
+}
+
+static void
 set_touchpad_use_type (GpdsUI *ui, GpdsTouchpadUseType use_type)
 {
     GtkToggleButton *button;
@@ -487,22 +535,14 @@ set_touchpad_use_type (GpdsUI *ui, GpdsTouchpadUseType use_type)
     set_sensitivity_depends_on_use_type(ui, use_type);
 }
 
-static void
-cb_touchpad_use_type_toggled (GtkToggleButton *button, gpointer user_data)
+static GpdsTouchpadUseType
+get_touchpad_use_type (GpdsUI *ui)
 {
-    GpdsUI *ui = GPDS_UI(user_data);
     GpdsTouchpadUseType use_type;
-    gint properties[1];
-    GError *error = NULL;
     GtkToggleButton *disable_touchpad_button;
     GtkToggleButton *disable_tapping_and_scrolling_button;
     GtkBuilder *builder;
     gboolean disable_touchpad, disable_tapping_and_scrolling;
-    GpdsXInput *xinput;
-
-    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
-    if (!xinput)
-        return;
 
     builder = gpds_ui_get_builder(ui);
     disable_touchpad_button =
@@ -522,20 +562,19 @@ cb_touchpad_use_type_toggled (GtkToggleButton *button, gpointer user_data)
             GPDS_TOUCHPAD_USE_TYPE_NORMAL;
     }
 
-    properties[0] = use_type;
-    if (!gpds_xinput_set_int_properties(xinput,
-                                        GPDS_TOUCHPAD_OFF,
-                                        &error,
-                                        properties,
-                                        1)) {
-        if (error) {
-            show_error(error);
-            g_error_free(error);
-        }
-    }
+    return use_type;
+}
 
-    gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, (gint)use_type);
+static void
+cb_touchpad_use_type_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsUI *ui = GPDS_UI(user_data);
+    GpdsTouchpadUseType use_type;
+
+    use_type = get_touchpad_use_type(ui);
     set_sensitivity_depends_on_use_type(ui, use_type);
+
+    set_touchpad_use_type_property(ui, use_type);
 }
 
 static void
@@ -561,31 +600,28 @@ cb_disable_while_other_device_exists_toggled (GtkToggleButton *button, gpointer 
 }
 
 static void
-cb_disable_tapping_toggled (GtkToggleButton *button, gpointer user_data)
+set_tap_time_property (GpdsUI *ui)
 {
-    GtkBuilder *builder;
     GObject *object;
-    GpdsUI *ui = GPDS_UI(user_data);
-    GpdsXInput *xinput;
-    gint properties[1];
-    gboolean disable_tapping;
     gint tap_time;
+    gboolean disable_tapping;
+    gint properties[1];
+    GpdsXInput *xinput;
     GError *error = NULL;
 
-    disable_tapping = gtk_toggle_button_get_active(button);
+    object = gpds_ui_get_ui_object_by_name(ui, "tapping_time_scale");
+    tap_time = gtk_range_get_value(GTK_RANGE(object));
 
-    gpds_ui_set_gconf_bool(ui,
-                           GPDS_TOUCHPAD_DISABLE_TAPPING_KEY,
-                           disable_tapping);
+    object = gpds_ui_get_ui_object_by_name(ui, "disable_tapping");
+    disable_tapping = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object));
+
+    tap_time = disable_tapping ? 0 : tap_time;
 
     xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
     if (!xinput)
         return;
 
-    builder = gpds_ui_get_builder(ui);
-    object = gtk_builder_get_object(builder, "tapping_time_scale");
-    tap_time = gtk_range_get_value(GTK_RANGE(object));
-    properties[0] = disable_tapping ? 0 : tap_time;
+    properties[0] = tap_time;
     if (!gpds_xinput_set_int_properties(xinput,
                                         GPDS_TOUCHPAD_TAP_TIME,
                                         &error,
@@ -596,7 +632,20 @@ cb_disable_tapping_toggled (GtkToggleButton *button, gpointer user_data)
             g_error_free(error);
         }
     }
+}
 
+static void
+cb_disable_tapping_toggled (GtkToggleButton *button, gpointer user_data)
+{
+    GpdsUI *ui = GPDS_UI(user_data);
+    gboolean disable_tapping;
+    GtkBuilder *builder;
+
+    disable_tapping = gtk_toggle_button_get_active(button);
+
+    set_tap_time_property(ui);
+
+    builder = gpds_ui_get_builder(ui);
     set_widget_sensitivity(builder, "tapping_frame", !disable_tapping);
 }
 
@@ -645,37 +694,28 @@ cb_move_speed_scale_value_changed (GtkRange *range, gpointer user_data)
 static void
 cb_minimum_speed_scale_value_changed (GtkRange *range, gpointer user_data)
 {
-    gdouble value;
     cb_move_speed_scale_value_changed(range, user_data);
-
-    value = gtk_range_get_value(range);
-    gpds_ui_set_gconf_float(GPDS_UI(user_data), GPDS_TOUCHPAD_MINIMUM_SPEED_KEY, value);
 }
 
 static void
 cb_maximum_speed_scale_value_changed (GtkRange *range, gpointer user_data)
 {
-    gdouble value;
     cb_move_speed_scale_value_changed(range, user_data);
-
-    value = gtk_range_get_value(range);
-    gpds_ui_set_gconf_float(GPDS_UI(user_data), GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY, value);
 }
 
 static void
 cb_acceleration_factor_scale_value_changed (GtkRange *range, gpointer user_data)
 {
-    gdouble value;
     cb_move_speed_scale_value_changed(range, user_data);
-
-    value = gtk_range_get_value(range);
-    gpds_ui_set_gconf_float(GPDS_UI(user_data), GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY, value);
 }
 
 static void
-setup_signals (GpdsUI *ui, GtkBuilder *builder)
+connect_signals (GpdsUI *ui)
 {
     GObject *object;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(ui);
 
 #define CONNECT(object_name, signal_name)                               \
     object = gtk_builder_get_object(builder, #object_name);             \
@@ -721,6 +761,61 @@ setup_signals (GpdsUI *ui, GtkBuilder *builder)
     CONNECT(trigger_any_toggle, button_press_event);
 
 #undef CONNECT
+}
+
+static void
+disconnect_signals (GpdsUI *ui)
+{
+    GObject *object;
+    GtkBuilder *builder;
+
+    builder = gpds_ui_get_builder(ui);
+
+#define DISCONNECT(object_name, signal_name)                            \
+    object = gtk_builder_get_object(builder, #object_name);             \
+    g_signal_handlers_disconnect_by_func(                               \
+        object,                                                         \
+        G_CALLBACK(cb_ ## object_name ## _ ## signal_name),             \
+        ui)
+
+    DISCONNECT(disable_touchpad, toggled);
+    DISCONNECT(disable_tapping_and_scrolling, toggled);
+    DISCONNECT(disable_while_other_device_exists, toggled);
+    DISCONNECT(guest_mouse_off, toggled);
+    DISCONNECT(palm_detection, toggled);
+    DISCONNECT(palm_detection_width_scale, value_changed);
+    DISCONNECT(palm_detection_depth_scale, value_changed);
+    DISCONNECT(locked_drags, toggled);
+    DISCONNECT(locked_drags_timeout_scale, value_changed);
+    DISCONNECT(disable_tapping, toggled);
+    DISCONNECT(tapping_time_scale, value_changed);
+    DISCONNECT(tapping_move_scale, value_changed);
+    DISCONNECT(faster_tapping_check, toggled);
+    DISCONNECT(circular_scrolling, toggled);
+    DISCONNECT(vertical_scrolling, toggled);
+    DISCONNECT(continuous_edge_scrolling, toggled);
+    DISCONNECT(vertical_scrolling_scale, value_changed);
+    DISCONNECT(horizontal_scrolling, toggled);
+    DISCONNECT(horizontal_scrolling_scale, value_changed);
+    DISCONNECT(two_finger_vertical_scrolling, toggled);
+    DISCONNECT(two_finger_horizontal_scrolling, toggled);
+
+    DISCONNECT(minimum_speed_scale, value_changed);
+    DISCONNECT(maximum_speed_scale, value_changed);
+    DISCONNECT(acceleration_factor_scale, value_changed);
+
+    /* cirlular scrolling trigger */
+    DISCONNECT(trigger_top_toggle, button_press_event);
+    DISCONNECT(trigger_top_right_toggle, button_press_event);
+    DISCONNECT(trigger_right_toggle, button_press_event);
+    DISCONNECT(trigger_right_bottom_toggle, button_press_event);
+    DISCONNECT(trigger_bottom_toggle, button_press_event);
+    DISCONNECT(trigger_bottom_left_toggle, button_press_event);
+    DISCONNECT(trigger_left_toggle, button_press_event);
+    DISCONNECT(trigger_left_top_toggle, button_press_event);
+    DISCONNECT(trigger_any_toggle, button_press_event);
+
+#undef DISCONNECT
 }
 
 static void
@@ -977,9 +1072,10 @@ set_tapping_time_from_preference (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static void
-setup_current_values (GpdsUI *ui, GtkBuilder *builder)
+set_gconf_values_to_widget (GpdsUI *ui)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
+    GtkBuilder *builder;
 
 #define SET_INT_VALUE(PROP_NAME, widget_name)                           \
     gpds_xinput_ui_set_widget_value_from_preference(                    \
@@ -1001,6 +1097,8 @@ setup_current_values (GpdsUI *ui, GtkBuilder *builder)
     SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS, "locked_drags");
     SET_INT_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT, "locked_drags_timeout_scale");
     SET_BOOLEAN_VALUE(GPDS_TOUCHPAD_CIRCULAR_SCROLLING, "circular_scrolling");
+
+    builder = gpds_ui_get_builder(ui);
 
     set_tapping_time_from_preference(ui, builder);
     set_edge_scrolling_property_from_preference(ui, builder);
@@ -1056,8 +1154,133 @@ build (GpdsUI  *ui, GError **error)
     g_object_unref(xinput);
 
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "touchpad");
-    setup_current_values(ui, builder);
-    setup_signals(ui, builder);
+    set_gconf_values_to_widget(ui);
+
+    return TRUE;
+}
+
+static void
+set_widget_values_to_xinput (GpdsUI *ui)
+{
+    GObject *object;
+    GtkBuilder *builder;
+    GpdsXInput *xinput;
+    GpdsTouchpadUseType use_type;
+    GpdsTouchpadCircularScrollingTrigger trigger;
+
+    builder = gpds_ui_get_builder(ui);
+
+#define SET_TOGGLE_VALUE(property_name, widget_name)                                       \
+    object = gtk_builder_get_object(builder, widget_name);                                 \
+    gpds_xinput_ui_set_xinput_property_from_toggle_button_state(GPDS_XINPUT_UI(ui),        \
+                                                                property_name,             \
+                                                                GTK_TOGGLE_BUTTON(object));
+#define SET_RANGE_VALUE(property_name, widget_name)                                \
+    object = gtk_builder_get_object(builder, widget_name);                         \
+    gpds_xinput_ui_set_xinput_property_from_range_value(GPDS_XINPUT_UI(ui),        \
+                                                        property_name,             \
+                                                        GTK_RANGE(object));
+
+
+    SET_RANGE_VALUE(GPDS_TOUCHPAD_TAP_MOVE, "tapping_move_scale");
+    SET_TOGGLE_VALUE(GPDS_TOUCHPAD_TAP_FAST_TAP, "faster_tapping_check");
+    SET_TOGGLE_VALUE(GPDS_TOUCHPAD_GUEST_MOUSE_OFF, "guest_mouse_off");
+    SET_TOGGLE_VALUE(GPDS_TOUCHPAD_PALM_DETECTION, "palm_detection");
+    SET_TOGGLE_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS, "locked_drags");
+    SET_RANGE_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT, "locked_drags_timeout_scale");
+    SET_TOGGLE_VALUE(GPDS_TOUCHPAD_CIRCULAR_SCROLLING, "circular_scrolling");
+
+    xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(ui));
+    set_two_finger_scrolling_toggle_property(xinput, builder);
+    set_palm_dimensions_property(xinput, builder);
+    set_scrolling_distance_property(xinput, builder);
+    set_edge_scrolling_toggle_property(xinput, builder);
+    set_move_speed_property(xinput, builder);
+
+    use_type = get_touchpad_use_type(ui);
+    set_touchpad_use_type_property(ui, use_type);
+
+    trigger = get_circular_scrolling_trigger_button_state(ui);
+    set_circular_scrolling_trigger_property(ui, trigger);
+
+    set_tap_time_property(ui);
+}
+
+static void
+set_widget_values_to_gconf (GpdsUI *ui)
+{
+    GpdsTouchpadUseType use_type;
+    GpdsTouchpadCircularScrollingTrigger trigger;
+
+#define SET_GCONF_VALUE(gconf_key_name, widget_name)                \
+    gpds_xinput_ui_set_gconf_value_from_widget(GPDS_XINPUT_UI(ui),  \
+                                               gconf_key_name,      \
+                                               widget_name);
+
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_TAP_MOVE_KEY, "tapping_move_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_TAP_TIME_KEY, "tapping_time_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_TAP_FAST_TAP_KEY, "faster_tapping_check");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_GUEST_MOUSE_OFF_KEY, "guest_mouse_off");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_PALM_DETECTION_KEY, "palm_detection");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS_KEY, "locked_drags");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_LOCKED_DRAGS_TIMEOUT_KEY, "locked_drags_timeout_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_CIRCULAR_SCROLLING_KEY, "circular_scrolling");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_TWO_FINGER_VERTICAL_SCROLLING_KEY, "two_finger_vertical_scrolling");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_TWO_FINGER_HORIZONTAL_SCROLLING_KEY, "two_finger_horizontal_scrolling");
+
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_PALM_DETECTION_WIDTH_KEY, "palm_detection_width_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_PALM_DETECTION_DEPTH_KEY, "palm_detection_depth_scale");
+
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_VERTICAL_SCROLLING_DISTANCE_KEY, "vertical_scrolling_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_DISTANCE_KEY, "horizontal_scrolling_scale");
+
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_VERTICAL_SCROLLING_KEY, "vertical_scrolling");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_HORIZONTAL_SCROLLING_KEY, "horizontal_scrolling");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_CONTINUOUS_EDGE_SCROLLING_KEY, "conitnuous_edge_scrolling");
+
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_MINIMUM_SPEED_KEY, "minimum_speed_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_MAXIMUM_SPEED_KEY, "maximum_speed_scale");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY, "acceleration_factor_scale");
+
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_DISABLE_TAPPING_KEY, "disable_tapping");
+
+    use_type = get_touchpad_use_type(ui);
+    gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, (gint)use_type);
+
+    trigger = get_circular_scrolling_trigger_button_state(ui);
+    gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_CIRCULAR_SCROLLING_TRIGGER_KEY, (gint)trigger);
+}
+
+static gboolean
+dry_run (GpdsUI *ui, GError **error)
+{
+    gboolean ret;
+
+    if (GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->dry_run)
+        ret = GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->dry_run(ui, error);
+
+    connect_signals(ui);
+
+    set_widget_values_to_xinput(ui);
+
+    return TRUE;
+}
+
+static void
+finish_dry_run(GpdsUI *ui, GError **error)
+{
+    disconnect_signals(ui);
+    set_gconf_values_to_widget(ui);
+
+    if (GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->finish_dry_run)
+        GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->finish_dry_run(ui, error);
+}
+
+static gboolean
+apply (GpdsUI *ui, GError **error)
+{
+    set_widget_values_to_xinput(ui);
+    set_widget_values_to_gconf(ui);
 
     return TRUE;
 }

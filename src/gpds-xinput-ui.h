@@ -74,6 +74,10 @@ void        gpds_xinput_ui_set_toggle_button_state_from_preference
                                              gint property,
                                              const gchar *gconf_key_name,
                                              const gchar *button_name);
+void        gpds_xinput_ui_set_gconf_value_from_widget
+                                            (GpdsXInputUI *ui,
+                                             const gchar *gconf_key_name,
+                                             const gchar *widget_name);
 void        gpds_xinput_ui_set_widget_value_from_preference
                                             (GpdsXInputUI *ui,
                                              gint property,
@@ -92,7 +96,6 @@ cb_ ## function_name ## _toggled (GtkToggleButton *button,                      
                                                                 PROPERTY_NAME,                          \
                                                                 button);                                \
     enable = gtk_toggle_button_get_active(button);                                                      \
-    gpds_ui_set_gconf_bool(GPDS_UI(user_data), PROPERTY_NAME ## _KEY, enable);                          \
     builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                  \
     if (!depend_widget_name)                                                                            \
         return;                                                                                         \
@@ -111,7 +114,6 @@ cb_ ## function_name ## _value_changed (GtkRange *range, gpointer user_data)    
                                                         PROPERTY_NAME,                      \
                                                         range);                             \
     value = gtk_range_get_value(range);                                                     \
-    gpds_ui_set_gconf_int(GPDS_UI(user_data), PROPERTY_NAME ## _KEY, (gint)value);          \
 }
 
 G_END_DECLS
