@@ -1,0 +1,327 @@
+# Norwegian translation of control-center (bokmål dialect).
+# Copyright (C) 1999-2005 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2010.
+# Terance Edward Sola <terance@lyse.net>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-control-center 2.29.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-14 19:17+0100\n"
+"PO-Revision-Date: 2010-03-14 19:20+0100\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "Ingen %s funnet."
+
+#: ../src/gpds-xinput.c:220
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr ""
+
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
+#, c-format
+msgid "There is no registered property for %d."
+msgstr ""
+
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+
+#: ../src/gpds-xinput-utils.c:107
+#, c-format
+msgid "Could not open %s device."
+msgstr "Kunne ikke åpne enheten «%s»."
+
+#: ../src/gpds-xinput-utils.c:124
+#, c-format
+msgid "No float atom in XServer"
+msgstr ""
+
+#: ../modules/gpds-touchpad-ui.c:1127 ../modules/gpds-mouse-ui.c:511
+#: ../modules/gpds-pointingstick-ui.c:236
+#, c-format
+msgid "%s did not find."
+msgstr ""
+
+#: ../modules/gpds-touchpad-ui.c:1301 ../modules/gpds-mouse-ui.c:655
+#: ../modules/gpds-pointingstick-ui.c:380
+#, c-format
+msgid "There is no widget(%s)."
+msgstr ""
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+#, fuzzy
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Br_uk autentisering</b>"
+
+#: ../data/mouse.ui.h:2
+#, fuzzy
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Br_uk autentisering</b>"
+
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:7
+msgid "<i>Long</i>"
+msgstr "<i>Lang</i>"
+
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:9
+msgid "<i>Short</i>"
+msgstr "<i>Kort</i>"
+
+#: ../data/mouse.ui.h:5
+msgid "Enable _horizontal scroll"
+msgstr "Aktiver horisontal rulling"
+
+#: ../data/mouse.ui.h:6
+#, fuzzy
+msgid "Enable _vertical scroll"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/mouse.ui.h:7
+msgid "Use _middle button emulation"
+msgstr ""
+
+#: ../data/mouse.ui.h:8
+msgid "Use _wheel emulation"
+msgstr ""
+
+#: ../data/mouse.ui.h:9
+msgid "_button:"
+msgstr "_knapp:"
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr ""
+
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:38
+msgid "_timeout:"
+msgstr "_tidsavbrudd:"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "t_idsavbrudd:"
+
+#: ../data/touchpad.ui.h:1
+#, fuzzy
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>Åpne %s</b>"
+
+#: ../data/touchpad.ui.h:2
+#, fuzzy
+msgid "<b>Locked Drags</b>"
+msgstr "<b>Åpne %s</b>"
+
+#: ../data/touchpad.ui.h:3
+#, fuzzy
+msgid "<b>Palm Detection</b>"
+msgstr "<b>Br_uk autentisering</b>"
+
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
+#, fuzzy
+msgid "<b>Scrolling</b>"
+msgstr "Rulling"
+
+#: ../data/touchpad.ui.h:5 ../data/pointingstick.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>Rask</i>"
+
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>Høy</i>"
+
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:8
+msgid "<i>Low</i>"
+msgstr "<i>Lav</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Narrow</i>"
+msgstr "<i>Smal</i>"
+
+#: ../data/touchpad.ui.h:11 ../data/pointingstick.ui.h:10
+msgid "<i>Slow</i>"
+msgstr "<i>Sakte</i>"
+
+#: ../data/touchpad.ui.h:12
+msgid "<i>Wide</i>"
+msgstr "<i>Bred</i>"
+
+#: ../data/touchpad.ui.h:13
+msgid "Acceleration"
+msgstr "Aksellerasjon"
+
+#: ../data/touchpad.ui.h:14
+#, fuzzy
+msgid "Disable _tapping"
+msgstr "Deak_tiver pekeplaten mens du skriver"
+
+#: ../data/touchpad.ui.h:15
+#, fuzzy
+msgid "Disable _tapping and scrolling"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/touchpad.ui.h:16
+msgid "Disable while any _other devices are connected"
+msgstr ""
+
+#: ../data/touchpad.ui.h:17
+#, fuzzy
+msgid "Enable Ci_rcular scrolling"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _faster tapping"
+msgstr ""
+
+#: ../data/touchpad.ui.h:19
+#, fuzzy
+msgid "Enable _horizontal scrolling"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable _locked drags"
+msgstr ""
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable _palm detection"
+msgstr ""
+
+#: ../data/touchpad.ui.h:22
+#, fuzzy
+msgid "Enable _vertical scrolling"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/touchpad.ui.h:23
+#, fuzzy
+msgid "Enable continuous edge scrolling"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/touchpad.ui.h:24
+#, fuzzy
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Aktiver h_orisontal rulling"
+
+#: ../data/touchpad.ui.h:25
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr ""
+
+#: ../data/touchpad.ui.h:26
+msgid "General"
+msgstr "Generelt"
+
+#: ../data/touchpad.ui.h:27
+msgid "Maximum speed"
+msgstr ""
+
+#: ../data/touchpad.ui.h:28
+msgid "Mimimum speed"
+msgstr ""
+
+#: ../data/touchpad.ui.h:29
+msgid "Scrolling"
+msgstr "Rulling"
+
+#: ../data/touchpad.ui.h:30
+msgid "Set _guest mouse off"
+msgstr ""
+
+#: ../data/touchpad.ui.h:31
+msgid "Speed"
+msgstr "Hastighet"
+
+#: ../data/touchpad.ui.h:32
+msgid "Start point of circular scrolling:"
+msgstr ""
+
+#: ../data/touchpad.ui.h:33
+msgid "Tapping"
+msgstr ""
+
+#: ../data/touchpad.ui.h:34
+msgid "Tapping move: "
+msgstr ""
+
+#: ../data/touchpad.ui.h:35
+msgid "Tapping time: "
+msgstr ""
+
+#: ../data/touchpad.ui.h:36
+msgid "_Disable touchpad"
+msgstr "_Slå av pekeplate"
+
+#: ../data/touchpad.ui.h:37
+#, fuzzy
+msgid "_range:"
+msgstr "_Leder:"
+
+#: ../data/touchpad.ui.h:39
+msgid "pre_ssure:"
+msgstr ""
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr ""
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Følsomhet</b>"
+
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Hastighet</b>"
+
+#: ../data/pointingstick.ui.h:11
+msgid "Enable _Press to Select"
+msgstr ""
+
+#: ../data/pointingstick.ui.h:12
+#, fuzzy
+msgid "Enable sc_rolling"
+msgstr "_Kantrulling"
+
+#: ../data/pointingstick.ui.h:13
+msgid "Middle button _timeout:"
+msgstr ""
+
+#: ../data/pointingstick.ui.h:14
+msgid "T_hreshold:"
+msgstr "T_erskel:"
+
+#: ../data/pointingstick.ui.h:15
+msgid "_Sensitivity:"
+msgstr "_Følsomhet:"
+
+#: ../data/pointingstick.ui.h:16
+msgid "_Speed:"
+msgstr "_Hastighet:"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+#, fuzzy
+msgid "Enable pointing-device plugin"
+msgstr "Slå på innlogging med fingeravtrykk"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "Pekeenheter"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "Sett dine brukervalg for pekeenheter"
+
