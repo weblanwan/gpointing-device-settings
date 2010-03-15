@@ -41,6 +41,38 @@ gpds_get_icon_file_directory (void)
     return dir ? dir : GPDS_ICONDIR;
 }
 
+GdkPixbuf *
+gpds_convert_to_grayscaled_pixbuf (GdkPixbuf *src)
+{
+    GdkPixbuf *dest;
+    gint width, height;
+    guchar *pixels;
+    int rowstride, n_channels;
+    int x, y;
+
+    dest = gdk_pixbuf_copy(src);
+    width = gdk_pixbuf_get_width(dest);
+    height = gdk_pixbuf_get_height(dest);
+    rowstride = gdk_pixbuf_get_rowstride(dest);
+    n_channels = gdk_pixbuf_get_n_channels(dest);
+    pixels = gdk_pixbuf_get_pixels(dest);
+
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width * n_channels; x += n_channels) {
+            guchar grayscale;
+            guchar *p;
+
+            p = pixels + y * rowstride + x;
+            grayscale = (p[0] * 11 + p[1] * 16 + p[2] * 5) / 32;
+            p[0] = grayscale;
+            p[1] = grayscale;
+            p[2] = grayscale;
+        }
+    }
+
+    return dest;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

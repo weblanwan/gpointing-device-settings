@@ -20,12 +20,13 @@
 #ifndef __GPDS_UTILS_H__
 #define __GPDS_UTILS_H__
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 const gchar *gpds_get_ui_file_directory (void);
 const gchar *gpds_get_icon_file_directory (void);
+GdkPixbuf   *gpds_convert_to_grayscaled_pixbuf (GdkPixbuf *src);
 
 G_END_DECLS
 

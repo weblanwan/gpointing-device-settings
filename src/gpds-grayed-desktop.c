@@ -90,9 +90,6 @@ create_grayscaled_background (void)
     GdkWindow *root;
     GdkPixbuf *pixbuf;
     gint width, height;
-    guchar *pixels;
-    int rowstride, n_channels;
-    int x, y;
 
     root = gdk_get_default_root_window();
     gdk_drawable_get_size(root, &width, &height);
@@ -103,25 +100,7 @@ create_grayscaled_background (void)
                                           0, 0,
                                           width, height);
 
-    pixels = gdk_pixbuf_get_pixels(pixbuf);
-    rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-    n_channels = gdk_pixbuf_get_n_channels(pixbuf);
-
-    for (y = 0; y < height; y++) {
-        for (x = 0; x < width * n_channels; x += n_channels) {
-            guchar grayscale;
-            guchar *p;
-
-            p = pixels + y * rowstride + x;
-            grayscale = (p[0] * 11 + p[1] * 16 + p[2] * 5) / 32;
-            p[0] = grayscale;
-            p[1] = grayscale;
-            p[2] = grayscale;
-            p[3] = 1;
-        }
-    }
-
-    return pixbuf;
+    return gpds_convert_to_grayscaled_pixbuf(pixbuf);
 }
 
 static void

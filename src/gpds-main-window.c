@@ -478,38 +478,6 @@ grab_pointer (GpdsMainWindow *window)
     return TRUE;
 }
 
-static GdkPixbuf *
-convert_to_grayscaled_pixbuf (GdkPixbuf *src)
-{
-    GdkPixbuf *dest;
-    gint width, height;
-    guchar *pixels;
-    int rowstride, n_channels;
-    int x, y;
-
-    dest = gdk_pixbuf_copy(src);
-    width = gdk_pixbuf_get_width(dest);
-    height = gdk_pixbuf_get_height(dest);
-    rowstride = gdk_pixbuf_get_rowstride(dest);
-    n_channels = gdk_pixbuf_get_n_channels(dest);
-    pixels = gdk_pixbuf_get_pixels(dest);
-
-    for (y = 0; y < height; y++) {
-        for (x = 0; x < width * n_channels; x += n_channels) {
-            guchar grayscale;
-            guchar *p;
-
-            p = pixels + y * rowstride + x;
-            grayscale = (p[0] * 11 + p[1] * 16 + p[2] * 5) / 32;
-            p[0] = grayscale;
-            p[1] = grayscale;
-            p[2] = grayscale;
-        }
-    }
-
-    return dest;
-}
-
 static gboolean
 set_grayscaled_pixbuf (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
@@ -523,7 +491,7 @@ set_grayscaled_pixbuf (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
     gtk_tree_model_get(model, iter,
                        ORIGINAL_ICON_COLUMN, &pixbuf,
                        -1);
-    gray = convert_to_grayscaled_pixbuf(pixbuf);
+    gray = gpds_convert_to_grayscaled_pixbuf(pixbuf);
 
     gtk_list_store_set(GTK_LIST_STORE(model), iter,
                        ICON_COLUMN, gray,
