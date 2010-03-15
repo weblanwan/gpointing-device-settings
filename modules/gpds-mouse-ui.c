@@ -62,6 +62,7 @@ static void       finish_dry_run     (GpdsUI  *ui, GError **error);
 static gboolean   apply              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
+static void       disconnect_signals (GpdsUI  *ui);
 
 G_DEFINE_DYNAMIC_TYPE(GpdsMouseUI, gpds_mouse_ui, GPDS_TYPE_XINPUT_UI)
 
@@ -118,6 +119,7 @@ dispose (GObject *object)
     GpdsMouseUI *ui = GPDS_MOUSE_UI(object);
 
     g_free(ui->ui_file_path);
+    disconnect_signals(GPDS_UI(ui));
 
     if (G_OBJECT_CLASS(gpds_mouse_ui_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_mouse_ui_parent_class)->dispose(object);
@@ -221,7 +223,8 @@ set_wheel_emulation_button_to_gconf (GpdsMouseUI *ui)
 static void
 cb_wheel_emulation_button_changed (GtkComboBox *combo, gpointer user_data)
 {
-    set_wheel_emulation_button_to_xinput(GPDS_MOUSE_UI(user_data));
+    if (gpds_ui_is_dry_run_mode(GPDS_UI(user_data)))
+        set_wheel_emulation_button_to_xinput(GPDS_MOUSE_UI(user_data));
 }
 
 static void
@@ -276,10 +279,9 @@ static void                                                                     
 cb_ ## name ## _toggled (GtkToggleButton *button,                                   \
                          gpointer user_data)                                        \
 {                                                                                   \
-    gboolean enable;                                                                \
     GpdsMouseUI *ui = GPDS_MOUSE_UI(user_data);                                     \
-    set_scroll_axes_property(ui);                                                   \
-    enable = gtk_toggle_button_get_active(button);                                  \
+    if (gpds_ui_is_dry_run_mode(GPDS_UI(user_data)))                                \
+        set_scroll_axes_property(ui);                                               \
 }
 
 DEFINE_WHEEL_EMULATION_SCROLL_BUTTON_TOGGLED_CALLBACK(wheel_emulation_vertical, WHEEL_EMULATION_Y_AXIS)
@@ -540,6 +542,8 @@ build (GpdsUI  *ui, GError **error)
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "mouse");
     set_gconf_values_to_widget(ui);
 
+    connect_signals(ui);
+
     return TRUE;
 }
 
@@ -613,8 +617,6 @@ dry_run (GpdsUI *ui, GError **error)
     if (GPDS_UI_CLASS(gpds_mouse_ui_parent_class)->dry_run)
         ret = GPDS_UI_CLASS(gpds_mouse_ui_parent_class)->dry_run(ui, error);
 
-    connect_signals(ui);
-
     set_widget_values_to_xinput(ui);
 
     return TRUE;
@@ -623,7 +625,6 @@ dry_run (GpdsUI *ui, GError **error)
 static void
 finish_dry_run(GpdsUI *ui, GError **error)
 {
-    disconnect_signals(ui);
     set_gconf_values_to_widget(ui);
 
     if (GPDS_UI_CLASS(gpds_mouse_ui_parent_class)->finish_dry_run)

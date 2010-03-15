@@ -92,9 +92,11 @@ cb_ ## function_name ## _toggled (GtkToggleButton *button,                      
     GtkBuilder *builder;                                                                                \
     GObject *depend_widget = NULL;                                                                      \
     gboolean enable;                                                                                    \
-    gpds_xinput_ui_set_xinput_property_from_toggle_button_state(GPDS_XINPUT_UI(user_data),              \
-                                                                PROPERTY_NAME,                          \
-                                                                button);                                \
+    if (gpds_ui_is_dry_run_mode(GPDS_UI(user_data))) {                                                  \
+        gpds_xinput_ui_set_xinput_property_from_toggle_button_state(GPDS_XINPUT_UI(user_data),          \
+                                                                    PROPERTY_NAME,                      \
+                                                                    button);                            \
+    }                                                                                                   \
     enable = gtk_toggle_button_get_active(button);                                                      \
     builder = gpds_ui_get_builder(GPDS_UI(user_data));                                                  \
     if (!depend_widget_name)                                                                            \
@@ -109,11 +111,11 @@ cb_ ## function_name ## _toggled (GtkToggleButton *button,                      
 static void                                                                                 \
 cb_ ## function_name ## _value_changed (GtkRange *range, gpointer user_data)                \
 {                                                                                           \
-    gdouble value;                                                                          \
-    gpds_xinput_ui_set_xinput_property_from_range_value(GPDS_XINPUT_UI(user_data),          \
-                                                        PROPERTY_NAME,                      \
-                                                        range);                             \
-    value = gtk_range_get_value(range);                                                     \
+    if (gpds_ui_is_dry_run_mode(GPDS_UI(user_data))) {                                      \
+        gpds_xinput_ui_set_xinput_property_from_range_value(GPDS_XINPUT_UI(user_data),      \
+                                                            PROPERTY_NAME,                  \
+                                                            range);                         \
+    }                                                                                       \
 }
 
 G_END_DECLS

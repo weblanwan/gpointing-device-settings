@@ -59,6 +59,7 @@ struct _GpdsUIPriv
     GtkBuilder *builder;
     gchar *device_name;
     GConfClient *gconf;
+    gboolean is_dry_run_mode;
 };
 
 enum
@@ -110,6 +111,7 @@ gpds_ui_init (GpdsUI *ui)
     priv->device_name = NULL;
     priv->builder = gtk_builder_new();
     priv->gconf = gconf_client_get_default();
+    priv->is_dry_run_mode = FALSE;
 }
 
 static void
@@ -228,6 +230,8 @@ gpds_ui_dry_run (GpdsUI *ui, GError **error)
 
     g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
 
+    GPDS_UI_GET_PRIVATE(ui)->is_dry_run_mode = TRUE;
+
     klass = GPDS_UI_GET_CLASS(ui);
     return (klass->dry_run) ? klass->dry_run(ui, error) : FALSE;
 }
@@ -238,6 +242,8 @@ gpds_ui_finish_dry_run (GpdsUI *ui, GError **error)
     GpdsUIClass *klass;
 
     g_return_if_fail(GPDS_IS_UI(ui));
+
+    GPDS_UI_GET_PRIVATE(ui)->is_dry_run_mode = FALSE;
 
     klass = GPDS_UI_GET_CLASS(ui);
     if (klass->finish_dry_run)
@@ -445,6 +451,14 @@ gpds_ui_get_gconf_string (GpdsUI *ui, const gchar *key, gchar **value)
     g_free(gconf_key);
 
     return exist_value;
+}
+
+gboolean
+gpds_ui_is_dry_run_mode (GpdsUI *ui)
+{
+    g_return_val_if_fail(GPDS_IS_UI(ui), FALSE);
+
+    return GPDS_UI_GET_PRIVATE(ui)->is_dry_run_mode;
 }
 
 /*

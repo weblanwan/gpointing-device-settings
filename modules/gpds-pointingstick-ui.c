@@ -62,6 +62,7 @@ static void       finish_dry_run     (GpdsUI  *ui, GError **error);
 static gboolean   apply              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
+static void       disconnect_signals (GpdsUI  *ui);
 
 G_DEFINE_DYNAMIC_TYPE(GpdsPointingStickUI, gpds_pointingstick_ui, GPDS_TYPE_XINPUT_UI)
 
@@ -118,6 +119,7 @@ dispose (GObject *object)
     GpdsPointingStickUI *ui = GPDS_POINTINGSTICK_UI(object);
 
     g_free(ui->ui_file_path);
+    disconnect_signals(GPDS_UI(ui));
 
     if (G_OBJECT_CLASS(gpds_pointingstick_ui_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_pointingstick_ui_parent_class)->dispose(object);
@@ -265,6 +267,8 @@ build (GpdsUI  *ui, GError **error)
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "pointingstick");
     set_gconf_values_to_widget(ui);
 
+    connect_signals(ui);
+
     return TRUE;
 }
 
@@ -338,8 +342,6 @@ dry_run (GpdsUI *ui, GError **error)
     if (GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->dry_run)
         ret = GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->dry_run(ui, error);
 
-    connect_signals(ui);
-
     set_widget_values_to_xinput(ui);
 
     return TRUE;
@@ -348,7 +350,6 @@ dry_run (GpdsUI *ui, GError **error)
 static void
 finish_dry_run(GpdsUI *ui, GError **error)
 {
-    disconnect_signals(ui);
     set_gconf_values_to_widget(ui);
 
     if (GPDS_UI_CLASS(gpds_pointingstick_ui_parent_class)->finish_dry_run)

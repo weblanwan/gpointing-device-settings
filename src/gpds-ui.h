@@ -104,6 +104,7 @@ void         gpds_ui_set_gconf_string     (GpdsUI *ui,
 gboolean     gpds_ui_get_gconf_string     (GpdsUI *ui,
                                            const gchar *key,
                                            gchar **value);
+gboolean     gpds_ui_is_dry_run_mode      (GpdsUI *ui);
 
 G_END_DECLS
 

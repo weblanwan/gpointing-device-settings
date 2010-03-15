@@ -61,6 +61,7 @@ static void       finish_dry_run     (GpdsUI  *ui, GError **error);
 static gboolean   apply              (GpdsUI  *ui, GError **error);
 static GtkWidget *get_content_widget (GpdsUI  *ui, GError **error);
 static GdkPixbuf *get_icon_pixbuf    (GpdsUI  *ui, GError **error);
+static void       disconnect_signals (GpdsUI  *ui);
 
 G_DEFINE_DYNAMIC_TYPE(GpdsTouchpadUI, gpds_touchpad_ui, GPDS_TYPE_XINPUT_UI)
 
@@ -116,6 +117,7 @@ dispose (GObject *object)
     GpdsTouchpadUI *ui = GPDS_TOUCHPAD_UI(object);
 
     g_free(ui->ui_file_path);
+    disconnect_signals(GPDS_UI(ui));
 
     if (G_OBJECT_CLASS(gpds_touchpad_ui_parent_class)->dispose)
         G_OBJECT_CLASS(gpds_touchpad_ui_parent_class)->dispose(object);
@@ -574,7 +576,8 @@ cb_touchpad_use_type_toggled (GtkToggleButton *button, gpointer user_data)
     use_type = get_touchpad_use_type(ui);
     set_sensitivity_depends_on_use_type(ui, use_type);
 
-    set_touchpad_use_type_property(ui, use_type);
+    if (gpds_ui_is_dry_run_mode(ui))
+        set_touchpad_use_type_property(ui, use_type);
 }
 
 static void
@@ -643,7 +646,8 @@ cb_disable_tapping_toggled (GtkToggleButton *button, gpointer user_data)
 
     disable_tapping = gtk_toggle_button_get_active(button);
 
-    set_tap_time_property(ui);
+    if (gpds_ui_is_dry_run_mode(ui))
+        set_tap_time_property(ui);
 
     builder = gpds_ui_get_builder(ui);
     set_widget_sensitivity(builder, "tapping_frame", !disable_tapping);
@@ -682,6 +686,9 @@ cb_move_speed_scale_value_changed (GtkRange *range, gpointer user_data)
 {
     GtkBuilder *builder;
     GpdsXInput *xinput;
+
+    if (!gpds_ui_is_dry_run_mode(GPDS_UI(user_data)))
+        return;
 
     xinput = gpds_xinput_ui_get_xinput(GPDS_XINPUT_UI(user_data));
     if (!xinput)
@@ -1156,6 +1163,8 @@ build (GpdsUI  *ui, GError **error)
     gpds_ui_set_gconf_string(ui, GPDS_GCONF_DEVICE_TYPE_KEY, "touchpad");
     set_gconf_values_to_widget(ui);
 
+    connect_signals(ui);
+
     return TRUE;
 }
 
@@ -1259,8 +1268,6 @@ dry_run (GpdsUI *ui, GError **error)
     if (GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->dry_run)
         ret = GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->dry_run(ui, error);
 
-    connect_signals(ui);
-
     set_widget_values_to_xinput(ui);
 
     return TRUE;
@@ -1269,7 +1276,6 @@ dry_run (GpdsUI *ui, GError **error)
 static void
 finish_dry_run(GpdsUI *ui, GError **error)
 {
-    disconnect_signals(ui);
     set_gconf_values_to_widget(ui);
 
     if (GPDS_UI_CLASS(gpds_touchpad_ui_parent_class)->finish_dry_run)
