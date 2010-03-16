@@ -1067,8 +1067,14 @@ set_tapping_time_from_preference (GpdsUI *ui, GtkBuilder *builder)
         }
     }
 
-    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_TAP_TIME_KEY, &value))
+    if (!gpds_ui_get_gconf_int(ui, GPDS_TOUCHPAD_TAP_TIME_KEY, &value) && !values) {
+        if (!gpds_xinput_ui_get_xinput_int_property(GPDS_XINPUT_UI(ui),
+                                                    GPDS_TOUCHPAD_TAP_TIME,
+                                                    &values, &n_values)) {
+            return;
+        }
         value = values[0];
+    }
 
     double_value = value;
     object = gpds_ui_get_ui_object_by_name(GPDS_UI(ui), "tapping_time_scale");
