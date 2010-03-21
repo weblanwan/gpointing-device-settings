@@ -45,6 +45,7 @@ struct _GpdsPointingStickUI
 {
     GpdsXInputUI parent;
     gchar *ui_file_path;
+    gboolean is_trackpoint;
 };
 
 struct _GpdsPointingStickUIClass
@@ -94,6 +95,7 @@ gpds_pointingstick_ui_init (GpdsPointingStickUI *ui)
     ui->ui_file_path = g_build_filename(gpds_get_ui_file_directory(),
                                         "pointingstick.ui",
                                         NULL);
+    ui->is_trackpoint = FALSE;
 }
 
 G_MODULE_EXPORT void
@@ -216,8 +218,10 @@ set_gconf_values_to_widget (GpdsUI *ui)
                   "middle_button_timeout_scale");
     SET_INT_VALUE(GPDS_POINTINGSTICK_SENSITIVITY,
                   "sensitivity_scale");
-    SET_INT_VALUE(GPDS_POINTINGSTICK_SPEED,
-                  "speed_scale");
+    if (GPDS_POINTINGSTICK_UI(ui)->is_trackpoint) {
+        SET_INT_VALUE(GPDS_POINTINGSTICK_SPEED,
+                      "speed_scale");
+    }
     SET_INT_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD,
                   "press_to_select_threshold_scale");
 }
@@ -248,6 +252,8 @@ build (GpdsUI  *ui, GError **error)
 {
     GtkBuilder *builder;
     GpdsXInput *xinput;
+    gint *values = NULL;
+    gulong n_values;
 
     builder = gpds_ui_get_builder(ui);
 
@@ -261,6 +267,20 @@ build (GpdsUI  *ui, GError **error)
     if (!xinput) {
         return FALSE;
     }
+
+    if (gpds_xinput_get_int_properties(xinput,
+                                       GPDS_POINTINGSTICK_SPEED,
+                                       NULL,
+                                       &values,
+                                       &n_values)) {
+        GPDS_POINTINGSTICK_UI(ui)->is_trackpoint = TRUE;
+        g_free(values);
+    } else {
+        GObject *widget;
+        widget = gtk_builder_get_object(builder, "speed_box");
+        gtk_widget_set_sensitive(GTK_WIDGET(widget), FALSE);
+    }
+
     gpds_xinput_ui_set_xinput(GPDS_XINPUT_UI(ui), xinput);
     g_object_unref(xinput);
 
@@ -298,12 +318,14 @@ set_widget_values_to_xinput (GpdsUI *ui)
 
     SET_RANGE_VALUE(GPDS_POINTINGSTICK_SENSITIVITY,
                     "sensitivity_scale");
-    SET_RANGE_VALUE(GPDS_POINTINGSTICK_SPEED,
-                    "speed_scale");
     SET_RANGE_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD,
                     "press_to_select_threshold_scale");
     SET_RANGE_VALUE(GPDS_POINTINGSTICK_MIDDLE_BUTTON_TIMEOUT,
                     "middle_button_timeout_scale");
+    if (GPDS_POINTINGSTICK_UI(ui)->is_trackpoint) {
+        SET_RANGE_VALUE(GPDS_POINTINGSTICK_SPEED,
+                        "speed_scale");
+    }
 
 #undef SET_TOGGLE_VALUE
 #undef SET_RANGE_VALUE
@@ -325,10 +347,12 @@ set_widget_values_to_gconf (GpdsUI *ui)
                     "middle_button_timeout_scale");
     SET_GCONF_VALUE(GPDS_POINTINGSTICK_SENSITIVITY_KEY,
                     "sensitivity_scale");
-    SET_GCONF_VALUE(GPDS_POINTINGSTICK_SPEED_KEY,
-                    "speed_scale");
     SET_GCONF_VALUE(GPDS_POINTINGSTICK_PRESS_TO_SELECT_THRESHOLD_KEY,
                     "press_to_select_threshold_scale");
+    if (GPDS_POINTINGSTICK_UI(ui)->is_trackpoint) {
+        SET_GCONF_VALUE(GPDS_POINTINGSTICK_SPEED_KEY,
+                        "speed_scale");
+    }
 
 #undef SET_TOGGLE_VALUE
 #undef SET_RANGE_VALUE
