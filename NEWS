@@ -1,4 +1,27 @@
 ============================
+GPointinDeviceSettings 1.6.0
+============================
+* Overall
+ - Fix crash on start
+ - Dry-run mode
+* Pointing Stick
+ - xf86-input-pointing-stick [1] support
+* New translation
+ - Estonian (Priit Laes)
+ - Norwegian (Kjartan Maraas)
+* Update translation
+ - Czech (Marek Černock)
+ - French (Claude Paroz)
+ - Galician (Fran Diéguez)
+ - German (Mario Blättermann)
+ - Portuguese (António Lima)
+ - Spanish (Jorge González)
+ - Slovenian (Andrej Žnidaršič)
+ - Simplified Chinese (YunQiang Su)
+
+[1] http://wiki.github.com/hiikezoe/xf86-input-pointing-stick/
+
+============================
 GPointinDeviceSettings 1.5.1
 ============================
 * Overall
