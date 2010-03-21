@@ -597,9 +597,11 @@ cb_disable_while_other_device_exists_toggled (GtkToggleButton *button, gpointer 
 {
     GpdsUI *ui = GPDS_UI(user_data);
 
-    gpds_ui_set_gconf_bool(ui,
-                           GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
-                           gtk_toggle_button_get_active(button));
+    if (gpds_ui_is_dry_run_mode(ui)) {
+        gpds_ui_set_gconf_bool(ui,
+                               GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY,
+                               gtk_toggle_button_get_active(button));
+    }
 }
 
 static void
@@ -1085,6 +1087,18 @@ set_tapping_time_from_preference (GpdsUI *ui, GtkBuilder *builder)
 }
 
 static void
+set_disable_while_other_device_exists (GpdsUI *ui, GtkBuilder *builder)
+{
+    GObject *object;
+    gboolean disable;
+
+    gpds_ui_get_gconf_bool(ui, GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY, &disable);
+    object = gpds_ui_get_ui_object_by_name(GPDS_UI(ui), "disable_while_other_device_exists");
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object), disable);
+}
+
+static void
 set_gconf_values_to_widget (GpdsUI *ui)
 {
     GpdsXInputUI *xinput_ui = GPDS_XINPUT_UI(ui);
@@ -1113,6 +1127,7 @@ set_gconf_values_to_widget (GpdsUI *ui)
 
     builder = gpds_ui_get_builder(ui);
 
+    set_disable_while_other_device_exists(ui, builder);
     set_tapping_time_from_preference(ui, builder);
     set_edge_scrolling_property_from_preference(ui, builder);
     set_palm_dimensions_property_from_preference(ui, builder);
@@ -1258,6 +1273,7 @@ set_widget_values_to_gconf (GpdsUI *ui)
     SET_GCONF_VALUE(GPDS_TOUCHPAD_ACCELERATION_FACTOR_KEY, "acceleration_factor_scale");
 
     SET_GCONF_VALUE(GPDS_TOUCHPAD_DISABLE_TAPPING_KEY, "disable_tapping");
+    SET_GCONF_VALUE(GPDS_TOUCHPAD_DISABLE_WHILE_OTHER_DEVICE_EXISTS_KEY, "disable_while_other_device_exists");
 
     use_type = get_touchpad_use_type(ui);
     gpds_ui_set_gconf_int(ui, GPDS_TOUCHPAD_OFF_KEY, (gint)use_type);
