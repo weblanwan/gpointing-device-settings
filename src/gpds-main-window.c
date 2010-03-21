@@ -30,6 +30,7 @@
 #include "gpds-ui.h"
 #include "gpds-utils.h"
 #include "gpds-grayed-desktop.h"
+#include "gpds-event-feedback.h"
 
 enum {
     DEVICE_NAME_COLUMN,
@@ -44,6 +45,7 @@ struct _GpdsMainWindowPriv
     GList *uis;
     GtkWidget *background;
     GtkWidget *dry_run_button;
+    GtkWidget *feedback;
     GtkIconView *icon_view;
     GdkColor *original_text_color;
     GdkColor *original_base_color;
@@ -242,6 +244,27 @@ cb_selection_changed (GtkIconView *icon_view, gpointer data)
     gtk_tree_path_free(path);
 }
 
+static gboolean
+cb_button_event (GtkWidget *widget, GdkEventButton *event, gpointer user_data)
+{
+    gtk_widget_event(GTK_WIDGET(user_data), (GdkEvent*)event);
+    return FALSE;
+}
+
+static gboolean
+cb_motion_notify (GtkWidget *widget, GdkEventMotion *event, gpointer user_data)
+{
+    gtk_widget_event(GTK_WIDGET(user_data), (GdkEvent*)event);
+    return FALSE;
+}
+
+static gboolean
+cb_scroll (GtkWidget *widget, GdkEventScroll *event, gpointer user_data)
+{
+    gtk_widget_event(GTK_WIDGET(user_data), (GdkEvent*)event);
+    return FALSE;
+}
+
 static void
 gpds_main_window_init (GpdsMainWindow *window)
 {
@@ -257,6 +280,7 @@ gpds_main_window_init (GpdsMainWindow *window)
     priv->background = NULL;
     priv->original_text_color = NULL;
     priv->original_base_color = NULL;
+    priv->feedback = gpds_event_feedback_new(GTK_WINDOW(window));
 
     device_store = gtk_list_store_new(N_COLUMNS,
                                       G_TYPE_STRING,
@@ -334,38 +358,6 @@ heartbeat (GtkWidget *widget)
 }
 
 static gboolean
-button_press (GtkWidget *widget, GdkEventButton *event)
-{
-    heartbeat(widget);
-
-    return FALSE;
-}
-
-static gboolean
-button_release (GtkWidget *widget, GdkEventButton *event)
-{
-    heartbeat(widget);
-
-    return FALSE;
-}
-
-static gboolean
-motion_notify (GtkWidget *widget, GdkEventMotion *event)
-{
-    heartbeat(widget);
-
-    return FALSE;
-}
-
-static gboolean
-scroll (GtkWidget *widget, GdkEventScroll *event)
-{
-    heartbeat(widget);
-
-    return FALSE;
-}
-
-static gboolean
 restore_original_pixbuf (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
     GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(data);
@@ -404,6 +396,51 @@ get_current_ui (GpdsMainWindow *window)
     return GPDS_UI(g_list_nth_data(priv->uis, index));
 }
 
+static gboolean
+button_press (GtkWidget *widget, GdkEventButton *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+button_release (GtkWidget *widget, GdkEventButton *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+motion_notify (GtkWidget *widget, GdkEventMotion *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static gboolean
+scroll (GtkWidget *widget, GdkEventScroll *event)
+{
+    heartbeat(widget);
+
+    return FALSE;
+}
+
+static void
+disconnect_icon_view_signals (GpdsMainWindow *window)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+
+    g_signal_handlers_disconnect_by_func(priv->icon_view,
+                                         G_CALLBACK(cb_button_event), window);
+    g_signal_handlers_disconnect_by_func(priv->icon_view,
+                                         G_CALLBACK(cb_motion_notify), window);
+    g_signal_handlers_disconnect_by_func(priv->icon_view,
+                                         G_CALLBACK(cb_scroll), window);
+}
+
 static void
 finish_dry_run (GpdsMainWindow *window)
 {
@@ -422,6 +459,7 @@ finish_dry_run (GpdsMainWindow *window)
 
     gpds_ui_finish_dry_run(ui, NULL);
 
+    disconnect_icon_view_signals(window);
     gdk_pointer_ungrab(GDK_CURRENT_TIME);
     if (priv->background) {
         gtk_widget_destroy(priv->background);
@@ -502,6 +540,21 @@ set_grayscaled_pixbuf (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 }
 
 static void
+connect_icon_view_signals (GpdsMainWindow *window)
+{
+    GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
+
+    g_signal_connect(priv->icon_view, "button-press-event",
+                     G_CALLBACK(cb_button_event), window);
+    g_signal_connect(priv->icon_view, "button-release-event",
+                     G_CALLBACK(cb_button_event), window);
+    g_signal_connect(priv->icon_view, "motion-notify-event",
+                     G_CALLBACK(cb_motion_notify), window);
+    g_signal_connect(priv->icon_view, "scroll-event",
+                     G_CALLBACK(cb_scroll), window);
+}
+
+static void
 start_dry_run (GpdsMainWindow *window)
 {
     GpdsMainWindowPriv *priv = GPDS_MAIN_WINDOW_GET_PRIVATE(window);
@@ -539,6 +592,7 @@ start_dry_run (GpdsMainWindow *window)
     gtk_widget_modify_base(GTK_WIDGET(priv->icon_view),
                            GTK_STATE_NORMAL, &style->base[GTK_STATE_INSENSITIVE]);
     gtk_widget_queue_draw(GTK_WIDGET(priv->icon_view));
+    connect_icon_view_signals(window);
 
     grab_pointer(window);
 }

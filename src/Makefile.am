@@ -19,6 +19,8 @@ libgpds_la_SOURCES =			\
 	gpds-grayed-desktop.h		\
 	gpds-main-window.c		\
 	gpds-main-window.h		\
+	gpds-event-feedback.c		\
+	gpds-event-feedback.h		\
 	gpds-ui.c			\
 	gpds-xinput-ui.c		\
 	gpds-gconf.c			\
