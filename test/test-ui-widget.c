@@ -263,6 +263,8 @@ wait_action (void)
                               &idle_received, NULL);
     while (!idle_received)
         g_main_context_iteration(NULL, FALSE);
+    gpds_ui_apply(ui, &error);
+    gcut_assert_error(error);
 }
 
 void
