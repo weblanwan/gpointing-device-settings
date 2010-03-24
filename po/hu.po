@@ -1,19 +1,22 @@
 # HUNGARIAN TRANSLATION FOR GPOINTER DEVICE SETTINGS.
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the GPOINTER DEVICE SETTINHS package.
-# Németh Tamás <ntomasz@uhuklub.hu>, 2010.
 #
+# Németh Tamás <ntomasz@uhuklub.hu>, 2010.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointer-device-settings MASTER\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-21 07:23+0000\n"
-"PO-Revision-Date: 2010-03-14 10:43+0100\n"
-"Last-Translator: Németh Tamás <ntomasz@uhuklub.hu>\n"
-"Language-Team: Hungarian <gnome@fsf.hu>\n"
+"POT-Creation-Date: 2010-03-24 14:20+0100\n"
+"PO-Revision-Date: 2010-03-24 14:21+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
@@ -23,7 +26,7 @@ msgstr "%s nem található."
 #: ../src/gpds-xinput.c:220
 #, c-format
 msgid "An X error occurred. The error was %s."
-msgstr "X kiszolgáló hiba történt. A hiba: %s"
+msgstr "X-kiszolgálóhiba történt. A hiba: %s"
 
 #: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
@@ -59,18 +62,18 @@ msgstr "%s nem található."
 #: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
-msgstr "Nincs grafikai elem (%s)."
+msgstr "Nincs felületi elem (%s)."
 
 #.
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
 #: ../data/mouse.ui.h:1
 msgid "<b>Middle Button Emulation</b>"
-msgstr "<b>Középső gomb emuláció</b>"
+msgstr "<b>Középső gomb emulálása</b>"
 
 #: ../data/mouse.ui.h:2
 msgid "<b>Wheel Emulation</b>"
-msgstr "<b>Görgetés emuláció</b>"
+msgstr "<b>Görgő emulálása</b>"
 
 #: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:7
 msgid "<i>Long</i>"
@@ -90,11 +93,11 @@ msgstr "_Függőleges görgetés engedélyezése"
 
 #: ../data/mouse.ui.h:7
 msgid "Use _middle button emulation"
-msgstr "_Középső gomb emuláció engedélyezése"
+msgstr "_Középső gomb emulálásának engedélyezése"
 
 #: ../data/mouse.ui.h:8
 msgid "Use _wheel emulation"
-msgstr "_Görgetőkerék emuláció engedélyezése"
+msgstr "_Görgő emulálásának engedélyezése"
 
 #: ../data/mouse.ui.h:9
 msgid "_button:"
@@ -106,11 +109,11 @@ msgstr "_tehetetlenség:"
 
 #: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:38
 msgid "_timeout:"
-msgstr "_időtúllépés:"
+msgstr "_időkorlát:"
 
 #: ../data/mouse.ui.h:12
 msgid "tim_eout:"
-msgstr "_időtúllépés:"
+msgstr "i_dőkorlát:"
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
@@ -122,7 +125,7 @@ msgstr "<b>Zárolt húzások</b>"
 
 #: ../data/touchpad.ui.h:3
 msgid "<b>Palm Detection</b>"
-msgstr "<b>Palm felismerés</b>"
+msgstr "<b>Tenyérfelismerés</b>"
 
 #: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
@@ -154,7 +157,7 @@ msgstr "<i>Széles</i>"
 
 #: ../data/touchpad.ui.h:13
 msgid "Acceleration"
-msgstr "Gyorsaság"
+msgstr "Gyorsítás"
 
 #: ../data/touchpad.ui.h:14
 msgid "Disable _tapping"
@@ -166,7 +169,7 @@ msgstr "K_oppintás és görgetés tiltása"
 
 #: ../data/touchpad.ui.h:16
 msgid "Disable while any _other devices are connected"
-msgstr "Letiltva, ha _egyéb eszköz is csatlakoztatva van"
+msgstr "Kikapcsolás, ha _más eszköz is csatlakoztatva van"
 
 #: ../data/touchpad.ui.h:17
 msgid "Enable Ci_rcular scrolling"
@@ -186,7 +189,7 @@ msgstr "_Zárolt húzások engedélyezése"
 
 #: ../data/touchpad.ui.h:21
 msgid "Enable _palm detection"
-msgstr "_Palm felismerés engedélyezése"
+msgstr "_Tenyérfelismerés engedélyezése"
 
 #: ../data/touchpad.ui.h:22
 msgid "Enable _vertical scrolling"
@@ -194,7 +197,7 @@ msgstr "_Függőleges görgetés engedélyezése"
 
 #: ../data/touchpad.ui.h:23
 msgid "Enable continuous edge scrolling"
-msgstr "Folyamatos görgetés engedélyezése"
+msgstr "Folyamatos szélen görgetés engedélyezése"
 
 #: ../data/touchpad.ui.h:24
 msgid "Enable horizontal scrolling when dragging with two fingers"
@@ -222,7 +225,7 @@ msgstr "Görgetés"
 
 #: ../data/touchpad.ui.h:30
 msgid "Set _guest mouse off"
-msgstr "Vendégegér kikapcsolása"
+msgstr "_Vendégegér kikapcsolása"
 
 #: ../data/touchpad.ui.h:31
 msgid "Speed"
@@ -246,7 +249,7 @@ msgstr "Koppintás ideje: "
 
 #: ../data/touchpad.ui.h:36
 msgid "_Disable touchpad"
-msgstr "Touch_Pad tiltása"
+msgstr "É_rintőtábla kikapcsolása"
 
 #: ../data/touchpad.ui.h:37
 msgid "_range:"
@@ -278,11 +281,11 @@ msgstr "_Görgetés engedélyezése"
 
 #: ../data/pointingstick.ui.h:13
 msgid "Middle button _timeout:"
-msgstr "Középső gomb i_dőtúllépése:"
+msgstr "Középső gomb i_dőkorlátja:"
 
 #: ../data/pointingstick.ui.h:14
 msgid "T_hreshold:"
-msgstr "_Határérték:"
+msgstr "_Küszöb:"
 
 #: ../data/pointingstick.ui.h:15
 msgid "_Sensitivity:"
@@ -297,9 +300,8 @@ msgid "Enable pointing-device plugin"
 msgstr "A mutatóeszközök bővítmény engedélyezése"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
-msgid ""
-"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
-msgstr "Állítsa be a True értéket a mutatóeszközök bővítmény engedélyezéséhez."
+msgid "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr "Állítsa igazra a mutatóeszközök bővítmény engedélyezéséhez."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
 msgid "Pointing devices"
@@ -307,4 +309,13 @@ msgstr "Mutatóeszközök"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
-msgstr "A mutatóeszközök tulajdonságainak beállításai"
+msgstr "A mutatóeszközök tulajdonságainak beállítása"
+
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "_Próbaüzem"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "Próbaüzem be_fejezése"
+
