@@ -1,12 +1,13 @@
 # German translation of gpointing-device-settings.
 # Mario Blättermann <mariobl@gnome.org>, 2009, 2010.
+# Christian Kirbach <Christian.Kirbach@googlemail.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-04 11:23+0000\n"
-"PO-Revision-Date: 2010-02-04 20:14+0100\n"
+"POT-Creation-Date: 2010-03-24 13:21+0000\n"
+"PO-Revision-Date: 2010-03-25 12:48+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,22 +16,22 @@ msgstr ""
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 
-#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
 msgstr "Kein %s gefunden."
 
-#: ../src/gpds-xinput.c:214
+#: ../src/gpds-xinput.c:220
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "Ein Fehler des X-Window-Systems ist aufgetreten. Fehlermeldung war %s."
 
-#: ../src/gpds-xinput.c:300 ../src/gpds-xinput.c:318 ../src/gpds-xinput.c:336
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "Keine Eigenschaft für %d registriert."
 
-#: ../src/gpds-xinput.c:438 ../src/gpds-xinput.c:605
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -49,14 +50,14 @@ msgstr "Gerät %s konnte nicht geöffnet werden."
 msgid "No float atom in XServer"
 msgstr "Kein Float-Atom im X-Server"
 
-#: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
-#: ../modules/gpds-pointingstick-ui.c:207
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
 msgstr "%s wurde nicht gefunden."
 
-#: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
-#: ../modules/gpds-pointingstick-ui.c:256
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Es gibt kein Widget(%s)."
@@ -72,21 +73,21 @@ msgstr "<b>Emulation der mittleren Taste</b>"
 msgid "<b>Wheel Emulation</b>"
 msgstr "<b>Mausrad-Emulation</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:5
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:7
 msgid "<i>Long</i>"
 msgstr "<i>Lang</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:7
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:9
 msgid "<i>Short</i>"
 msgstr "<i>Kurz</i>"
 
 #: ../data/mouse.ui.h:5
 msgid "Enable _horizontal scroll"
-msgstr "_Horizontales Scrollen aktivieren"
+msgstr "_Horizontalen Bildlauf aktivieren"
 
 #: ../data/mouse.ui.h:6
 msgid "Enable _vertical scroll"
-msgstr "_Vertikales Scrollen aktivieren"
+msgstr "_Vertikalen Bildlauf aktivieren"
 
 #: ../data/mouse.ui.h:7
 msgid "Use _middle button emulation"
@@ -102,15 +103,15 @@ msgstr "_Taste:"
 
 #: ../data/mouse.ui.h:10
 msgid "_inertia:"
-msgstr ""
+msgstr "_Trägheit:"
 
 #: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:38
 msgid "_timeout:"
-msgstr ""
+msgstr "_Zeitablauf:"
 
 #: ../data/mouse.ui.h:12
 msgid "tim_eout:"
-msgstr ""
+msgstr "Zeit_ablauf:"
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
@@ -126,17 +127,17 @@ msgstr "<b>Handflächenerkennung</b>"
 
 #: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
-msgstr "<b>Scrollen</b>"
+msgstr "<b>Bildlauf</b>"
 
-#: ../data/touchpad.ui.h:5
+#: ../data/touchpad.ui.h:5 ../data/pointingstick.ui.h:5
 msgid "<i>Fast</i>"
 msgstr "<i>Schnell</i>"
 
-#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:4
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:6
 msgid "<i>High</i>"
 msgstr "<i>Hoch</i>"
 
-#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:6
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:8
 msgid "<i>Low</i>"
 msgstr "<i>Niedrig</i>"
 
@@ -144,7 +145,7 @@ msgstr "<i>Niedrig</i>"
 msgid "<i>Narrow</i>"
 msgstr "<i>Eng</i>"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:11 ../data/pointingstick.ui.h:10
 msgid "<i>Slow</i>"
 msgstr "<i>Langsam</i>"
 
@@ -158,12 +159,11 @@ msgstr "Beschleunigung"
 
 #: ../data/touchpad.ui.h:14
 msgid "Disable _tapping"
-msgstr ""
+msgstr "_Klopfen deaktivieren"
 
 #: ../data/touchpad.ui.h:15
-#| msgid "Enable _vertical scrolling"
 msgid "Disable _tapping and scrolling"
-msgstr ""
+msgstr "_Klopfen und Bildlauf deaktivieren"
 
 #: ../data/touchpad.ui.h:16
 msgid "Disable while any _other devices are connected"
@@ -171,15 +171,15 @@ msgstr "Deaktivieren, wenn _andere Geräte angeschlossen sind"
 
 #: ../data/touchpad.ui.h:17
 msgid "Enable Ci_rcular scrolling"
-msgstr "Zi_rkulares Scrollen aktivieren"
+msgstr "Zi_rkularen Bildlauf aktivieren"
 
 #: ../data/touchpad.ui.h:18
 msgid "Enable _faster tapping"
-msgstr ""
+msgstr "_Schnelleres Klopfen aktivieren"
 
 #: ../data/touchpad.ui.h:19
 msgid "Enable _horizontal scrolling"
-msgstr "_Horizontales Scrollen aktivieren"
+msgstr "_Horizontalen Bildlauf aktivieren"
 
 #: ../data/touchpad.ui.h:20
 msgid "Enable _locked drags"
@@ -191,19 +191,19 @@ msgstr "_Handflächenerkennung aktivieren"
 
 #: ../data/touchpad.ui.h:22
 msgid "Enable _vertical scrolling"
-msgstr "_Vertikales Scrollen aktivieren"
+msgstr "_Vertikalen Bildlauf aktivieren"
 
 #: ../data/touchpad.ui.h:23
 msgid "Enable continuous edge scrolling"
-msgstr ""
+msgstr "Anhaltenden Randbildlauf aktivieren"
 
 #: ../data/touchpad.ui.h:24
 msgid "Enable horizontal scrolling when dragging with two fingers"
-msgstr "Horizontales Scrollen beim Ziehen mit zwei Fingern aktivieren"
+msgstr "Horizontalen Bildlauf beim Ziehen mit zwei Fingern aktivieren"
 
 #: ../data/touchpad.ui.h:25
 msgid "Enable vertical scrolling when dragging with two fingers"
-msgstr "Vertikales Scrollen beim Ziehen mit zwei Fingern aktivieren"
+msgstr "Vertikalen Bildlauf beim Ziehen mit zwei Fingern aktivieren"
 
 #: ../data/touchpad.ui.h:26
 msgid "General"
@@ -219,7 +219,7 @@ msgstr "Minimalgeschwindigkeit"
 
 #: ../data/touchpad.ui.h:29
 msgid "Scrolling"
-msgstr "Scrollen"
+msgstr "Bildlauf"
 
 #: ../data/touchpad.ui.h:30
 msgid "Set _guest mouse off"
@@ -231,19 +231,19 @@ msgstr "Geschwindigkeit"
 
 #: ../data/touchpad.ui.h:32
 msgid "Start point of circular scrolling:"
-msgstr "Startpunkt des zirkularen Scrollens:"
+msgstr "Startpunkt des zirkularen Bildlaufs:"
 
 #: ../data/touchpad.ui.h:33
 msgid "Tapping"
-msgstr ""
+msgstr "Klopfen"
 
 #: ../data/touchpad.ui.h:34
 msgid "Tapping move: "
-msgstr ""
+msgstr "Klopfbewegung: "
 
 #: ../data/touchpad.ui.h:35
 msgid "Tapping time: "
-msgstr ""
+msgstr "Klopfzeit: "
 
 #: ../data/touchpad.ui.h:36
 msgid "_Disable touchpad"
@@ -257,10 +257,6 @@ msgstr "Be_reich:"
 msgid "pre_ssure:"
 msgstr "Dru_ck:"
 
-#: ../data/main-window.ui.h:1
-msgid "GPointing Device Settings"
-msgstr "GPointing Zeigegerät-Einstellungen"
-
 #: ../data/pointingstick.ui.h:1
 msgid "<b>Press to Select</b>"
 msgstr "<b>Drücken zum Auswählen</b>"
@@ -269,27 +265,33 @@ msgstr "<b>Drücken zum Auswählen</b>"
 msgid "<b>Sensitivity</b>"
 msgstr "<b>Empfindlichkeit</b>"
 
-#: ../data/pointingstick.ui.h:8
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Geschwindigkeit</b>"
+
+#: ../data/pointingstick.ui.h:11
 msgid "Enable _Press to Select"
 msgstr "Auswählen durch Dr_ücken aktivieren"
 
-#: ../data/pointingstick.ui.h:9
-#| msgid "Enable Ci_rcular scrolling"
+#: ../data/pointingstick.ui.h:12
 msgid "Enable sc_rolling"
-msgstr "Sc_rollen aktivieren"
+msgstr "_Bildlauf aktivieren"
 
-#: ../data/pointingstick.ui.h:10
-#| msgid "Use _middle button emulation"
+#: ../data/pointingstick.ui.h:13
 msgid "Middle button _timeout:"
-msgstr ""
+msgstr "_Zeitablauf für die mittlere Maustaste"
 
-#: ../data/pointingstick.ui.h:11
+#: ../data/pointingstick.ui.h:14
 msgid "T_hreshold:"
 msgstr "Ansprec_hschwelle:"
 
-#: ../data/pointingstick.ui.h:12
+#: ../data/pointingstick.ui.h:15
 msgid "_Sensitivity:"
 msgstr "Em_pfindlichkeit:"
+
+#: ../data/pointingstick.ui.h:16
+msgid "_Speed:"
+msgstr "_Geschwindigkeit:"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
@@ -299,8 +301,8 @@ msgstr "Pointing-Device-Plugin aktivieren"
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
-"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings verwendet "
-"wird."
+"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings "
+"verwendet wird."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
 msgid "Pointing devices"
@@ -309,3 +311,6 @@ msgstr "Zeigegeräte"
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
 msgstr "Richten Sie Ihre Zeigegeräte ein"
+
+#~ msgid "GPointing Device Settings"
+#~ msgstr "GPointing Zeigegerät-Einstellungen"
