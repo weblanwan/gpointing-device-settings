@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-16 03:42+0000\n"
-"PO-Revision-Date: 2010-02-18 20:27+0300\n"
+"POT-Creation-Date: 2010-04-19 11:21+0000\n"
+"PO-Revision-Date: 2010-05-17 13:13+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -203,14 +203,14 @@ msgstr "_Ulatus:"
 msgid "pre_ssure:"
 msgstr "_Surve:"
 
-msgid "GPointing Device Settings"
-msgstr "GPointing seadme sätted"
-
 msgid "<b>Press to Select</b>"
 msgstr "<b>Valimiseks klõpsa</b>"
 
 msgid "<b>Sensitivity</b>"
 msgstr "<b>Tundlikkus</b>"
+
+msgid "<b>Speed</b>"
+msgstr "<b>Kiirus</b>"
 
 msgid "Enable _Press to Select"
 msgstr "_Surumisel tehakse hiireklõps"
@@ -227,6 +227,9 @@ msgstr "_Lävi:"
 msgid "_Sensitivity:"
 msgstr "_Tundlikkus:"
 
+msgid "_Speed:"
+msgstr "_Kiirus:"
+
 msgid "Enable pointing-device plugin"
 msgstr "Osutamisseadme plugina lubamine"
 
@@ -239,3 +242,6 @@ msgstr "Osutamisseadmed"
 
 msgid "Set your pointing devices preferences"
 msgstr "Osutamisseadmete eelistused"
+
+#~ msgid "GPointing Device Settings"
+#~ msgstr "GPointing seadme sätted"
