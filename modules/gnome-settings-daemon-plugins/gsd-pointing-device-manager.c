@@ -177,11 +177,11 @@ gsd_pointing_device_manager_new (const gchar *device_type, const gchar *device_n
 {
     GType type = 0;
 
-    if (!strcmp(device_type, "mouse"))
+    if (!g_ascii_strcasecmp(device_type, "mouse"))
         type = GSD_TYPE_MOUSE_EXTENSION_MANAGER;
-    else if (!strcmp(device_type, "touchpad"))
+    else if (!g_ascii_strcasecmp(device_type, "touchpad"))
         type = GSD_TYPE_TOUCHPAD_MANAGER;
-    else if (!strcmp(device_type, "pointingstick"))
+    else if (!g_ascii_strcasecmp(device_type, "pointingstick"))
         type = GSD_TYPE_POINTINGSTICK_MANAGER;
 
     if (type)
