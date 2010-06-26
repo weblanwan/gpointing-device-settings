@@ -24,10 +24,13 @@
 #include <gnome-settings-daemon/gnome-settings-plugin.h>
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
+#include <gdk/gdkx.h>
+#include <X11/extensions/XInput.h>
 
 #include "gsd-pointing-device-manager.h"
 #include "gpds-gconf.h"
 #include "gpds-xinput-pointer-info.h"
+#include "gpds-xinput-utils.h"
 
 #define GSD_TYPE_POINTING_DEVICE_PLUGIN            (gsd_pointing_device_plugin_get_type ())
 #define GSD_POINTING_DEVICE_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSD_TYPE_POINTING_DEVICE_PLUGIN, GsdPointingDevicePlugin))
@@ -61,44 +64,90 @@ gsd_pointing_device_plugin_init (GsdPointingDevicePlugin *plugin)
     plugin->managers = NULL;
 }
 
-static GList *
-collect_pointer_device_infos_from_gconf (void)
+static gboolean
+has_manager (GsdPointingDevicePlugin *plugin, const gchar *device_name)
 {
-    GConfClient *gconf;
-    GSList *dirs, *node;
-    GList *infos = NULL;
+    GList *node;
 
-    gconf = gconf_client_get_default();
-    dirs = gconf_client_all_dirs(gconf, GPDS_GCONF_DIR, NULL);
+    for (node = plugin->managers; node; node = g_list_next(node)) {
+        GsdPointingDeviceManager *manager = node->data;
 
-    for (node = dirs; node; node = g_slist_next(node)) {
-        const gchar *dir = node->data;
-        gchar *device_type;
-        gchar *device_type_key;
-
-        device_type_key = gconf_concat_dir_and_key(dir, GPDS_GCONF_DEVICE_TYPE_KEY);
-        device_type = gconf_client_get_string(gconf, device_type_key, NULL);
-        if (device_type) {
-            GpdsXInputPointerInfo *info;
-            gchar *device_name, *unescaped_device_name;
-
-            device_name = g_path_get_basename(dir);
-            unescaped_device_name = gconf_unescape_key(device_name, -1);
-            info = gpds_xinput_pointer_info_new(unescaped_device_name, device_type);
-            infos = g_list_prepend(infos, info);
-            g_free(unescaped_device_name);
-            g_free(device_name);
-        }
-
-        g_free(device_type_key);
-        g_free(device_type);
+        if (g_str_equal(gsd_pointing_device_manager_get_device_name(manager), device_name))
+            return TRUE;
     }
 
-    g_slist_foreach(dirs, (GFunc)g_free, NULL);
-    g_slist_free(dirs);
-    g_object_unref(gconf);
+    return FALSE;
+}
 
-    return infos;
+static GdkFilterReturn
+device_presence_filter (GdkXEvent *xevent,
+                        GdkEvent  *event,
+                        gpointer   data)
+{
+    XEvent *xev = (XEvent *)xevent;
+    XEventClass class_presence;
+    int xi_presence;
+    GsdPointingDevicePlugin *plugin = GSD_POINTING_DEVICE_PLUGIN(data);
+
+    DevicePresence(gdk_x11_get_default_xdisplay(), xi_presence, class_presence);
+
+    if (xev->type == xi_presence) {
+        XDeviceInfo *device_info = NULL;
+        XDevicePresenceNotifyEvent *notify_event = (XDevicePresenceNotifyEvent *)xev;
+
+        device_info = gpds_xinput_utils_get_device_info_from_id(notify_event->deviceid, NULL);
+        if (notify_event->devchange == DeviceEnabled) {
+            GsdPointingDeviceManager *manager;
+
+            if (has_manager(plugin, device_info->name))
+                return GDK_FILTER_CONTINUE;
+
+            manager = gsd_pointing_device_manager_new(gdk_x11_get_xatom_name(device_info->type),
+                                                      device_info->name);
+            if (manager) {
+                gsd_pointing_device_manager_start(manager, NULL);
+                plugin->managers = g_list_prepend(plugin->managers, manager);
+            }
+        } else if (notify_event->devchange == DeviceRemoved) {
+        }
+    }
+
+    return GDK_FILTER_CONTINUE;
+}
+
+static void
+add_device_presence_filter (GsdPointingDevicePlugin *plugin)
+{
+    Display *display;
+    XEventClass class_presence;
+    gint xi_presence;
+
+    gint op_code, event, error;
+
+    if (!XQueryExtension(GDK_DISPLAY(),
+                         "XInputExtension",
+                         &op_code,
+                         &event,
+                         &error)) {
+        return;
+    }
+
+    display = gdk_x11_get_default_xdisplay();
+
+    gdk_error_trap_push();
+    DevicePresence(display, xi_presence, class_presence);
+    XSelectExtensionEvent(display,
+                          RootWindow(display, DefaultScreen(display)),
+                          &class_presence, 1);
+    gdk_flush();
+    if (!gdk_error_trap_pop())
+        gdk_window_add_filter(NULL, device_presence_filter, plugin);
+}
+
+static void
+remove_device_presence_filter (GsdPointingDevicePlugin *plugin)
+{
+    gdk_window_remove_filter(NULL, device_presence_filter, plugin);
 }
 
 static void
@@ -109,7 +158,10 @@ activate (GnomeSettingsPlugin *plugin)
 
     pointing_device_plugin = GSD_POINTING_DEVICE_PLUGIN(plugin); 
 
-    pointer_device_infos = collect_pointer_device_infos_from_gconf();
+    add_device_presence_filter(pointing_device_plugin);
+
+    pointer_device_infos = gpds_xinput_utils_collect_pointer_infos();
+
     for (node = pointer_device_infos; node; node = g_list_next(node)) {
         GsdPointingDeviceManager *manager;
         GpdsXInputPointerInfo *info = node->data;
@@ -132,6 +184,8 @@ static void
 stop_all_managers (GsdPointingDevicePlugin *plugin)
 {
     GList *node;
+
+    remove_device_presence_filter(plugin);
 
     for (node = plugin->managers; node; node = g_list_next(node)) {
         GsdPointingDeviceManager *manager = node->data;

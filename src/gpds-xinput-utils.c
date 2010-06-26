@@ -62,6 +62,33 @@ gpds_xinput_utils_get_device_info (const gchar *device_name, GError **error)
     return NULL;
 }
 
+XDeviceInfo *
+gpds_xinput_utils_get_device_info_from_id  (XID id, GError **error)
+{
+    XDeviceInfo *device_infos;
+    gint i, n_device_infos;
+
+    device_infos = XListInputDevices(GDK_DISPLAY(), &n_device_infos);
+
+    for (i = 0; i < n_device_infos; i++) {
+        if (device_infos[i].use != IsXExtensionPointer)
+            continue;
+        if (device_infos[i].id == id) {
+            XFreeDeviceList(device_infos);
+            return &device_infos[i];
+        }
+    }
+
+    XFreeDeviceList(device_infos);
+
+    g_set_error(error,
+                GPDS_XINPUT_UTILS_ERROR,
+                GPDS_XINPUT_UTILS_ERROR_NO_DEVICE,
+                _("No device found for %d."), (int)id);
+
+    return NULL;
+}
+
 gshort
 gpds_xinput_utils_get_device_num_buttons (const gchar *device_name, GError **error)
 {

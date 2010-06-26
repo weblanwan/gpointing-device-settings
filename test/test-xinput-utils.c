@@ -6,6 +6,7 @@
 void test_exist_device (void);
 void test_get_float_atom (void);
 void test_get_device_info (void);
+void test_get_device_info_from_id (void);
 void test_open_device (void);
 void test_open_no_device (void);
 void test_get_device_num_buttons (void);
@@ -49,11 +50,24 @@ test_get_float_atom (void)
 void
 test_get_device_info (void)
 {
-    XDeviceInfo *device_info = NULL; 
+    XDeviceInfo *device_info = NULL;
     device_info = gpds_xinput_utils_get_device_info(DEVICE_NAME, &error);
     cut_assert(device_info);
 
     gcut_assert_error(error);
+}
+
+void
+test_get_device_info_from_id (void)
+{
+    XDeviceInfo *device_info = NULL;
+    device_info = gpds_xinput_utils_get_device_info(DEVICE_NAME, &error);
+    cut_assert(device_info);
+
+    gcut_assert_error(error);
+
+    device_info = gpds_xinput_utils_get_device_info_from_id(device_info->id, &error);
+    cut_assert_equal_string(DEVICE_NAME, device_info->name);
 }
 
 void
