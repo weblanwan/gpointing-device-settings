@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-24 13:21+0000\n"
-"PO-Revision-Date: 2010-03-25 12:48+0100\n"
+"POT-Creation-Date: 2010-06-26 11:00+0000\n"
+"PO-Revision-Date: 2010-06-27 19:07+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,12 +40,17 @@ msgstr ""
 "Formattypen stimmen nicht überein.\n"
 "%s ist angegeben, aber %s wurde zurückgegeben."
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Kein Gerät gefunden für %d."
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "Gerät %s konnte nicht geöffnet werden."
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
 msgstr "Kein Float-Atom im X-Server"
@@ -301,8 +306,8 @@ msgstr "Pointing-Device-Plugin aktivieren"
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
-"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings "
-"verwendet wird."
+"Legt fest, ob das Plugin zur Verwaltung der GPointingDeviceSettings verwendet "
+"wird."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
 msgid "Pointing devices"
