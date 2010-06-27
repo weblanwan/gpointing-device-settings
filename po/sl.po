@@ -1,6 +1,6 @@
-# Slovenian translation for gpointing-device-settings.
+# Slovenian translations for gpointing-device-settings.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the gpointing-device-settings package.
 #
 # Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009 - 2010.
 #
@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-12 10:36+0000\n"
-"PO-Revision-Date: 2010-05-30 11:13+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2010-06-26 11:00+0000\n"
+"PO-Revision-Date: 2010-06-27 18:21+0100\n"
+"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,26 +48,31 @@ msgstr ""
 "Vrsta zapisa se ne ujema.\n"
 "Naveden je %s, vrnjen pa %s."
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Ni najdene naprave za %d."
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "Naprave %s ni mogoče odpreti."
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
 msgstr "Ni plavajočega atoma v XServer"
 
-#: ../modules/gpds-touchpad-ui.c:1029
-#: ../modules/gpds-mouse-ui.c:440
-#: ../modules/gpds-pointingstick-ui.c:212
+#: ../modules/gpds-touchpad-ui.c:1155
+#: ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
 msgstr "%s ni mogoče najti."
 
-#: ../modules/gpds-touchpad-ui.c:1078
-#: ../modules/gpds-mouse-ui.c:489
-#: ../modules/gpds-pointingstick-ui.c:261
+#: ../modules/gpds-touchpad-ui.c:1329
+#: ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Ni gradnika (%s)."
@@ -331,3 +336,4 @@ msgstr "Nastavitve možnosti vaših kazalnih naprav"
 
 #~ msgid "GPointing Device Settings"
 #~ msgstr "Nastavitve naprave GPointing"
+
