@@ -2,12 +2,13 @@
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-04 10:30+0000\n"
-"PO-Revision-Date: 2010-03-07 14:50+0100\n"
+"POT-Creation-Date: 2010-06-26 11:00+0000\n"
+"PO-Revision-Date: 2010-06-27 11:40+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,22 +16,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
 msgstr "No se encontró %s."
 
-#: ../src/gpds-xinput.c:214
+#: ../src/gpds-xinput.c:220
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "Ocurrió un error de las X. El error fue %s."
 
-#: ../src/gpds-xinput.c:300 ../src/gpds-xinput.c:318 ../src/gpds-xinput.c:336
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "No hay una propiedad registrada para %d."
 
-#: ../src/gpds-xinput.c:438 ../src/gpds-xinput.c:605
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -39,24 +40,29 @@ msgstr ""
 "El tipo de formato no coincide.\n"
 "%s está especificado, pero devuelve %s."
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "No se encontró dispositivo para %d."
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "No se pudo abrir el dispositivo %s."
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
 msgstr "No hay átomo flotante en el servidor X"
 
-#: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
-#: ../modules/gpds-pointingstick-ui.c:212
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
 msgstr "No se encontró %s."
 
-#: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
-#: ../modules/gpds-pointingstick-ui.c:261
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "No existe el widget (%s)."
@@ -256,10 +262,6 @@ msgstr "_rango:"
 msgid "pre_ssure:"
 msgstr "pre_sión:"
 
-#: ../data/main-window.ui.h:1
-msgid "GPointing Device Settings"
-msgstr "Ajustes del dispositivo apuntador"
-
 #: ../data/pointingstick.ui.h:1
 msgid "<b>Press to Select</b>"
 msgstr "<b>Pulsar para seleccionar</b>"
@@ -269,7 +271,6 @@ msgid "<b>Sensitivity</b>"
 msgstr "<b>Sensibilidad</b>"
 
 #: ../data/pointingstick.ui.h:4
-#| msgid "<b>Guest Mouse</b>"
 msgid "<b>Speed</b>"
 msgstr "<b>Velocidad</b>"
 
@@ -294,7 +295,6 @@ msgid "_Sensitivity:"
 msgstr "_Sensibilidad:"
 
 #: ../data/pointingstick.ui.h:16
-#| msgid "Speed"
 msgid "_Speed:"
 msgstr "Ve_locidad:"
 
@@ -316,6 +316,9 @@ msgstr "Dispositivos apuntadores"
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
 msgstr "Establezca sus preferencias del dispositivo apuntador"
+
+#~ msgid "GPointing Device Settings"
+#~ msgstr "Ajustes del dispositivo apuntador"
 
 #, fuzzy
 #~ msgid "<i>Range</i>"
