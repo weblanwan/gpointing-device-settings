@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-19 11:21+0000\n"
-"PO-Revision-Date: 2010-05-17 13:13+0300\n"
+"POT-Creation-Date: 2010-06-27 19:35+0000\n"
+"PO-Revision-Date: 2010-07-07 21:38+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,12 +41,17 @@ msgstr ""
 "%s oli määratud, aga tagastati %s."
 
 #, c-format
+msgid "No device found for %d."
+msgstr "%d jaoks ei leitud seadet."
+
+#, c-format
 msgid "Could not open %s device."
 msgstr "Seadet %s ei suudetud avada."
 
-#, fuzzy, c-format
+# endiselt pole kindel, aga vähemalt lause kõlab parem :)
+#, c-format
 msgid "No float atom in XServer"
-msgstr "XServeris puudub ujukoma aatom"
+msgstr "XServeris puudub ujukoma aatomi tugi"
 
 #, c-format
 msgid "%s did not find."
@@ -233,8 +238,7 @@ msgstr "_Kiirus:"
 msgid "Enable pointing-device plugin"
 msgstr "Osutamisseadme plugina lubamine"
 
-msgid ""
-"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgid "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr "Märgi see, et plugin haldaks GPointingDeviceSettings sätteid."
 
 msgid "Pointing devices"
