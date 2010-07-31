@@ -1,36 +1,36 @@
 # Chinese (China) translation for gpointing-device-settings.
 # Copyright (C) 2009 gpointing-device-settings's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gpointing-device-settings package.
-# YunQiang Su <wzssyqa@gmail.com>, 2009,2010.
 #
+# YunQiang Su <wzssyqa@gmail.com>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-09 18:35+0000\n"
-"PO-Revision-Date: 2010-02-11 23:20+0800\n"
+"POT-Creation-Date: 2010-07-12 00:22+0000\n"
+"PO-Revision-Date: 2010-07-31 11:23+0800\n"
 "Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
 msgstr "没有发现 %s"
 
-#: ../src/gpds-xinput.c:214
+#: ../src/gpds-xinput.c:220
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "X 发生了错误。这个错误是 %s 。"
 
-#: ../src/gpds-xinput.c:300 ../src/gpds-xinput.c:318 ../src/gpds-xinput.c:336
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "没有为 %d 注册属性。"
 
-#: ../src/gpds-xinput.c:438 ../src/gpds-xinput.c:605
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -39,24 +39,29 @@ msgstr ""
 "格式类型不匹配。\n"
 "指定的是 %s ，但是返回的是 %s。"
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "没有为 %d 找到设备。"
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "不能打开设备 %s。"
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
 msgstr "XServer 无浮动原子"
 
-#: ../modules/gpds-touchpad-ui.c:1029 ../modules/gpds-mouse-ui.c:440
-#: ../modules/gpds-pointingstick-ui.c:207
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
 msgstr "没有发现 %s 。"
 
-#: ../modules/gpds-touchpad-ui.c:1078 ../modules/gpds-mouse-ui.c:489
-#: ../modules/gpds-pointingstick-ui.c:256
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "没有部件 (%s)"
@@ -72,11 +77,11 @@ msgstr "<b>模拟中键</b>"
 msgid "<b>Wheel Emulation</b>"
 msgstr "<b>模拟滚轮</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:5
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:7
 msgid "<i>Long</i>"
 msgstr "<i>长</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:7
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:9
 msgid "<i>Short</i>"
 msgstr "<i>短</i>"
 
@@ -129,15 +134,15 @@ msgstr "<b>手掌探测</b>"
 msgid "<b>Scrolling</b>"
 msgstr "<b>滚动</b>"
 
-#: ../data/touchpad.ui.h:5
+#: ../data/touchpad.ui.h:5 ../data/pointingstick.ui.h:5
 msgid "<i>Fast</i>"
 msgstr "<i>快</i>"
 
-#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:4
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:6
 msgid "<i>High</i>"
 msgstr "<i>高</i>"
 
-#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:6
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:8
 msgid "<i>Low</i>"
 msgstr "<i>低</i>"
 
@@ -145,7 +150,7 @@ msgstr "<i>低</i>"
 msgid "<i>Narrow</i>"
 msgstr "<i>窄</i>"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:11 ../data/pointingstick.ui.h:10
 msgid "<i>Slow</i>"
 msgstr "<i>慢</i>"
 
@@ -259,10 +264,6 @@ msgstr "区域(_R):"
 msgid "pre_ssure:"
 msgstr "压力(_P)："
 
-#: ../data/main-window.ui.h:1
-msgid "GPointing Device Settings"
-msgstr "触摸设备管理器"
-
 #: ../data/pointingstick.ui.h:1
 msgid "<b>Press to Select</b>"
 msgstr "<b>按下以选择</b>"
@@ -271,25 +272,37 @@ msgstr "<b>按下以选择</b>"
 msgid "<b>Sensitivity</b>"
 msgstr "<b>敏感性</b>"
 
-#: ../data/pointingstick.ui.h:8
+#: ../data/pointingstick.ui.h:4
+#, fuzzy
+#| msgid "<b>Guest Mouse</b>"
+msgid "<b>Speed</b>"
+msgstr "<b>外来鼠标</b>"
+
+#: ../data/pointingstick.ui.h:11
 msgid "Enable _Press to Select"
 msgstr "启用按压选择(_P)"
 
-#: ../data/pointingstick.ui.h:9
+#: ../data/pointingstick.ui.h:12
 msgid "Enable sc_rolling"
 msgstr "启用滚动(_R)"
 
-#: ../data/pointingstick.ui.h:10
+#: ../data/pointingstick.ui.h:13
 msgid "Middle button _timeout:"
 msgstr "中键超时(_T)"
 
-#: ../data/pointingstick.ui.h:11
+#: ../data/pointingstick.ui.h:14
 msgid "T_hreshold:"
 msgstr "灵敏度(_H)："
 
-#: ../data/pointingstick.ui.h:12
+#: ../data/pointingstick.ui.h:15
 msgid "_Sensitivity:"
 msgstr "敏感性(_S)："
+
+#: ../data/pointingstick.ui.h:16
+#, fuzzy
+#| msgid "Speed"
+msgid "_Speed:"
+msgstr "速度"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
@@ -307,3 +320,6 @@ msgstr "指点设备"
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
 msgstr "设置指点设备首选项"
+
+#~ msgid "GPointing Device Settings"
+#~ msgstr "触摸设备管理器"
