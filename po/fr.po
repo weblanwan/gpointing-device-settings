@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-13 12:14+0000\n"
+"POT-Creation-Date: 2010-08-04 22:16+0000\n"
 "PO-Revision-Date: 2010-03-13 23:52+0100\n"
 "Last-Translator: Cédric Felizard <cedric.felizard@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -43,24 +43,29 @@ msgstr ""
 "Le type de format ne correspond pas.\n"
 "%s est indiqué mais %s est retourné."
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Aucun périphérique trouvé pour %d."
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "Impossible d'ouvrir le périphérique %s."
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
 msgstr "Pas de « float atom » dans XServer"
 
-#: ../modules/gpds-touchpad-ui.c:1127 ../modules/gpds-mouse-ui.c:511
-#: ../modules/gpds-pointingstick-ui.c:236
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
 msgstr "%s n'a pas été trouvé."
 
-#: ../modules/gpds-touchpad-ui.c:1301 ../modules/gpds-mouse-ui.c:655
-#: ../modules/gpds-pointingstick-ui.c:380
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
 msgstr "Il n'y a pas d'élément graphique (%s)."
