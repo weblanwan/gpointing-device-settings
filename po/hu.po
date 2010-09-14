@@ -1,15 +1,15 @@
-# HUNGARIAN TRANSLATION FOR GPOINTER DEVICE SETTINGS.
+# Hungarian translation of gpointing-device-settings
 # Copyright (C) 2010 Free Software Foundation, Inc.
-# This file is distributed under the same license as the GPOINTER DEVICE SETTINHS package.
+# This file is distributed under the same license as the gpointing-device-settings package.
 #
-# Németh Tamás <ntomasz@uhuklub.hu>, 2010.
+# Németh Tamás <ntomasz at uhuklub dot hu>, 2010.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gpointer-device-settings MASTER\n"
+"Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-14 12:20+0200\n"
-"PO-Revision-Date: 2010-09-14 12:19+0200\n"
+"POT-Creation-Date: 2010-09-14 12:25+0200\n"
+"PO-Revision-Date: 2010-09-14 12:25+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
@@ -393,8 +393,8 @@ msgstr "A mutatóeszközök tulajdonságainak beállítása"
 
 #: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
 msgid "Dry _run"
-msgstr ""
+msgstr "_Próbaüzem"
 
 #: ../src/gpds-main-window.c:572
 msgid "_Finish dry run"
-msgstr ""
+msgstr "Próbaü_zem befejezése"
