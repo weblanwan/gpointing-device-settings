@@ -46,7 +46,7 @@ msgstr "%d jaoks ei leitud seadet."
 
 #, c-format
 msgid "Could not open %s device."
-msgstr "Seadet %s ei suudetud avada."
+msgstr "Seadet %s pole võimalik avada."
 
 # endiselt pole kindel, aga vähemalt lause kõlab parem :)
 #, c-format
