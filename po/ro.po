@@ -1,0 +1,396 @@
+# Romanian translation for gpointing-device-settings.
+# Copyright (C) 2010 gpointing-device-settings's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gpointing-device-settings package.
+# Cristian Iacobescu <cristy_hereg93@yahoo.com>, 2010.
+# Iacobescu Cristian <cristy_hereg93@yahoo.com>, 2010.
+# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-20 18:14+0000\n"
+"PO-Revision-Date: 2010-12-08 18:44+0300\n"
+"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
+"Language-Team: Romanian Gnome Team <gnomero-list@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Virtaal 0.6.1\n"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "Niciun %s găsit."
+
+#: ../src/gpds-xinput.c:220
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "O eroare X a avut loc. Eroarea este %s."
+
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "Nu există nicio proprietate înregistrată pentru %d."
+
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Tipul formatului este nepotrivit.\n"
+"%s este specificat, dar %s returnează."
+
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Nu s-a găsit niciun dispozitiv pentru %d."
+
+#: ../src/gpds-xinput-utils.c:134
+#, c-format
+msgid "Could not open %s device."
+msgstr "Nu se poate deschide dispozitivul %s."
+
+#: ../src/gpds-xinput-utils.c:151
+#, c-format
+msgid "No float atom in XServer"
+msgstr "Niciun „float atom” în XServer"
+
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
+#, c-format
+msgid "%s did not find."
+msgstr "%s nu s-a găsit."
+
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Nu există niciun widget(%s)."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Emularea butonului mijloc</b>"
+
+#: ../data/mouse.ui.h:2
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Emularea rotiței</b>"
+
+#: ../data/mouse.ui.h:3
+msgid "Enable _horizontal scroll"
+msgstr "Activează derularea _orizontală"
+
+#: ../data/mouse.ui.h:4
+msgid "Enable _vertical scroll"
+msgstr "Activează derularea _verticală"
+
+#: ../data/mouse.ui.h:5
+msgid "Use _middle button emulation"
+msgstr "Emulează butonul din _mijloc"
+
+#: ../data/mouse.ui.h:6
+msgid "Use _wheel emulation"
+msgstr "Emulea_ză rotița din mijloc"
+
+#: ../data/mouse.ui.h:7
+msgid "_button:"
+msgstr "_butonul:"
+
+#: ../data/mouse.ui.h:8
+msgid "_inertia:"
+msgstr "_inerție:"
+
+#: ../data/mouse.ui.h:9 ../data/touchpad.ui.h:36
+msgid "_timeout:"
+msgstr "_limita de timp:"
+
+#: ../data/mouse.ui.h:10
+msgctxt "inertia"
+msgid "<i>Long</i>"
+msgstr "<i>Lungă</i>"
+
+#: ../data/mouse.ui.h:11
+msgctxt "inertia"
+msgid "<i>Short</i>"
+msgstr "<i>Scurtă</i>"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "limită de ti_mp:"
+
+#: ../data/mouse.ui.h:13 ../data/touchpad.ui.h:42
+#: ../data/pointingstick.ui.h:17
+msgctxt "timeout"
+msgid "<i>Long</i>"
+msgstr "<i>Lungă</i>"
+
+#: ../data/mouse.ui.h:14 ../data/touchpad.ui.h:43
+#: ../data/pointingstick.ui.h:18
+msgctxt "timeout"
+msgid "<i>Short</i>"
+msgstr "<i>Scurtă</i>"
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>Maus străin</b>"
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr "<b>Trageri blocate</b>"
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr "<b>Detectare palmă</b>"
+
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
+msgid "<b>Scrolling</b>"
+msgstr "<b>Derulare</b>"
+
+#: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>Repede</i>"
+
+#: ../data/touchpad.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>Ridicat</i>"
+
+#: ../data/touchpad.ui.h:7
+msgid "<i>Low</i>"
+msgstr "<i>Redus</i>"
+
+#: ../data/touchpad.ui.h:8
+msgid "<i>Narrow</i>"
+msgstr "<i>Îngust</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Slow</i>"
+msgstr "<i>Încet</i>"
+
+#: ../data/touchpad.ui.h:10
+msgid "<i>Wide</i>"
+msgstr "<i>Larg</i>"
+
+#: ../data/touchpad.ui.h:11
+msgid "Acceleration"
+msgstr "Accelerare"
+
+#: ../data/touchpad.ui.h:12
+msgid "Disable _tapping"
+msgstr "Dezactivează a_tingerea"
+
+#: ../data/touchpad.ui.h:13
+msgid "Disable _tapping and scrolling"
+msgstr "Dezactivează a_tingerea și derularea"
+
+#: ../data/touchpad.ui.h:14
+msgid "Disable while any _other devices are connected"
+msgstr "Dezactivează când _oricare alte dispozitive sunt conectate"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable Ci_rcular scrolling"
+msgstr "Activează derularea ci_rculară"
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _faster tapping"
+msgstr "Activea_ză atingerea _rapidă"
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _horizontal scrolling"
+msgstr "Activează derularea _orizontală"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _locked drags"
+msgstr "Activează _tragerile blocate"
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable _palm detection"
+msgstr "Activează detectarea _palmei"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable _vertical scrolling"
+msgstr "Activează derularea _verticală"
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable continuous edge scrolling"
+msgstr "Activează derularea continuă pe margine"
+
+#: ../data/touchpad.ui.h:22
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Activează derularea pe orizontală atunci când se trage cu două degete"
+
+#: ../data/touchpad.ui.h:23
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Activează derularea pe verticală atunci când se trage cu două degete"
+
+#: ../data/touchpad.ui.h:24
+msgid "General"
+msgstr "General"
+
+#: ../data/touchpad.ui.h:25
+msgid "Maximum speed"
+msgstr "Viteză maximă"
+
+#: ../data/touchpad.ui.h:26
+msgid "Mimimum speed"
+msgstr "Viteză minimă"
+
+#: ../data/touchpad.ui.h:27
+msgid "Scrolling"
+msgstr "Derulare"
+
+#: ../data/touchpad.ui.h:28
+msgid "Set _guest mouse off"
+msgstr "Oprește _mausul străin"
+
+#: ../data/touchpad.ui.h:29
+msgid "Speed"
+msgstr "Viteză"
+
+#: ../data/touchpad.ui.h:30
+msgid "Start point of circular scrolling:"
+msgstr "Punctul de start al derulării circulare:"
+
+#: ../data/touchpad.ui.h:31
+msgid "Tapping"
+msgstr "Atingere"
+
+#: ../data/touchpad.ui.h:32
+msgid "Tapping move: "
+msgstr "Mișcarea atingerii:"
+
+#: ../data/touchpad.ui.h:33
+msgid "Tapping time: "
+msgstr "Timpul atingerii:"
+
+#: ../data/touchpad.ui.h:34
+msgid "_Disable touchpad"
+msgstr "_Dezactivează touchpad-ul"
+
+#: ../data/touchpad.ui.h:35
+msgid "_range:"
+msgstr "_arie:"
+
+#: ../data/touchpad.ui.h:37
+msgctxt "distance"
+msgid "<i>Long</i>"
+msgstr "<i>Lungă</i>"
+
+#: ../data/touchpad.ui.h:38
+msgctxt "distance"
+msgid "<i>Short</i>"
+msgstr "<i>Scurtă</i>"
+
+#: ../data/touchpad.ui.h:39
+msgid "pre_ssure:"
+msgstr "pre_siune:"
+
+#: ../data/touchpad.ui.h:40
+msgctxt "time"
+msgid "<i>Long</i>"
+msgstr "<i>Lungă</i>"
+
+#: ../data/touchpad.ui.h:41
+msgctxt "time"
+msgid "<i>Short</i>"
+msgstr "<i>Scurtă</i>"
+
+#: ../data/touchpad.ui.h:44
+msgctxt "yes"
+msgid "<i>High</i>"
+msgstr "<i>Ridicată</i>"
+
+#: ../data/touchpad.ui.h:45
+msgctxt "yes"
+msgid "<i>Low</i>"
+msgstr "<i>Redusă</i>"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<b>Apasă pentru a selecta</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Sensibilitate</b>"
+
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Viteză</b>"
+
+#: ../data/pointingstick.ui.h:5
+msgid "Enable _Press to Select"
+msgstr "Activează „A_pasă pentru a selecta”"
+
+#: ../data/pointingstick.ui.h:6
+msgid "Enable sc_rolling"
+msgstr "Activează _derularea"
+
+#: ../data/pointingstick.ui.h:7
+msgid "Middle button _timeout:"
+msgstr "Limita de _timp a butonului din mijloc:"
+
+#: ../data/pointingstick.ui.h:8
+msgid "T_hreshold:"
+msgstr "_Prag:"
+
+#: ../data/pointingstick.ui.h:9
+msgid "_Sensitivity:"
+msgstr "_Sensibilitate:"
+
+#: ../data/pointingstick.ui.h:10
+msgid "_Speed:"
+msgstr "_Viteză:"
+
+#: ../data/pointingstick.ui.h:11
+msgctxt "sensitivity"
+msgid "<i>High</i>"
+msgstr "<i>Ridicată</i>"
+
+#: ../data/pointingstick.ui.h:12
+msgctxt "sensitivity"
+msgid "<i>Low</i>"
+msgstr "<i>Redusă</i>"
+
+#: ../data/pointingstick.ui.h:13
+msgctxt "speed"
+msgid "<i>Fast</i>"
+msgstr "<i>Rapidă</i>"
+
+#: ../data/pointingstick.ui.h:14
+msgctxt "speed"
+msgid "<i>Slow</i>"
+msgstr "<i>Înceată</i>"
+
+#: ../data/pointingstick.ui.h:15
+msgctxt "threshold"
+msgid "<i>High</i>"
+msgstr "<i>Ridicat</i>"
+
+#: ../data/pointingstick.ui.h:16
+msgctxt "threshold"
+msgid "<i>Low</i>"
+msgstr "<i>Redus</i>"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Activează modulul pointing-device"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Dacă este adevărat, se activează modulul pentru gestionarea configurărilor "
+"GPointingDeviceSettings."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "Dispozitive de indicare"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "Configurează preferințele pentru dispozitivele de indicare"
