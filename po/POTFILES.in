@@ -1,3 +1,4 @@
+src/gpds-main-window.c
 src/gpds-ui.c
 src/gpds-xinput-ui.c
 src/gpds-xinput.c
@@ -11,4 +12,3 @@ modules/gpds-mouse-ui.c
 data/gpointing-device-settings_gnome_settings_daemon.schemas.in
 data/gpointing-device-settings.desktop.in.in
 modules/gpds-pointingstick-ui.c
-
