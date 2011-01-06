@@ -2,19 +2,28 @@
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-08 20:28+0000\n"
-"PO-Revision-Date: 2010-09-09 20:46+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2011-01-03 22:20+0000\n"
+"PO-Revision-Date: 2011-01-05 13:24+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "Ejecución en _seco"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Finalizar ejecución en seco"
 
 #: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
@@ -107,13 +116,11 @@ msgid "_timeout:"
 msgstr "_tiempo de expiración:"
 
 #: ../data/mouse.ui.h:10
-#| msgid "<i>Long</i>"
 msgctxt "inertia"
 msgid "<i>Long</i>"
 msgstr "<i>Largo</i>"
 
 #: ../data/mouse.ui.h:11
-#| msgid "<i>Short</i>"
 msgctxt "inertia"
 msgid "<i>Short</i>"
 msgstr "<i>Corto</i>"
@@ -124,14 +131,12 @@ msgstr "ti_empo de expiración:"
 
 #: ../data/mouse.ui.h:13 ../data/touchpad.ui.h:42
 #: ../data/pointingstick.ui.h:17
-#| msgid "<i>Long</i>"
 msgctxt "timeout"
 msgid "<i>Long</i>"
 msgstr "<i>Largo</i>"
 
 #: ../data/mouse.ui.h:14 ../data/touchpad.ui.h:43
 #: ../data/pointingstick.ui.h:18
-#| msgid "<i>Short</i>"
 msgctxt "timeout"
 msgid "<i>Short</i>"
 msgstr "<i>Corto</i>"
@@ -277,13 +282,11 @@ msgid "_range:"
 msgstr "_rango:"
 
 #: ../data/touchpad.ui.h:37
-#| msgid "<i>Long</i>"
 msgctxt "distance"
 msgid "<i>Long</i>"
 msgstr "<i>Larga</i>"
 
 #: ../data/touchpad.ui.h:38
-#| msgid "<i>Short</i>"
 msgctxt "distance"
 msgid "<i>Short</i>"
 msgstr "<i>Corta</i>"
@@ -293,25 +296,21 @@ msgid "pre_ssure:"
 msgstr "pre_sión:"
 
 #: ../data/touchpad.ui.h:40
-#| msgid "<i>Long</i>"
 msgctxt "time"
 msgid "<i>Long</i>"
 msgstr "<i>Largo</i>"
 
 #: ../data/touchpad.ui.h:41
-#| msgid "<i>Short</i>"
 msgctxt "time"
 msgid "<i>Short</i>"
 msgstr "<i>Corto</i>"
 
 #: ../data/touchpad.ui.h:44
-#| msgid "<i>High</i>"
 msgctxt "yes"
 msgid "<i>High</i>"
 msgstr "<i>Alto</i>"
 
 #: ../data/touchpad.ui.h:45
-#| msgid "<i>Low</i>"
 msgctxt "yes"
 msgid "<i>Low</i>"
 msgstr "<i>Bajo</i>"
@@ -353,37 +352,31 @@ msgid "_Speed:"
 msgstr "Ve_locidad:"
 
 #: ../data/pointingstick.ui.h:11
-#| msgid "<i>High</i>"
 msgctxt "sensitivity"
 msgid "<i>High</i>"
 msgstr "<i>Alta</i>"
 
 #: ../data/pointingstick.ui.h:12
-#| msgid "<i>Low</i>"
 msgctxt "sensitivity"
 msgid "<i>Low</i>"
 msgstr "<i>Baja</i>"
 
 #: ../data/pointingstick.ui.h:13
-#| msgid "<i>Fast</i>"
 msgctxt "speed"
 msgid "<i>Fast</i>"
 msgstr "<i>Rápida</i>"
 
 #: ../data/pointingstick.ui.h:14
-#| msgid "<i>Slow</i>"
 msgctxt "speed"
 msgid "<i>Slow</i>"
 msgstr "<i>Lenta</i>"
 
 #: ../data/pointingstick.ui.h:15
-#| msgid "<i>High</i>"
 msgctxt "threshold"
 msgid "<i>High</i>"
 msgstr "<i>Alto</i>"
 
 #: ../data/pointingstick.ui.h:16
-#| msgid "<i>Low</i>"
 msgctxt "threshold"
 msgid "<i>Low</i>"
 msgstr "<i>Bajo</i>"
