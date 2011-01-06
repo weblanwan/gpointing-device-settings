@@ -4,14 +4,14 @@
 #
 # Michal Čihař <michal@cihar.com>, 2009.
 # Lucas Lommer <llommer@svn.gnome.org>, 2010.
-# Marek Černocký <marek@manet.cz>, 2009, 2010.
+# Marek Černocký <marek@manet.cz>, 2009 – 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-10 07:44+0000\n"
-"PO-Revision-Date: 2010-09-11 18:16+0200\n"
+"POT-Creation-Date: 2011-01-06 11:46+0000\n"
+"PO-Revision-Date: 2011-01-06 12:57+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "_Vyzkoušet"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Ukončit zkoušku"
 
 #: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
@@ -394,4 +402,3 @@ msgstr "Polohovací zařízení"
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
 msgstr "Nastavení předvoleb vašeho polohovacího zařízení"
-
