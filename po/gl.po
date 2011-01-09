@@ -1,96 +1,404 @@
-# Spanish translation for the-board.
-# Copyright (C) 2010 the-board's COPYRIGHT HOLDER
-# This file is distributed under the same license as the the-board package.
-# Jorge González <jorgegonz@svn.gnome.org>, 2010.
-# Fran Diéguez <frandieguez@ubuntu.com>, 2010.
+# Galician translation for gpointing-device-settings.
+# Copyright (C) 2009 gpointing-device-settings's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gpointing-device-settings package.
+# Fran Diéguez <frandieguez@ubuntu.com>, 2009, 2010, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: the-board master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=the-"
-"board&component=general\n"
-"POT-Creation-Date: 2011-01-06 12:25+0000\n"
-"PO-Revision-Date: 2010-12-16 22:26+0100\n"
-"Last-Translator: marcoslans <marcoslansgarza@gmail.com>\n"
+"Project-Id-Version: gpointing-device-settings master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-09 16:02+0100\n"
+"PO-Revision-Date: 2011-01-09 16:04+0100\n"
+"Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome-gl-list@gnome.org>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Poedit-Language: Galician\n"
 
-#: ../data/the-board.desktop.in.in.h:1
-msgid "Make daily records in a board"
-msgstr "Facer rexistros diarios nun taboleiro"
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "Execución en _seco"
 
-#: ../src/js/ui/backgrounds/checked.js:11
-msgid "Checked"
-msgstr "Comprobado"
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Rematar execución en seco"
 
-#: ../src/js/ui/backgrounds/grass.js:11
-msgid "Grass"
-msgstr "Céspede"
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "Non se atopou %s."
 
-#: ../src/js/ui/backgrounds/paper.js:11
-msgid "Paper"
-msgstr "Papel"
+#: ../src/gpds-xinput.c:220
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "Produciuse un erro X. O erro foi %s."
 
-#: ../src/js/ui/backgrounds/wood.js:11
-msgid "Wood"
-msgstr "Madeira"
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "Non hai unha propiedade para %d rexistrada."
 
-#: ../src/js/ui/things/label.js:14
-msgid "Label"
-msgstr "Etiqueta"
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"O tipo de formato non coincide.\n"
+"%s está especificado pero devolveuse %s."
 
-#: ../src/js/ui/things/note.js:14
-msgid "Note"
-msgstr "Nota"
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Non se encontrou un dispositivo para %d."
 
-#: ../src/js/ui/things/photo.js:23
-msgid "Photo"
-msgstr "Foto"
+#: ../src/gpds-xinput-utils.c:134
+#, c-format
+msgid "Could not open %s device."
+msgstr "Non foi posíbel abrir o dispositivo %s."
 
-#: ../src/js/ui/things/photo.js:408 ../src/js/ui/things/video.js:653
-msgid "Load from"
-msgstr "Cargar desde"
+#: ../src/gpds-xinput-utils.c:151
+#, c-format
+msgid "No float atom in XServer"
+msgstr "Non se atopou un átomo flotante en XServer"
 
-#: ../src/js/ui/things/photo.js:411 ../src/js/ui/things/video.js:656
-msgid "File"
-msgstr "Ficheiro"
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
+#, c-format
+msgid "%s did not find."
+msgstr "%s non se atopou."
 
-#: ../src/js/ui/things/video.js:24
-msgid "Video"
-msgstr "Vídeo"
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Non hai un widget(%s)."
 
-#: ../src/js/ui/application.js:156 ../src/js/ui/application.js:167
-msgid "Added to The Board"
-msgstr "Engadido ao taboleiro"
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Emulación do botón medio</b>"
 
-#: ../src/js/ui/mainWindow.js:187
-msgid "The Board is loading. Just a sec."
-msgstr "Estase cargando o taboleiro. Só un segundo."
+#: ../data/mouse.ui.h:2
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Emulación de roda</b>"
 
-#: ../src/js/ui/pageButton.js:110
-msgid "Add Page"
-msgstr "Engadir unha páxina"
+#: ../data/mouse.ui.h:3
+msgid "Enable _horizontal scroll"
+msgstr "Activar desprazamento _horizontal"
 
-#: ../src/js/ui/pageButton.js:112
-msgid "Untitled"
-msgstr "Sen título"
+#: ../data/mouse.ui.h:4
+msgid "Enable _vertical scroll"
+msgstr "Activar desprazamento _vertical"
 
-#: ../src/js/ui/toolBoxBackgrounds.js:29
-msgid "Background"
-msgstr "Fondo de pantalla"
+#: ../data/mouse.ui.h:5
+msgid "Use _middle button emulation"
+msgstr "Empregar a emulación do botón _medio"
 
-#: ../src/js/ui/toolBoxThings.js:29
-msgid "Add"
-msgstr "Engadir"
+#: ../data/mouse.ui.h:6
+msgid "Use _wheel emulation"
+msgstr "Empregar emulación da _roda"
 
-#: ../src/nautilus/tb-nautilus.c:252
-msgid "Add to The Board"
-msgstr "Engadir ao taboleiro"
+#: ../data/mouse.ui.h:7
+msgid "_button:"
+msgstr "_botón:"
 
-#: ../src/nautilus/tb-nautilus.c:253
-msgid "Add selected file to the board"
-msgstr "Engadir un ficheiro seleccionado ao taboleiro"
+#: ../data/mouse.ui.h:8
+msgid "_inertia:"
+msgstr "_inercia:"
+
+#: ../data/mouse.ui.h:9 ../data/touchpad.ui.h:36
+msgid "_timeout:"
+msgstr "_tempo de espera:"
+
+#: ../data/mouse.ui.h:10
+msgctxt "inertia"
+msgid "<i>Long</i>"
+msgstr "<i>Longo</i>"
+
+#: ../data/mouse.ui.h:11
+msgctxt "inertia"
+msgid "<i>Short</i>"
+msgstr "<i>Curto</i>"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "tempo de _espera:"
+
+#: ../data/mouse.ui.h:13 ../data/touchpad.ui.h:42
+#: ../data/pointingstick.ui.h:17
+msgctxt "timeout"
+msgid "<i>Long</i>"
+msgstr "<i>Longo</i>"
+
+#: ../data/mouse.ui.h:14 ../data/touchpad.ui.h:43
+#: ../data/pointingstick.ui.h:18
+msgctxt "timeout"
+msgid "<i>Short</i>"
+msgstr "<i>Curto</i>"
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr "<i>Rato invitado</i>"
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr "<i>Arrastre bloqueado</i>"
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr "<i>Detección de Palm</i>"
+
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
+msgid "<b>Scrolling</b>"
+msgstr "<i>Desprazamento</i>"
+
+#: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>Rápido</i>"
+
+#: ../data/touchpad.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>Alta</i>"
+
+#: ../data/touchpad.ui.h:7
+msgid "<i>Low</i>"
+msgstr "<i>Baixa</i>"
+
+#: ../data/touchpad.ui.h:8
+msgid "<i>Narrow</i>"
+msgstr "<i>Estreito</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Slow</i>"
+msgstr "<i>Lento</i>"
+
+#: ../data/touchpad.ui.h:10
+msgid "<i>Wide</i>"
+msgstr "<i>Amplo</i>"
+
+#: ../data/touchpad.ui.h:11
+msgid "Acceleration"
+msgstr "Aceleración"
+
+#: ../data/touchpad.ui.h:12
+msgid "Disable _tapping"
+msgstr "Activar toques _rápidos"
+
+#: ../data/touchpad.ui.h:13
+msgid "Disable _tapping and scrolling"
+msgstr "Desactivar os _toques rápidos e o desprazamento"
+
+#: ../data/touchpad.ui.h:14
+msgid "Disable while any _other devices are connected"
+msgstr "Desactivar mentres calquera _outro dispositivo estea conectado"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable Ci_rcular scrolling"
+msgstr "Activar desprazamento ci_rcular"
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _faster tapping"
+msgstr "Activar toques _rápidos"
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _horizontal scrolling"
+msgstr "Activar desprazamento _horizontal"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _locked drags"
+msgstr "Activar _bloqueo do arrastre"
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable _palm detection"
+msgstr "Activar a detección de _palm"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable _vertical scrolling"
+msgstr "Activar desprazamento _vertical"
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable continuous edge scrolling"
+msgstr "Activar desprazamento continuo de bordes"
+
+#: ../data/touchpad.ui.h:22
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Activar desprazamento horizontal ao arrastrar con dous dedos"
+
+#: ../data/touchpad.ui.h:23
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Activar desprazamento vertical ao arrastrar con dous dedos"
+
+#: ../data/touchpad.ui.h:24
+msgid "General"
+msgstr "Xeral"
+
+#: ../data/touchpad.ui.h:25
+msgid "Maximum speed"
+msgstr "Velocidade máxima"
+
+#: ../data/touchpad.ui.h:26
+msgid "Mimimum speed"
+msgstr "Velocidade mínima"
+
+#: ../data/touchpad.ui.h:27
+msgid "Scrolling"
+msgstr "Desprazamento"
+
+#: ../data/touchpad.ui.h:28
+msgid "Set _guest mouse off"
+msgstr "Desactivar o rato _invitado"
+
+#: ../data/touchpad.ui.h:29
+msgid "Speed"
+msgstr "Velocidade"
+
+#: ../data/touchpad.ui.h:30
+msgid "Start point of circular scrolling:"
+msgstr "Punto de inicio do desprazamento circular:"
+
+#: ../data/touchpad.ui.h:31
+msgid "Tapping"
+msgstr "Toque"
+
+#: ../data/touchpad.ui.h:32
+msgid "Tapping move: "
+msgstr "Movemento do toque:"
+
+#: ../data/touchpad.ui.h:33
+msgid "Tapping time: "
+msgstr "Tempo de toque:"
+
+#: ../data/touchpad.ui.h:34
+msgid "_Disable touchpad"
+msgstr "_Desactivar touchpad"
+
+#: ../data/touchpad.ui.h:35
+msgid "_range:"
+msgstr "_rango:"
+
+#: ../data/touchpad.ui.h:37
+msgctxt "distance"
+msgid "<i>Long</i>"
+msgstr "<i>Longo</i>"
+
+#: ../data/touchpad.ui.h:38
+msgctxt "distance"
+msgid "<i>Short</i>"
+msgstr "<i>Curto</i>"
+
+#: ../data/touchpad.ui.h:39
+msgid "pre_ssure:"
+msgstr "pre_sión:"
+
+#: ../data/touchpad.ui.h:40
+msgctxt "time"
+msgid "<i>Long</i>"
+msgstr "<i>Longo</i>"
+
+#: ../data/touchpad.ui.h:41
+msgctxt "time"
+msgid "<i>Short</i>"
+msgstr "<i>Curto</i>"
+
+#: ../data/touchpad.ui.h:44
+msgctxt "yes"
+msgid "<i>High</i>"
+msgstr "<i>Alta</i>"
+
+#: ../data/touchpad.ui.h:45
+msgctxt "yes"
+msgid "<i>Low</i>"
+msgstr "<i>Baixa</i>"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<i>Prema para seleccionar</i>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Sensitibilidade</b>"
+
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<i>Velocidade</i>"
+
+#: ../data/pointingstick.ui.h:5
+msgid "Enable _Press to Select"
+msgstr "Activar _premer para seleccionar"
+
+#: ../data/pointingstick.ui.h:6
+msgid "Enable sc_rolling"
+msgstr "Activar o _desprazamento"
+
+#: ../data/pointingstick.ui.h:7
+msgid "Middle button _timeout:"
+msgstr "Tempo de _espera do botón do medio:"
+
+#: ../data/pointingstick.ui.h:8
+msgid "T_hreshold:"
+msgstr "Lí_mite:"
+
+#: ../data/pointingstick.ui.h:9
+msgid "_Sensitivity:"
+msgstr "_Sensibilidade:"
+
+#: ../data/pointingstick.ui.h:10
+msgid "_Speed:"
+msgstr "_Velocidade:"
+
+#: ../data/pointingstick.ui.h:11
+msgctxt "sensitivity"
+msgid "<i>High</i>"
+msgstr "<i>Alto</i>"
+
+#: ../data/pointingstick.ui.h:12
+msgctxt "sensitivity"
+msgid "<i>Low</i>"
+msgstr "<i>Baixo</i>"
+
+#: ../data/pointingstick.ui.h:13
+msgctxt "speed"
+msgid "<i>Fast</i>"
+msgstr "<i>Rápido</i>"
+
+#: ../data/pointingstick.ui.h:14
+msgctxt "speed"
+msgid "<i>Slow</i>"
+msgstr "<i>Lento</i>"
+
+#: ../data/pointingstick.ui.h:15
+msgctxt "threshold"
+msgid "<i>High</i>"
+msgstr "<i>Alto</i>"
+
+#: ../data/pointingstick.ui.h:16
+msgctxt "threshold"
+msgid "<i>Low</i>"
+msgstr "<i>Baixo</i>"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Activar o engadido de dispositivo de apuntamento"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Estableza a Verdadeiro para activar o engadido para xestionar as "
+"configuracións de GPointingDeviceSettings."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "Dispositivos apuntadores"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "Establece as preferencias dos seus dispositivos apuntadores"
+
+#~ msgid "GPointing Device Settings"
+#~ msgstr "Configuracións de dispositivo GPointing"
