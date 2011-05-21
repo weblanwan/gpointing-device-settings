@@ -3,247 +3,390 @@
 #
 # Tournaris Pavlos <p.tournaris@gmail.com>, 2009.
 # Simos Xenitellis <simos.lists@googlemail.com>, 2009.
+# Mel Argyropoulou <bunnydee93@gmail.com>, 2011.
+# Giannis Katsampirhs <juankatsampirhs@gmail.com>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-13 09:56+0900\n"
-"PO-Revision-Date: 2009-10-20 13:40+0300\n"
-"Last-Translator: Simos Xenitellis <simos.lists@googlemail.com>\n"
+"POT-Creation-Date: 2011-05-21 23:02+0300\n"
+"PO-Revision-Date: 2011-05-21 22:35+0300\n"
+"Last-Translator: Giannis Katsampirhs <juankatsampirhs@gmail.com>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.0\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: ../src/gpds-xinput-ui.c:91 ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "Δοκιμαστική _εκτέλεση"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Τέλος δοκιμαστικής εκτέλεσης"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
-msgstr "Δεν βρέθηκε κανένα %s."
+msgstr "Δε βρέθηκε κανένα %s."
 
-#: ../src/gpds-xinput.c:221
+#: ../src/gpds-xinput.c:220
 #, c-format
 msgid "An X error occurred. The error was %s."
 msgstr "Προέκυψε ένα σφάλμα Χ (εκ του X.Org). Το σφάλμα ήταν %s."
 
-#: ../src/gpds-xinput.c:307 ../src/gpds-xinput.c:325 ../src/gpds-xinput.c:343
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
 msgid "There is no registered property for %d."
-msgstr ""
+msgstr "Δεν υπάρχει καταχωρημένη ιδιότητα για το %d."
 
-#: ../src/gpds-xinput.c:445 ../src/gpds-xinput.c:612
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
 "%s is specified but %s returns."
 msgstr ""
+"Ο τύπος της μορφής είναι αταίριαστος.\n"
+"Έχει οριστεί %s αλλά επιστρέφεται %s."
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Δε βρέθηκε συσκευή για %d."
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "Αδύνατο το άνοιγμα της συσκευής %s."
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
-msgstr ""
+msgstr "Δεν υπάρχει αιωρούμενο άτομο στον XServer"
 
-#: ../modules/gpds-touchpad-ui.c:781 ../modules/gpds-mouse-ui.c:440
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
-msgstr "%s δε βρέθηκε."
+msgstr "Δε βρέθηκε το %s."
 
-#: ../modules/gpds-touchpad-ui.c:830 ../modules/gpds-mouse-ui.c:489
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
-msgstr ""
+msgstr "Δεν υπάρχει το γραφικό συστατικό(%s)."
 
 #.
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
 #: ../data/mouse.ui.h:1
 msgid "<b>Middle Button Emulation</b>"
-msgstr ""
+msgstr "<b>Προσομοίωση μεσαίου κουμπιού</b>"
 
 #: ../data/mouse.ui.h:2
 msgid "<b>Wheel Emulation</b>"
-msgstr ""
+msgstr "<b>Προσομοίωση τροχού</b>"
 
-#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:7 ../data/pointingstick.ui.h:7
 msgid "<i>Long</i>"
-msgstr ""
+msgstr "<i>Μακρύ</i>"
 
-#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:10 ../data/pointingstick.ui.h:9
 msgid "<i>Short</i>"
-msgstr ""
+msgstr "<i>Βραχύ</i>"
 
 #: ../data/mouse.ui.h:5
 msgid "Enable _horizontal scroll"
-msgstr ""
+msgstr "Ενεργοποίηση _οριζόντιας κύλισης"
 
 #: ../data/mouse.ui.h:6
 msgid "Enable _vertical scroll"
-msgstr ""
+msgstr "Ενεργοποίηση _κάθετης κύλισης"
 
 #: ../data/mouse.ui.h:7
 msgid "Use _middle button emulation"
-msgstr ""
+msgstr "Χρήση προσομοίωσης _μεσαίου κουμπιού"
 
 #: ../data/mouse.ui.h:8
 msgid "Use _wheel emulation"
-msgstr ""
+msgstr "Χρήση προσομοίωσης _τροχού"
 
 #: ../data/mouse.ui.h:9
 msgid "_button:"
-msgstr ""
+msgstr "_κουμπί:"
 
 #: ../data/mouse.ui.h:10
 msgid "_inertia:"
-msgstr ""
+msgstr "_αδράνεια:"
 
-#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:31
+#: ../data/mouse.ui.h:11 ../data/touchpad.ui.h:38
 msgid "_timeout:"
-msgstr ""
+msgstr "_χρονική λήξη:"
 
 #: ../data/mouse.ui.h:12
 msgid "tim_eout:"
-msgstr ""
+msgstr "χρονική _λήξη:"
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
-msgstr ""
+msgstr "<b>Δευτερεύον ποντίκι</b>"
 
 #: ../data/touchpad.ui.h:2
 msgid "<b>Locked Drags</b>"
-msgstr ""
+msgstr "<b>Κλειδωμένες μεταφορές-αποθέσεις</b>"
 
 #: ../data/touchpad.ui.h:3
 msgid "<b>Palm Detection</b>"
-msgstr ""
+msgstr "<b>Ανίχνευση συσκευής Palm</b>"
 
-#: ../data/touchpad.ui.h:4
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
-msgstr ""
+msgstr "<b>Κύλιση</b>"
 
-#: ../data/touchpad.ui.h:5
+#: ../data/touchpad.ui.h:5 ../data/pointingstick.ui.h:5
 msgid "<i>Fast</i>"
-msgstr ""
+msgstr "<i>Γρήγορα</i>"
 
-#: ../data/touchpad.ui.h:6
+#: ../data/touchpad.ui.h:6 ../data/pointingstick.ui.h:6
 msgid "<i>High</i>"
-msgstr ""
+msgstr "<i>Υψηλά</i>"
 
-#: ../data/touchpad.ui.h:8
+#: ../data/touchpad.ui.h:8 ../data/pointingstick.ui.h:8
 msgid "<i>Low</i>"
-msgstr ""
+msgstr "<i>Χαμηλά</i>"
 
 #: ../data/touchpad.ui.h:9
 msgid "<i>Narrow</i>"
-msgstr ""
+msgstr "<i>Στενά</i>"
 
-#: ../data/touchpad.ui.h:11
+#: ../data/touchpad.ui.h:11 ../data/pointingstick.ui.h:10
 msgid "<i>Slow</i>"
-msgstr ""
+msgstr "<i>Αργά</i>"
 
 #: ../data/touchpad.ui.h:12
 msgid "<i>Wide</i>"
-msgstr ""
+msgstr "<i>Πλατιά</i>"
 
 #: ../data/touchpad.ui.h:13
-msgid "Disable while _other device is connected"
-msgstr ""
+msgid "Acceleration"
+msgstr "Επιτάχυνση"
 
 #: ../data/touchpad.ui.h:14
-msgid "Enable Ci_rcular scrolling"
-msgstr ""
+msgid "Disable _tapping"
+msgstr "Απενεργοποίηση _χτύπων"
 
 #: ../data/touchpad.ui.h:15
-msgid "Enable _faster tapping"
-msgstr ""
+msgid "Disable _tapping and scrolling"
+msgstr "Απενεργοποίηση _χτύπων και κύλισης"
 
 #: ../data/touchpad.ui.h:16
-msgid "Enable _horizontal scrolling"
-msgstr ""
+msgid "Disable while any _other devices are connected"
+msgstr "Απενεργοποίηση ενώ ά_λλες συσκευές είναι συνδεδεμένες"
 
 #: ../data/touchpad.ui.h:17
-msgid "Enable _locked drags"
-msgstr ""
+msgid "Enable Ci_rcular scrolling"
+msgstr "Ενεργοποίηση κυ_κλικής κύλισης"
 
 #: ../data/touchpad.ui.h:18
-msgid "Enable _palm detection"
-msgstr ""
+msgid "Enable _faster tapping"
+msgstr "Ενεργοποίηση _ταχύτερων χτύπων"
 
 #: ../data/touchpad.ui.h:19
-msgid "Enable _vertical scrolling"
-msgstr ""
+msgid "Enable _horizontal scrolling"
+msgstr "Ενεργοποίηση _οριζόντιας κύλισης"
 
 #: ../data/touchpad.ui.h:20
-msgid "Enable continuous edge scrolling"
-msgstr ""
+msgid "Enable _locked drags"
+msgstr "Ενεργοποίηση κ_λειδωμένων αποθέσεων"
 
 #: ../data/touchpad.ui.h:21
-msgid "Enable horizontal scrolling when dragging with two fingers"
-msgstr ""
+msgid "Enable _palm detection"
+msgstr "Ενεργοποίηση _ανίχνευσης palm"
 
 #: ../data/touchpad.ui.h:22
-msgid "Enable vertical scrolling when dragging with two fingers"
-msgstr ""
+msgid "Enable _vertical scrolling"
+msgstr "Ενεργοποίηση _κάθετης κύλισης"
 
 #: ../data/touchpad.ui.h:23
+msgid "Enable continuous edge scrolling"
+msgstr "Ενεργοποίηση συνεχόμενης κύλισης άκρων"
+
+#: ../data/touchpad.ui.h:24
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr ""
+"Ενεργοποίηση οριζόντιας κύλισης όταν γίνεται μεταφορά κι απόθεση με δύο "
+"δάχτυλα"
+
+#: ../data/touchpad.ui.h:25
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr ""
+"Ενεργοποίηση κάθετης κύλισης όταν γίνεται μεταφορά κι απόθεση με δύο δάχτυλα"
+
+#: ../data/touchpad.ui.h:26
 msgid "General"
 msgstr "Γενικά"
 
-#: ../data/touchpad.ui.h:24
-msgid "Scrolling"
-msgstr ""
-
-#: ../data/touchpad.ui.h:25
-msgid "Set _guest mouse off"
-msgstr ""
-
-#: ../data/touchpad.ui.h:26
-msgid "Start point of circular scrolling:"
-msgstr ""
-
 #: ../data/touchpad.ui.h:27
-msgid "Tapping"
-msgstr ""
+msgid "Maximum speed"
+msgstr "Μέγιστη ταχύτητα"
 
 #: ../data/touchpad.ui.h:28
-msgid "Tapping move: "
-msgstr ""
+msgid "Mimimum speed"
+msgstr "Ελάχιστη ταχύτητα"
 
 #: ../data/touchpad.ui.h:29
-msgid "Tapping time: "
-msgstr ""
+msgid "Scrolling"
+msgstr "Κύλιση"
 
 #: ../data/touchpad.ui.h:30
-msgid "_range:"
-msgstr ""
+msgid "Set _guest mouse off"
+msgstr "Απενεργοποίηση _δευτερεύοντος ποντικιού"
+
+#: ../data/touchpad.ui.h:31
+msgid "Speed"
+msgstr "Ταχύτητα"
 
 #: ../data/touchpad.ui.h:32
-msgid "pre_ssure:"
-msgstr ""
+msgid "Start point of circular scrolling:"
+msgstr "Σημείο εκκίνησης κυκλικής κύλισης:"
 
-#: ../data/main-window.ui.h:1
-msgid "GPointing Device Settings"
-msgstr "Ρυθμίσεις συσκευής GPointing"
+#: ../data/touchpad.ui.h:33
+msgid "Tapping"
+msgstr "Χτύποι"
+
+#: ../data/touchpad.ui.h:34
+msgid "Tapping move: "
+msgstr "Κίνηση χτύπων:"
+
+#: ../data/touchpad.ui.h:35
+msgid "Tapping time: "
+msgstr "Χρόνος χτύπων:"
+
+#: ../data/touchpad.ui.h:36
+msgid "_Disable touchpad"
+msgstr "_Απενεργοποίηση επιφάνειας αφής"
+
+#: ../data/touchpad.ui.h:37
+msgid "_range:"
+msgstr "_εύρος:"
+
+#: ../data/touchpad.ui.h:39
+msgid "pre_ssure:"
+msgstr "πίε_ση:"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<b>Πίεση για επιλογή</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Ευαισθησία</b>"
+
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Ταχύτητα</b>"
+
+#: ../data/pointingstick.ui.h:11
+msgid "Enable _Press to Select"
+msgstr "Ενεργοποίηση του _Πίεση για επιλογή"
+
+#: ../data/pointingstick.ui.h:12
+msgid "Enable sc_rolling"
+msgstr "Ενεργοποίηση κύ_λισης"
+
+#: ../data/pointingstick.ui.h:13
+msgid "Middle button _timeout:"
+msgstr "Χ_ρονική λήξη μεσαίου κουμπιού:"
+
+#: ../data/pointingstick.ui.h:14
+msgid "T_hreshold:"
+msgstr "Κ_ατώφλι:"
+
+#: ../data/pointingstick.ui.h:15
+msgid "_Sensitivity:"
+msgstr "_Ευαισθησία:"
+
+#: ../data/pointingstick.ui.h:16
+msgid "_Speed:"
+msgstr "_Ταχύτητα:"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
-msgstr ""
+msgstr "Ενεργοποίηση προσθέτου συσκευής επισήμανσης"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
 msgid ""
 "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
 msgstr ""
+"Ορισμός σε Αληθής για να επιτρέψετε στο πρόσθετο να διαχειριστεί τις "
+"ρυθμίσεις του GPointingDeviceSettings."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
-#, fuzzy
 msgid "Pointing devices"
-msgstr "Ρυθμίσεις συσκευής GPointing"
+msgstr "Ρυθμίσεις συσκευών επισήμανσης"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
-msgstr ""
+msgstr "Καθορισμός των προτιμήσεων συσκευών επισήμανσης"
+
+#~ msgctxt "timeout"
+#~ msgid "<i>Long</i>"
+#~ msgstr "<i>Μακρύ</i>"
+
+#~ msgctxt "timeout"
+#~ msgid "<i>Short</i>"
+#~ msgstr "<i>Βραχύ</i>"
+
+#~ msgctxt "distance"
+#~ msgid "<i>Long</i>"
+#~ msgstr "<i>Μακρύ</i>"
+
+#~ msgctxt "distance"
+#~ msgid "<i>Short</i>"
+#~ msgstr "<i>Βραχύ</i>"
+
+#~ msgctxt "time"
+#~ msgid "<i>Long</i>"
+#~ msgstr "<i>Μακρύ</i>"
+
+#~ msgctxt "time"
+#~ msgid "<i>Short</i>"
+#~ msgstr "<i>Βραχύ</i>"
+
+#~ msgctxt "yes"
+#~ msgid "<i>High</i>"
+#~ msgstr "<i>Υψηλά</i>"
+
+#~ msgctxt "yes"
+#~ msgid "<i>Low</i>"
+#~ msgstr "<i>Χαμηλά</i>"
+
+#~ msgctxt "sensitivity"
+#~ msgid "<i>High</i>"
+#~ msgstr "<i>Υψηλά</i>"
+
+#~ msgctxt "sensitivity"
+#~ msgid "<i>Low</i>"
+#~ msgstr "<i>Χαμηλά</i>"
+
+#~ msgctxt "speed"
+#~ msgid "<i>Fast</i>"
+#~ msgstr "<i>Γρήγορα</i>"
+
+#~ msgctxt "speed"
+#~ msgid "<i>Slow</i>"
+#~ msgstr "<i>Αργά</i>"
+
+#~ msgctxt "threshold"
+#~ msgid "<i>High</i>"
+#~ msgstr "<i>Υψηλά</i>"
+
+#~ msgctxt "threshold"
+#~ msgid "<i>Low</i>"
+#~ msgstr "<i>Χαμηλά</i>"
+
+#~ msgid "GPointing Device Settings"
+#~ msgstr "Ρυθμίσεις συσκευής GPointing"
