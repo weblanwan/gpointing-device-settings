@@ -3,7 +3,7 @@ AC_PREREQ(2.57)
 
 AC_INIT(gpointing-device-settings, 1.5.1,
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GPointingDeviceSettings])
-AM_INIT_AUTOMAKE([1.9 tar-pax])
+AM_INIT_AUTOMAKE([1.9 tar-ustar])
 AM_INIT_AUTOMAKE([foreign])
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 AM_CONFIG_HEADER(config.h)
