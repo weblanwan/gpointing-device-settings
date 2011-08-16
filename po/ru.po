@@ -1,0 +1,403 @@
+# Russian translation for gpointing-device-settings.
+# Copyright (C) 2010 gpointing-device-settings's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gpointing-device-settings package.
+#
+# ad_user <alexey_z@list.ru>, 2010.
+# Yuri Kozlov <yuray@komyakino.ru>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-24 14:55+0000\n"
+"PO-Revision-Date: 2011-08-15 21:19+0400\n"
+"Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "_Пробный запуск"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Завершить пробный запуск"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "%s не найден."
+
+#: ../src/gpds-xinput.c:220
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "Произошла ошибка в X. Текст сообщения: %s."
+
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "Нет зарегистрированного свойства для %d."
+
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Несовместимый тип формата.\n"
+"Указан %s, но возвращён %s."
+
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Не найдено устройств для %d."
+
+#: ../src/gpds-xinput-utils.c:134
+#, c-format
+msgid "Could not open %s device."
+msgstr "Не удалось открыть устройство «%s»."
+
+#: ../src/gpds-xinput-utils.c:151
+#, c-format
+msgid "No float atom in XServer"
+msgstr "Нет атома float в XServer"
+
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
+#, c-format
+msgid "%s did not find."
+msgstr "Не удалось найти «%s»."
+
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Нет виджета (%s)."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Эмуляция средней кнопки</b>"
+
+#: ../data/mouse.ui.h:2
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Эмуляция колёсика</b>"
+
+#: ../data/mouse.ui.h:3
+msgid "Enable _horizontal scroll"
+msgstr "Включить _горизонтальную прокрутку"
+
+#: ../data/mouse.ui.h:4
+msgid "Enable _vertical scroll"
+msgstr "Включить _вертикальную прокрутку"
+
+#: ../data/mouse.ui.h:5
+msgid "Use _middle button emulation"
+msgstr "Использовать эмуляцию средней кнопки"
+
+#: ../data/mouse.ui.h:6
+msgid "Use _wheel emulation"
+msgstr "Использовать эмуляцию колёсика"
+
+#: ../data/mouse.ui.h:7
+msgid "_button:"
+msgstr "_кнопка:"
+
+#: ../data/mouse.ui.h:8
+msgid "_inertia:"
+msgstr "_инерция: "
+
+#: ../data/mouse.ui.h:9 ../data/touchpad.ui.h:36
+msgid "_timeout:"
+msgstr "_задержка: "
+
+#: ../data/mouse.ui.h:10
+msgctxt "inertia"
+msgid "<i>Long</i>"
+msgstr "<i>больше</i>"
+
+#: ../data/mouse.ui.h:11
+msgctxt "inertia"
+msgid "<i>Short</i>"
+msgstr "<i>меньше</i>"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "за_держка: "
+
+#: ../data/mouse.ui.h:13 ../data/touchpad.ui.h:42
+#: ../data/pointingstick.ui.h:17
+msgctxt "timeout"
+msgid "<i>Long</i>"
+msgstr "<i>длиннее</i>"
+
+#: ../data/mouse.ui.h:14 ../data/touchpad.ui.h:43
+#: ../data/pointingstick.ui.h:18
+msgctxt "timeout"
+msgid "<i>Short</i>"
+msgstr "<i>короче</i>"
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>Внешняя мышь</b>"
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr "<b>Блокированные перетаскивания</b>"
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr "<b>Нажатия ладонью</b>"
+
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
+msgid "<b>Scrolling</b>"
+msgstr "<b>Прокрутка</b>"
+
+#: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>быстрее</i>"
+
+#: ../data/touchpad.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>выше</i>"
+
+#: ../data/touchpad.ui.h:7
+msgid "<i>Low</i>"
+msgstr "<i>ниже</i>"
+
+#: ../data/touchpad.ui.h:8
+msgid "<i>Narrow</i>"
+msgstr "<i>меньше</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Slow</i>"
+msgstr "<i>медленнее</i>"
+
+#: ../data/touchpad.ui.h:10
+msgid "<i>Wide</i>"
+msgstr "<i>больше</i>"
+
+#: ../data/touchpad.ui.h:11
+msgid "Acceleration"
+msgstr "Ускорение"
+
+#: ../data/touchpad.ui.h:12
+msgid "Disable _tapping"
+msgstr "Отключить _касания"
+
+#: ../data/touchpad.ui.h:13
+msgid "Disable _tapping and scrolling"
+msgstr "Отключить _касания и прокрутку"
+
+#: ../data/touchpad.ui.h:14
+msgid "Disable while any _other devices are connected"
+msgstr "Отключать при подключении других устройств"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable Ci_rcular scrolling"
+msgstr "Включить _круговую прокрутку"
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _faster tapping"
+msgstr "Включить _быстрые нажатия"
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _horizontal scrolling"
+msgstr "Включить _горизонтальную прокрутку"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _locked drags"
+msgstr "Включить _блокированные перетаскивания"
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable _palm detection"
+msgstr "Включить определение нажатия _ладонью"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable _vertical scrolling"
+msgstr "Включить _вертикальную прокрутку"
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable continuous edge scrolling"
+msgstr "Включить непрерывную прокрутку у края"
+
+#: ../data/touchpad.ui.h:22
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Включить горизонтальную прокрутку при проведении двумя пальцами"
+
+#: ../data/touchpad.ui.h:23
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Включить вертикальную прокрутку при проведении двумя пальцами"
+
+#: ../data/touchpad.ui.h:24
+msgid "General"
+msgstr "Общие"
+
+#: ../data/touchpad.ui.h:25
+msgid "Maximum speed"
+msgstr "Максимальная скорость"
+
+#: ../data/touchpad.ui.h:26
+msgid "Mimimum speed"
+msgstr "Минимальная скорость"
+
+#: ../data/touchpad.ui.h:27
+msgid "Scrolling"
+msgstr "Прокрутка"
+
+#: ../data/touchpad.ui.h:28
+msgid "Set _guest mouse off"
+msgstr "Выключить внешнюю мышь"
+
+#: ../data/touchpad.ui.h:29
+msgid "Speed"
+msgstr "Скорость"
+
+#: ../data/touchpad.ui.h:30
+msgid "Start point of circular scrolling:"
+msgstr "Начальная точка круговой прокрутки:"
+
+#: ../data/touchpad.ui.h:31
+msgid "Tapping"
+msgstr "Касание"
+
+#: ../data/touchpad.ui.h:32
+msgid "Tapping move: "
+msgstr "Перемещение касания: "
+
+#: ../data/touchpad.ui.h:33
+msgid "Tapping time: "
+msgstr "Время касания: "
+
+#: ../data/touchpad.ui.h:34
+msgid "_Disable touchpad"
+msgstr "_Отключить сенсорную панель"
+
+#: ../data/touchpad.ui.h:35
+msgid "_range:"
+msgstr "_область:"
+
+#: ../data/touchpad.ui.h:37
+msgctxt "distance"
+msgid "<i>Long</i>"
+msgstr "<i>длиннее</i>"
+
+#: ../data/touchpad.ui.h:38
+msgctxt "distance"
+msgid "<i>Short</i>"
+msgstr "<i>короче</i>"
+
+#: ../data/touchpad.ui.h:39
+msgid "pre_ssure:"
+msgstr "д_авление:"
+
+#: ../data/touchpad.ui.h:40
+msgctxt "time"
+msgid "<i>Long</i>"
+msgstr "<i>длиннее</i>"
+
+#: ../data/touchpad.ui.h:41
+msgctxt "time"
+msgid "<i>Short</i>"
+msgstr "<i>короче</i>"
+
+#: ../data/touchpad.ui.h:44
+msgctxt "yes"
+msgid "<i>High</i>"
+msgstr "<i>выше</i>"
+
+#: ../data/touchpad.ui.h:45
+msgctxt "yes"
+msgid "<i>Low</i>"
+msgstr "<i>ниже</i>"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<b>Выбор нажатием</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Чувствительность</b>"
+
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Скорость</b>"
+
+#: ../data/pointingstick.ui.h:5
+msgid "Enable _Press to Select"
+msgstr "Включить выбор нажатием"
+
+#: ../data/pointingstick.ui.h:6
+msgid "Enable sc_rolling"
+msgstr "Включить прокрутку"
+
+#: ../data/pointingstick.ui.h:7
+msgid "Middle button _timeout:"
+msgstr "Таймаут _средней кнопки:"
+
+#: ../data/pointingstick.ui.h:8
+msgid "T_hreshold:"
+msgstr "Поро_г:"
+
+#: ../data/pointingstick.ui.h:9
+msgid "_Sensitivity:"
+msgstr "_Чувствительность:"
+
+#: ../data/pointingstick.ui.h:10
+msgid "_Speed:"
+msgstr "_Скорость:"
+
+#: ../data/pointingstick.ui.h:11
+msgctxt "sensitivity"
+msgid "<i>High</i>"
+msgstr "<i>выше</i>"
+
+#: ../data/pointingstick.ui.h:12
+msgctxt "sensitivity"
+msgid "<i>Low</i>"
+msgstr "<i>ниже</i>"
+
+#: ../data/pointingstick.ui.h:13
+msgctxt "speed"
+msgid "<i>Fast</i>"
+msgstr "<i>быстрее</i>"
+
+#: ../data/pointingstick.ui.h:14
+msgctxt "speed"
+msgid "<i>Slow</i>"
+msgstr "<i>медленнее</i>"
+
+#: ../data/pointingstick.ui.h:15
+msgctxt "threshold"
+msgid "<i>High</i>"
+msgstr "<i>выше</i>"
+
+#: ../data/pointingstick.ui.h:16
+msgctxt "threshold"
+msgid "<i>Low</i>"
+msgstr "<i>ниже</i>"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Включить модуль указательного устройства"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Установите в True, чтобы разрешить модулю управлять параметрами "
+"GPointingDeviceSettings."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "Указательные устройства"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "Настройка указательных устройств"
