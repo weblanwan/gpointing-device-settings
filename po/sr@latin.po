@@ -1,0 +1,401 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: gpointing-device-settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-16 06:42+0000\n"
+"PO-Revision-Date: 2012-03-20 11:00+0200\n"
+"Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "Suvo _pokretanje"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Završi suvo pokretanje"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "Nisam pronašao „%s“."
+
+#: ../src/gpds-xinput.c:220
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "Došlo je do greške Iksa. Greška beše „%s“."
+
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "Nema zabeleženog svojstva za „%d“."
+
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Vrsta formata je pogrešna.\n"
+"„%s“ je navedena ali je vraćena „%s“."
+
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Nisam pronašao uređaj za „%d“."
+
+#: ../src/gpds-xinput-utils.c:134
+#, c-format
+msgid "Could not open %s device."
+msgstr "Ne mogu da otvorim uređaj „%s“."
+
+#: ../src/gpds-xinput-utils.c:151
+#, c-format
+msgid "No float atom in XServer"
+msgstr "Nema pokretnog atoma u Iks serveru"
+
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
+#, c-format
+msgid "%s did not find."
+msgstr "Nisam pronašao „%s“."
+
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Nema elementa(%s)."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "<b>Middle Button Emulation</b>"
+msgstr "<b>Emulacija srednjeg dugmeta</b>"
+
+#: ../data/mouse.ui.h:2
+msgid "<b>Wheel Emulation</b>"
+msgstr "<b>Emulacija točkića</b>"
+
+#: ../data/mouse.ui.h:3
+msgid "Enable _horizontal scroll"
+msgstr "Uključi _vodoravno klizanje"
+
+#: ../data/mouse.ui.h:4
+msgid "Enable _vertical scroll"
+msgstr "Uključi _uspravno klizanje"
+
+#: ../data/mouse.ui.h:5
+msgid "Use _middle button emulation"
+msgstr "Koristi emulaciju _srednjeg dugmeta"
+
+#: ../data/mouse.ui.h:6
+msgid "Use _wheel emulation"
+msgstr "Koristi emulaciju _točkića"
+
+#: ../data/mouse.ui.h:7
+msgid "_button:"
+msgstr "_dugme:"
+
+#: ../data/mouse.ui.h:8
+msgid "_inertia:"
+msgstr "_inercija:"
+
+#: ../data/mouse.ui.h:9 ../data/touchpad.ui.h:36
+msgid "_timeout:"
+msgstr "_vremenski rok:"
+
+#: ../data/mouse.ui.h:10
+msgctxt "inertia"
+msgid "<i>Long</i>"
+msgstr "<i>Duga</i>"
+
+#: ../data/mouse.ui.h:11
+msgctxt "inertia"
+msgid "<i>Short</i>"
+msgstr "<i>Kratka</i>"
+
+#: ../data/mouse.ui.h:12
+msgid "tim_eout:"
+msgstr "vremenski _rok:"
+
+#: ../data/mouse.ui.h:13 ../data/touchpad.ui.h:42
+#: ../data/pointingstick.ui.h:17
+msgctxt "timeout"
+msgid "<i>Long</i>"
+msgstr "<i>Dug</i>"
+
+#: ../data/mouse.ui.h:14 ../data/touchpad.ui.h:43
+#: ../data/pointingstick.ui.h:18
+msgctxt "timeout"
+msgid "<i>Short</i>"
+msgstr "<i>Kratak</i>"
+
+#: ../data/touchpad.ui.h:1
+msgid "<b>Guest Mouse</b>"
+msgstr "<b>Miš gosta</b>"
+
+#: ../data/touchpad.ui.h:2
+msgid "<b>Locked Drags</b>"
+msgstr "<b>Zaključana prevlačenja</b>"
+
+#: ../data/touchpad.ui.h:3
+msgid "<b>Palm Detection</b>"
+msgstr "<b>Otkrivanje dlana</b>"
+
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
+msgid "<b>Scrolling</b>"
+msgstr "<b>Klizanje</b>"
+
+#: ../data/touchpad.ui.h:5
+msgid "<i>Fast</i>"
+msgstr "<i>Brzo</i>"
+
+#: ../data/touchpad.ui.h:6
+msgid "<i>High</i>"
+msgstr "<i>Visoko</i>"
+
+#: ../data/touchpad.ui.h:7
+msgid "<i>Low</i>"
+msgstr "<i>Nisko</i>"
+
+#: ../data/touchpad.ui.h:8
+msgid "<i>Narrow</i>"
+msgstr "<i>Blisko</i>"
+
+#: ../data/touchpad.ui.h:9
+msgid "<i>Slow</i>"
+msgstr "<i>Sporo</i>"
+
+#: ../data/touchpad.ui.h:10
+msgid "<i>Wide</i>"
+msgstr "<i>Široko</i>"
+
+#: ../data/touchpad.ui.h:11
+msgid "Acceleration"
+msgstr "Ubrzanje"
+
+#: ../data/touchpad.ui.h:12
+msgid "Disable _tapping"
+msgstr "Isključi _lupkanje"
+
+#: ../data/touchpad.ui.h:13
+msgid "Disable _tapping and scrolling"
+msgstr "Isključi _lupkanje i klizanje"
+
+#: ../data/touchpad.ui.h:14
+msgid "Disable while any _other devices are connected"
+msgstr "Isključi kada su priključeni neki _drugi uređaji"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable Ci_rcular scrolling"
+msgstr "Uključi _kružno klizanje"
+
+#: ../data/touchpad.ui.h:16
+msgid "Enable _faster tapping"
+msgstr "Uključi _brže lupkanje"
+
+#: ../data/touchpad.ui.h:17
+msgid "Enable _horizontal scrolling"
+msgstr "Uključi _vodoravno klizanje"
+
+#: ../data/touchpad.ui.h:18
+msgid "Enable _locked drags"
+msgstr "Uključi _zaključana prevlačenja"
+
+#: ../data/touchpad.ui.h:19
+msgid "Enable _palm detection"
+msgstr "Uključi otkrivanje _dlana"
+
+#: ../data/touchpad.ui.h:20
+msgid "Enable _vertical scrolling"
+msgstr "Uključi _uspravno klizanje"
+
+#: ../data/touchpad.ui.h:21
+msgid "Enable continuous edge scrolling"
+msgstr "Uključite neprekidno klizanje ivicom"
+
+#: ../data/touchpad.ui.h:22
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Uključite vodoravno klizanje kada držite sa dva prsta"
+
+#: ../data/touchpad.ui.h:23
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Uključite uspravno klizanje kada držite sa dva prsta"
+
+#: ../data/touchpad.ui.h:24
+msgid "General"
+msgstr "Opšte"
+
+#: ../data/touchpad.ui.h:25
+msgid "Maximum speed"
+msgstr "Najveća brzina"
+
+#: ../data/touchpad.ui.h:26
+msgid "Mimimum speed"
+msgstr "Najmanja brzina"
+
+#: ../data/touchpad.ui.h:27
+msgid "Scrolling"
+msgstr "Klizanje"
+
+#: ../data/touchpad.ui.h:28
+msgid "Set _guest mouse off"
+msgstr "Podesi isključenim miša _gosta"
+
+#: ../data/touchpad.ui.h:29
+msgid "Speed"
+msgstr "Brzina"
+
+#: ../data/touchpad.ui.h:30
+msgid "Start point of circular scrolling:"
+msgstr "Polazna tačka kružnog klizanja:"
+
+#: ../data/touchpad.ui.h:31
+msgid "Tapping"
+msgstr "Lupkanje"
+
+#: ../data/touchpad.ui.h:32
+msgid "Tapping move: "
+msgstr "Pokret lupkanja: "
+
+#: ../data/touchpad.ui.h:33
+msgid "Tapping time: "
+msgstr "Vreme lupkanja: "
+
+#: ../data/touchpad.ui.h:34
+msgid "_Disable touchpad"
+msgstr "_Isključi dodirnu tablu"
+
+#: ../data/touchpad.ui.h:35
+msgid "_range:"
+msgstr "_opseg:"
+
+#: ../data/touchpad.ui.h:37
+msgctxt "distance"
+msgid "<i>Long</i>"
+msgstr "<i>Kratka</i>"
+
+#: ../data/touchpad.ui.h:38
+msgctxt "distance"
+msgid "<i>Short</i>"
+msgstr "<i>Duga</i>"
+
+#: ../data/touchpad.ui.h:39
+msgid "pre_ssure:"
+msgstr "_pritisak:"
+
+#: ../data/touchpad.ui.h:40
+msgctxt "time"
+msgid "<i>Long</i>"
+msgstr "<i>Dugo</i>"
+
+#: ../data/touchpad.ui.h:41
+msgctxt "time"
+msgid "<i>Short</i>"
+msgstr "<i>Kratko</i>"
+
+#: ../data/touchpad.ui.h:44
+msgctxt "yes"
+msgid "<i>High</i>"
+msgstr "<i>Visoko</i>"
+
+#: ../data/touchpad.ui.h:45
+msgctxt "yes"
+msgid "<i>Low</i>"
+msgstr "<i>Nisko</i>"
+
+#: ../data/pointingstick.ui.h:1
+msgid "<b>Press to Select</b>"
+msgstr "<b>Pritisni za izbor</b>"
+
+#: ../data/pointingstick.ui.h:3
+msgid "<b>Sensitivity</b>"
+msgstr "<b>Osetljivost</b>"
+
+#: ../data/pointingstick.ui.h:4
+msgid "<b>Speed</b>"
+msgstr "<b>Brzina</b>"
+
+#: ../data/pointingstick.ui.h:5
+msgid "Enable _Press to Select"
+msgstr "Uključi _pritisak za izbor"
+
+#: ../data/pointingstick.ui.h:6
+msgid "Enable sc_rolling"
+msgstr "Uključi _klizanje"
+
+#: ../data/pointingstick.ui.h:7
+msgid "Middle button _timeout:"
+msgstr "Vremenski _rok srednjeg dugmeta:"
+
+#: ../data/pointingstick.ui.h:8
+msgid "T_hreshold:"
+msgstr "_Prag:"
+
+#: ../data/pointingstick.ui.h:9
+msgid "_Sensitivity:"
+msgstr "_Osetljivost:"
+
+#: ../data/pointingstick.ui.h:10
+msgid "_Speed:"
+msgstr "_Brzina:"
+
+#: ../data/pointingstick.ui.h:11
+msgctxt "sensitivity"
+msgid "<i>High</i>"
+msgstr "<i>Visoka</i>"
+
+#: ../data/pointingstick.ui.h:12
+msgctxt "sensitivity"
+msgid "<i>Low</i>"
+msgstr "<i>Niska</i>"
+
+#: ../data/pointingstick.ui.h:13
+msgctxt "speed"
+msgid "<i>Fast</i>"
+msgstr "<i>Brzo</i>"
+
+#: ../data/pointingstick.ui.h:14
+msgctxt "speed"
+msgid "<i>Slow</i>"
+msgstr "<i>Sporo</i>"
+
+#: ../data/pointingstick.ui.h:15
+msgctxt "threshold"
+msgid "<i>High</i>"
+msgstr "<i>Velik</i>"
+
+#: ../data/pointingstick.ui.h:16
+msgctxt "threshold"
+msgid "<i>Low</i>"
+msgstr "<i>Nizak</i>"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Uključuje priključak pokazivačkih uređaja"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Izaberite ovo da uključite priključak za upravljanje podešavanjima G-podešavanja "
+"pokazivačkih uređaja."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "Pokazivački uređaji"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "Podesite postavke vaših pokazivačkih uređaja"
