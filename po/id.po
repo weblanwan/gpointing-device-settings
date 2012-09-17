@@ -1,24 +1,33 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Indonesian translation of gpointing-device-settings
+# Copyright (C) YEAR THE gpointing-device-settings' COPYRIGHT HOLDER
+# This file is distributed under the same license as the gpointing-device-settings package.
 # Imam Musthaqim <userindesign@gmail.com>, 2009.
+# Andika Triwidada <andika@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-21 07:23+0000\n"
-"PO-Revision-Date: 2010-04-14 11:15+0700\n"
+"POT-Creation-Date: 2011-01-03 22:20+0000\n"
+"PO-Revision-Date: 2012-09-17 11:33+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
-"Language-Team: INDONESIA <userindsign@gmail.com>\n"
+"Language-Team: INDONESIA <gnome@i15n.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Indonesian\n"
-"X-Poedit-Country: INDONESIA\n"
+"Language: id_ID\n"
+"X-Generator: Poedit 1.5.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../src/gpds-xinput-ui.c:95
-#: ../src/gpds-xinput-utils.c:60
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "Uji _coba"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Akhiri uji coba"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
 #, c-format
 msgid "No %s found."
 msgstr "Tidak ada %s yang ditemukan."
@@ -28,15 +37,12 @@ msgstr "Tidak ada %s yang ditemukan."
 msgid "An X error occurred. The error was %s."
 msgstr "Terjadi kesalahan X. Kesalahannya adalah %s."
 
-#: ../src/gpds-xinput.c:306
-#: ../src/gpds-xinput.c:324
-#: ../src/gpds-xinput.c:342
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
 #, c-format
 msgid "There is no registered property for %d."
 msgstr "Tidak ada properti terdaftar untuk %d."
 
-#: ../src/gpds-xinput.c:444
-#: ../src/gpds-xinput.c:611
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
 #, c-format
 msgid ""
 "Format type is mismatched.\n"
@@ -45,25 +51,28 @@ msgstr ""
 "Jenis format tidak cocok.\n"
 "%s ditentukan tapi %s kembali."
 
-#: ../src/gpds-xinput-utils.c:107
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Tak ditemukan perangkat bagi %d."
+
+#: ../src/gpds-xinput-utils.c:134
 #, c-format
 msgid "Could not open %s device."
 msgstr "Tidak dapat membuka perangkat %s."
 
-#: ../src/gpds-xinput-utils.c:124
+#: ../src/gpds-xinput-utils.c:151
 #, c-format
 msgid "No float atom in XServer"
 msgstr "Tidak ada atom mengambang dalam XServer"
 
-#: ../modules/gpds-touchpad-ui.c:1155
-#: ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
 #: ../modules/gpds-pointingstick-ui.c:242
 #, c-format
 msgid "%s did not find."
 msgstr "%s tidak menemukan."
 
-#: ../modules/gpds-touchpad-ui.c:1329
-#: ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
 #: ../modules/gpds-pointingstick-ui.c:405
 #, c-format
 msgid "There is no widget(%s)."
@@ -81,49 +90,62 @@ msgid "<b>Wheel Emulation</b>"
 msgstr "<b>Emulasi Roda</b>"
 
 #: ../data/mouse.ui.h:3
-#: ../data/touchpad.ui.h:7
-#: ../data/pointingstick.ui.h:7
-msgid "<i>Long</i>"
-msgstr "<i>Panjang</i>"
-
-#: ../data/mouse.ui.h:4
-#: ../data/touchpad.ui.h:10
-#: ../data/pointingstick.ui.h:9
-msgid "<i>Short</i>"
-msgstr "<i>Pendek</i>"
-
-#: ../data/mouse.ui.h:5
 msgid "Enable _horizontal scroll"
 msgstr "Aktifkan gulir _horizontal"
 
-#: ../data/mouse.ui.h:6
+#: ../data/mouse.ui.h:4
 msgid "Enable _vertical scroll"
 msgstr "Aktifkan gulir _vertikal"
 
-#: ../data/mouse.ui.h:7
+#: ../data/mouse.ui.h:5
 msgid "Use _middle button emulation"
 msgstr "Gunakan emulasi tombol _tengah"
 
-#: ../data/mouse.ui.h:8
+#: ../data/mouse.ui.h:6
 msgid "Use _wheel emulation"
 msgstr "Gunakan emulasi _roda"
 
-#: ../data/mouse.ui.h:9
+#: ../data/mouse.ui.h:7
 msgid "_button:"
 msgstr "_tombol:"
 
-#: ../data/mouse.ui.h:10
+#: ../data/mouse.ui.h:8
 msgid "_inertia:"
 msgstr "_inersia:"
 
-#: ../data/mouse.ui.h:11
-#: ../data/touchpad.ui.h:38
+#: ../data/mouse.ui.h:9 ../data/touchpad.ui.h:36
 msgid "_timeout:"
 msgstr "batas _waktu:"
+
+#: ../data/mouse.ui.h:10
+#| msgid "<i>Long</i>"
+msgctxt "inertia"
+msgid "<i>Long</i>"
+msgstr "<i>Panjang</i>"
+
+#: ../data/mouse.ui.h:11
+#| msgid "<i>Short</i>"
+msgctxt "inertia"
+msgid "<i>Short</i>"
+msgstr "<i>Pendek</i>"
 
 #: ../data/mouse.ui.h:12
 msgid "tim_eout:"
 msgstr "batas _waktu:"
+
+#: ../data/mouse.ui.h:13 ../data/touchpad.ui.h:42
+#: ../data/pointingstick.ui.h:17
+#| msgid "<i>Long</i>"
+msgctxt "timeout"
+msgid "<i>Long</i>"
+msgstr "<i>Lama</i>"
+
+#: ../data/mouse.ui.h:14 ../data/touchpad.ui.h:43
+#: ../data/pointingstick.ui.h:18
+#| msgid "<i>Short</i>"
+msgctxt "timeout"
+msgid "<i>Short</i>"
+msgstr "<i>Sebentar</i>"
 
 #: ../data/touchpad.ui.h:1
 msgid "<b>Guest Mouse</b>"
@@ -137,147 +159,175 @@ msgstr "<b>Seret Terkunci</b>"
 msgid "<b>Palm Detection</b>"
 msgstr "<b>Deteksi Telapak Tangan</b>"
 
-#: ../data/touchpad.ui.h:4
-#: ../data/pointingstick.ui.h:2
+#: ../data/touchpad.ui.h:4 ../data/pointingstick.ui.h:2
 msgid "<b>Scrolling</b>"
 msgstr "<b>Menggulir</b>"
 
 #: ../data/touchpad.ui.h:5
-#: ../data/pointingstick.ui.h:5
 msgid "<i>Fast</i>"
 msgstr "<i>Cepat</i>"
 
 #: ../data/touchpad.ui.h:6
-#: ../data/pointingstick.ui.h:6
 msgid "<i>High</i>"
 msgstr "<i>Tinggi</i>"
 
-#: ../data/touchpad.ui.h:8
-#: ../data/pointingstick.ui.h:8
+#: ../data/touchpad.ui.h:7
 msgid "<i>Low</i>"
 msgstr "<i>Rendah</i>"
 
-#: ../data/touchpad.ui.h:9
+#: ../data/touchpad.ui.h:8
 msgid "<i>Narrow</i>"
 msgstr "<i>Sempit</i>"
 
-#: ../data/touchpad.ui.h:11
-#: ../data/pointingstick.ui.h:10
+#: ../data/touchpad.ui.h:9
 msgid "<i>Slow</i>"
 msgstr "<i>Lambat</i>"
 
-#: ../data/touchpad.ui.h:12
+#: ../data/touchpad.ui.h:10
 msgid "<i>Wide</i>"
 msgstr "<i>Lebar</i>"
 
-#: ../data/touchpad.ui.h:13
+#: ../data/touchpad.ui.h:11
 msgid "Acceleration"
 msgstr "Akselerasi"
 
-#: ../data/touchpad.ui.h:14
-#| msgid "Enable _faster tapping"
+#: ../data/touchpad.ui.h:12
 msgid "Disable _tapping"
 msgstr "Matikan ke_tukan"
 
-#: ../data/touchpad.ui.h:15
-#| msgid "Enable _vertical scrolling"
+#: ../data/touchpad.ui.h:13
 msgid "Disable _tapping and scrolling"
 msgstr "Matikan ke_tukan dan gulir"
 
-#: ../data/touchpad.ui.h:16
+#: ../data/touchpad.ui.h:14
 msgid "Disable while any _other devices are connected"
 msgstr "Matikan ketika perangkat la_in sedang tersambung"
 
-#: ../data/touchpad.ui.h:17
+#: ../data/touchpad.ui.h:15
 msgid "Enable Ci_rcular scrolling"
 msgstr "Aktifkan gulir Melingka_r"
 
-#: ../data/touchpad.ui.h:18
+#: ../data/touchpad.ui.h:16
 msgid "Enable _faster tapping"
 msgstr "Aktifkan ketukan yang _lebih cepat"
 
-#: ../data/touchpad.ui.h:19
+#: ../data/touchpad.ui.h:17
 msgid "Enable _horizontal scrolling"
 msgstr "Aktifkan gulir _horizontal"
 
-#: ../data/touchpad.ui.h:20
+#: ../data/touchpad.ui.h:18
 msgid "Enable _locked drags"
 msgstr "Aktifkan seret _terkunci"
 
-#: ../data/touchpad.ui.h:21
+#: ../data/touchpad.ui.h:19
 msgid "Enable _palm detection"
 msgstr "Aktifkan deteksi _telapak tangan"
 
-#: ../data/touchpad.ui.h:22
+#: ../data/touchpad.ui.h:20
 msgid "Enable _vertical scrolling"
 msgstr "Aktifkan gulir _vertikal"
 
-#: ../data/touchpad.ui.h:23
+#: ../data/touchpad.ui.h:21
 msgid "Enable continuous edge scrolling"
 msgstr "Aktifkan gulir pinggir kontinu"
 
-#: ../data/touchpad.ui.h:24
+#: ../data/touchpad.ui.h:22
 msgid "Enable horizontal scrolling when dragging with two fingers"
 msgstr "Aktifkan gulir horizontal saat menyeret dengan dua jari"
 
-#: ../data/touchpad.ui.h:25
+#: ../data/touchpad.ui.h:23
 msgid "Enable vertical scrolling when dragging with two fingers"
 msgstr "Aktifkan gulir vertikal saat menyeret dengan dua jari"
 
-#: ../data/touchpad.ui.h:26
+#: ../data/touchpad.ui.h:24
 msgid "General"
 msgstr "Umum"
 
-#: ../data/touchpad.ui.h:27
+#: ../data/touchpad.ui.h:25
 msgid "Maximum speed"
 msgstr "Kecepatan maksimum"
 
-#: ../data/touchpad.ui.h:28
+#: ../data/touchpad.ui.h:26
 msgid "Mimimum speed"
 msgstr "Kecepatan minimum"
 
-#: ../data/touchpad.ui.h:29
+#: ../data/touchpad.ui.h:27
 msgid "Scrolling"
 msgstr "Menggulir"
 
-#: ../data/touchpad.ui.h:30
+#: ../data/touchpad.ui.h:28
 msgid "Set _guest mouse off"
 msgstr "Matikan _mouse tamu"
 
-#: ../data/touchpad.ui.h:31
+#: ../data/touchpad.ui.h:29
 msgid "Speed"
 msgstr "Kecepatan"
 
-#: ../data/touchpad.ui.h:32
+#: ../data/touchpad.ui.h:30
 msgid "Start point of circular scrolling:"
 msgstr "Titik awal gulir melingkar:"
 
-#: ../data/touchpad.ui.h:33
+#: ../data/touchpad.ui.h:31
 msgid "Tapping"
 msgstr "Mengetuk"
 
-#: ../data/touchpad.ui.h:34
+#: ../data/touchpad.ui.h:32
 msgid "Tapping move: "
 msgstr "Gerakan mengetuk:"
 
-#: ../data/touchpad.ui.h:35
+#: ../data/touchpad.ui.h:33
 msgid "Tapping time: "
 msgstr "Waktu mengetuk:"
 
-#: ../data/touchpad.ui.h:36
+#: ../data/touchpad.ui.h:34
 msgid "_Disable touchpad"
 msgstr "Matikan bi_dang sentuh"
 
-#: ../data/touchpad.ui.h:37
+#: ../data/touchpad.ui.h:35
 msgid "_range:"
 msgstr "_jangkauan:"
+
+#: ../data/touchpad.ui.h:37
+#| msgid "<i>Long</i>"
+msgctxt "distance"
+msgid "<i>Long</i>"
+msgstr "<i>Jauh</i>"
+
+#: ../data/touchpad.ui.h:38
+#| msgid "<i>Short</i>"
+msgctxt "distance"
+msgid "<i>Short</i>"
+msgstr "<i>Dekat</i>"
 
 #: ../data/touchpad.ui.h:39
 msgid "pre_ssure:"
 msgstr "te_kanan:"
 
+#: ../data/touchpad.ui.h:40
+#| msgid "<i>Long</i>"
+msgctxt "time"
+msgid "<i>Long</i>"
+msgstr "<i>Lama</i>"
+
+#: ../data/touchpad.ui.h:41
+#| msgid "<i>Short</i>"
+msgctxt "time"
+msgid "<i>Short</i>"
+msgstr "<i>Sebentar</i>"
+
+#: ../data/touchpad.ui.h:44
+#| msgid "<i>High</i>"
+msgctxt "yes"
+msgid "<i>High</i>"
+msgstr "<i>Tinggi</i>"
+
+#: ../data/touchpad.ui.h:45
+#| msgid "<i>Low</i>"
+msgctxt "yes"
+msgid "<i>Low</i>"
+msgstr "<i>Rendah</i>"
+
 #: ../data/pointingstick.ui.h:1
-#| msgid "<b>Palm Detection</b>"
 msgid "<b>Press to Select</b>"
 msgstr "<b>Tekan untuk Memilih</b>"
 
@@ -286,50 +336,84 @@ msgid "<b>Sensitivity</b>"
 msgstr "<b>Kepekaan</b>"
 
 #: ../data/pointingstick.ui.h:4
-#| msgid "<b>Guest Mouse</b>"
 msgid "<b>Speed</b>"
 msgstr "<b>Kecepatan</b>"
 
-#: ../data/pointingstick.ui.h:11
+#: ../data/pointingstick.ui.h:5
 msgid "Enable _Press to Select"
 msgstr "Aktifkan _Tekan untuk Memilih"
 
-#: ../data/pointingstick.ui.h:12
-#| msgid "Enable Ci_rcular scrolling"
+#: ../data/pointingstick.ui.h:6
 msgid "Enable sc_rolling"
 msgstr "Aktifkan guli_r"
 
-#: ../data/pointingstick.ui.h:13
-#| msgid "Use _middle button emulation"
+#: ../data/pointingstick.ui.h:7
 msgid "Middle button _timeout:"
 msgstr "Timeout tombol _tengah:"
 
-#: ../data/pointingstick.ui.h:14
+#: ../data/pointingstick.ui.h:8
 msgid "T_hreshold:"
 msgstr "A_mbang:"
 
-#: ../data/pointingstick.ui.h:15
+#: ../data/pointingstick.ui.h:9
 msgid "_Sensitivity:"
 msgstr "_Kepekaan:"
 
-#: ../data/pointingstick.ui.h:16
+#: ../data/pointingstick.ui.h:10
 msgid "_Speed:"
 msgstr "_Kecepatan:"
+
+#: ../data/pointingstick.ui.h:11
+#| msgid "<i>High</i>"
+msgctxt "sensitivity"
+msgid "<i>High</i>"
+msgstr "<i>Tinggi</i>"
+
+#: ../data/pointingstick.ui.h:12
+#| msgid "<i>Low</i>"
+msgctxt "sensitivity"
+msgid "<i>Low</i>"
+msgstr "<i>Rendah</i>"
+
+#: ../data/pointingstick.ui.h:13
+#| msgid "<i>Fast</i>"
+msgctxt "speed"
+msgid "<i>Fast</i>"
+msgstr "<i>Cepat</i>"
+
+#: ../data/pointingstick.ui.h:14
+#| msgid "<i>Slow</i>"
+msgctxt "speed"
+msgid "<i>Slow</i>"
+msgstr "<i>Lambat</i>"
+
+#: ../data/pointingstick.ui.h:15
+#| msgid "<i>High</i>"
+msgctxt "threshold"
+msgid "<i>High</i>"
+msgstr "<i>Tinggi</i>"
+
+#: ../data/pointingstick.ui.h:16
+#| msgid "<i>Low</i>"
+msgctxt "threshold"
+msgid "<i>Low</i>"
+msgstr "<i>Rendah</i>"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
 msgid "Enable pointing-device plugin"
 msgstr "Aktifkan plugin perangkat-penunjuk"
 
 #: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
-msgid "Set to True to enable the plugin to manage GPointingDeviceSettings settings."
-msgstr "Setel ke Benar untuk memungkinkan plugin mengelola setelan GPointingDeviceSettings."
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Setel ke Benar untuk memungkinkan plugin mengelola setelan "
+"GPointingDeviceSettings."
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:1
-#| msgid "GPointing Device Settings"
 msgid "Pointing devices"
 msgstr "Perangkat penunjuk"
 
 #: ../data/gpointing-device-settings.desktop.in.in.h:2
 msgid "Set your pointing devices preferences"
 msgstr "Atur preferensi perangkat penunjuk Anda"
-
