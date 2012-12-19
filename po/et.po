@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpointing-device-settings master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-08 16:50+0000\n"
-"PO-Revision-Date: 2010-09-09 23:25+0300\n"
-"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"POT-Creation-Date: 2012-10-29 13:31+0000\n"
+"PO-Revision-Date: 2012-12-19 16:13+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Estonian\n"
 "X-Poedit-Country: ESTONIA\n"
+
+msgid "Dry _run"
+msgstr "_Kuivkäivitus"
+
+msgid "_Finish dry run"
+msgstr "_Lõpeta kuivkäivitus"
 
 #, c-format
 msgid "No %s found."
@@ -65,20 +71,25 @@ msgstr "Sellist vidinat pole (%s)."
 #.
 #. vi:ts=4:nowrap:ai:expandtab:sw=4
 #.
-msgid "<b>Middle Button Emulation</b>"
-msgstr "<b>Keskmise klahvi emuleerimine</b>"
-
-msgid "<b>Wheel Emulation</b>"
-msgstr "<b>Kerimisratta emuleerimine</b>"
-
-msgid "Enable _horizontal scroll"
-msgstr "_Horisontaalsuunaline kerimine"
-
-msgid "Enable _vertical scroll"
-msgstr "_Vertikaalsuunaline kerimine"
+msgid "Middle Button Emulation"
+msgstr "Keskmise nupu emuleerimine"
 
 msgid "Use _middle button emulation"
 msgstr "_Keskmise nupu emuleerimine"
+
+msgid "_timeout:"
+msgstr "_Ajapiirang:"
+
+msgctxt "timeout"
+msgid "Short"
+msgstr "Lühike"
+
+msgctxt "timeout"
+msgid "Long"
+msgstr "Pikk"
+
+msgid "Wheel Emulation"
+msgstr "Kerimisratta emuleerimine"
 
 msgid "Use _wheel emulation"
 msgstr "_Kerimisratta emuleerimine"
@@ -86,66 +97,28 @@ msgstr "_Kerimisratta emuleerimine"
 msgid "_button:"
 msgstr "_Nupp:"
 
-msgid "_inertia:"
-msgstr "_Inertsus:"
-
-msgid "_timeout:"
-msgstr "_Ajapiirang:"
-
-msgctxt "inertia"
-msgid "<i>Long</i>"
-msgstr "<i>Raske</i>"
-
-msgctxt "inertia"
-msgid "<i>Short</i>"
-msgstr "<i>Kerge</i>"
-
 msgid "tim_eout:"
 msgstr "_Ajapiirang:"
 
-msgctxt "timeout"
-msgid "<i>Long</i>"
-msgstr "<i>Pikk</i>"
+msgid "_inertia:"
+msgstr "_Inertsus:"
 
-msgctxt "timeout"
-msgid "<i>Short</i>"
-msgstr "<i>Lühike</i>"
+msgctxt "inertia"
+msgid "Short"
+msgstr "Kerge"
 
-msgid "<b>Guest Mouse</b>"
-msgstr "<b>Väline hiir</b>"
+msgctxt "inertia"
+msgid "Long"
+msgstr "Raske"
 
-msgid "<b>Locked Drags</b>"
-msgstr "<b>Lohistamise lukk</b>"
+msgid "Enable _vertical scroll"
+msgstr "_Vertikaalsuunaline kerimine"
 
-msgid "<b>Palm Detection</b>"
-msgstr "<b>Peopesa tuvastus</b>"
+msgid "Enable _horizontal scroll"
+msgstr "_Horisontaalsuunaline kerimine"
 
-msgid "<b>Scrolling</b>"
-msgstr "<b>Kerimine</b>"
-
-msgid "<i>Fast</i>"
-msgstr "<i>Kiire</i>"
-
-msgid "<i>High</i>"
-msgstr "<i>Kõrge</i>"
-
-msgid "<i>Low</i>"
-msgstr "<i>Madal</i>"
-
-msgid "<i>Narrow</i>"
-msgstr "<i>Kitsas</i>"
-
-msgid "<i>Slow</i>"
-msgstr "<i>Aeglane</i>"
-
-msgid "<i>Wide</i>"
-msgstr "<i>Lai</i>"
-
-msgid "Acceleration"
-msgstr "Kiirendus"
-
-msgid "Disable _tapping"
-msgstr "_Koputamine keelatud"
+msgid "_Disable touchpad"
+msgstr "_Puuteplaat on keelatud"
 
 msgid "Disable _tapping and scrolling"
 msgstr "_Koputamine ja kerimine keelatud"
@@ -153,107 +126,150 @@ msgstr "_Koputamine ja kerimine keelatud"
 msgid "Disable while any _other devices are connected"
 msgstr "Keelatud, kui mõni _teine seade on ühendatud"
 
-msgid "Enable Ci_rcular scrolling"
-msgstr "_Ringkerimine lubatud"
+msgid "Guest Mouse"
+msgstr "Väline hiir"
 
-msgid "Enable _faster tapping"
-msgstr "_Kiire koputamine lubatud"
+msgid "Set _guest mouse off"
+msgstr "_Väline hiir on välja lülitatud"
 
-msgid "Enable _horizontal scrolling"
-msgstr "_Horisontaalne kerimine lubatud"
-
-msgid "Enable _locked drags"
-msgstr "_Lohistamislukk lubatud"
+msgid "Palm Detection"
+msgstr "Peopesa tuvastus"
 
 msgid "Enable _palm detection"
 msgstr "_Peopesa tuvastus lubatud"
 
-msgid "Enable _vertical scrolling"
-msgstr "_Vertikaalne kerimine lubatud"
-
-msgid "Enable continuous edge scrolling"
-msgstr "Serva jõudes kerimine ei peatu"
-
-msgid "Enable horizontal scrolling when dragging with two fingers"
-msgstr "Kahe sõrmega lohistamisel keritakse horisontaalsuunas"
-
-msgid "Enable vertical scrolling when dragging with two fingers"
-msgstr "Kahe sõrmega lohistamisel keritakse vertikaalsuunas"
-
-msgid "General"
-msgstr "Üldine"
-
-msgid "Maximum speed"
-msgstr "Suurim kiirus"
-
-msgid "Mimimum speed"
-msgstr "Väikseim kiirus"
-
-msgid "Scrolling"
-msgstr "Kerimine"
-
-msgid "Set _guest mouse off"
-msgstr "_Külalishiir välja lülitatud"
-
-msgid "Speed"
-msgstr "Kiirus"
-
-msgid "Start point of circular scrolling:"
-msgstr "Ringkerimise alguspunkt:"
-
-msgid "Tapping"
-msgstr "Koputus"
-
-msgid "Tapping move: "
-msgstr "Koputuse nihe:"
-
-msgid "Tapping time: "
-msgstr "Koputuse kestus:"
-
-msgid "_Disable touchpad"
-msgstr "_Puuteplaat on keelatud"
-
 msgid "_range:"
 msgstr "_Ulatus:"
 
-msgctxt "distance"
-msgid "<i>Long</i>"
-msgstr "<i>Kauge</i>"
+msgid "Narrow"
+msgstr "Kitsas"
 
-msgctxt "distance"
-msgid "<i>Short</i>"
-msgstr "<i>Lühike</i>"
+msgid "Wide"
+msgstr "Lai"
 
 msgid "pre_ssure:"
 msgstr "_Surve:"
 
-msgctxt "time"
-msgid "<i>Long</i>"
-msgstr "<i>Pikk</i>"
+msgid "Low"
+msgstr "Väike"
+
+msgid "High"
+msgstr "Suur"
+
+msgid "Locked Drags"
+msgstr "Lohistamise lukk"
+
+msgid "Enable _locked drags"
+msgstr "_Lohistamislukk lubatud"
+
+msgid "General"
+msgstr "Üldine"
+
+msgid "Disable _tapping"
+msgstr "_Koputamine keelatud"
+
+msgid "Tapping time: "
+msgstr "Koputuse kestus: "
 
 msgctxt "time"
-msgid "<i>Short</i>"
-msgstr "<i>Lühike</i>"
+msgid "Short"
+msgstr "Lühike"
+
+msgctxt "time"
+msgid "Long"
+msgstr "Pikk"
+
+msgid "Tapping move: "
+msgstr "Koputuse nihe:"
+
+msgctxt "distance"
+msgid "Short"
+msgstr "Lühike"
+
+msgctxt "distance"
+msgid "Long"
+msgstr "Pikk"
+
+msgid "Enable _faster tapping"
+msgstr "_Kiire koputamine lubatud"
+
+msgid "Tapping"
+msgstr "Koputus"
+
+msgid "Enable _vertical scrolling"
+msgstr "_Vertikaalne kerimine lubatud"
+
+msgid "Slow"
+msgstr "Aeglane"
+
+msgid "Fast"
+msgstr "Kiire"
+
+msgid "Enable _horizontal scrolling"
+msgstr "_Horisontaalne kerimine lubatud"
+
+msgid "Enable continuous edge scrolling"
+msgstr "Serva jõudes kerimine ei peatu"
+
+msgid "Enable Ci_rcular scrolling"
+msgstr "_Ringkerimine lubatud"
+
+msgid "Start point of circular scrolling:"
+msgstr "Ringkerimise alguspunkt:"
+
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Kahe sõrmega lohistamisel keritakse vertikaalsuunas"
+
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Kahe sõrmega lohistamisel keritakse horisontaalsuunas"
+
+msgid "Scrolling"
+msgstr "Kerimine"
+
+msgid "Mimimum speed"
+msgstr "Väikseim kiirus"
+
+msgid "Maximum speed"
+msgstr "Suurim kiirus"
+
+msgid "Acceleration"
+msgstr "Kiirendus"
 
 msgctxt "yes"
-msgid "<i>High</i>"
-msgstr "<i>Kõrge</i>"
+msgid "Low"
+msgstr "Aeglane"
 
 msgctxt "yes"
-msgid "<i>Low</i>"
-msgstr "<i>Madal</i>"
+msgid "High"
+msgstr "Kiire"
 
-msgid "<b>Press to Select</b>"
-msgstr "<b>Valimiseks klõpsa</b>"
+msgid "Speed"
+msgstr "Kiirus"
 
-msgid "<b>Sensitivity</b>"
-msgstr "<b>Tundlikkus</b>"
+msgid "Sensitivity"
+msgstr "Tundlikkus"
 
-msgid "<b>Speed</b>"
-msgstr "<b>Kiirus</b>"
+msgid "_Sensitivity:"
+msgstr "_Tundlikkus:"
 
-msgid "Enable _Press to Select"
-msgstr "_Surumisel tehakse hiireklõps"
+msgctxt "sensitivity"
+msgid "Low"
+msgstr "Tundetu"
+
+msgctxt "sensitivity"
+msgid "High"
+msgstr "Tundlik"
+
+msgid "_Speed:"
+msgstr "_Kiirus:"
+
+msgctxt "speed"
+msgid "Slow"
+msgstr "Aeglane"
+
+msgctxt "speed"
+msgid "Fast"
+msgstr "Kiire"
 
 msgid "Enable sc_rolling"
 msgstr "_Kerimine lubatud"
@@ -261,38 +277,22 @@ msgstr "_Kerimine lubatud"
 msgid "Middle button _timeout:"
 msgstr "Kesknupu _ajapiir:"
 
+msgid "Press to Select"
+msgstr "Valimiseks klõpsa"
+
+msgid "Enable _Press to Select"
+msgstr "_Vajutusel tehakse hiireklõps"
+
 msgid "T_hreshold:"
 msgstr "_Lävi:"
 
-msgid "_Sensitivity:"
-msgstr "_Tundlikkus:"
-
-msgid "_Speed:"
-msgstr "_Kiirus:"
-
-msgctxt "sensitivity"
-msgid "<i>High</i>"
-msgstr "<i>Tundlik</i>"
-
-msgctxt "sensitivity"
-msgid "<i>Low</i>"
-msgstr "<i>Tuim</i>"
-
-msgctxt "speed"
-msgid "<i>Fast</i>"
-msgstr "<i>Kiire</i>"
-
-msgctxt "speed"
-msgid "<i>Slow</i>"
-msgstr "<i>Aeglane</i>"
+msgctxt "threshold"
+msgid "Low"
+msgstr "Madal"
 
 msgctxt "threshold"
-msgid "<i>High</i>"
-msgstr "<i>Kõrge</i>"
-
-msgctxt "threshold"
-msgid "<i>Low</i>"
-msgstr "<i>Madal</i>"
+msgid "High"
+msgstr "Kõrge"
 
 msgid "Enable pointing-device plugin"
 msgstr "Osutamisseadme plugina lubamine"
