@@ -1,0 +1,392 @@
+# Bosnian translation for bosnianuniversetranslation
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the bosnianuniversetranslation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bosnianuniversetranslation\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-26 21:35+0000\n"
+"PO-Revision-Date: 2015-03-02 11:52+0100\n"
+"Last-Translator: Selma Glavić <sglavic1@etf.unsa.ba>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-02-05 06:56+0000\n"
+"X-Generator: Poedit 1.7.4\n"
+
+#: ../src/gpds-main-window.c:322 ../src/gpds-main-window.c:458
+msgid "Dry _run"
+msgstr "Suho_pokretanje"
+
+#: ../src/gpds-main-window.c:572
+msgid "_Finish dry run"
+msgstr "_Završi suho pokretanje"
+
+#: ../src/gpds-xinput-ui.c:95 ../src/gpds-xinput-utils.c:60
+#, c-format
+msgid "No %s found."
+msgstr "Nijedan %s nije nađen."
+
+#: ../src/gpds-xinput.c:220
+#, c-format
+msgid "An X error occurred. The error was %s."
+msgstr "Došlo je do pogreške X. Pogreška je %s."
+
+#: ../src/gpds-xinput.c:306 ../src/gpds-xinput.c:324 ../src/gpds-xinput.c:342
+#, c-format
+msgid "There is no registered property for %d."
+msgstr "Nema registrirani objekt za %d."
+
+#: ../src/gpds-xinput.c:444 ../src/gpds-xinput.c:611
+#, c-format
+msgid ""
+"Format type is mismatched.\n"
+"%s is specified but %s returns."
+msgstr ""
+"Tip formata se ne slaže.\n"
+"%s je naveden ali %s se vraća."
+
+#: ../src/gpds-xinput-utils.c:87
+#, c-format
+msgid "No device found for %d."
+msgstr "Uređaj nije nađen za %d."
+
+#: ../src/gpds-xinput-utils.c:134
+#, c-format
+msgid "Could not open %s device."
+msgstr "Ne mogu otvoriti %s uređaj."
+
+#: ../src/gpds-xinput-utils.c:151
+#, c-format
+msgid "No float atom in XServer"
+msgstr "Nema pokretnog atoma u Iks serveru"
+
+#: ../modules/gpds-touchpad-ui.c:1155 ../modules/gpds-mouse-ui.c:513
+#: ../modules/gpds-pointingstick-ui.c:242
+#, c-format
+msgid "%s did not find."
+msgstr "%s nije nađen."
+
+#: ../modules/gpds-touchpad-ui.c:1329 ../modules/gpds-mouse-ui.c:656
+#: ../modules/gpds-pointingstick-ui.c:405
+#, c-format
+msgid "There is no widget(%s)."
+msgstr "Nema widget(%s)."
+
+#.
+#. vi:ts=4:nowrap:ai:expandtab:sw=4
+#.
+#: ../data/mouse.ui.h:1
+msgid "Middle Button Emulation"
+msgstr "Emulacija Srednje Tipke"
+
+#: ../data/mouse.ui.h:2
+msgid "Use _middle button emulation"
+msgstr "Koristi _imitaciju srednje tipke"
+
+#: ../data/mouse.ui.h:3 ../data/touchpad.ui.h:16
+msgid "_timeout:"
+msgstr "_stanka:"
+
+#: ../data/mouse.ui.h:4 ../data/touchpad.ui.h:17 ../data/pointingstick.ui.h:12
+msgctxt "timeout"
+msgid "Short"
+msgstr "Kratko"
+
+#: ../data/mouse.ui.h:5 ../data/touchpad.ui.h:18 ../data/pointingstick.ui.h:13
+msgctxt "timeout"
+msgid "Long"
+msgstr "Dugo"
+
+#: ../data/mouse.ui.h:6
+msgid "Wheel Emulation"
+msgstr "Imitacija Koluta"
+
+#: ../data/mouse.ui.h:7
+msgid "Use _wheel emulation"
+msgstr "Koristi _imitaciju koluta"
+
+#: ../data/mouse.ui.h:8
+msgid "_button:"
+msgstr "_dugme:"
+
+#: ../data/mouse.ui.h:9
+msgid "tim_eout:"
+msgstr "ist_ek:"
+
+#: ../data/mouse.ui.h:10
+msgid "_inertia:"
+msgstr "_inercija:"
+
+#: ../data/mouse.ui.h:11
+msgctxt "inertia"
+msgid "Short"
+msgstr "Kratko"
+
+#: ../data/mouse.ui.h:12
+msgctxt "inertia"
+msgid "Long"
+msgstr "Dugo"
+
+#: ../data/mouse.ui.h:13
+msgid "Enable _vertical scroll"
+msgstr "Omogući _vertikalno pomicanje"
+
+#: ../data/mouse.ui.h:14
+msgid "Enable _horizontal scroll"
+msgstr "Omogući _horizontalno pomicanje"
+
+#: ../data/touchpad.ui.h:1
+msgid "_Disable touchpad"
+msgstr "_Onemogući touchpad"
+
+#: ../data/touchpad.ui.h:2
+msgid "Disable _tapping and scrolling"
+msgstr "_Onemogući _kuckanje i pomicanje"
+
+#: ../data/touchpad.ui.h:3
+msgid "Disable while any _other devices are connected"
+msgstr "_Onemogući dok bilo koji _ drugi uređaj je priključen"
+
+#: ../data/touchpad.ui.h:4
+msgid "Guest Mouse"
+msgstr "Gostujući miš"
+
+#: ../data/touchpad.ui.h:5
+msgid "Set _guest mouse off"
+msgstr "Isključi _gostujućeg miša"
+
+#: ../data/touchpad.ui.h:6
+msgid "Palm Detection"
+msgstr "Detekcija Dlana"
+
+#: ../data/touchpad.ui.h:7
+msgid "Enable _palm detection"
+msgstr "Omogući _detekciju dlana"
+
+#: ../data/touchpad.ui.h:8
+msgid "_range:"
+msgstr "_daljina:"
+
+#: ../data/touchpad.ui.h:9
+msgid "Narrow"
+msgstr "Uzak"
+
+#: ../data/touchpad.ui.h:10
+msgid "Wide"
+msgstr "Širok"
+
+#: ../data/touchpad.ui.h:11
+msgid "pre_ssure:"
+msgstr "priti_sak:"
+
+#: ../data/touchpad.ui.h:12
+msgid "Low"
+msgstr "Nisko"
+
+#: ../data/touchpad.ui.h:13
+msgid "High"
+msgstr "Visoko"
+
+#: ../data/touchpad.ui.h:14
+msgid "Locked Drags"
+msgstr "Zaključana Povlačenja"
+
+#: ../data/touchpad.ui.h:15
+msgid "Enable _locked drags"
+msgstr "Omogući _zaključana povlačenja"
+
+#: ../data/touchpad.ui.h:19
+msgid "General"
+msgstr "Opšte"
+
+#: ../data/touchpad.ui.h:20
+msgid "Disable _tapping"
+msgstr "Onemogući _tapkanje"
+
+#: ../data/touchpad.ui.h:21
+msgid "Tapping time: "
+msgstr "Vrijeme tapkanja: "
+
+#: ../data/touchpad.ui.h:22
+msgctxt "time"
+msgid "Short"
+msgstr "Kratko"
+
+#: ../data/touchpad.ui.h:23
+msgctxt "time"
+msgid "Long"
+msgstr "Dugo"
+
+#: ../data/touchpad.ui.h:24
+msgid "Tapping move: "
+msgstr "Pomjeranje tapkanja: "
+
+#: ../data/touchpad.ui.h:25
+msgctxt "distance"
+msgid "Short"
+msgstr "Kratko"
+
+#: ../data/touchpad.ui.h:26
+msgctxt "distance"
+msgid "Long"
+msgstr "Dugo"
+
+#: ../data/touchpad.ui.h:27
+msgid "Enable _faster tapping"
+msgstr "Omogući _brzo tapkanje"
+
+#: ../data/touchpad.ui.h:28
+msgid "Tapping"
+msgstr "Tapkanje"
+
+#: ../data/touchpad.ui.h:29
+msgid "Enable _vertical scrolling"
+msgstr "Omogući _vertikalno pomjeranje"
+
+#: ../data/touchpad.ui.h:30
+msgid "Slow"
+msgstr "Spor"
+
+#: ../data/touchpad.ui.h:31
+msgid "Fast"
+msgstr "Brzo"
+
+#: ../data/touchpad.ui.h:32
+msgid "Enable _horizontal scrolling"
+msgstr "Omogućeno_horizontalno pomjeranje"
+
+#: ../data/touchpad.ui.h:33
+msgid "Enable continuous edge scrolling"
+msgstr "Omogućeno kontinuirano pomjeranje ivica"
+
+#: ../data/touchpad.ui.h:34
+msgid "Enable Ci_rcular scrolling"
+msgstr "Omogući Ci_rkularno pomjeranje"
+
+#: ../data/touchpad.ui.h:35
+msgid "Start point of circular scrolling:"
+msgstr "Početna tačka kružnog pomjeranja:"
+
+#: ../data/touchpad.ui.h:36
+msgid "Enable vertical scrolling when dragging with two fingers"
+msgstr "Omogućeno vertikalno pomjeranja kada povlačite sa dva prsta"
+
+#: ../data/touchpad.ui.h:37
+msgid "Enable horizontal scrolling when dragging with two fingers"
+msgstr "Omogućeno horizontalno pomjeranja kada povlačite sa dva prsta"
+
+#: ../data/touchpad.ui.h:38 ../data/pointingstick.ui.h:9
+msgid "Scrolling"
+msgstr "Pomjeranje"
+
+#: ../data/touchpad.ui.h:39
+msgid "Mimimum speed"
+msgstr "Najmanja brzina"
+
+#: ../data/touchpad.ui.h:40
+msgid "Maximum speed"
+msgstr "Najveća brzina"
+
+#: ../data/touchpad.ui.h:41
+msgid "Acceleration"
+msgstr "Ubrzanje"
+
+#: ../data/touchpad.ui.h:42
+msgctxt "yes"
+msgid "Low"
+msgstr "Nizak"
+
+#: ../data/touchpad.ui.h:43
+msgctxt "yes"
+msgid "High"
+msgstr "Visok"
+
+#: ../data/touchpad.ui.h:44 ../data/pointingstick.ui.h:5
+msgid "Speed"
+msgstr "Brzina"
+
+#: ../data/pointingstick.ui.h:1
+msgid "Sensitivity"
+msgstr "Osjetljivost"
+
+#: ../data/pointingstick.ui.h:2
+msgid "_Sensitivity:"
+msgstr "_Osjetljivost:"
+
+#: ../data/pointingstick.ui.h:3
+msgctxt "sensitivity"
+msgid "Low"
+msgstr "Niska"
+
+#: ../data/pointingstick.ui.h:4
+msgctxt "sensitivity"
+msgid "High"
+msgstr "Visoka"
+
+#: ../data/pointingstick.ui.h:6
+msgid "_Speed:"
+msgstr "_Brzina:"
+
+#: ../data/pointingstick.ui.h:7
+msgctxt "speed"
+msgid "Slow"
+msgstr "Spora"
+
+#: ../data/pointingstick.ui.h:8
+msgctxt "speed"
+msgid "Fast"
+msgstr "Brza"
+
+#: ../data/pointingstick.ui.h:10
+msgid "Enable sc_rolling"
+msgstr "Omogućeno sc_rolling"
+
+#: ../data/pointingstick.ui.h:11
+msgid "Middle button _timeout:"
+msgstr "Srednji dugme_pauza:"
+
+#: ../data/pointingstick.ui.h:14
+msgid "Press to Select"
+msgstr "Pritisni da označiš"
+
+#: ../data/pointingstick.ui.h:15
+msgid "Enable _Press to Select"
+msgstr "Omogućeno_Pritisnuti za označavanje"
+
+#: ../data/pointingstick.ui.h:16
+msgid "T_hreshold:"
+msgstr "P_rag:"
+
+#: ../data/pointingstick.ui.h:17
+msgctxt "threshold"
+msgid "Low"
+msgstr "Nizak"
+
+#: ../data/pointingstick.ui.h:18
+msgctxt "threshold"
+msgid "High"
+msgstr "Visok"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:1
+msgid "Enable pointing-device plugin"
+msgstr "Omogućen dodatak pokazivačkog-uređaja"
+
+#: ../data/gpointing-device-settings_gnome_settings_daemon.schemas.in.h:2
+msgid ""
+"Set to True to enable the plugin to manage GPointingDeviceSettings settings."
+msgstr ""
+"Postavi na Truje da omogućite dodatak za upravljanje GPointingDeviceSettings "
+"postavkama."
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:1
+msgid "Pointing devices"
+msgstr "Pokazivački uređaji"
+
+#: ../data/gpointing-device-settings.desktop.in.in.h:2
+msgid "Set your pointing devices preferences"
+msgstr "Postavi svoje pokazivačke mogućnosti uređaja"
